@@ -1,0 +1,263 @@
+package test.elements;
+
+import com.github.t1.bulmajava.basic.*;
+import com.github.t1.bulmajava.elements.Button;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import test.RenderTestExtension;
+
+import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Color.*;
+import static com.github.t1.bulmajava.basic.Size.LARGE;
+import static com.github.t1.bulmajava.basic.State.SELECTED;
+import static com.github.t1.bulmajava.basic.Style.LIGHT;
+import static com.github.t1.bulmajava.basic.Style.OUTLINED;
+import static com.github.t1.bulmajava.elements.Button.*;
+import static test.CustomAssertions.then;
+
+@ExtendWith(RenderTestExtension.class)
+class ButtonTest {
+    @Test void shouldRenderButton() {
+        var button = button("Button");
+
+        then(button).rendersAs("""
+                <button class="button">Button</button>
+                """);
+    }
+
+    @Test void shouldRenderButtonWithStringContent() {
+        var button = button().contains("Button");
+
+        then(button).rendersAs("""
+                <button class="button">Button</button>
+                """);
+    }
+
+    @Test void shouldRenderButtonWithDivContent() {
+        var button = button().contains(Basic.span().contains("foo"));
+
+        then(button).rendersAs("""
+                <button class="button">
+                    <span>foo</span>
+                </button>
+                """);
+    }
+
+    @Test void shouldRenderButtonWithCustomClass() {
+        var button = button("Button").classes("custom");
+
+        then(button).rendersAs("""
+                <button class="button custom">Button</button>
+                """);
+    }
+
+    @Test void shouldRenderAnchorButton() {
+        var button = a().classes("button").contains("Anchor");
+
+        then(button).rendersAs("""
+                <a class="button">Anchor</a>
+                """);
+    }
+
+    @ParameterizedTest @EnumSource void shouldRenderStyleButton(Style style) {
+        var button = button(style.name()).is(style);
+
+        then(button).rendersAs("<button class=\"button is-" + style.key() + "\">" + style.name() + "</button>\n");
+    }
+
+    @ParameterizedTest @EnumSource void shouldRenderColorButton(Color color) {
+        var button = button(color.name()).is(color);
+
+        then(button).rendersAs("<button class=\"button is-" + color.key() + "\">" + color.name() + "</button>\n");
+    }
+
+    @ParameterizedTest @EnumSource void shouldRenderSizeButton(Size size) {
+        var button = button(size.name()).is(size);
+
+        then(button).rendersAs("<button class=\"button is-" + size.key() + "\">" + size.name() + "</button>\n");
+    }
+
+    @ParameterizedTest @EnumSource
+    void shouldRenderLightColorButton(Color color) {
+        Button button1 = button(color.name()).is(color);
+        var button = button1.is(LIGHT);
+
+        then(button).rendersAs("<button class=\"button is-" + color.key() + " is-light\">" + color.name() + "</button>\n");
+    }
+
+    @Test void shouldRenderSmallButtons() {
+        var buttons = buttons()
+                .classes("are-small").contains(
+                        button("One"),
+                        button("Two"));
+
+        then(buttons).rendersAs("""
+                <div class="buttons are-small">
+                    <button class="button">One</button>
+                    <button class="button">Two</button>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderLargeResponsiveButton() {
+        var button = button("Button").is(LARGE).responsive();
+
+        then(button).rendersAs("<button class=\"button is-large is-responsive\">Button</button>\n");
+    }
+
+    @ParameterizedTest @EnumSource void shouldRenderStateButton(State state) {
+        var button = button(state.name()).is(state);
+
+        then(button).rendersAs("<button class=\"button is-" + state.key() + "\">" + state.name() + "</button>\n");
+    }
+
+    @ParameterizedTest @EnumSource void shouldRenderDisabledColorButton(Color color) {
+        var button = button("Disabled " + color.name()).disabled().is(color);
+
+        then(button).rendersAs("<button class=\"button is-" + color.key() + "\" disabled>Disabled " + color.name() + "</button>\n");
+    }
+
+    @Test void shouldRenderIconOnlyButton() {
+        var button = button().icon("bold");
+
+        then(button).rendersAs("""
+                <button class="button">
+                    <span class="icon"><i class="fas fa-bold"></i></span>
+                </button>
+                """);
+    }
+
+    @Test void shouldRenderIconAndTextButton() {
+        var button = button("Delete").is(DANGER, OUTLINED).icon("times");
+
+        then(button).rendersAs("""
+                <button class="button is-danger is-outlined">
+                    <span>Delete</span>
+                    <span class="icon"><i class="fas fa-times"></i></span>
+                </button>
+                """);
+    }
+
+    @Test void shouldRenderLargeIconOnlyButton() {
+        var button = button().is(LARGE).icon("heading", FontSize.x2);
+
+        then(button).rendersAs("""
+                <button class="button is-large">
+                    <span class="icon"><i class="fas fa-heading fa-2x"></i></span>
+                </button>
+                """);
+    }
+
+    @Test void shouldRenderButtonGroup() {
+        var button = Basic.group().contains(
+                Basic.control().contains(button("Save changes").is(LINK)),
+                Basic.control().contains(button("Cancel")),
+                Basic.control().contains(button("Delete post").is(DANGER)));
+
+        then(button).rendersAs("""
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link">Save changes</button>
+                    </div>
+                    <div class="control">
+                        <button class="button">Cancel</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-danger">Delete post</button>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFieldAddons() {
+        var buttons = fieldsAddon().contains(
+                Basic.control().contains(button().icon("align-left").contains(Basic.span("Left"))),
+                Basic.control().contains(button().icon("align-center").contains(Basic.span("Center"))),
+                Basic.control().contains(button().icon("align-right").contains(Basic.span("Right"))));
+
+        then(buttons).rendersAs("""
+                <div class="field has-addons">
+                    <div class="control">
+                        <button class="button">
+                            <span class="icon"><i class="fas fa-align-left"></i></span>
+                            <span>Left</span>
+                        </button>
+                    </div>
+                    <div class="control">
+                        <button class="button">
+                            <span class="icon"><i class="fas fa-align-center"></i></span>
+                            <span>Center</span>
+                        </button>
+                    </div>
+                    <div class="control">
+                        <button class="button">
+                            <span class="icon"><i class="fas fa-align-right"></i></span>
+                            <span>Right</span>
+                        </button>
+                    </div>
+                </div>
+                """);
+    }
+
+    @ParameterizedTest @EnumSource void shouldRenderAlignedAddons(Alignment alignment) {
+        var buttons = buttonsAddon().is(alignment).contains(
+                button("Yes"),
+                button("Maybe"),
+                button("No"));
+
+        then(buttons).rendersAs("""
+                <div class="buttons has-addons is-$alignment">
+                    <button class="button">Yes</button>
+                    <button class="button">Maybe</button>
+                    <button class="button">No</button>
+                </div>
+                """.replace("$alignment", alignment.key()));
+    }
+
+    @Test void shouldRenderSelectedSuccess() {
+        var buttons = buttonsAddon().contains(
+                button("Yes").is(SUCCESS, SELECTED),
+                button("Maybe"),
+                button("No"));
+
+        then(buttons).rendersAs("""
+                <div class="buttons has-addons">
+                    <button class="button is-success is-selected">Yes</button>
+                    <button class="button">Maybe</button>
+                    <button class="button">No</button>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderSelectedInfo() {
+        var buttons = buttonsAddon().contains(
+                button("Yes"),
+                button("Maybe").is(INFO, SELECTED),
+                button("No"));
+
+        then(buttons).rendersAs("""
+                <div class="buttons has-addons">
+                    <button class="button">Yes</button>
+                    <button class="button is-info is-selected">Maybe</button>
+                    <button class="button">No</button>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderAddonsSelectedDanger() {
+        var buttons = buttonsAddon().contains(
+                button("Yes"),
+                button("Maybe"),
+                button("No").is(DANGER, SELECTED));
+
+        then(buttons).rendersAs("""
+                <div class="buttons has-addons">
+                    <button class="button">Yes</button>
+                    <button class="button">Maybe</button>
+                    <button class="button is-danger is-selected">No</button>
+                </div>
+                """);
+    }
+}

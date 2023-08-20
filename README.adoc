@@ -1,0 +1,9 @@
+= Bulma Java
+
+A simple servers-side-html library based on Bulma components.
+
+Everything is immutable, i.e. no builders, no withers.
+
+== Restrictions
+
+Currently, only https://fontawesome.com[fontawesome] is supported.
