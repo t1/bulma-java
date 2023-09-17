@@ -14,25 +14,25 @@ import static test.CustomAssertions.then;
 @ExtendWith(RenderTestExtension.class)
 class MenuTest {
     @Test void shouldRenderMenu() {
-        var menu = menu().contains(
+        var menu = menu().content(
                 menuLabel("General"),
-                menuList().contains(
+                menuList().content(
                         a("Dashboard"),
                         a("Customers")),
                 menuLabel("Administration"),
-                menuList().contains(
+                menuList().content(
                         a("Team Settings"),
-                        li().contains(
+                        li().content(
                                 a("Manage Your Team").is(ACTIVE),
-                                ul().contains(
-                                        li().contains(a("Members")),
-                                        li().contains(a("Plugins")),
-                                        li().contains(a("Add a member")))),
+                                ul().content(
+                                        li().content(a("Members")),
+                                        li().content(a("Plugins")),
+                                        li().content(a("Add a member")))),
                         a("Invitations"),
                         a("Cloud Storage Environment Settings"),
                         a("Authentication")),
                 menuLabel("Transactions"),
-                menuList().contains(
+                menuList().content(
                         a("Payments"),
                         a("Transfers"),
                         a("Balance")));

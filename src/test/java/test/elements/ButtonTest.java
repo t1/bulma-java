@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.*;
 import static com.github.t1.bulmajava.basic.Size.LARGE;
 import static com.github.t1.bulmajava.basic.State.SELECTED;
@@ -28,7 +29,7 @@ class ButtonTest {
     }
 
     @Test void shouldRenderButtonWithStringContent() {
-        var button = button().contains("Button");
+        var button = button().content("Button");
 
         then(button).rendersAs("""
                 <button class="button">Button</button>
@@ -36,7 +37,7 @@ class ButtonTest {
     }
 
     @Test void shouldRenderButtonWithDivContent() {
-        var button = button().contains(Basic.span().contains("foo"));
+        var button = button().content(span().content("foo"));
 
         then(button).rendersAs("""
                 <button class="button">
@@ -54,7 +55,7 @@ class ButtonTest {
     }
 
     @Test void shouldRenderAnchorButton() {
-        var button = a().classes("button").contains("Anchor");
+        var button = a().classes("button").content("Anchor");
 
         then(button).rendersAs("""
                 <a class="button">Anchor</a>
@@ -89,7 +90,7 @@ class ButtonTest {
 
     @Test void shouldRenderSmallButtons() {
         var buttons = buttons()
-                .classes("are-small").contains(
+                .classes("are-small").content(
                         button("One"),
                         button("Two"));
 
@@ -130,7 +131,7 @@ class ButtonTest {
     }
 
     @Test void shouldRenderIconAndTextButton() {
-        var button = button("Delete").is(DANGER, OUTLINED).icon("times");
+        var button = button().content(span("Delete")).is(DANGER, OUTLINED).icon("times");
 
         then(button).rendersAs("""
                 <button class="button is-danger is-outlined">
@@ -151,10 +152,10 @@ class ButtonTest {
     }
 
     @Test void shouldRenderButtonGroup() {
-        var button = Basic.group().contains(
-                Basic.control().contains(button("Save changes").is(LINK)),
-                Basic.control().contains(button("Cancel")),
-                Basic.control().contains(button("Delete post").is(DANGER)));
+        var button = group().content(
+                control().content(button("Save changes").is(LINK)),
+                control().content(button("Cancel")),
+                control().content(button("Delete post").is(DANGER)));
 
         then(button).rendersAs("""
                 <div class="field is-grouped">
@@ -172,10 +173,10 @@ class ButtonTest {
     }
 
     @Test void shouldRenderFieldAddons() {
-        var buttons = fieldsAddon().contains(
-                Basic.control().contains(button().icon("align-left").contains(Basic.span("Left"))),
-                Basic.control().contains(button().icon("align-center").contains(Basic.span("Center"))),
-                Basic.control().contains(button().icon("align-right").contains(Basic.span("Right"))));
+        var buttons = fieldsAddon().content(
+                control().content(button().icon("align-left").content(span("Left"))),
+                control().content(button().icon("align-center").content(span("Center"))),
+                control().content(button().icon("align-right").content(span("Right"))));
 
         then(buttons).rendersAs("""
                 <div class="field has-addons">
@@ -202,7 +203,7 @@ class ButtonTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderAlignedAddons(Alignment alignment) {
-        var buttons = buttonsAddon().is(alignment).contains(
+        var buttons = buttonsAddon().is(alignment).content(
                 button("Yes"),
                 button("Maybe"),
                 button("No"));
@@ -217,7 +218,7 @@ class ButtonTest {
     }
 
     @Test void shouldRenderSelectedSuccess() {
-        var buttons = buttonsAddon().contains(
+        var buttons = buttonsAddon().content(
                 button("Yes").is(SUCCESS, SELECTED),
                 button("Maybe"),
                 button("No"));
@@ -232,7 +233,7 @@ class ButtonTest {
     }
 
     @Test void shouldRenderSelectedInfo() {
-        var buttons = buttonsAddon().contains(
+        var buttons = buttonsAddon().content(
                 button("Yes"),
                 button("Maybe").is(INFO, SELECTED),
                 button("No"));
@@ -247,7 +248,7 @@ class ButtonTest {
     }
 
     @Test void shouldRenderAddonsSelectedDanger() {
-        var buttons = buttonsAddon().contains(
+        var buttons = buttonsAddon().content(
                 button("Yes"),
                 button("Maybe"),
                 button("No").is(DANGER, SELECTED));

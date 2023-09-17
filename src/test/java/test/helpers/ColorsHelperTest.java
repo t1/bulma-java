@@ -33,7 +33,7 @@ class ColorsHelperTest {
 
     private static void shouldRenderTextColorX(String color) {
         var contrast = contrast(() -> color);
-        var text = notification().hasBackground(() -> contrast).hasText(() -> color).contains("Text");
+        var text = notification().hasBackground(() -> contrast).hasText(() -> color).content("Text");
 
         then(text).rendersAs("""
                 <div class="notification has-background-$contrast has-text-$color">Text</div>
@@ -60,7 +60,7 @@ class ColorsHelperTest {
 
     private static void shouldRenderBgColorX(String color) {
         var contrast = contrast(() -> color);
-        var text = notification().hasText(() -> contrast).hasBackground(() -> color).contains("Text");
+        var text = notification().hasText(() -> contrast).hasBackground(() -> color).content("Text");
 
         then(text).rendersAs("""
                 <div class="notification has-text-$contrast has-background-$color">Text</div>

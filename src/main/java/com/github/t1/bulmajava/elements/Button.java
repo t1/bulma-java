@@ -10,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 import java.util.function.Function;
 
 import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.span;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
@@ -23,7 +22,7 @@ public class Button extends AbstractElement<Button> {
 
     public static Button button(String content) {return button(string(content));}
 
-    public static Button button(Renderable content) {return button().contains(content);}
+    public static Button button(Renderable content) {return button().content(content);}
 
     public static Button button() {return new Button();}
 
@@ -38,17 +37,14 @@ public class Button extends AbstractElement<Button> {
     public Button icon(String name, String... classes) {return icon(name, null, classes);}
 
     public Button icon(String name, FontSize fontSize, String... classes) {
-        var result = this;
-        if (result.content() instanceof RenderableString)
-            result = result.content(span().content(result.content()));
-        return result.contains(Icon.icon(name, fontSize, classes));
+        content(Icon.icon(name, fontSize, classes));
+        return this;
     }
 
     public Button icon(Function<Icon, Icon> function) {
         var existing = content().find(Icon.class).orElseThrow(() -> new IllegalStateException("no icon found"));
-        var replacement = function.apply(existing);
-        return content((existing == content()) ? replacement
-                : content().replace(existing, replacement));
+        function.apply(existing);
+        return this;
     }
 
     public Button isIcon(Modifier... modifiers) {return icon(icon -> icon.is(modifiers));}

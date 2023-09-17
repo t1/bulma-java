@@ -14,17 +14,17 @@ import static test.RenderTestExtension.loremIpsum;
 @ExtendWith(RenderTestExtension.class)
 class BlockTest {
     @Test void shouldRenderThreeBlocks() {
-        var blocks = div().contains(
-                block().contains(
+        var blocks = div().content(
+                block().content(
                         string("This text is within a "),
                         strong("block"),
                         string(".")),
-                block().contains(
+                block().content(
                         string("This text is within a "),
                         strong("second block"),
                         string(". "),
                         string(loremIpsum())),
-                block().contains(
+                block().content(
                         string("This text is within a "),
                         strong("third block"),
                         string(". This block has no margin at the bottom.")),

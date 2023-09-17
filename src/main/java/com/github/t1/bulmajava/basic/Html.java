@@ -6,6 +6,8 @@ import lombok.experimental.SuperBuilder;
 import java.util.function.Function;
 
 import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
+import static com.github.t1.bulmajava.basic.Renderable.Indented.indented;
+import static com.github.t1.bulmajava.basic.Renderable.UnsafeString.unsafeString;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Html extends AbstractElement<Html> {
@@ -17,11 +19,11 @@ public class Html extends AbstractElement<Html> {
 
     protected Html(String title) {
         super("html", Attributes.of(stringAttribute("lang", "en")),
-                Basic.element("head").contains(
+                Basic.element("head").content(
                         meta_("charset", "utf-8"),
                         meta_("http-equiv", "X-UA-Compatible", "IE=edge"),
                         meta_name("viewport", "width=device-width, initial-scale=1"),
-                        (title == null) ? null : Basic.element("title").contains(title)));
+                        (title == null) ? null : Basic.element("title").content(title)));
     }
 
 
@@ -51,30 +53,47 @@ public class Html extends AbstractElement<Html> {
         return meta_(name1, value1).attr(name2, value2);
     }
 
-    public Html title(String title) {return head(Basic.element("title").contains(title));}
+    public Html title(String title) {return head(Basic.element("title").content(title));}
 
     public Html stylesheet(String href) {
         return head(Basic.element("link").attr("rel", "stylesheet").close(false).attr("href", href));
     }
 
-    public Html script(String src) {return head(Basic.element("script").attr("src", src));}
+    public Html script(String src) {return head(scriptElement(src));}
 
-    public Html head(Renderable content) {return head((AbstractElement<?> e) -> e.contains(content));}
+    public Html script(String src, String type) {return head(scriptElement(src).attr("type", type));}
+
+    private Element scriptElement(String src) {return Basic.element("script").attr("src", src);}
+
+    public Html javaScript(String src) {return script(src, "application/javascript");}
+
+    /**
+     * Add a <code>script</code> header element with <code>type="application/javascript</code>,
+     * and the script code you provide indented to the current level.
+     * <br/>
+     * Note that the code is <em>unsafe</em>!
+     */
+    public Html javaScriptCode(String code) {
+        return head(Basic.element("script").attr("type", "application/javascript")
+                .content(indented(unsafeString(code))));
+    }
+
+    public Html head(Renderable content) {return head((AbstractElement<?> e) -> e.content(content));}
 
     public Html head(Function<AbstractElement<?>, AbstractElement<?>> function) {
-        return element(e -> e.hasName("head"), function, () -> Basic.element("head"));
+        return content(e -> e.hasName("head"), function, () -> Basic.element("head"));
     }
 
     @Override
-    public Html contains(Renderable content) {
+    public Html content(Renderable content) {
         return content instanceof AbstractElement<?> e && e.hasName("body")
-                ? super.contains(content) : body(content);
+                ? super.content(content) : body(content);
     }
 
-    public Html body(Renderable content) {return body((AbstractElement<?> e) -> e.contains(content));}
+    public Html body(Renderable content) {return body((AbstractElement<?> e) -> e.content(content));}
 
     public Html body(Function<AbstractElement<?>, AbstractElement<?>> function) {
-        return element(e -> e.hasName("body"), function, () -> Basic.element("body"));
+        return content(e -> e.hasName("body"), function, () -> Basic.element("body"));
     }
 
 

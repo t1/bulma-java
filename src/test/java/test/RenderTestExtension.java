@@ -47,7 +47,7 @@ public class RenderTestExtension implements Extension, BeforeAllCallback, Before
 
     @Override public void beforeAll(ExtensionContext extensionContext) {
         if (addSectionWrapper(extensionContext))
-            ALL.append(section().contains(container().close(false)).close(false).render()).in().in();
+            ALL.append(section().content(container().close(false)).close(false).render()).in().in();
         ALL.append("        " + title(extensionContext.getDisplayName()));
     }
 

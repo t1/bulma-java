@@ -4,7 +4,7 @@ import com.github.t1.bulmajava.basic.AbstractElement;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Attribute.noValueAttribute;
+import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Textarea extends AbstractElement<Textarea> {

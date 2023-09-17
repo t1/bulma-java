@@ -1,6 +1,5 @@
 package test.components;
 
-import com.github.t1.bulmajava.basic.Basic;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
@@ -8,22 +7,23 @@ import test.RenderTestExtension;
 import static com.github.t1.bulmajava.basic.Alignment.LEFT;
 import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
 import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.bulmajava.basic.State.ACTIVE;
 import static com.github.t1.bulmajava.components.Dropdown.dropdown;
 import static com.github.t1.bulmajava.components.Dropdown.dropup;
-import static com.github.t1.bulmajava.basic.State.ACTIVE;
 import static com.github.t1.bulmajava.elements.TableStyle.HOVERABLE;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class DropdownTest {
     @Test void shouldRenderDropdown() {
-        var dropdown = dropdown("Dropdown button", "dropdown-menu1").contains(
+        var dropdown = dropdown("Dropdown button", "dropdown-menu1").content(
                         a("Dropdown item").href("#"),
                         a("Other dropdown item"),
                         a("Active dropdown item").is(ACTIVE).href("#"),
                         a("Other dropdown item").href("#"),
-                        Basic.hr(),
+                        hr(),
                         a("With a divider").href("#"))
                 .is(ACTIVE).style("margin-bottom: 210px;");
 
@@ -35,11 +35,11 @@ class DropdownTest {
                             <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
                         </button>
                     </div>
-                    <div class="dropdown-menu" id="dropdown-menu1" role="menu">
+                    <div id="dropdown-menu1" class="dropdown-menu" role="menu">
                         <div class="dropdown-content">
                             <a class="dropdown-item" href="#">Dropdown item</a>
                             <a class="dropdown-item">Other dropdown item</a>
-                            <a href="#" class="is-active dropdown-item">Active dropdown item</a>
+                            <a class="is-active dropdown-item" href="#">Active dropdown item</a>
                             <a class="dropdown-item" href="#">Other dropdown item</a>
                             <hr class="dropdown-divider">
                             <a class="dropdown-item" href="#">With a divider</a>
@@ -50,21 +50,21 @@ class DropdownTest {
     }
 
     @Test void shouldRenderDropdownWithAnyContent() {
-        var dropdown = dropdown("Content", "dropdown-menu2").contains(
-                        Basic.div().contains(
-                                Basic.p().contains(
+        var dropdown = dropdown("Content", "dropdown-menu2").content(
+                        div().content(
+                                p().content(
                                         string("You can insert "),
-                                        Basic.strong("any type of content"),
+                                        strong("any type of content"),
                                         string(" within the dropdown menu.")
                                 )),
-                        Basic.hr(),
-                        Basic.div().contains(
-                                Basic.p().contains(
+                        hr(),
+                        div().content(
+                                p().content(
                                         string("You simply need to use a "),
-                                        Basic.code("<div>"),
+                                        code("<div>"),
                                         string(" instead.")
                                 )),
-                        Basic.hr(),
+                        hr(),
                         a("This is a link").href("#"))
                 .is(ACTIVE).style("margin-bottom: 210px;");
 
@@ -76,7 +76,7 @@ class DropdownTest {
                             <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
                         </button>
                     </div>
-                    <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+                    <div id="dropdown-menu2" class="dropdown-menu" role="menu">
                         <div class="dropdown-content">
                             <div class="dropdown-item">
                                 <p>You can insert <strong>any type of content</strong> within the dropdown menu.</p>
@@ -94,7 +94,7 @@ class DropdownTest {
     }
 
     @Test void shouldRenderClickableDropdownMenu() {
-        var dropdown = dropdown("Click me", "dropdown-menu3").contains(
+        var dropdown = dropdown("Click me", "dropdown-menu3").content(
                 a("Overview").href("#"),
                 a("Modifiers").href("#"),
                 a("Grid").href("#"),
@@ -102,7 +102,7 @@ class DropdownTest {
                 a("Elements").href("#"),
                 a("Components").href("#"),
                 a("Layout").href("#"),
-                Basic.hr(),
+                hr(),
                 a("More").href("#"));
 
         then(dropdown).rendersAs("""
@@ -113,7 +113,7 @@ class DropdownTest {
                             <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
                         </button>
                     </div>
-                    <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+                    <div id="dropdown-menu3" class="dropdown-menu" role="menu">
                         <div class="dropdown-content">
                             <a class="dropdown-item" href="#">Overview</a>
                             <a class="dropdown-item" href="#">Modifiers</a>
@@ -131,8 +131,8 @@ class DropdownTest {
     }
 
     @Test void shouldRenderHoverableDropdownMenu() {
-        var dropdown = dropdown("Hover me", "dropdown-menu4").contains(
-                Basic.div().contains(Basic.p("You can insert any type of content within the dropdown menu."))
+        var dropdown = dropdown("Hover me", "dropdown-menu4").content(
+                div().content(p("You can insert any type of content within the dropdown menu."))
         ).is(HOVERABLE).style("margin-bottom: 100px;");
 
         then(dropdown).rendersAs("""
@@ -143,7 +143,7 @@ class DropdownTest {
                             <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
                         </button>
                     </div>
-                    <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                    <div id="dropdown-menu4" class="dropdown-menu" role="menu">
                         <div class="dropdown-content">
                             <div class="dropdown-item">
                                 <p>You can insert any type of content within the dropdown menu.</p>
@@ -155,8 +155,8 @@ class DropdownTest {
     }
 
     @Test void shouldRenderLeftAlignedDropdownMenu() {
-        var dropdown = dropdown("Left aligned", "dropdown-menu5").contains(
-                Basic.div().contains(Basic.p("The dropdown is left-aligned by default."))
+        var dropdown = dropdown("Left aligned", "dropdown-menu5").content(
+                div().content(p("The dropdown is left-aligned by default."))
         ).is(LEFT, ACTIVE).style("margin-bottom: 80px;");
 
         then(dropdown).rendersAs("""
@@ -167,7 +167,7 @@ class DropdownTest {
                             <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
                         </button>
                     </div>
-                    <div class="dropdown-menu" id="dropdown-menu5" role="menu">
+                    <div id="dropdown-menu5" class="dropdown-menu" role="menu">
                         <div class="dropdown-content">
                             <div class="dropdown-item">
                                 <p>The dropdown is left-aligned by default.</p>
@@ -179,8 +179,8 @@ class DropdownTest {
     }
 
     @Test void shouldRenderRightAlignedDropdownMenu() {
-        var dropdown = dropdown("Right aligned", "dropdown-menu6").contains(
-                Basic.div().contains(Basic.p("Add the is-right modifier for a right-aligned dropdown."))
+        var dropdown = dropdown("Right aligned", "dropdown-menu6").content(
+                div().content(p("Add the is-right modifier for a right-aligned dropdown."))
         ).is(RIGHT, ACTIVE).style("margin-bottom: 100px;");
 
         then(dropdown).rendersAs("""
@@ -191,7 +191,7 @@ class DropdownTest {
                             <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
                         </button>
                     </div>
-                    <div class="dropdown-menu" id="dropdown-menu6" role="menu">
+                    <div id="dropdown-menu6" class="dropdown-menu" role="menu">
                         <div class="dropdown-content">
                             <div class="dropdown-item">
                                 <p>Add the is-right modifier for a right-aligned dropdown.</p>
@@ -203,8 +203,8 @@ class DropdownTest {
     }
 
     @Test void shouldRenderDropupMenu() {
-        var dropdown = dropup("Dropup button", "dropdown-menu7").contains(
-                Basic.div().contains(Basic.p("You can add the is-up modifier to have a dropdown menu that appears above the dropdown button."))
+        var dropdown = dropup("Dropup button", "dropdown-menu7").content(
+                div().content(p("You can add the is-up modifier to have a dropdown menu that appears above the dropdown button."))
         ).is(ACTIVE).style("margin-top: 120px;");
 
         then(dropdown).rendersAs("""
@@ -215,7 +215,7 @@ class DropdownTest {
                             <span class="icon is-small"><i class="fas fa-angle-up" aria-hidden="true"></i></span>
                         </button>
                     </div>
-                    <div class="dropdown-menu" id="dropdown-menu7" role="menu">
+                    <div id="dropdown-menu7" class="dropdown-menu" role="menu">
                         <div class="dropdown-content">
                             <div class="dropdown-item">
                                 <p>You can add the is-up modifier to have a dropdown menu that appears above the dropdown button.</p>

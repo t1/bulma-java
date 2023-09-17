@@ -10,7 +10,7 @@ public class Box extends AbstractElement<Box> {
 
     public static Box articleBox() {return new Box("article");}
 
-    public static Box box(String text) {return box().contains(text);}
+    public static Box box(String text) {return box().content(text);}
 
     public Box(String elementName) {super(elementName, "box");}
 }

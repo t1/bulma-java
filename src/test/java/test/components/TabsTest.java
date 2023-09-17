@@ -12,22 +12,22 @@ import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
 import static com.github.t1.bulmajava.basic.Anchor.a;
 import static com.github.t1.bulmajava.basic.Basic.li;
 import static com.github.t1.bulmajava.basic.Basic.span;
-import static com.github.t1.bulmajava.components.Tabs.tabs;
-import static com.github.t1.bulmajava.elements.Icon.icon;
-import static com.github.t1.bulmajava.elements.IconStyle.REGULAR;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.ACTIVE;
 import static com.github.t1.bulmajava.basic.Style.FULLWIDTH;
+import static com.github.t1.bulmajava.components.Tabs.tabs;
+import static com.github.t1.bulmajava.elements.Icon.icon;
+import static com.github.t1.bulmajava.elements.IconStyle.REGULAR;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class TabsTest {
     @Test void shouldRenderTabs() {
-        var tabs = tabs().contains(
-                li().contains(a("Pictures")).is(ACTIVE),
-                li().contains(a("Music")),
-                li().contains(a("Videos")),
-                li().contains(a("Documents")));
+        var tabs = tabs().content(
+                li().content(a("Pictures")).is(ACTIVE),
+                li().content(a("Music")),
+                li().content(a("Videos")),
+                li().content(a("Documents")));
 
         then(tabs).rendersAs("""
                 <div class="tabs">
@@ -50,11 +50,11 @@ class TabsTest {
     }
 
     @Test void shouldRenderCenteredTabs() {
-        var tabs = tabs().is(CENTERED).contains(
-                li().contains(a("Pictures")).is(ACTIVE),
-                li().contains(a("Music")),
-                li().contains(a("Videos")),
-                li().contains(a("Documents")));
+        var tabs = tabs().is(CENTERED).content(
+                li().content(a("Pictures")).is(ACTIVE),
+                li().content(a("Music")),
+                li().content(a("Videos")),
+                li().content(a("Documents")));
 
         then(tabs).rendersAs("""
                 <div class="tabs is-centered">
@@ -77,11 +77,11 @@ class TabsTest {
     }
 
     @Test void shouldRenderRightTabs() {
-        var tabs = tabs().is(RIGHT).contains(
-                li().contains(a("Pictures")).is(ACTIVE),
-                li().contains(a("Music")),
-                li().contains(a("Videos")),
-                li().contains(a("Documents")));
+        var tabs = tabs().is(RIGHT).content(
+                li().content(a("Pictures")).is(ACTIVE),
+                li().content(a("Music")),
+                li().content(a("Videos")),
+                li().content(a("Documents")));
 
         then(tabs).rendersAs("""
                 <div class="tabs is-right">
@@ -104,21 +104,21 @@ class TabsTest {
     }
 
     @Test void shouldRenderTabsWithIcons() {
-        var tabs = tabs().is(CENTERED).contains(
-                li().contains(a().contains(
-                        icon("image").is(SMALL).ariaHidden(),
+        var tabs = tabs().is(CENTERED).content(
+                li().content(a().content(
+                        icon("image").is(SMALL).ariaHidden(true),
                         span("Pictures")
                 )).is(ACTIVE),
-                li().contains(a().contains(
-                        icon("music").is(SMALL).ariaHidden(),
+                li().content(a().content(
+                        icon("music").is(SMALL).ariaHidden(true),
                         span("Music")
                 )),
-                li().contains(a().contains(
-                        icon("film").is(SMALL).ariaHidden(),
+                li().content(a().content(
+                        icon("film").is(SMALL).ariaHidden(true),
                         span("Videos")
                 )),
-                li().contains(a().contains(
-                        icon("file-alt", REGULAR).is(SMALL).ariaHidden(),
+                li().content(a().content(
+                        icon("file-alt", REGULAR).is(SMALL).ariaHidden(true),
                         span("Documents")
                 )));
 
@@ -155,11 +155,11 @@ class TabsTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderSizedTabs(Size size) {
-        var tabs = tabs().is(size).contains(
-                li().contains(a("Pictures")).is(ACTIVE),
-                li().contains(a("Music")),
-                li().contains(a("Videos")),
-                li().contains(a("Documents")));
+        var tabs = tabs().is(size).content(
+                li().content(a("Pictures")).is(ACTIVE),
+                li().content(a("Music")),
+                li().content(a("Videos")),
+                li().content(a("Documents")));
 
         then(tabs).rendersAs("""
                 <div class="tabs is-$size">
@@ -182,21 +182,21 @@ class TabsTest {
     }
 
     @Test void shouldRenderBoxedTabs() {
-        var tabs = tabs().isBoxed().contains(
-                li().contains(a().contains(
-                        icon("image").is(SMALL).ariaHidden(),
+        var tabs = tabs().isBoxed().content(
+                li().content(a().content(
+                        icon("image").is(SMALL).ariaHidden(true),
                         span("Pictures")
                 )).is(ACTIVE),
-                li().contains(a().contains(
-                        icon("music").is(SMALL).ariaHidden(),
+                li().content(a().content(
+                        icon("music").is(SMALL).ariaHidden(true),
                         span("Music")
                 )),
-                li().contains(a().contains(
-                        icon("film").is(SMALL).ariaHidden(),
+                li().content(a().content(
+                        icon("film").is(SMALL).ariaHidden(true),
                         span("Videos")
                 )),
-                li().contains(a().contains(
-                        icon("file-alt", REGULAR).is(SMALL).ariaHidden(),
+                li().content(a().content(
+                        icon("file-alt", REGULAR).is(SMALL).ariaHidden(true),
                         span("Documents")
                 )));
 
@@ -233,21 +233,21 @@ class TabsTest {
     }
 
     @Test void shouldRenderToggleTabs() {
-        var tabs = tabs().isToggle().contains(
-                li().contains(a().contains(
-                        icon("image").is(SMALL).ariaHidden(),
+        var tabs = tabs().isToggle().content(
+                li().content(a().content(
+                        icon("image").is(SMALL).ariaHidden(true),
                         span("Pictures")
                 )).is(ACTIVE),
-                li().contains(a().contains(
-                        icon("music").is(SMALL).ariaHidden(),
+                li().content(a().content(
+                        icon("music").is(SMALL).ariaHidden(true),
                         span("Music")
                 )),
-                li().contains(a().contains(
-                        icon("film").is(SMALL).ariaHidden(),
+                li().content(a().content(
+                        icon("film").is(SMALL).ariaHidden(true),
                         span("Videos")
                 )),
-                li().contains(a().contains(
-                        icon("file-alt", REGULAR).is(SMALL).ariaHidden(),
+                li().content(a().content(
+                        icon("file-alt", REGULAR).is(SMALL).ariaHidden(true),
                         span("Documents")
                 )));
 
@@ -284,20 +284,20 @@ class TabsTest {
     }
 
     @Test void shouldRenderRoundedToggleTabs() {
-        var tabs = tabs().isRoundedToggle().contains(
-                li().contains(a().contains(
+        var tabs = tabs().isRoundedToggle().content(
+                li().content(a().content(
                         icon("image").is(SMALL),
                         span("Pictures")
                 )).is(ACTIVE),
-                li().contains(a().contains(
+                li().content(a().content(
                         icon("music").is(SMALL),
                         span("Music")
                 )),
-                li().contains(a().contains(
+                li().content(a().content(
                         icon("film").is(SMALL),
                         span("Videos")
                 )),
-                li().contains(a().contains(
+                li().content(a().content(
                         icon("file-alt").is(SMALL),
                         span("Documents")
                 )));
@@ -335,18 +335,18 @@ class TabsTest {
     }
 
     @Test void shouldRenderFullWidthTabs() {
-        var tabs = tabs().is(FULLWIDTH).contains(
-                li().contains(a().contains(
-                        icon("angle-left").ariaHidden(),
+        var tabs = tabs().is(FULLWIDTH).content(
+                li().content(a().content(
+                        icon("angle-left").ariaHidden(true),
                         span("Left")
                 )),
-                li().contains(a().contains(
-                        icon("angle-up").ariaHidden(),
+                li().content(a().content(
+                        icon("angle-up").ariaHidden(true),
                         span("Up")
                 )),
-                li().contains(a().contains(
+                li().content(a().content(
                         span("Right"),
-                        icon("angle-right").ariaHidden()
+                        icon("angle-right").ariaHidden(true)
                 )));
 
         then(tabs).rendersAs("""

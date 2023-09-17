@@ -1,5 +1,6 @@
 package test.basic;
 
+import com.github.t1.bulmajava.basic.Renderer;
 import org.junit.jupiter.api.Test;
 
 import static com.github.t1.bulmajava.basic.Basic.h1;
@@ -23,6 +24,44 @@ class HtmlTest {
                 """);
     }
 
+    @Test void shouldRenderHtmlWithTwoSpaces() {
+        var renderer = new Renderer().indentString("  ");
+
+        var tag = html(null);
+
+        tag.render(renderer);
+        //noinspection HtmlRequiredTitleElement
+        then(renderer.render()).isEqualTo("""
+                <!DOCTYPE html>
+                <html lang="en">
+                  <head>
+                    <meta charset="utf-8">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="viewport" content="width=device-width, initial-scale=1">
+                  </head>
+                </html>
+                """);
+    }
+
+    @Test void shouldRenderHtmlWithTabs() {
+        var renderer = new Renderer().indentString("\t");
+
+        var tag = html(null);
+
+        tag.render(renderer);
+        //noinspection HtmlRequiredTitleElement
+        then(renderer.render()).isEqualTo("""
+                <!DOCTYPE html>
+                <html lang="en">
+                	<head>
+                		<meta charset="utf-8">
+                		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+                		<meta name="viewport" content="width=device-width, initial-scale=1">
+                	</head>
+                </html>
+                """);
+    }
+
     @Test void shouldRenderHtmlWithStylesheet() {
         var tag = html(null).stylesheet("bulma.min.css");
 
@@ -34,13 +73,13 @@ class HtmlTest {
                         <meta charset="utf-8">
                         <meta http-equiv="X-UA-Compatible" content="IE=edge">
                         <meta name="viewport" content="width=device-width, initial-scale=1">
-                        <link href="bulma.min.css" rel="stylesheet">
+                        <link rel="stylesheet" href="bulma.min.css">
                     </head>
                 </html>
                 """);
     }
 
-    @Test void shouldRenderHtmlWithScript() {
+    @Test void shouldRenderHtmlWithScriptSrc() {
         var tag = html(null).script("main.js");
 
         //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
@@ -52,6 +91,62 @@ class HtmlTest {
                         <meta http-equiv="X-UA-Compatible" content="IE=edge">
                         <meta name="viewport" content="width=device-width, initial-scale=1">
                         <script src="main.js"></script>
+                    </head>
+                </html>
+                """);
+    }
+
+    @Test void shouldRenderHtmlWithJavaScript() {
+        @SuppressWarnings("JSUnusedLocalSymbols")
+        var tag = html(null).javaScript("foo");
+
+        //noinspection HtmlRequiredTitleElement,HtmlUnknownTarget
+        then(tag).rendersAs_notAll("""
+                <!DOCTYPE html>
+                <html lang="en">
+                    <head>
+                        <meta charset="utf-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                        <script src="foo" type="application/javascript"></script>
+                    </head>
+                </html>
+                """);
+    }
+
+    @Test void shouldRenderHtmlWithJavaScriptCode() {
+        @SuppressWarnings("JSUnusedLocalSymbols")
+        var tag = html(null).javaScriptCode("""
+                function bodyFoo() {
+                    console.log("foo");
+                }
+
+                function bodyBar() {
+                    console.log("bar");
+                    
+                    console.log("baz");
+                }
+                """);
+
+        //noinspection HtmlRequiredTitleElement
+        then(tag).rendersAs_notAll("""
+                <!DOCTYPE html>
+                <html lang="en">
+                    <head>
+                        <meta charset="utf-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                        <script type="application/javascript">
+                            function bodyFoo() {
+                                console.log("foo");
+                            }
+                            
+                            function bodyBar() {
+                                console.log("bar");
+                                
+                                console.log("baz");
+                            }
+                        </script>
                     </head>
                 </html>
                 """);
@@ -144,7 +239,7 @@ class HtmlTest {
     }
 
     @Test void shouldRenderHtmlWithImplicitBody() {
-        var tag = html(null).contains(h1("Hello"));
+        var tag = html(null).content(h1("Hello"));
 
         //noinspection HtmlRequiredTitleElement
         then(tag).rendersAs_notAll("""

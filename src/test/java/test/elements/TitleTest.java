@@ -1,6 +1,5 @@
 package test.elements;
 
-import com.github.t1.bulmajava.elements.Title;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,12 +8,14 @@ import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Style.SPACED;
+import static com.github.t1.bulmajava.elements.Title.subtitle;
+import static com.github.t1.bulmajava.elements.Title.title;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class TitleTest {
     @Test void shouldRenderTitle() {
-        var h1 = Title.title(1, "Title");
+        var h1 = title(1, "Title");
 
         then(h1).rendersAs("""
                 <h1 class="title">Title</h1>
@@ -22,7 +23,7 @@ class TitleTest {
     }
 
     @Test void shouldRenderTitleContains() {
-        var h1 = Title.title(2).contains("Title");
+        var h1 = title(2).content("Title");
 
         then(h1).rendersAs("""
                 <h2 class="title">Title</h2>
@@ -30,7 +31,7 @@ class TitleTest {
     }
 
     @ParameterizedTest @ValueSource(ints = {1, 2, 3, 4, 5, 6}) void shouldRenderTitleSize(int size) {
-        var h1 = Title.title(1, "Title").size(size);
+        var h1 = title(1, "Title").is(size);
 
         then(h1).rendersAs("""
                 <h1 class="title is-$size">Title</h1>
@@ -39,7 +40,7 @@ class TitleTest {
 
 
     @Test void shouldRenderSubtitle() {
-        var h1 = Title.subtitle(2, "Subtitle");
+        var h1 = subtitle(2, "Subtitle");
 
         then(h1).rendersAs("""
                 <h2 class="subtitle">Subtitle</h2>
@@ -47,7 +48,7 @@ class TitleTest {
     }
 
     @Test void shouldRenderSubtitleContains() {
-        var h1 = Title.subtitle(3, "Subtitle");
+        var h1 = subtitle(3, "Subtitle");
 
         then(h1).rendersAs("""
                 <h3 class="subtitle">Subtitle</h3>
@@ -55,7 +56,7 @@ class TitleTest {
     }
 
     @ParameterizedTest @ValueSource(ints = {1, 2, 3, 4, 5, 6}) void shouldRenderSubtitleSize(int size) {
-        var h4 = Title.subtitle(4, "Subtitle").size(size);
+        var h4 = subtitle(4, "Subtitle").is(size);
 
         then(h4).rendersAs("""
                 <h4 class="subtitle is-$size">Subtitle</h4>
@@ -63,9 +64,9 @@ class TitleTest {
     }
 
     @Test void shouldRenderNonSpacedTitleAndSubtitle() {
-        var div = div().contains(
-                Title.title("Title 2").size(2),
-                Title.subtitle("Subtitle 4").size(4));
+        var div = div().content(
+                title("Title 2").is(2),
+                subtitle("Subtitle 4").is(4));
 
         then(div).rendersAs("""
                 <div>
@@ -76,9 +77,9 @@ class TitleTest {
     }
 
     @Test void shouldRenderSpacedTitleAndSubtitle() {
-        var div = div().contains(
-                Title.title("Title 2").size(2).is(SPACED),
-                Title.subtitle("Subtitle 4").size(4));
+        var div = div().content(
+                title("Title 2").is(2).is(SPACED),
+                subtitle("Subtitle 4").is(4));
 
         then(div).rendersAs("""
                 <div>

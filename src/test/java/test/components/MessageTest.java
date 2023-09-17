@@ -1,6 +1,5 @@
 package test.components;
 
-import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Color;
 import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.basic.Size;
@@ -11,21 +10,22 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
-import static com.github.t1.bulmajava.components.Message.*;
-import static com.github.t1.bulmajava.elements.Delete.delete;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.Style.DARK;
+import static com.github.t1.bulmajava.components.Message.*;
+import static com.github.t1.bulmajava.elements.Delete.delete;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class MessageTest {
     @Test void shouldRenderMessage() {
         var message = message(
-                messageHeader().contains(
-                        Basic.p("Hello World"),
+                messageHeader().content(
+                        p("Hello World"),
                         delete()),
-                messageBody().contains(
+                messageBody().content(
                         textItems()
                 )).style("width: 440px;");
 
@@ -44,10 +44,10 @@ class MessageTest {
 
     @Test void shouldRenderDarkMessage() {
         var message = message(
-                messageHeader().contains(
-                        Basic.p("Dark"),
+                messageHeader().content(
+                        p("Dark"),
                         delete()),
-                messageBody().contains(
+                messageBody().content(
                         textItems()
                 )).is(DARK).style("width: 440px;");
 
@@ -66,10 +66,10 @@ class MessageTest {
 
     @ParameterizedTest @EnumSource void shouldRenderColorMessage(Color color) {
         var message = message(
-                messageHeader().contains(
-                        Basic.p(color.key()),
+                messageHeader().content(
+                        p(color.key()),
                         delete()),
-                messageBody().contains(
+                messageBody().content(
                         textItems()
                 )).is(color).style("width: 440px;");
 
@@ -90,7 +90,7 @@ class MessageTest {
 
     @Test void shouldRenderTextOnlyMessage() {
         var message = message(
-                messageBody().contains(
+                messageBody().content(
                         textItems()
                 )).style("width: 440px;");
 
@@ -105,7 +105,7 @@ class MessageTest {
 
     @Test void shouldRenderDarkTextOnlyMessage() {
         var message = message(
-                messageBody().contains(
+                messageBody().content(
                         textItems()
                 )).is(DARK).style("width: 440px;");
 
@@ -120,7 +120,7 @@ class MessageTest {
 
     @ParameterizedTest @EnumSource void shouldRenderTextOnlyColorMessage(Color color) {
         var message = message(
-                messageBody().contains(
+                messageBody().content(
                         textItems()
                 )).is(color).style("width: 440px;");
 
@@ -137,10 +137,10 @@ class MessageTest {
 
     @ParameterizedTest @EnumSource void shouldRenderSizeMessage(Size size) {
         var message = message(
-                messageHeader().contains(
-                        Basic.p(size.key() + " message"),
+                messageHeader().content(
+                        p(size.key() + " message"),
                         delete().is(SMALL)),
-                messageBody().contains(
+                messageBody().content(
                         textItems()
                 )).is(size).style("width: 440px;");
 
@@ -162,12 +162,12 @@ class MessageTest {
     private static Renderable[] textItems() {
         return new Renderable[]{
                 string("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
-                Basic.strong("Pellentesque risus mi"),
+                strong("Pellentesque risus mi"),
                 string(", tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. " +
                        "Nullam gravida purus diam, et dictum"),
                 a("felis venenatis"),
                 string("efficitur. Aenean ac"),
-                Basic.em("eleifend lacus"),
+                em("eleifend lacus"),
                 string(", in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, " +
                        "id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.")
         };

@@ -6,8 +6,8 @@ import com.github.t1.bulmajava.basic.Classes;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
+import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
 import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
-import static com.github.t1.bulmajava.basic.Attribute.noValueAttribute;
 import static com.github.t1.bulmajava.form.InputType.RESET;
 import static com.github.t1.bulmajava.form.InputType.SUBMIT;
 

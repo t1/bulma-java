@@ -53,7 +53,7 @@ class ImageTest {
 
     @ParameterizedTest @EnumSource void shouldRenderImageRatios(ImageRatio imageRatio) {
         var fileName = fileNameFor(imageRatio);
-        var image = div().style("width: 240px;").contains(
+        var image = div().style("width: 240px;").content(
                 image(imageRatio, src(fileName), "xxx"));
 
         //noinspection HtmlUnknownTarget

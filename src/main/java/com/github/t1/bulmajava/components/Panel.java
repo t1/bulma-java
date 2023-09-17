@@ -15,9 +15,9 @@ public class Panel extends AbstractElement<Panel> {
 
     private Panel(String name) {super(name, "panel");}
 
-    public Panel containsHeading(AbstractElement<?> content) {return contains(content.classes("panel-heading"));}
+    public Panel addHeading(AbstractElement<?> content) {return content(content.classes("panel-heading"));}
 
-    public Panel containsBlock(AbstractElement<?> content) {return contains(content.classes("panel-block"));}
+    public Panel addBlock(AbstractElement<?> content) {return content(content.classes("panel-block"));}
 
-    public Panel containsTabs(Renderable... content) {return contains(p().classes("panel-tabs").contains(content));}
+    public Panel addTabs(Renderable... content) {return content(p().classes("panel-tabs").content(content));}
 }

@@ -50,7 +50,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderHoverTextArea() {
-        var textarea = field().containsControl(
+        var textarea = field().control(
                 textarea().placeholder("Hovered textarea").is(HOVERED));
 
         then(textarea).rendersAs("""
@@ -63,7 +63,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderFocusTextArea() {
-        var textarea = field().containsControl(
+        var textarea = field().control(
                 textarea().placeholder("Focused textarea").is(FOCUSED));
 
         then(textarea).rendersAs("""
@@ -76,7 +76,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderLoadingTextArea() {
-        var textarea = field().containsControl(
+        var textarea = field().control(
                 textarea().placeholder("Loading textarea"), LOADING);
 
         then(textarea).rendersAs("""
@@ -89,11 +89,11 @@ class TextareaTest {
     }
 
     @Test void shouldRenderSizedLoadingTextArea() {
-        var textarea = div().style("width: 300px;").contains(
-                field().containsControl(textarea().placeholder("Small loading textarea").is(SMALL), SMALL, LOADING),
-                field().containsControl(textarea().placeholder("Normal loading textarea"), LOADING),
-                field().containsControl(textarea().placeholder("Medium loading textarea").is(MEDIUM), MEDIUM, LOADING),
-                field().containsControl(textarea().placeholder("Large loading textarea").is(LARGE), LARGE, LOADING));
+        var textarea = div().style("width: 300px;").content(
+                field().control(textarea().placeholder("Small loading textarea").is(SMALL), SMALL, LOADING),
+                field().control(textarea().placeholder("Normal loading textarea"), LOADING),
+                field().control(textarea().placeholder("Medium loading textarea").is(MEDIUM), MEDIUM, LOADING),
+                field().control(textarea().placeholder("Large loading textarea").is(LARGE), LARGE, LOADING));
 
         then(textarea).rendersAs("""
                 <div style="width: 300px;">
@@ -122,7 +122,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderDisabledTextArea() {
-        var textarea = field().containsControl(
+        var textarea = field().control(
                 textarea().placeholder("Disabled textarea").disabled());
 
         then(textarea).rendersAs("""
@@ -135,8 +135,8 @@ class TextareaTest {
     }
 
     @Test void shouldRenderReadonlyTextArea() {
-        var textarea = field().containsControl(
-                textarea().contains("This content is readonly").readonly());
+        var textarea = field().control(
+                textarea().content("This content is readonly").readonly());
 
         then(textarea).rendersAs("""
                 <div class="field">
@@ -148,7 +148,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderFixedSizeTextArea() {
-        var textarea = field().containsControl(
+        var textarea = field().control(
                 textarea().fixedSize().placeholder("Fixed size textarea"));
 
         then(textarea).rendersAs("""

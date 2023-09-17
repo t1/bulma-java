@@ -13,7 +13,7 @@ import static test.CustomAssertions.then;
 @ExtendWith(RenderTestExtension.class)
 class CheckboxTest {
     @Test void shouldRenderCheckbox() {
-        var field = field().containsControl(checkbox().contains("Remember me"));
+        var field = field().control(checkbox().content("Remember me"));
 
         then(field).rendersAs("""
                 <div class="field">
@@ -28,7 +28,7 @@ class CheckboxTest {
     }
 
     @Test void shouldRenderCheckboxWithLink() {
-        var field = field().containsControl(checkbox().contains(
+        var field = field().control(checkbox().content(
                 string("I agree to the"),
                 a("terms and conditions").href("#")));
 
@@ -46,7 +46,7 @@ class CheckboxTest {
     }
 
     @Test void shouldRenderDisabledCheckbox() {
-        var field = field().containsControl(checkbox().contains("Save my preferences").disabled());
+        var field = field().control(checkbox().content("Save my preferences").disabled());
 
         //noinspection HtmlUnknownAttribute // the disabled label is actually correct
         then(field).rendersAs("""
@@ -62,7 +62,7 @@ class CheckboxTest {
     }
 
     @Test void shouldRenderCheckedCheckbox() {
-        var field = field().containsControl(checkbox().contains("Save my preferences").checked());
+        var field = field().control(checkbox().content("Save my preferences").checked());
 
         then(field).rendersAs("""
                 <div class="field">

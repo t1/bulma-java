@@ -1,11 +1,11 @@
 package test.components;
 
-import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.elements.Button;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.PRIMARY;
 import static com.github.t1.bulmajava.basic.Color.SUCCESS;
 import static com.github.t1.bulmajava.components.Modal.*;
@@ -23,16 +23,16 @@ import static test.RenderTestExtension.loremIpsumS;
 @ExtendWith(RenderTestExtension.class)
 class ModalTest {
     @Test void shouldRenderModal() {
-        var modal = Basic.div().contains(
-                modal().id("modal-1").contains(
-                        modalContent().contains(
+        var modal = div().content(
+                modal().id("modal-1").content(
+                        modalContent().content(
                                 box("Some text inside the modal.")),
                         modalCloseButton()),
                 openModalButton("modal-1"));
 
         then(modal).rendersAs("""
                 <div>
-                    <div class="modal" id="modal-1">
+                    <div id="modal-1" class="modal">
                         <div class="modal-background"></div>
                         <div class="modal-content">
                             <div class="box">Some text inside the modal.</div>
@@ -45,16 +45,16 @@ class ModalTest {
     }
 
     @Test void shouldRenderModalImage() {
-        var modal = Basic.div().contains(
-                modal().id("modal-2").contains(
-                        modalContent().contains(
-                                imageP(_4by3).contains(img("https://bulma.io/images/placeholders/1280x960.png", "xxx"))),
+        var modal = div().content(
+                modal().id("modal-2").content(
+                        modalContent().content(
+                                imageP(_4by3).content(img("https://bulma.io/images/placeholders/1280x960.png", "xxx"))),
                         modalCloseButton()),
                 openModalButton("modal-2"));
 
         then(modal).rendersAs("""
                 <div>
-                    <div class="modal" id="modal-2">
+                    <div id="modal-2" class="modal">
                         <div class="modal-background"></div>
                         <div class="modal-content">
                             <p class="image is-4by3">
@@ -69,15 +69,15 @@ class ModalTest {
     }
 
     @Test void shouldRenderModalCard() {
-        var modal = Basic.div().contains(
-                modal().id("modal-3").contains(modalCard().contains(
-                        Basic.header().contains(
+        var modal = div().content(
+                modal().id("modal-3").content(modalCard().content(
+                        header().content(
                                 modalCardTitle("Modal title"),
                                 close()),
-                        section().contains(
-                                Basic.h1("Hello World"),
+                        section().content(
+                                h1("Hello World"),
                                 loremIpsumS()),
-                        Basic.footer().contains(
+                        footer().content(
                                 button("Save changes").is(SUCCESS),
                                 button("Cancel")
                         ))),
@@ -85,7 +85,7 @@ class ModalTest {
 
         then(modal).rendersAs("""
                 <div>
-                    <div class="modal" id="modal-3">
+                    <div id="modal-3" class="modal">
                         <div class="modal-background"></div>
                         <div class="modal-card">
                             <header class="modal-card-head">

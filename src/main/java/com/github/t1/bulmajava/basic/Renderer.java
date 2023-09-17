@@ -3,7 +3,13 @@ package com.github.t1.bulmajava.basic;
 @SuppressWarnings("UnusedReturnValue")
 public class Renderer {
     private final StringBuilder string = new StringBuilder();
+    private String indentString = "    ";
     private int indent = 0;
+
+    public Renderer indentString(String indentString) {
+        this.indentString = indentString;
+        return this;
+    }
 
     public Renderer in() {
         indent++;
@@ -15,7 +21,7 @@ public class Renderer {
         return this;
     }
 
-    public Renderer appendIndent() {return append("    ".repeat(indent));}
+    public Renderer appendIndent() {return append(indentString.repeat(indent));}
 
     public Renderer nl() {
         if (lastChar() != '\n') append("\n");

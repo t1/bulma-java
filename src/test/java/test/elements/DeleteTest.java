@@ -36,7 +36,7 @@ class DeleteTest {
     }
 
     @Test void shouldRenderDeleteNotification() {
-        var tag = div().classes("notification").is(DANGER).contains(
+        var tag = div().classes("notification").is(DANGER).content(
                 delete(),
                 loremIpsumS());
 
@@ -49,9 +49,9 @@ class DeleteTest {
     }
 
     @Test void shouldRenderDeleteMessage() {
-        var tag = element("article").classes("message").is(INFO).contains(
-                div().classes("message-header").contains(string("Info"), delete()),
-                div().classes("message-body").contains(loremIpsum()));
+        var tag = element("article").classes("message").is(INFO).content(
+                div().classes("message-header").content(string("Info"), delete()),
+                div().classes("message-body").content(loremIpsum()));
 
         then(tag).rendersAs("""
                 <article class="message is-info">

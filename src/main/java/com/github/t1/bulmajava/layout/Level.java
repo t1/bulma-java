@@ -19,31 +19,39 @@ public class Level extends AbstractElement<Level> {
     public Level() {super("nav", "level");}
 
 
-    /** Use {@link #containsItem(Renderable, String...)} instead! */
+    /** Use {@link #addItem(Renderable, String...)} instead! */
     @Deprecated
-    @Override public Level contains(Renderable content) {return super.contains(content);}
+    @Override public Level content(String content) {return super.content(content);}
 
-    /** Use {@link #containsItem(Renderable, String...)} instead! */
+    /** Use {@link #addItem(Renderable, String...)} instead! */
     @Deprecated
-    @Override public Level contains(Renderable... content) {return super.contains(content);}
+    @Override public Level content(Renderable content) {return super.content(content);}
 
-    public Level containsItem(Renderable content, String... classNames) {
-        return super.contains(item(content).classes(classNames));
+    /** Use {@link #addItem(Renderable, String...)} instead! */
+    @Deprecated
+    @Override public Level content(Renderable... content) {return super.content(content);}
+
+    /** Use {@link #addItem(Renderable, String...)} instead! */
+    @Deprecated
+    @Override public Level content(Stream<Renderable> content) {return super.content(content);}
+
+    public Level addItem(Renderable content, String... classNames) {
+        return super.content(item(content).classes(classNames));
     }
 
-    public Level containsLeft(Renderable... content) {
-        return element("level-left", left -> left.contains(Stream.of(content).map(Level::item)));
+    public Level addLeft(Renderable... content) {
+        return content("level-left", left -> left.content(Stream.of(content).map(Level::item)));
     }
 
-    public Level containsLeftA(Renderable... content) {
-        return element("level-left", left -> left.contains(Stream.of(content).map(Level::itemA)));
+    public Level addLeftA(Renderable... content) {
+        return content("level-left", left -> left.content(Stream.of(content).map(Level::itemA)));
     }
 
-    private static Anchor itemA(Renderable... content) {return a().classes("level-item").contains(content);}
+    private static Anchor itemA(Renderable... content) {return a().classes("level-item").content(content);}
 
-    private static Element item(Renderable... content) {return div().classes("level-item").contains(content);}
+    private static Element item(Renderable... content) {return div().classes("level-item").content(content);}
 
-    public Level containsRight(Renderable... content) {
-        return element("level-right", right -> right.contains(Stream.of(content).map(Level::item)));
+    public Level addRight(Renderable... content) {
+        return content("level-right", right -> right.content(Stream.of(content).map(Level::item)));
     }
 }

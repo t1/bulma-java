@@ -1,6 +1,5 @@
 package test.form;
 
-import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Style;
 import com.github.t1.bulmajava.form.Checkbox;
 import org.junit.jupiter.api.Test;
@@ -10,6 +9,7 @@ import test.RenderTestExtension;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.*;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.Size.*;
@@ -30,32 +30,32 @@ import static test.CustomAssertions.then;
 @ExtendWith(RenderTestExtension.class)
 class GeneralTest {
     @Test void shouldRenderForm() {
-        var form = Basic.div().style("width: 400px;").contains(
-                field().label("Name").containsControl(
+        var form = div().style("width: 400px;").content(
+                field().label("Name").control(
                         input(TEXT).placeholder("Text input")),
-                field().label("Username").containsControl(
+                field().label("Username").control(
                                 input(TEXT).is(SUCCESS).placeholder("Text input").value("bulma"))
                         .iconLeft("user")
                         .iconRight("check")
                         .help("This username is available", SUCCESS),
-                field().label("Email").containsControl(
+                field().label("Email").control(
                                 input(EMAIL).is(DANGER).placeholder("Email input").value("hello@"))
                         .iconLeft("envelope")
                         .iconRight("exclamation-triangle")
                         .help("This email is invalid", DANGER),
-                field().label("Subject").containsControl(select(null)
+                field().label("Subject").control(select(null)
                         .option("1", "Select dropdown")
                         .option("2", "With options")),
-                field().label("Message").containsControl(
+                field().label("Message").control(
                         textarea().placeholder("Textarea")),
-                field().containsControl(
-                        Checkbox.checkbox().contains(
+                field().control(
+                        Checkbox.checkbox().content(
                                 string("I agree to the"),
                                 a("terms and conditions").href("#"))),
                 field()
-                        .containsControl(radio("question").contains(string("Yes")))
-                        .containsControl(radio("question").contains(string("No"))),
-                field().containsControl(buttons().contains(
+                        .control(radio("question").content(string("Yes")))
+                        .control(radio("question").content(string("No"))),
+                field().control(buttons().content(
                         button("Submit").is(LINK),
                         button("Cancel").is(LINK, LIGHT))));
 
@@ -136,8 +136,8 @@ class GeneralTest {
     }
 
     @Test void shouldRenderFormField() {
-        var form = Basic.div().style("width: 400px;").contains(
-                field().label("Label").containsControl(
+        var form = div().style("width: 400px;").content(
+                field().label("Label").control(
                                 input(TEXT).placeholder("Text input"))
                         .help("This is a help text"));
 
@@ -155,10 +155,10 @@ class GeneralTest {
     }
 
     @Test void shouldRenderSpacedFormFields() {
-        var form = Basic.div().style("width: 400px;").contains(
-                field().label("Name").containsControl(
+        var form = div().style("width: 400px;").content(
+                field().label("Name").control(
                         input(TEXT).placeholder("e.g Alex Smith")),
-                field().label("Email").containsControl(
+                field().label("Email").control(
                         input(EMAIL).placeholder("e.g. alexsmith@gmail.com")));
 
         then(form).rendersAs("""
@@ -180,13 +180,13 @@ class GeneralTest {
     }
 
     @Test void shouldRenderFormWithIcon() {
-        var form = Basic.div().style("width: 400px;").contains(
-                field().containsControl(input(EMAIL).placeholder("Email"))
+        var form = div().style("width: 400px;").content(
+                field().control(input(EMAIL).placeholder("Email"))
                         .iconLeft("envelope")
                         .iconRight("check"),
-                field().containsControl(input(PASSWORD).placeholder("Password"))
+                field().control(input(PASSWORD).placeholder("Password"))
                         .iconLeft("lock"),
-                field().containsControl(button("Login").is(SUCCESS)));
+                field().control(button("Login").is(SUCCESS)));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
@@ -213,8 +213,8 @@ class GeneralTest {
     }
 
     @Test void shouldRenderSelectWithIcon() {
-        var form = Basic.div().style("width: 400px;").contains(
-                field().containsControl(select(null)
+        var form = div().style("width: 400px;").content(
+                field().control(select(null)
                                 .option("1", "Country").selected()
                                 .option("2", "Select dropdown")
                                 .option("3", "With options"))
@@ -239,8 +239,8 @@ class GeneralTest {
     }
 
     @Test void shouldRenderSmallInputWithIcon() {
-        var form = Basic.div().style("width: 400px;").contains(
-                field().label("Small input", SMALL).containsControl(
+        var form = div().style("width: 400px;").content(
+                field().label("Small input", SMALL).control(
                                 input(EMAIL).is(SMALL).placeholder("Normal"))
                         .iconLeft("envelope")
                         .iconRight("check"));
@@ -260,12 +260,12 @@ class GeneralTest {
     }
 
     @Test void shouldRenderNormalSizeInputWithIcon() {
-        var form = Basic.div().style("width: 400px;").contains(
-                field().label("Normal input").containsControl(
+        var form = div().style("width: 400px;").content(
+                field().label("Normal input").control(
                                 input(EMAIL).placeholder("Extra small"))
                         .iconLeft("envelope", XS)
                         .iconRight("check", XS),
-                field().containsControl(
+                field().control(
                                 input(EMAIL).placeholder("Normal"))
                         .iconLeft("envelope", NORMAL)
                         .iconRight("check", NORMAL));
@@ -292,16 +292,16 @@ class GeneralTest {
     }
 
     @Test void shouldRenderMediumSizeInputWithIcon() {
-        var form = Basic.div().style("width: 400px;").contains(
-                field().label("Medium input", MEDIUM).containsControl(
+        var form = div().style("width: 400px;").content(
+                field().label("Medium input", MEDIUM).control(
                                 input(EMAIL).is(MEDIUM).placeholder("Extra small"))
                         .iconLeft("envelope", XS)
                         .iconRight("check", XS),
-                field().containsControl(
+                field().control(
                                 input(EMAIL).is(MEDIUM).placeholder("Small"))
                         .iconLeft("envelope", SM, NORMAL)
                         .iconRight("check", SM, NORMAL),
-                field().containsControl(
+                field().control(
                                 input(EMAIL).is(MEDIUM).placeholder("Normal"))
                         .iconLeft("envelope", MEDIUM)
                         .iconRight("check", MEDIUM));
@@ -335,20 +335,20 @@ class GeneralTest {
     }
 
     @Test void shouldRenderLargeSizeInputWithIcon() {
-        var form = Basic.div().style("width: 400px;").contains(
-                field().label("Large input", LARGE).containsControl(
+        var form = div().style("width: 400px;").content(
+                field().label("Large input", LARGE).control(
                                 input(EMAIL).is(LARGE).placeholder("Extra small"))
                         .iconLeft("envelope", XS)
                         .iconRight("check", XS),
-                field().containsControl(
+                field().control(
                                 input(EMAIL).is(LARGE).placeholder("Small"))
                         .iconLeft("envelope", SM, NORMAL)
                         .iconRight("check", SM, NORMAL),
-                field().containsControl(
+                field().control(
                                 input(EMAIL).is(LARGE).placeholder("Normal"))
                         .iconLeft("envelope", LARGE)
                         .iconRight("check", LARGE),
-                field().containsControl(
+                field().control(
                                 input(EMAIL).is(LARGE).placeholder("Large"))
                         .iconLeft("envelope", LG, LARGE)
                         .iconRight("check", LG, LARGE));
@@ -389,8 +389,8 @@ class GeneralTest {
     }
 
     @Test void shouldRenderFieldWithButtonAddon() {
-        var form = Basic.div().style("width: 400px;").contains(field()
-                .containsControl(input(TEXT).placeholder("Find a repository"))
+        var form = div().style("width: 400px;").content(field()
+                .control(input(TEXT).placeholder("Find a repository"))
                 .containsAddonRight(a("Search").button().is(INFO)));
 
         then(form).rendersAs("""
@@ -408,8 +408,8 @@ class GeneralTest {
     }
 
     @Test void shouldRenderFieldWithStaticButtonAddon() {
-        var form = Basic.div().style("width: 400px;").contains(field()
-                .containsControl(input(TEXT).placeholder("Your email"))
+        var form = div().style("width: 400px;").content(field()
+                .control(input(TEXT).placeholder("Your email"))
                 .containsAddonRight(a("@gmail.com").button().is(STATIC)));
 
         then(form).rendersAs("""
@@ -428,7 +428,7 @@ class GeneralTest {
 
     @Test void shouldRenderFieldWithLeftAndRightAddon() {
         var form = field()
-                .containsControl(input(TEXT).placeholder("Amount of money"))
+                .control(input(TEXT).placeholder("Amount of money"))
                 .containsAddonLeft(select(null).options("$", "£", "€"))
                 .containsAddonRight(a("Transfer").button());
 
@@ -455,7 +455,7 @@ class GeneralTest {
 
     @Test void shouldRenderFieldWithExpandedFieldAndLeftAndRightAddon() {
         var form = field()
-                .containsControl(input(TEXT).placeholder("Amount of money"), EXPANDED)
+                .control(input(TEXT).placeholder("Amount of money"), EXPANDED)
                 .containsAddonLeft(select(null).options("$", "£", "€"))
                 .containsAddonRight(a("Transfer").button());
 
@@ -482,7 +482,7 @@ class GeneralTest {
 
     @Test void shouldRenderFieldWithFieldAndLeftAndExpandedRightAddon() {
         var form = field()
-                .containsControl(input(TEXT).placeholder("Amount of money"))
+                .control(input(TEXT).placeholder("Amount of money"))
                 .containsAddonLeft(select(null).options("$", "£", "€"))
                 .containsAddonRight(input(TEXT).placeholder("Target account"), EXPANDED);
 
@@ -509,7 +509,7 @@ class GeneralTest {
 
     @Test void shouldRenderFieldWithFieldAndExpandedLeftAddonAndRightAddon() {
         var form = field()
-                .containsControl(input(TEXT).placeholder("Amount of money"))
+                .control(input(TEXT).placeholder("Amount of money"))
                 .containsAddonLeft(input(TEXT).placeholder("Currency"), EXPANDED)
                 .containsAddonRight(a("Transfer").button());
 
@@ -530,7 +530,7 @@ class GeneralTest {
 
     @Test void shouldRenderFieldWithExpandedSelect() {
         var form = field()
-                .containsControl(select("country").is(Style.FULLWIDTH)
+                .control(select("country").is(Style.FULLWIDTH)
                         .options("Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador",
                                 "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"), EXPANDED)
                 .containsAddonRight(button("Choose").submit().is(PRIMARY));
@@ -564,7 +564,7 @@ class GeneralTest {
 
     @Test void shouldRenderCenteredFieldWithAddons() {
         var form = field().classes("has-addons-centered")
-                .containsControl(input(TEXT).placeholder("Amount of money"))
+                .control(input(TEXT).placeholder("Amount of money"))
                 .containsAddonLeft(select("currency").options("$", "£", "€"))
                 .containsAddonRight(a("Transfer").button().is(PRIMARY));
 
@@ -591,7 +591,7 @@ class GeneralTest {
 
     @Test void shouldRenderRightFieldWithAddons() {
         var form = field().classes("has-addons-right")
-                .containsControl(input(TEXT).placeholder("Amount of money"))
+                .control(input(TEXT).placeholder("Amount of money"))
                 .containsAddonLeft(select("currency").options("$", "£", "€"))
                 .containsAddonRight(a("Transfer").button().is(PRIMARY));
 
@@ -618,8 +618,8 @@ class GeneralTest {
 
     @Test void shouldRenderGroupedFields() {
         var form = field().grouped()
-                .containsControl(a("Submit").button().is(PRIMARY))
-                .containsControl(a("Cancel").button().is(LIGHT));
+                .control(a("Submit").button().is(PRIMARY))
+                .control(a("Cancel").button().is(LIGHT));
 
         then(form).rendersAs("""
                 <div class="field is-grouped">
@@ -635,8 +635,8 @@ class GeneralTest {
 
     @Test void shouldRenderGroupedFieldsCentered() {
         var form = field().grouped().classes("is-grouped-centered")
-                .containsControl(a("Submit").button().is(PRIMARY))
-                .containsControl(a("Cancel").button().is(LIGHT));
+                .control(a("Submit").button().is(PRIMARY))
+                .control(a("Cancel").button().is(LIGHT));
 
         then(form).rendersAs("""
                 <div class="field is-grouped is-grouped-centered">
@@ -652,8 +652,8 @@ class GeneralTest {
 
     @Test void shouldRenderGroupedFieldsRight() {
         var form = field().grouped().classes("is-grouped-right")
-                .containsControl(a("Submit").button().is(PRIMARY))
-                .containsControl(a("Cancel").button().is(LIGHT));
+                .control(a("Submit").button().is(PRIMARY))
+                .control(a("Cancel").button().is(LIGHT));
 
         then(form).rendersAs("""
                 <div class="field is-grouped is-grouped-right">
@@ -669,8 +669,8 @@ class GeneralTest {
 
     @Test void shouldRenderGroupedFieldsExpanded() {
         var form = field().grouped()
-                .containsControl(input(TEXT).placeholder("Find a repository"), EXPANDED)
-                .containsControl(a("Search").button().is(INFO));
+                .control(input(TEXT).placeholder("Find a repository"), EXPANDED)
+                .control(a("Search").button().is(INFO));
 
         then(form).rendersAs("""
                 <div class="field is-grouped">
@@ -685,8 +685,8 @@ class GeneralTest {
     }
 
     @Test void shouldRenderGroupedMultilineFieldsExpanded() {
-        var form = Basic.div().style("width: 400px;").contains(
-                field().grouped().classes("is-grouped-multiline").contains(
+        var form = div().style("width: 400px;").content(
+                field().grouped().classes("is-grouped-multiline").control(
                         Stream.of("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen")
                                 .map(name -> a(name).button())));
 
@@ -738,54 +738,54 @@ class GeneralTest {
     }
 
     @Test void shouldRenderHorizontalForm() {
-        var form = Basic.div().style("width: 1000px;").contains(
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label").is(NORMAL).contains(
-                                Basic.label("From")),
-                        Basic.div().classes("field-body").contains(
-                                field().containsControl(input(TEXT).placeholder("Name"), EXPANDED)
+        var form = div().style("width: 1000px;").content(
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").is(NORMAL).content(
+                                label("From")),
+                        div().classes("field-body").content(
+                                field().control(input(TEXT).placeholder("Name"), EXPANDED)
                                         .iconLeft("user"),
-                                field().containsControl(input(EMAIL).is(SUCCESS).placeholder("Email").value("alex@smith.com"), EXPANDED)
+                                field().control(input(EMAIL).is(SUCCESS).placeholder("Email").value("alex@smith.com"), EXPANDED)
                                         .iconLeft("envelope")
                                         .iconRight("check"))),
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label"),
-                        Basic.div().classes("field-body").contains(
-                                Basic.div().classes("field").is(EXPANDED).contains(
-                                        field().containsControl(a("+44").button().is(STATIC))
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label"),
+                        div().classes("field-body").content(
+                                div().classes("field").is(EXPANDED).content(
+                                        field().control(a("+44").button().is(STATIC))
                                                 .containsAddonRight(input(TEL).placeholder("Your phone number"), EXPANDED),
-                                        Basic.p("Do not enter the first zero").classes("help")))),
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label").is(NORMAL).contains(
-                                Basic.label("Department")),
-                        Basic.div().classes("field-body").contains(
-                                field().is(NARROW).containsControl(select("department").is(Style.FULLWIDTH)
+                                        p("Do not enter the first zero").classes("help")))),
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").is(NORMAL).content(
+                                label("Department")),
+                        div().classes("field-body").content(
+                                field().is(NARROW).control(select("department").is(Style.FULLWIDTH)
                                         .options("Business development", "Marketing", "Sales")))),
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label").contains(
-                                Basic.label("Already a member?")),
-                        Basic.div().classes("field-body").contains(
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").content(
+                                label("Already a member?")),
+                        div().classes("field-body").content(
                                 field().is(NARROW)
-                                        .containsControl(radio("member").contains(string("Yes")))
-                                        .containsControl(radio("member").contains(string("No"))))),
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label").is(NORMAL).contains(
-                                Basic.label("Subject")),
-                        Basic.div().classes("field-body").contains(
+                                        .control(radio("member").content(string("Yes")))
+                                        .control(radio("member").content(string("No"))))),
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").is(NORMAL).content(
+                                label("Subject")),
+                        div().classes("field-body").content(
                                 field()
-                                        .containsControl(input(TEXT).is(DANGER).placeholder("e.g. Partnership opportunity"))
+                                        .control(input(TEXT).is(DANGER).placeholder("e.g. Partnership opportunity"))
                                         .help("This field is required", DANGER))),
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label").is(NORMAL).contains(
-                                Basic.label("Question")),
-                        Basic.div().classes("field-body").contains(
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").is(NORMAL).content(
+                                label("Question")),
+                        div().classes("field-body").content(
                                 field()
-                                        .containsControl(textarea().placeholder("Explain how we can help you")))),
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label"),
-                        Basic.div().classes("field-body").contains(
+                                        .control(textarea().placeholder("Explain how we can help you")))),
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label"),
+                        div().classes("field-body").content(
                                 field()
-                                        .containsControl(button("Send message").is(PRIMARY)))));
+                                        .control(button("Send message").is(PRIMARY)))));
 
         then(form).rendersAs("""
                 <div style="width: 1000px;">
@@ -902,32 +902,32 @@ class GeneralTest {
     }
 
     @Test void shouldRenderHorizontalFormWithSizes() {
-        var form = Basic.div().style("width: 1000px;").contains(
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label").contains(
-                                Basic.label("No padding")),
-                        Basic.div().classes("field-body").contains(
-                                field().containsControl(Checkbox.checkbox().contains("Checkbox")))),
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label").is(SMALL).contains(
-                                Basic.label("Small padding")),
-                        Basic.div().classes("field-body").contains(
-                                field().containsControl(input(TEXT).is(SMALL).placeholder("Small sized input")))),
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label").is(NORMAL).contains(
-                                Basic.label("Normal label")),
-                        Basic.div().classes("field-body").contains(
-                                field().containsControl(input(TEXT).placeholder("Normal sized input")))),
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label").is(MEDIUM).contains(
-                                Basic.label("Medium label")),
-                        Basic.div().classes("field-body").contains(
-                                field().containsControl(input(TEXT).is(MEDIUM).placeholder("Medium sized input")))),
-                Basic.div().classes("field", "is-horizontal").contains(
-                        Basic.div().classes("field-label").is(LARGE).contains(
-                                Basic.label("Large label")),
-                        Basic.div().classes("field-body").contains(
-                                field().containsControl(input(TEXT).is(LARGE).placeholder("Large sized input")))));
+        var form = div().style("width: 1000px;").content(
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").content(
+                                label("No padding")),
+                        div().classes("field-body").content(
+                                field().control(Checkbox.checkbox().content("Checkbox")))),
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").is(SMALL).content(
+                                label("Small padding")),
+                        div().classes("field-body").content(
+                                field().control(input(TEXT).is(SMALL).placeholder("Small sized input")))),
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").is(NORMAL).content(
+                                label("Normal label")),
+                        div().classes("field-body").content(
+                                field().control(input(TEXT).placeholder("Normal sized input")))),
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").is(MEDIUM).content(
+                                label("Medium label")),
+                        div().classes("field-body").content(
+                                field().control(input(TEXT).is(MEDIUM).placeholder("Medium sized input")))),
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").is(LARGE).content(
+                                label("Large label")),
+                        div().classes("field-body").content(
+                                field().control(input(TEXT).is(LARGE).placeholder("Large sized input")))));
 
         then(form).rendersAs("""
                 <div style="width: 1000px;">
@@ -999,10 +999,10 @@ class GeneralTest {
     }
 
     @Test void shouldRenderDisabledForm() {
-        var form = Basic.div().style("width: 1000px;").contains(
-                fieldset().disabled().contains(
-                        field().label("Name").containsControl(input(TEXT).placeholder("e.g Alex Smith")),
-                        field().label("Email").containsControl(input(EMAIL).placeholder("e.g. alexsmith@gmail.com"))));
+        var form = div().style("width: 1000px;").content(
+                fieldset().disabled().content(
+                        field().label("Name").control(input(TEXT).placeholder("e.g Alex Smith")),
+                        field().label("Email").control(input(EMAIL).placeholder("e.g. alexsmith@gmail.com"))));
 
         then(form).rendersAs("""
                 <div style="width: 1000px;">

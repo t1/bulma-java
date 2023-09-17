@@ -6,9 +6,7 @@ import com.github.t1.bulmajava.basic.Classes;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import java.util.function.Function;
-
-import static com.github.t1.bulmajava.basic.Attribute.noValueAttribute;
+import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.RADIO;
 
@@ -26,10 +24,14 @@ public class Radio extends AbstractElement<Radio> {
 
 
     @Override public Radio disabled() {
-        return super.disabled().replace((Function<Radio, Input>) Radio::getInput, Input::disabled);
+        getInput().disabled();
+        return super.disabled();
+    }
+
+    public Radio checked() {
+        getInput().attr(noValueAttribute("checked"));
+        return this;
     }
 
     private Input getInput() {return content().find(Input.class).orElseThrow();}
-
-    public Radio checked() {return replace((Function<Radio, Input>) Radio::getInput, input -> input.attr(noValueAttribute("checked")));}
 }

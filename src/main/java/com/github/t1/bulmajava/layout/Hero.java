@@ -7,30 +7,33 @@ import com.github.t1.bulmajava.basic.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
+import java.util.stream.Stream;
+
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Hero extends AbstractElement<Hero> {
     public static Hero hero() {return new Hero();}
 
     public Hero() {super("section", Attributes.of(Classes.of("hero")));}
 
-    /** Use {@link #containsBody(Renderable...)} instead! */
-    @Deprecated @Override public Hero contains(Renderable content) {return super.contains(content);}
-
-    /** Use {@link #containsBody(Renderable...)} instead! */
-    @Deprecated @Override public Hero contains(Renderable... content) {return super.contains(content);}
-
-
-    public Hero containsHead(Renderable content) {
-        return element("hero-head", body -> body.contains(content));
-    }
-
-    public Hero containsBody(Renderable... content) {
-        return element("hero-body", body -> body.contains(content));
-    }
-
-    public Hero containsFoot(Renderable content) {
-        return element("hero-foot", body -> body.contains(content));
-    }
 
     public Hero isFullheightWithNavbar() {return classes("is-fullheight-with-navbar");}
+
+
+    /** Use {@link #body(Renderable...)} instead! */
+    @Deprecated @Override public Hero content(String content) {return super.content(content);}
+
+    /** Use {@link #body(Renderable...)} instead! */
+    @Deprecated @Override public Hero content(Renderable content) {return super.content(content);}
+
+    /** Use {@link #body(Renderable...)} instead! */
+    @Deprecated @Override public Hero content(Renderable... content) {return super.content(content);}
+
+    /** Use {@link #body(Renderable...)} instead! */
+    @Deprecated @Override public Hero content(Stream<Renderable> content) {return super.content(content);}
+
+    public Hero head(Renderable content) {return content("hero-head", body -> body.content(content));}
+
+    public Hero body(Renderable... content) {return content("hero-body", body -> body.content(content));}
+
+    public Hero foot(Renderable content) {return content("hero-foot", body -> body.content(content));}
 }

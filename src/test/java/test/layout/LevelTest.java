@@ -1,11 +1,11 @@
 package test.layout;
 
-import com.github.t1.bulmajava.basic.Basic;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.INFO;
 import static com.github.t1.bulmajava.basic.Color.SUCCESS;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
@@ -22,14 +22,14 @@ import static test.CustomAssertions.then;
 class LevelTest {
     @Test void shouldRenderLevel() {
         var level = level()
-                .containsLeft(
-                        Basic.p().classes("subtitle", "is-5").contains(
-                                Basic.strong("123"), string(" posts")),
+                .addLeft(
+                        p().classes("subtitle", "is-5").content(
+                                strong("123"), string(" posts")),
                         field()
-                                .containsControl(input(TEXT).placeholder("Find a post"))
+                                .control(input(TEXT).placeholder("Find a post"))
                                 .containsAddonRight(button("Search")))
-                .containsRight(
-                        Basic.p().contains(Basic.strong("All")),
+                .addRight(
+                        p().content(strong("All")),
                         a("Published"),
                         a("Drafts"),
                         a("Deleted"),
@@ -76,21 +76,21 @@ class LevelTest {
     }
 
     @Test void shouldRenderCenteredLevel() {
-        var level = level().containsItem(Basic.div().contains(
-                                Basic.p("Tweets").classes("heading"),
-                                Basic.p("3,456").classes("title")),
+        var level = level().addItem(div().content(
+                                p("Tweets").classes("heading"),
+                                p("3,456").classes("title")),
                         "has-text-centered")
-                .containsItem(Basic.div().contains(
-                                Basic.p("Following").classes("heading"),
-                                Basic.p("123").classes("title")),
+                .addItem(div().content(
+                                p("Following").classes("heading"),
+                                p("123").classes("title")),
                         "has-text-centered")
-                .containsItem(Basic.div().contains(
-                                Basic.p("Followers").classes("heading"),
-                                Basic.p("456K").classes("title")),
+                .addItem(div().content(
+                                p("Followers").classes("heading"),
+                                p("456K").classes("title")),
                         "has-text-centered")
-                .containsItem(Basic.div().contains(
-                                Basic.p("Likes").classes("heading"),
-                                Basic.p("789").classes("title")),
+                .addItem(div().content(
+                                p("Likes").classes("heading"),
+                                p("789").classes("title")),
                         "has-text-centered");
 
         then(level).rendersAs("""
@@ -125,11 +125,11 @@ class LevelTest {
 
     @Test void shouldRenderCenteredLevel2() {
         var level = level()
-                .containsItem(a("Home").classes("link").is(INFO), "has-text-centered")
-                .containsItem(a("Menu").classes("link").is(INFO), "has-text-centered")
-                .containsItem(img("https://bulma.io/images/bulma-type.png", "").style("height: 30px;"), "has-text-centered")
-                .containsItem(a("Reservations").classes("link").is(INFO), "has-text-centered")
-                .containsItem(a("Contact").classes("link").is(INFO), "has-text-centered");
+                .addItem(a("Home").classes("link").is(INFO), "has-text-centered")
+                .addItem(a("Menu").classes("link").is(INFO), "has-text-centered")
+                .addItem(img("https://bulma.io/images/bulma-type.png", "").style("height: 30px;"), "has-text-centered")
+                .addItem(a("Reservations").classes("link").is(INFO), "has-text-centered")
+                .addItem(a("Contact").classes("link").is(INFO), "has-text-centered");
 
         then(level).rendersAs("""
                 <nav class="level">
@@ -153,21 +153,21 @@ class LevelTest {
     }
 
     @Test void shouldRenderMobileLevel() {
-        var level = level().is(MOBILE).containsItem(Basic.div().contains(
-                                Basic.p("Tweets").classes("heading"),
-                                Basic.p("3,456").classes("title")),
+        var level = level().is(MOBILE).addItem(div().content(
+                                p("Tweets").classes("heading"),
+                                p("3,456").classes("title")),
                         "has-text-centered")
-                .containsItem(Basic.div().contains(
-                                Basic.p("Following").classes("heading"),
-                                Basic.p("123").classes("title")),
+                .addItem(div().content(
+                                p("Following").classes("heading"),
+                                p("123").classes("title")),
                         "has-text-centered")
-                .containsItem(Basic.div().contains(
-                                Basic.p("Followers").classes("heading"),
-                                Basic.p("456K").classes("title")),
+                .addItem(div().content(
+                                p("Followers").classes("heading"),
+                                p("456K").classes("title")),
                         "has-text-centered")
-                .containsItem(Basic.div().contains(
-                                Basic.p("Likes").classes("heading"),
-                                Basic.p("789").classes("title")),
+                .addItem(div().content(
+                                p("Likes").classes("heading"),
+                                p("789").classes("title")),
                         "has-text-centered");
 
         then(level).rendersAs("""

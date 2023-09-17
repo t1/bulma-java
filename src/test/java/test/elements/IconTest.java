@@ -1,6 +1,5 @@
 package test.elements;
 
-import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.FontSize;
 import com.github.t1.bulmajava.basic.Size;
 import org.junit.jupiter.api.Test;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.elements.Block.blockP;
 import static com.github.t1.bulmajava.elements.Content.content_;
@@ -31,8 +31,8 @@ class IconTest {
     }
 
     @Test void shouldRenderIconText() {
-        var iconText = iconText().contains(
-                icon("home"), Basic.span("Home"));
+        var iconText = iconText().content(
+                icon("home"), span("Home"));
 
         then(iconText).rendersAs("""
                 <span class="icon-text">
@@ -43,11 +43,11 @@ class IconTest {
     }
 
     @Test void shouldRenderManyIconTexts() {
-        var iconText = iconText().contains(
-                icon("train"), Basic.span("Paris"),
-                icon("arrow-right"), Basic.span("Budapest"),
-                icon("arrow-right"), Basic.span("Bucharest"),
-                icon("arrow-right"), Basic.span("Istanbul"),
+        var iconText = iconText().content(
+                icon("train"), span("Paris"),
+                icon("arrow-right"), span("Budapest"),
+                icon("arrow-right"), span("Bucharest"),
+                icon("arrow-right"), span("Istanbul"),
                 icon("flag-checkered"));
 
         then(iconText).rendersAs("""
@@ -66,12 +66,12 @@ class IconTest {
     }
 
     @Test void shouldRenderInlineIcons() {
-        var content = content_().contains(
-                Basic.p().contains(
+        var content = content_().content(
+                p().content(
                         string("An invitation to"),
-                        iconText().contains(
+                        iconText().content(
                                 icon("utensils"),
-                                Basic.span("dinner")),
+                                span("dinner")),
                         string("was soon afterwards dispatched.")));
 
         then(content).rendersAs("""
@@ -89,28 +89,28 @@ class IconTest {
     }
 
     @Test void shouldRenderInlineIconsFlex() {
-        var content = content_().contains(
-                iconTextFlex().contains(
+        var content = content_().content(
+                iconTextFlex().content(
                         icon("info-circle").classes("has-text-info"),
-                        Basic.span("Information")),
-                blockP().contains(
+                        span("Information")),
+                blockP().content(
                         string("Your package will be delivered on "),
-                        Basic.strong("Tuesday at 08:00"),
+                        strong("Tuesday at 08:00"),
                         string(".")),
-                iconTextFlex().contains(
+                iconTextFlex().content(
                         icon("check-square").classes("has-text-success"),
-                        Basic.span("Success")),
-                blockP().contains("Your image has been successfully uploaded."),
-                iconTextFlex().contains(
+                        span("Success")),
+                blockP().content("Your image has been successfully uploaded."),
+                iconTextFlex().content(
                         icon("exclamation-triangle").classes("has-text-warning"),
-                        Basic.span("Warning")),
-                blockP().contains(string("Some information is missing from your"),
+                        span("Warning")),
+                blockP().content(string("Some information is missing from your"),
                         a("profile").href("#"),
                         string("details.")),
-                iconTextFlex().contains(
+                iconTextFlex().content(
                         icon("ban").classes("has-text-danger"),
-                        Basic.span("Danger")),
-                blockP().contains(string("There was an error in your submission."),
+                        span("Danger")),
+                blockP().content(string("There was an error in your submission."),
                         a("Please try again").href("#"),
                         string(".")));
 
@@ -149,7 +149,7 @@ class IconTest {
     }
 
     @Test void shouldRenderIconColors() {
-        var content = content_().contains(
+        var content = content_().content(
                 icon("info-circle").classes("has-text-info"),
                 icon("check-square").classes("has-text-success"),
                 icon("exclamation-triangle").classes("has-text-warning"),
@@ -166,11 +166,11 @@ class IconTest {
     }
 
     @Test void shouldRenderIconTextColors() {
-        var content = content_().contains(
-                iconText().classes("has-text-info").contains(icon("info-circle"), Basic.span("Info")),
-                iconText().classes("has-text-success").contains(icon("check-square"), Basic.span("Success")),
-                iconText().classes("has-text-warning").contains(icon("exclamation-triangle"), Basic.span("Warning")),
-                iconText().classes("has-text-danger").contains(icon("ban"), Basic.span("Danger")));
+        var content = content_().content(
+                iconText().classes("has-text-info").content(icon("info-circle"), span("Info")),
+                iconText().classes("has-text-success").content(icon("check-square"), span("Success")),
+                iconText().classes("has-text-warning").content(icon("exclamation-triangle"), span("Warning")),
+                iconText().classes("has-text-danger").content(icon("ban"), span("Danger")));
 
         then(content).rendersAs("""
                 <div class="content">

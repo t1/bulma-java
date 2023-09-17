@@ -17,15 +17,13 @@ import static com.github.t1.bulmajava.basic.Basic.span;
 public class Navbar extends AbstractElement<Navbar> {
     public static Navbar navbar(String menuId) {return new Navbar(menuId);}
 
-    private static final Attributes NAVBAR_ATTRIBUTES = Attributes.of(
-            Classes.of("navbar"),
-            stringAttribute("role", "navigation"),
-            stringAttribute("aria-label", "navigation"));
-
-    private final String menuId;
+    private String menuId;
 
     private Navbar(String menuId) {
-        super("nav", NAVBAR_ATTRIBUTES);
+        super("nav", Attributes.of(
+                Classes.of("navbar"),
+                stringAttribute("role", "navigation"),
+                stringAttribute("aria-label", "navigation")));
         this.menuId = menuId;
     }
 
@@ -40,12 +38,12 @@ public class Navbar extends AbstractElement<Navbar> {
     public static Element navbarEnd() {return div().classes("navbar-end").map(Navbar::item);}
 
     public Navbar brand(Renderable... renderables) {
-        return this.contains(div().classes("navbar-brand").map(Navbar::item).contains(renderables));
+        return this.content(div().classes("navbar-brand").map(Navbar::item).content(renderables));
     }
 
     public Navbar burger() {
-        var brand = findContent("navbar-brand").orElseThrow();
-        return this.replace(brand, brand.contains(navbarBurger(menuId)));
+        findElement("navbar-brand").orElseThrow().content(navbarBurger(menuId));
+        return this;
     }
 
     private static Anchor navbarBurger(String targetId) {
@@ -54,25 +52,29 @@ public class Navbar extends AbstractElement<Navbar> {
                 .attr("role", "button")
                 .ariaLabel("menu")
                 .attr("aria-expanded", "false")
-                .contains(
-                        span().ariaHidden(),
-                        span().ariaHidden(),
-                        span().ariaHidden());
+                .content(
+                        span().ariaHidden(true),
+                        span().ariaHidden(true),
+                        span().ariaHidden(true));
         if (targetId != null) burger = burger.attr("data-target", targetId);
         return burger;
     }
 
-    @Deprecated // use containsStart/End instead
-    @Override public Navbar contains(String content) {return super.contains(content);}
+    /** Use {@link #start(Renderable...)}/{@link #end(Renderable...)} instead! */
+    @Deprecated
+    @Override public Navbar content(String content) {return super.content(content);}
 
-    @Deprecated // use containsStart/End instead
-    @Override public Navbar contains(Stream<Renderable> content) {return super.contains(content);}
+    /** Use {@link #start(Renderable...)}/{@link #end(Renderable...)} instead! */
+    @Deprecated
+    @Override public Navbar content(Stream<Renderable> content) {return super.content(content);}
 
-    @Deprecated // use containsStart/End instead
-    @Override public Navbar contains(Renderable... content) {return super.contains(content);}
+    /** Use {@link #start(Renderable...)}/{@link #end(Renderable...)} instead! */
+    @Deprecated
+    @Override public Navbar content(Renderable... content) {return super.content(content);}
 
-    @Deprecated // use containsStart/End instead
-    @Override public Navbar contains(Renderable content) {return super.contains(content);}
+    /** Use {@link #start(Renderable...)}/{@link #end(Renderable...)} instead! */
+    @Deprecated
+    @Override public Navbar content(Renderable content) {return super.content(content);}
 
     public Navbar isFixedTop() {return classes("is-fixed-top");}
 
@@ -80,66 +82,54 @@ public class Navbar extends AbstractElement<Navbar> {
 
     public Navbar isTransparent() {return classes("is-transparent");}
 
-    public Navbar containsStart(Renderable... newStartContent) {
-        var menu = findContent("navbar-menu").orElseGet(() -> navbarMenu(menuId));
-        return contains(menu.contains(navbarStart().contains(newStartContent)));
+    public Navbar start(Renderable... newStartContent) {
+        var menu = findElement("navbar-menu").orElseGet(this::navbarMenu);
+        return content(menu.content(navbarStart().content(newStartContent)));
     }
 
-    public Navbar containsEnd(Renderable... newEndContent) {
-        Element menu;
-        Renderable existingContent;
-        var optionalMenu = findContent("navbar-menu");
-        if (optionalMenu.isPresent()) {
-            menu = (Element) optionalMenu.get();
-            existingContent = content();
-        } else {
-            menu = navbarMenu(menuId);
-            existingContent = ConcatenatedRenderable.concat(content(), menu);
-        }
-        var newMenu = menu.contains(navbarEnd().contains(newEndContent));
-        var newContent = (existingContent.equals(menu)) ? newMenu : existingContent.replace(menu, newMenu);
-        return content(newContent);
+    public Navbar end(Renderable... newEndContent) {
+        var menu = getOrCreate("navbar-menu", this::navbarMenu);
+        var end = menu.getOrCreate("navbar-end", Navbar::navbarEnd);
+        end.content(newEndContent);
+        return this;
     }
 
-    public static Element navbarMenu(String id) {return div().classes("navbar-menu").id(id);}
+    private Element navbarMenu() {return div().classes("navbar-menu").id(menuId);}
 
     @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
     public static class NavbarDropdown extends AbstractElement<NavbarDropdown> {
         public static NavbarDropdown navbarDropdown(String dropdownName, MenuActivationType activationType) {
-            return new NavbarDropdown().is(activationType).contains(
+            return new NavbarDropdown().is(activationType).content(
                     a(dropdownName).classes("navbar-link"),
                     div().classes("navbar-dropdown").map(Navbar::item));
         }
 
         private NavbarDropdown() {super("div", "has-dropdown");}
 
-        public NavbarDropdown contains(Renderable content) {
+        public NavbarDropdown content(Renderable content) {
             var dropdown = findDropdown();
             if (dropdown.isPresent()) {
-                return content(content().replace(dropdown.get(), dropdown.get().contains(item(content))));
-            } else return super.contains(content);
+                dropdown.get().content(item(content));
+                return this;
+            } else return super.content(content);
         }
 
-        private Optional<AbstractElement<?>> findDropdown() {return findContent("navbar-dropdown");}
+        private Optional<AbstractElement<?>> findDropdown() {return findElement("navbar-dropdown");}
 
-        private Optional<AbstractElement<?>> findLink() {return findContent("navbar-link");}
+        private Optional<AbstractElement<?>> findLink() {return findElement("navbar-link");}
 
         @Override public NavbarDropdown is(Modifier... modifiers) {
-            var result = this;
             for (var modifier : modifiers) {
-                if (modifier instanceof MenuActivationType) {
-                    result = result.classes(modifier.className());
-                } else {
-                    var dropdown = findDropdown().orElseThrow();
-                    result = result.content(content().replace(dropdown, dropdown.classes(modifier.className())));
-                }
+                if (modifier instanceof MenuActivationType) classes(modifier.className());
+                else findDropdown().orElseThrow().classes(modifier.className());
             }
-            return result;
+            return this;
         }
 
-        public NavbarDropdown isArrowless() {
+        public NavbarDropdown arrowless() {
             var link = findLink().orElseThrow();
-            return content(content().replace(link, link.classes("is-arrowless")));
+            link.classes("is-arrowless");
+            return this;
         }
     }
 }

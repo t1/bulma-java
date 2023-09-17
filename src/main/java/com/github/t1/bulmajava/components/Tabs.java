@@ -1,24 +1,26 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.bulmajava.basic.*;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Basic.ul;
-
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Tabs extends AbstractElement<Tabs> {
-    public static Tabs tabs() {return new Tabs("div").contains(ul());}
+    public static Tabs tabs() {return new Tabs("div");}
 
-    public static Tabs navTabs() {return new Tabs("nav").contains(ul());}
+    public static Tabs navTabs() {return new Tabs("nav");}
 
-    private Tabs(String elementName) {super(elementName, "tabs");}
-
-    @Override public Tabs contains(Renderable... content) {
-        var ul = contentElement();
-        return content(ul.contains(content));
+    private Tabs(String elementName) {
+        super(elementName, Attributes.of(Classes.of("tabs")), Basic.ul());
     }
+
+
+    @Override public Tabs content(Renderable content) {
+        ul().content(content);
+        return this;
+    }
+
+    private Element ul() {return contentAs(Element.class);}
 
     public Tabs isBoxed() {return classes("is-boxed");}
 

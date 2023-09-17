@@ -4,7 +4,7 @@ import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Modifier;
 
-import static com.github.t1.bulmajava.basic.Attribute.noValueAttribute;
+import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
 import static com.github.t1.bulmajava.basic.Basic.p;
 
 public class Image {
@@ -13,7 +13,7 @@ public class Image {
     }
 
     public static AbstractElement<?> image(ImageDimension dimension, String src, String alt, Modifier... modifiers) {
-        return image(dimension).contains(img(src, alt, modifiers));
+        return image(dimension).content(img(src, alt, modifiers));
     }
 
     public static AbstractElement<?> image(ImageDimension dimension) {
@@ -39,7 +39,7 @@ public class Image {
     }
 
     public static AbstractElement<?> movie(ImageRatio ratio, String src, String width, String height, Modifier... modifiers) {
-        return image(ratio).contains(
+        return image(ratio).content(
                 iframe(src, modifiers)
                         .classes("has-ratio")
                         .attr("width", width).attr("height", height)

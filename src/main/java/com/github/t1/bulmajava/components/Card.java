@@ -4,7 +4,6 @@ import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.elements.Button;
-import com.github.t1.bulmajava.elements.Icon;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
@@ -33,7 +32,7 @@ public class Card extends AbstractElement<Card> {
 
     private static Renderable headerElement(Renderable renderable) {
         if (renderable instanceof Button b)
-            return b.notClasses("button").classes("card-header-icon").icon(Icon::ariaHidden);
+            return b.notClasses("button").classes("card-header-icon").icon(icon -> icon.ariaHidden(true));
         if (renderable instanceof AbstractElement<?> e && e.hasName("p"))
             return e.classes("card-header-title");
         return renderable;

@@ -1,6 +1,5 @@
 package test.components;
 
-import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Color;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +9,7 @@ import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Alignment.LEFT;
 import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.element;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.LINK;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.State.ACTIVE;
@@ -28,45 +27,45 @@ import static test.CustomAssertions.then;
 class PanelTest {
     @Test void shouldRenderPanel() {
         var panel = panel("nav").style("width: 400px;")
-                .containsHeading(Basic.p("Repositories"))
-                .containsBlock(Basic.div().contains(
-                        Basic.p().classes("control has-icons-left").contains(
+                .addHeading(p("Repositories"))
+                .addBlock(div().content(
+                        p().classes("control has-icons-left").content(
                                 input(TEXT).placeholder("Search"),
-                                icon("search").is(LEFT).ariaHidden())))
-                .containsTabs(
+                                icon("search").is(LEFT).ariaHidden(true))))
+                .addTabs(
                         a("All").is(ACTIVE),
                         a("Public"),
                         a("Private"),
                         a("Sources"),
                         a("Forks"))
-                .containsBlock(a().is(ACTIVE).contains(
-                        Basic.span().classes("panel-icon").contains(
-                                Basic.i().classes("fas fa-book").ariaHidden()),
+                .addBlock(a().is(ACTIVE).content(
+                        span().classes("panel-icon").content(
+                                i().classes("fas fa-book").ariaHidden(true)),
                         string("bulma")))
-                .containsBlock(a().contains(
-                        Basic.span().classes("panel-icon").contains(
-                                Basic.i().classes("fas fa-book").ariaHidden()),
+                .addBlock(a().content(
+                        span().classes("panel-icon").content(
+                                i().classes("fas fa-book").ariaHidden(true)),
                         string("marksheet")))
-                .containsBlock(a().contains(
-                        Basic.span().classes("panel-icon").contains(
-                                Basic.i().classes("fas fa-book").ariaHidden()),
+                .addBlock(a().content(
+                        span().classes("panel-icon").content(
+                                i().classes("fas fa-book").ariaHidden(true)),
                         string("minireset.css")))
-                .containsBlock(a().contains(
-                        Basic.span().classes("panel-icon").contains(
-                                Basic.i().classes("fas fa-book").ariaHidden()),
+                .addBlock(a().content(
+                        span().classes("panel-icon").content(
+                                i().classes("fas fa-book").ariaHidden(true)),
                         string("jgthms.github.io")))
-                .containsBlock(a().contains(
-                        Basic.span().classes("panel-icon").contains(
-                                Basic.i().classes("fas fa-code-branch").ariaHidden()),
+                .addBlock(a().content(
+                        span().classes("panel-icon").content(
+                                i().classes("fas fa-code-branch").ariaHidden(true)),
                         string("daniellowtw/infboard")))
-                .containsBlock(a().contains(
-                        Basic.span().classes("panel-icon").contains(
-                                Basic.i().classes("fas fa-code-branch").ariaHidden()),
+                .addBlock(a().content(
+                        span().classes("panel-icon").content(
+                                i().classes("fas fa-code-branch").ariaHidden(true)),
                         string("mojs")))
-                .containsBlock(element("label").contains(
+                .addBlock(element("label").content(
                         input(CHECKBOX).notClasses("input"),
                         string("remember me")))
-                .containsBlock(Basic.div().contains(
+                .addBlock(div().content(
                         button("Reset all filters").is(LINK, OUTLINED, FULLWIDTH)));
 
         then(panel).rendersAs("""
@@ -122,32 +121,32 @@ class PanelTest {
 
     @ParameterizedTest @EnumSource void shouldRenderColorPanel(Color color) {
         var panel = panel().style("width: 400px;").is(color)
-                .containsHeading(Basic.p(color.key()))
-                .containsTabs(
+                .addHeading(p(color.key()))
+                .addTabs(
                         a("All").is(ACTIVE),
                         a("Public"),
                         a("Private"),
                         a("Sources"),
                         a("Forks"))
-                .containsBlock(Basic.div().contains(
-                        Basic.p().classes("control has-icons-left").contains(
+                .addBlock(div().content(
+                        p().classes("control has-icons-left").content(
                                 input(TEXT).placeholder("Search").is(color),
-                                icon("search").is(LEFT).ariaHidden())))
-                .containsBlock(a().is(ACTIVE).contains(
-                        Basic.span().classes("panel-icon").contains(
-                                Basic.i().classes("fas fa-book").ariaHidden()),
+                                icon("search").is(LEFT).ariaHidden(true))))
+                .addBlock(a().is(ACTIVE).content(
+                        span().classes("panel-icon").content(
+                                i().classes("fas fa-book").ariaHidden(true)),
                         string("bulma")))
-                .containsBlock(a().contains(
-                        Basic.span().classes("panel-icon").contains(
-                                Basic.i().classes("fas fa-book").ariaHidden()),
+                .addBlock(a().content(
+                        span().classes("panel-icon").content(
+                                i().classes("fas fa-book").ariaHidden(true)),
                         string("marksheet")))
-                .containsBlock(a().contains(
-                        Basic.span().classes("panel-icon").contains(
-                                Basic.i().classes("fas fa-book").ariaHidden()),
+                .addBlock(a().content(
+                        span().classes("panel-icon").content(
+                                i().classes("fas fa-book").ariaHidden(true)),
                         string("minireset.css")))
-                .containsBlock(a().contains(
-                        Basic.span().classes("panel-icon").contains(
-                                Basic.i().classes("fas fa-book").ariaHidden()),
+                .addBlock(a().content(
+                        span().classes("panel-icon").content(
+                                i().classes("fas fa-book").ariaHidden(true)),
                         string("jgthms.github.io")));
 
         then(panel).rendersAs("""

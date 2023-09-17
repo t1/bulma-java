@@ -1,10 +1,10 @@
 package test.layout;
 
-import com.github.t1.bulmajava.basic.Basic;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.PRIMARY;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.columns.ScreenSize.FULLHD;
@@ -16,9 +16,9 @@ import static test.CustomAssertions.then;
 @ExtendWith(RenderTestExtension.class)
 class ContainerTest {
     @Test void shouldRenderContainer() {
-        var container = container().contains(
-                notification().is(PRIMARY).contains(
-                        string("This container is "), Basic.strong("centered"), string(" on desktop and larger viewports.")));
+        var container = container().content(
+                notification().is(PRIMARY).content(
+                        string("This container is "), strong("centered"), string(" on desktop and larger viewports.")));
 
         then(container).rendersAs("""
                 <div class="container">
@@ -28,10 +28,10 @@ class ContainerTest {
     }
 
     @Test void shouldRenderWidescreenContainer() {
-        var container = container().is(WIDESCREEN).contains(
-                notification().is(PRIMARY).contains(
-                        string("This container is "), Basic.strong("fullwidth"), string(" "),
-                        Basic.em("until"), string(" the "), Basic.code("$widescreen"), string(" breakpoint.")));
+        var container = container().is(WIDESCREEN).content(
+                notification().is(PRIMARY).content(
+                        string("This container is "), strong("fullwidth"), string(" "),
+                        em("until"), string(" the "), code("$widescreen"), string(" breakpoint.")));
 
         then(container).rendersAs("""
                 <div class="container is-widescreen">
@@ -41,10 +41,10 @@ class ContainerTest {
     }
 
     @Test void shouldRenderFullhdContainer() {
-        var container = container().is(FULLHD).contains(
-                notification().is(PRIMARY).contains(
-                        string("This container is "), Basic.strong("fullwidth"), string(" "),
-                        Basic.em("until"), string(" the "), Basic.code("$fullhd"), string(" breakpoint.")));
+        var container = container().is(FULLHD).content(
+                notification().is(PRIMARY).content(
+                        string("This container is "), strong("fullwidth"), string(" "),
+                        em("until"), string(" the "), code("$fullhd"), string(" breakpoint.")));
 
         then(container).rendersAs("""
                 <div class="container is-fullhd">
@@ -54,10 +54,10 @@ class ContainerTest {
     }
 
     @Test void shouldRenderMaxDesktopContainer() {
-        var container = container().isMaxDesktop().contains(
-                notification().is(PRIMARY).contains(
-                        string("This container has a "), Basic.code("max-width"), string(" of "),
-                        Basic.code("$desktop - $container-offset"), string(" on widescreen and fullhd.")));
+        var container = container().isMaxDesktop().content(
+                notification().is(PRIMARY).content(
+                        string("This container has a "), code("max-width"), string(" of "),
+                        code("$desktop - $container-offset"), string(" on widescreen and fullhd.")));
 
         then(container).rendersAs("""
                 <div class="container is-max-desktop">
@@ -67,10 +67,10 @@ class ContainerTest {
     }
 
     @Test void shouldRenderMaxWidescreenContainer() {
-        var container = container().isMaxWidescreen().contains(
-                notification().is(PRIMARY).contains(
-                        string("This container has a "), Basic.code("max-width"), string(" of "),
-                        Basic.code("$widescreen - $container-offset"), string(" on fullhd.")));
+        var container = container().isMaxWidescreen().content(
+                notification().is(PRIMARY).content(
+                        string("This container has a "), code("max-width"), string(" of "),
+                        code("$widescreen - $container-offset"), string(" on fullhd.")));
 
         then(container).rendersAs("""
                 <div class="container is-max-widescreen">
@@ -80,9 +80,9 @@ class ContainerTest {
     }
 
     @Test void shouldRenderFluidContainer() {
-        var container = container().isFluid().contains(
-                notification().is(PRIMARY).contains(
-                        string("This container is "), Basic.strong("fluid"),
+        var container = container().isFluid().content(
+                notification().is(PRIMARY).content(
+                        string("This container is "), strong("fluid"),
                         string(": it will have a 32px gap on either side, on any viewport size.")));
 
         then(container).rendersAs("""

@@ -72,7 +72,7 @@ class InputTest {
     }
 
     @ParameterizedTest @EnumSource(mode = EXCLUDE, names = "LOADING") void shouldRenderStateInput(State state) {
-        var input = field().containsControl(input(TEXT).placeholder(state.key() + " input").is(state));
+        var input = field().control(input(TEXT).placeholder(state.key() + " input").is(state));
 
         then(input).rendersAs("""
                 <div class="field">
@@ -84,7 +84,7 @@ class InputTest {
     }
 
     @Test void shouldRenderLoadingInput() {
-        var input = field().containsControl(input(TEXT).placeholder("Loading input"), LOADING);
+        var input = field().control(input(TEXT).placeholder("Loading input"), LOADING);
 
         then(input).rendersAs("""
                 <div class="field">
@@ -96,11 +96,11 @@ class InputTest {
     }
 
     @Test void shouldRenderSizedLoadingInput() {
-        var input = div().style("width: 800px;").contains(
-                field().containsControl(input(TEXT).placeholder("Small loading input").is(SMALL), SMALL, LOADING),
-                field().containsControl(input(TEXT).placeholder("Normal loading input"), LOADING),
-                field().containsControl(input(TEXT).placeholder("Medium loading input").is(MEDIUM), MEDIUM, LOADING),
-                field().containsControl(input(TEXT).placeholder("Large loading input").is(LARGE), LARGE, LOADING));
+        var input = div().style("width: 800px;").content(
+                field().control(input(TEXT).placeholder("Small loading input").is(SMALL), SMALL, LOADING),
+                field().control(input(TEXT).placeholder("Normal loading input"), LOADING),
+                field().control(input(TEXT).placeholder("Medium loading input").is(MEDIUM), MEDIUM, LOADING),
+                field().control(input(TEXT).placeholder("Large loading input").is(LARGE), LARGE, LOADING));
 
         then(input).rendersAs("""
                 <div style="width: 800px;">
@@ -129,7 +129,7 @@ class InputTest {
     }
 
     @Test void shouldRenderDisabledInput() {
-        var input = field().containsControl(input(TEXT).placeholder("Disabled input").disabled());
+        var input = field().control(input(TEXT).placeholder("Disabled input").disabled());
 
         then(input).rendersAs("""
                 <div class="field">
@@ -141,7 +141,7 @@ class InputTest {
     }
 
     @Test void shouldRenderReadonlyInput() {
-        var input = field().containsControl(input(TEXT).value("This text is readonly").readonly());
+        var input = field().control(input(TEXT).value("This text is readonly").readonly());
 
         then(input).rendersAs("""
                 <div class="field">
@@ -153,17 +153,17 @@ class InputTest {
     }
 
     @Test void shouldRenderReadonlyStaticInput() {
-        var input = div().style("width: 800px;").contains(
-                div().classes("field", "is-horizontal").contains(
-                        div().classes("field-label").is(NORMAL).contains(
+        var input = div().style("width: 800px;").content(
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").is(NORMAL).content(
                                 label("From")),
-                        div().classes("field-body").contains(
-                                field().containsControl(input(EMAIL).is(STATIC).value("me@example.com").readonly()))),
-                div().classes("field", "is-horizontal").contains(
-                        div().classes("field-label").is(NORMAL).contains(
+                        div().classes("field-body").content(
+                                field().control(input(EMAIL).is(STATIC).value("me@example.com").readonly()))),
+                div().classes("field", "is-horizontal").content(
+                        div().classes("field-label").is(NORMAL).content(
                                 label("To")),
-                        div().classes("field-body").contains(
-                                field().containsControl(input(EMAIL).placeholder("Recipient email")))));
+                        div().classes("field-body").content(
+                                field().control(input(EMAIL).placeholder("Recipient email")))));
 
         then(input).rendersAs("""
                 <div style="width: 800px;">
@@ -196,11 +196,11 @@ class InputTest {
     }
 
     @Test void shouldRenderInputWithIcons() {
-        var input = div().style("width: 500px;").contains(
-                field().containsControl(input(EMAIL).placeholder("Email"))
+        var input = div().style("width: 500px;").content(
+                field().control(input(EMAIL).placeholder("Email"))
                         .iconLeft("envelope")
                         .iconRight("check"),
-                field().containsControl(input(PASSWORD).placeholder("Password"))
+                field().control(input(PASSWORD).placeholder("Password"))
                         .iconLeft("lock"));
 
         then(input).rendersAs("""
@@ -223,8 +223,8 @@ class InputTest {
     }
 
     @Test void shouldRenderInputWithSmallIcon() {
-        var input = div().style("width: 500px;").contains(
-                field().containsControl(input(EMAIL).placeholder("Email").is(SMALL))
+        var input = div().style("width: 500px;").content(
+                field().control(input(EMAIL).placeholder("Email").is(SMALL))
                         .iconLeft("envelope")
                         .iconRight("check"));
 
@@ -242,8 +242,8 @@ class InputTest {
     }
 
     @Test void shouldRenderInputWithNormalIcon() {
-        var input = div().style("width: 500px;").contains(
-                field().containsControl(input(EMAIL).placeholder("Email"))
+        var input = div().style("width: 500px;").content(
+                field().control(input(EMAIL).placeholder("Email"))
                         .iconLeft("envelope")
                         .iconRight("check"));
 
@@ -261,8 +261,8 @@ class InputTest {
     }
 
     @Test void shouldRenderInputWithMediumIcon() {
-        var input = div().style("width: 500px;").contains(
-                field().containsControl(input(EMAIL).placeholder("Email").is(MEDIUM))
+        var input = div().style("width: 500px;").content(
+                field().control(input(EMAIL).placeholder("Email").is(MEDIUM))
                         .iconLeft("envelope")
                         .iconRight("check"));
 
@@ -280,8 +280,8 @@ class InputTest {
     }
 
     @Test void shouldRenderInputWithLargeIcon() {
-        var input = div().style("width: 500px;").contains(
-                field().containsControl(input(EMAIL).placeholder("Email").is(LARGE))
+        var input = div().style("width: 500px;").content(
+                field().control(input(EMAIL).placeholder("Email").is(LARGE))
                         .iconLeft("envelope")
                         .iconRight("check"));
 

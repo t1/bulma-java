@@ -1,29 +1,19 @@
 package com.github.t1.bulmajava.basic;
 
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import lombok.experimental.Accessors;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static java.util.Collections.unmodifiableSet;
-
-@Value @RequiredArgsConstructor @Accessors(fluent = true)
-@SuppressWarnings("ClassCanBeRecord")
-public class Classes implements Attribute {
+public record Classes(@NonNull Set<String> set) implements Attribute {
     public static Classes of(String... classes) {
         return (classes.length == 0) ? null :
                 Classes.of(Set.of()).plus(classes); // ignore null classes
     }
 
-    public static Classes of(Set<String> classes) {return new Classes(unmodifiableSet(classes));}
-
-
-    @NonNull Set<String> set;
+    public static Classes of(Set<String> classes) {return new Classes(new LinkedHashSet<>(classes));}
 
     @Override public String toString() {return render();}
 
@@ -49,11 +39,7 @@ public class Classes implements Attribute {
         return Classes.of(copy);
     }
 
-    public Classes minus(Classes classes) {
-        var set = new LinkedHashSet<>(this.set);
-        set.removeAll(classes.set);
-        return set.isEmpty() ? null : Classes.of(set);
-    }
+    public void minus(Classes classes) {set.removeAll(classes.set);}
 
 
     @Override public void renderValue(Renderer renderer) {

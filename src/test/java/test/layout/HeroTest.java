@@ -1,6 +1,5 @@
 package test.layout;
 
-import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Color;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +9,7 @@ import test.NoSectionWrapper;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.*;
 import static com.github.t1.bulmajava.basic.Style.*;
 import static com.github.t1.bulmajava.components.Navbar.navbar;
@@ -29,7 +29,7 @@ import static test.CustomAssertions.then;
 @NoSectionWrapper
 class HeroTest {
     @Test void shouldRenderHero() {
-        var hero = hero().containsBody(
+        var hero = hero().body(
                 titleP("Hero title"),
                 subtitleP("Hero subtitle"));
 
@@ -44,7 +44,7 @@ class HeroTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderColorHero(Color color) {
-        var hero = hero().is(color).containsBody(
+        var hero = hero().is(color).body(
                 titleP(color.key() + " hero"),
                 subtitleP(color.key() + " subtitle"));
 
@@ -59,7 +59,7 @@ class HeroTest {
     }
 
     @Test void shouldRenderSmallHero() {
-        var hero = hero().is(SMALL, PRIMARY).containsBody(
+        var hero = hero().is(SMALL, PRIMARY).body(
                 titleP("Small hero"),
                 subtitleP("Small subtitle"));
 
@@ -74,7 +74,7 @@ class HeroTest {
     }
 
     @Test void shouldRenderMediumHero() {
-        var hero = hero().is(MEDIUM, LINK).containsBody(
+        var hero = hero().is(MEDIUM, LINK).body(
                 titleP("Medium hero"),
                 subtitleP("Medium subtitle"));
 
@@ -89,7 +89,7 @@ class HeroTest {
     }
 
     @Test void shouldRenderLargeHero() {
-        var hero = hero().is(LARGE, INFO).containsBody(
+        var hero = hero().is(LARGE, INFO).body(
                 titleP("Large hero"),
                 subtitleP("Large subtitle"));
 
@@ -104,7 +104,7 @@ class HeroTest {
     }
 
     @Test void shouldRenderHalfheightHero() {
-        var hero = hero().is(SUCCESS, HALFHEIGHT).containsBody(Basic.div().classes("").contains(
+        var hero = hero().is(SUCCESS, HALFHEIGHT).body(div().classes("").content(
                 titleP("Half height hero"),
                 subtitleP("Half height subtitle")));
 
@@ -121,7 +121,7 @@ class HeroTest {
     }
 
     @Test void shouldRenderFullheightHero() {
-        var hero = hero().is(DANGER, FULLHEIGHT).containsBody(Basic.div().classes("").contains(
+        var hero = hero().is(DANGER, FULLHEIGHT).body(div().classes("").content(
                 titleP("Fullheight hero"),
                 subtitleP("Fullheight subtitle")));
 
@@ -138,16 +138,16 @@ class HeroTest {
     }
 
     @Test void shouldRenderFullheightHeroWithNavbar() {
-        var div = Basic.div().contains(
+        var div = div().content(
                 navbar("fullheightHeroWithNavbarExample")
-                        .containsStart(
+                        .start(
                                 a("Home"),
                                 a("Documentation"))
-                        .containsEnd(Basic.div().contains(
-                                buttons().contains(
+                        .end(div().content(
+                                buttons().content(
                                         a("Github").classes("button").is(DARK),
                                         a("Download").classes("button").is(LINK)))),
-                hero().is(LINK).isFullheightWithNavbar().containsBody(
+                hero().is(LINK).isFullheightWithNavbar().body(
                         titleP("Fullheight hero with navbar")));
 
         // nav role and aria-label where missing in the docs
@@ -155,7 +155,7 @@ class HeroTest {
         then(div).rendersAs("""
                 <div>
                     <nav class="navbar" role="navigation" aria-label="navigation">
-                        <div class="navbar-menu" id="fullheightHeroWithNavbarExample">
+                        <div id="fullheightHeroWithNavbarExample" class="navbar-menu">
                             <div class="navbar-start">
                                 <a class="navbar-item">Home</a>
                                 <a class="navbar-item">Documentation</a>
@@ -181,26 +181,26 @@ class HeroTest {
 
     @Test void shouldRenderMediumThreePartHero() {
         var div = hero().is(PRIMARY, MEDIUM)
-                .containsHead(navbar("navbarMenuHeroA")
-                        .brand(a().contains(
+                .head(navbar("navbarMenuHeroA")
+                        .brand(a().content(
                                 img("https://bulma.io/images/bulma-type-white.png", "Logo")))
                         .burger()
-                        .containsEnd(
+                        .end(
                                 a("Home").is(ACTIVE),
                                 a("Examples"),
                                 a("Documentation"),
-                                Basic.div().contains(
-                                        a().button().is(PRIMARY, INVERTED).contains(icon("github", BOLD), Basic.span("Download")))))
-                .containsBody(Basic.div().classes("container", "has-text-centered").contains(
+                                div().content(
+                                        a().button().is(PRIMARY, INVERTED).content(icon("github", BOLD), span("Download")))))
+                .body(div().classes("container", "has-text-centered").content(
                         titleP("Title"),
                         subtitleP("Subtitle")))
-                .containsFoot(navTabs().contains(
-                        Basic.li().is(ACTIVE).contains(a("Overview")),
-                        Basic.li().contains(a("Modifiers")),
-                        Basic.li().contains(a("Grid")),
-                        Basic.li().contains(a("Elements")),
-                        Basic.li().contains(a("Components")),
-                        Basic.li().contains(a("Layout"))));
+                .foot(navTabs().content(
+                        li().is(ACTIVE).content(a("Overview")),
+                        li().content(a("Modifiers")),
+                        li().content(a("Grid")),
+                        li().content(a("Elements")),
+                        li().content(a("Components")),
+                        li().content(a("Layout"))));
 
         // nav role and aria-label where missing in the docs
         // I've also removed the empty container
@@ -218,7 +218,7 @@ class HeroTest {
                                     <span aria-hidden="true"></span>
                                 </a>
                             </div>
-                            <div class="navbar-menu" id="navbarMenuHeroA">
+                            <div id="navbarMenuHeroA" class="navbar-menu">
                                 <div class="navbar-end">
                                     <a class="is-active navbar-item">Home</a>
                                     <a class="navbar-item">Examples</a>
@@ -269,26 +269,26 @@ class HeroTest {
 
     @Test void shouldRenderLargeThreePartHero() {
         var div = hero().is(INFO, LARGE)
-                .containsHead(navbar("navbarMenuHeroB")
-                        .brand(a().contains(
+                .head(navbar("navbarMenuHeroB")
+                        .brand(a().content(
                                 img("https://bulma.io/images/bulma-type-white.png", "Logo")))
                         .burger()
-                        .containsEnd(
+                        .end(
                                 a("Home").is(ACTIVE),
                                 a("Examples"),
                                 a("Documentation"),
-                                Basic.div().contains(
-                                        a().button().is(INFO, INVERTED).contains(icon("github", BOLD), Basic.span("Download")))))
-                .containsBody(Basic.div().classes("container", "has-text-centered").contains(
+                                div().content(
+                                        a().button().is(INFO, INVERTED).content(icon("github", BOLD), span("Download")))))
+                .body(div().classes("container", "has-text-centered").content(
                         titleP("Title"),
                         subtitleP("Subtitle")))
-                .containsFoot(navTabs().isBoxed().is(FULLWIDTH).contains(
-                        Basic.li().is(ACTIVE).contains(a("Overview")),
-                        Basic.li().contains(a("Modifiers")),
-                        Basic.li().contains(a("Grid")),
-                        Basic.li().contains(a("Elements")),
-                        Basic.li().contains(a("Components")),
-                        Basic.li().contains(a("Layout"))));
+                .foot(navTabs().isBoxed().is(FULLWIDTH).content(
+                        li().is(ACTIVE).content(a("Overview")),
+                        li().content(a("Modifiers")),
+                        li().content(a("Grid")),
+                        li().content(a("Elements")),
+                        li().content(a("Components")),
+                        li().content(a("Layout"))));
 
         // nav role and aria-label where missing in the docs
         // I've also removed the empty container
@@ -306,7 +306,7 @@ class HeroTest {
                                     <span aria-hidden="true"></span>
                                 </a>
                             </div>
-                            <div class="navbar-menu" id="navbarMenuHeroB">
+                            <div id="navbarMenuHeroB" class="navbar-menu">
                                 <div class="navbar-end">
                                     <a class="is-active navbar-item">Home</a>
                                     <a class="navbar-item">Examples</a>
@@ -357,26 +357,26 @@ class HeroTest {
 
     @Test void shouldRenderFullHeightThreePartHero() {
         var div = hero().is(SUCCESS, FULLHEIGHT)
-                .containsHead(navbar("navbarMenuHeroC")
-                        .brand(a().contains(
+                .head(navbar("navbarMenuHeroC")
+                        .brand(a().content(
                                 img("https://bulma.io/images/bulma-type-white.png", "Logo")))
                         .burger()
-                        .containsEnd(
+                        .end(
                                 a("Home").is(ACTIVE),
                                 a("Examples"),
                                 a("Documentation"),
-                                Basic.div().contains(
-                                        a().button().is(SUCCESS, INVERTED).contains(icon("github", BOLD), Basic.span("Download")))))
-                .containsBody(Basic.div().classes("container", "has-text-centered").contains(
+                                div().content(
+                                        a().button().is(SUCCESS, INVERTED).content(icon("github", BOLD), span("Download")))))
+                .body(div().classes("container", "has-text-centered").content(
                         titleP("Title"),
                         subtitleP("Subtitle")))
-                .containsFoot(navTabs().isBoxed().is(FULLWIDTH).contains(
-                        Basic.li().is(ACTIVE).contains(a("Overview")),
-                        Basic.li().contains(a("Modifiers")),
-                        Basic.li().contains(a("Grid")),
-                        Basic.li().contains(a("Elements")),
-                        Basic.li().contains(a("Components")),
-                        Basic.li().contains(a("Layout"))));
+                .foot(navTabs().isBoxed().is(FULLWIDTH).content(
+                        li().is(ACTIVE).content(a("Overview")),
+                        li().content(a("Modifiers")),
+                        li().content(a("Grid")),
+                        li().content(a("Elements")),
+                        li().content(a("Components")),
+                        li().content(a("Layout"))));
 
         // nav role and aria-label where missing in the docs
         // I've also removed the empty container
@@ -394,7 +394,7 @@ class HeroTest {
                                     <span aria-hidden="true"></span>
                                 </a>
                             </div>
-                            <div class="navbar-menu" id="navbarMenuHeroC">
+                            <div id="navbarMenuHeroC" class="navbar-menu">
                                 <div class="navbar-end">
                                     <a class="is-active navbar-item">Home</a>
                                     <a class="navbar-item">Examples</a>

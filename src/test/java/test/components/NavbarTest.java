@@ -1,7 +1,6 @@
 package test.components;
 
 import com.github.t1.bulmajava.basic.Anchor;
-import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Color;
 import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.elements.Title;
@@ -13,6 +12,7 @@ import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
 import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.PRIMARY;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.Style.LIGHT;
@@ -28,21 +28,21 @@ import static test.CustomAssertions.then;
 @ExtendWith(RenderTestExtension.class)
 class NavbarTest {
     @Test void shouldRenderNavbar() {
-        var nav = Basic.control().contains(navbar("navbarBasicExample")
+        var nav = control().content(navbar("navbarBasicExample")
                         .brand(bulmaLogo())
                         .burger()
-                        .containsStart(
+                        .start(
                                 a("Home"),
                                 a("Documentation"),
-                                navbarDropdown("More", HOVERABLE).contains(
+                                navbarDropdown("More", HOVERABLE).content(
                                         a("About"),
                                         a("Jobs"),
                                         a("Contact"),
-                                        Basic.hr(),
+                                        hr(),
                                         a("Report an issue")))
-                        .containsEnd(Basic.div().contains(
-                                buttons().contains(
-                                        a().contains(Basic.strong("Sign up")).classes("button").is(PRIMARY),
+                        .end(div().content(
+                                buttons().content(
+                                        a().content(strong("Sign up")).classes("button").is(PRIMARY),
                                         a("Log in").classes("button").is(LIGHT)))))
                 .style("margin-bottom: 200px;");
 
@@ -59,7 +59,7 @@ class NavbarTest {
                                 <span aria-hidden="true"></span>
                             </a>
                         </div>
-                        <div class="navbar-menu" id="navbarBasicExample">
+                        <div id="navbarBasicExample" class="navbar-menu">
                             <div class="navbar-start">
                                 <a class="navbar-item">Home</a>
                                 <a class="navbar-item">Documentation</a>
@@ -89,22 +89,22 @@ class NavbarTest {
     }
 
     @Test void shouldRenderNavbarWithMenuRight() {
-        var nav = Basic.control().contains(navbar("navbarMenuRightExample")
+        var nav = control().content(navbar("navbarMenuRightExample")
                         .brand(bulmaLogo())
                         .burger()
-                        .containsStart(
-                                Basic.div().contains(
-                                        buttons().contains(
-                                                a().contains(Basic.strong("Sign up")).classes("button").is(PRIMARY),
+                        .start(
+                                div().content(
+                                        buttons().content(
+                                                a().content(strong("Sign up")).classes("button").is(PRIMARY),
                                                 a("Log in").classes("button").is(LIGHT))))
-                        .containsEnd(
+                        .end(
                                 a("Home"),
                                 a("Documentation"),
-                                navbarDropdown("More", HOVERABLE).contains(
+                                navbarDropdown("More", HOVERABLE).content(
                                         a("About"),
                                         a("Jobs"),
                                         a("Contact"),
-                                        Basic.hr(),
+                                        hr(),
                                         a("Report an issue"))))
                 .style("margin-bottom: 200px;");
 
@@ -121,7 +121,7 @@ class NavbarTest {
                                 <span aria-hidden="true"></span>
                             </a>
                         </div>
-                        <div class="navbar-menu" id="navbarMenuRightExample">
+                        <div id="navbarMenuRightExample" class="navbar-menu">
                             <div class="navbar-start">
                                 <div class="navbar-item">
                                     <div class="buttons">
@@ -151,17 +151,17 @@ class NavbarTest {
     }
 
     @Test void shouldRenderNavbarNoLeftButMenuRight() {
-        var nav = Basic.control().contains(navbar("navbarMenuNoLeftButRightExample")
+        var nav = control().content(navbar("navbarMenuNoLeftButRightExample")
                         .brand(bulmaLogo())
                         .burger()
-                        .containsEnd(
+                        .end(
                                 a("Home"),
                                 a("Documentation"),
-                                navbarDropdown("More", HOVERABLE).contains(
+                                navbarDropdown("More", HOVERABLE).content(
                                         a("About"),
                                         a("Jobs"),
                                         a("Contact"),
-                                        Basic.hr(),
+                                        hr(),
                                         a("Report an issue"))))
                 .style("margin-bottom: 200px;");
 
@@ -178,7 +178,7 @@ class NavbarTest {
                                 <span aria-hidden="true"></span>
                             </a>
                         </div>
-                        <div class="navbar-menu" id="navbarMenuNoLeftButRightExample">
+                        <div id="navbarMenuNoLeftButRightExample" class="navbar-menu">
                             <div class="navbar-end">
                                 <a class="navbar-item">Home</a>
                                 <a class="navbar-item">Documentation</a>
@@ -200,7 +200,7 @@ class NavbarTest {
     }
 
     @Test void shouldRenderNavbarBrand() {
-        var navbar = Basic.control().contains(navbar(null)
+        var navbar = control().content(navbar(null)
                 .brand(bulmaLogo())
                 .burger());
 
@@ -223,7 +223,7 @@ class NavbarTest {
     }
 
     @Test void shouldRenderTransparentNavbarBrand() {
-        var navbar = Basic.control().contains(
+        var navbar = control().content(
                 navbar(null)
                         .isTransparent()
                         .brand(bulmaLogo())
@@ -248,7 +248,7 @@ class NavbarTest {
     }
 
     @Test void shouldRenderFixedTopNavbarBrand() {
-        var navbar = Basic.control().contains(navbar(null)
+        var navbar = control().content(navbar(null)
                 .isFixedTop()
                 .brand(bulmaLogo())
                 .burger());
@@ -272,7 +272,7 @@ class NavbarTest {
     }
 
     @Test void shouldRenderFixedBottomNavbarBrand() {
-        var navbar = Basic.control().contains(navbar(null)
+        var navbar = control().content(navbar(null)
                 .isFixedBottom()
                 .brand(bulmaLogo())
                 .burger());
@@ -296,24 +296,24 @@ class NavbarTest {
     }
 
     @Test void shouldRenderRightDropdownNavbar() {
-        var div = Basic.control().style("width: 300px;").contains(
+        var div = control().style("width: 300px;").content(
                 navbar("navbarDropdownMenu")
-                        .containsStart(
-                                navbarDropdown("Left", ACTIVE).contains(
+                        .start(
+                                navbarDropdown("Left", ACTIVE).content(
                                         menu()))
-                        .containsEnd(
-                                navbarDropdown("Right", ACTIVE).is(RIGHT).contains(menu())),
-                section().classes("hero").is(PRIMARY).contains(
-                        Basic.div().classes("hero-body").contains(
+                        .end(
+                                navbarDropdown("Right", ACTIVE).is(RIGHT).content(menu())),
+                section().classes("hero").is(PRIMARY).content(
+                        div().classes("hero-body").content(
                                 Title.titleP("Docs"),
-                                Title.subtitleP("Everything you need to ").contains(
-                                        Basic.strong("create a website"),
+                                Title.subtitleP("Everything you need to ").content(
+                                        strong("create a website"),
                                         string(" with Bulma")))));
 
         then(div).rendersAs("""
                 <div class="control" style="width: 300px;">
                     <nav class="navbar" role="navigation" aria-label="navigation">
-                        <div class="navbar-menu" id="navbarDropdownMenu">
+                        <div id="navbarDropdownMenu" class="navbar-menu">
                             <div class="navbar-start">
                                 <div class="has-dropdown is-active navbar-item">
                                     <a class="navbar-link">Left</a>
@@ -351,15 +351,15 @@ class NavbarTest {
     }
 
     @Test void shouldRenderDropupNavbar() {
-        var div = Basic.control().contains(
-                        section().classes("hero").is(PRIMARY).contains(
-                                Basic.div().classes("hero-body").contains(
+        var div = control().content(
+                        section().classes("hero").is(PRIMARY).content(
+                                div().classes("hero-body").content(
                                         Title.titleP("Docs"),
-                                        Title.subtitleP("Everything you need to ").contains(
-                                                Basic.strong("create a website"),
+                                        Title.subtitleP("Everything you need to ").content(
+                                                strong("create a website"),
                                                 string(" with Bulma")))),
-                        navbar("navbarDropupMenu").containsStart(
-                                navbarDropdown("Dropup", ACTIVE).contains(
+                        navbar("navbarDropupMenu").start(
+                                navbarDropdown("Dropup", ACTIVE).content(
                                         menu()).classes("has-dropdown-up")))
                 .style("width: 400px");
 
@@ -372,7 +372,7 @@ class NavbarTest {
                         </div>
                     </section>
                     <nav class="navbar" role="navigation" aria-label="navigation">
-                        <div class="navbar-menu" id="navbarDropupMenu">
+                        <div id="navbarDropupMenu" class="navbar-menu">
                             <div class="navbar-start">
                                 <div class="has-dropdown is-active has-dropdown-up navbar-item">
                                     <a class="navbar-link">Dropup</a>
@@ -392,17 +392,17 @@ class NavbarTest {
     }
 
     @Test void shouldRenderArrowlessDropdownNavbar() {
-        var navbar = Basic.control().contains(
+        var navbar = control().content(
                         navbar("arrowlessNavbarDropupMenu")
-                                .containsStart(
-                                        navbarDropdown("Link without arrow", HOVERABLE).isArrowless()
-                                                .contains(menu())))
+                                .start(
+                                        navbarDropdown("Link without arrow", HOVERABLE).arrowless()
+                                                .content(menu())))
                 .style("margin-bottom: 200px;");
 
         then(navbar).rendersAs("""
                 <div class="control" style="margin-bottom: 200px;">
                     <nav class="navbar" role="navigation" aria-label="navigation">
-                        <div class="navbar-menu" id="arrowlessNavbarDropupMenu">
+                        <div id="arrowlessNavbarDropupMenu" class="navbar-menu">
                             <div class="navbar-start">
                                 <div class="has-dropdown is-hoverable navbar-item">
                                     <a class="navbar-link is-arrowless">Link without arrow</a>
@@ -422,16 +422,16 @@ class NavbarTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderColorNavbar(Color color) {
-        var nav = Basic.control().contains(navbar("navbar-" + color + "-example")
+        var nav = control().content(navbar("navbar-" + color + "-example")
                 .is(color)
                 .brand(bulmaLogo())
-                .containsStart(
+                .start(
                         a("Home"),
                         a("Documentation"),
-                        navbarDropdown("More", HOVERABLE).contains(a("About")))
-                .containsEnd(Basic.div().contains(
-                        buttons().contains(
-                                a().contains(Basic.strong("Sign up")).classes("button").is(PRIMARY),
+                        navbarDropdown("More", HOVERABLE).content(a("About")))
+                .end(div().content(
+                        buttons().content(
+                                a().content(strong("Sign up")).classes("button").is(PRIMARY),
                                 a("Log in").classes("button").is(LIGHT)))));
 
         then(nav).rendersAs("""
@@ -442,7 +442,7 @@ class NavbarTest {
                                 <img src="https://bulma.io/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
                             </a>
                         </div>
-                        <div class="navbar-menu" id="$menuId">
+                        <div id="$menuId" class="navbar-menu">
                             <div class="navbar-start">
                                 <a class="navbar-item">Home</a>
                                 <a class="navbar-item">Documentation</a>
@@ -471,7 +471,7 @@ class NavbarTest {
 
 
     private static Anchor bulmaLogo() {
-        return a().href("https://bulma.io").contains(
+        return a().href("https://bulma.io").content(
                 img("https://bulma.io/images/bulma-logo.png", "bulma logo", "112", "28"));
     }
 
@@ -480,7 +480,7 @@ class NavbarTest {
                 a("Overview"),
                 a("Elements"),
                 a("Components"),
-                Basic.hr(),
-                Basic.div().contains("Version 0.9.4")};
+                hr(),
+                div().content("Version 0.9.4")};
     }
 }

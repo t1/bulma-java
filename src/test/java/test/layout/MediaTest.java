@@ -1,11 +1,11 @@
 package test.layout;
 
-import com.github.t1.bulmajava.basic.Basic;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.INFO;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
@@ -29,19 +29,19 @@ import static test.RenderTestExtension.loremIpsumS;
 @ExtendWith(RenderTestExtension.class)
 class MediaTest {
     @Test void shouldRenderMediaObject() {
-        var div = Basic.div().style("width: 400px;").contains(media()
-                .containsLeft(figure().contains(imageP(_64x64).contains(
+        var div = div().style("width: 400px;").content(media()
+                .left(figure().content(imageP(_64x64).content(
                         img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
-                .containsContent(
-                        Basic.div().classes("content").contains(Basic.p().contains(
-                                Basic.strong("John Smith"), Basic.small("@johnsmith"), Basic.small("31m"),
-                                Basic.br(),
+                .addContent(
+                        div().classes("content").content(p().content(
+                                strong("John Smith"), small("@johnsmith"), small("31m"),
+                                br(),
                                 loremIpsumS())),
                         level().is(MOBILE)
-                                .containsLeftA(icon("reply").is(SMALL))
-                                .containsLeftA(icon("retweet").is(SMALL))
-                                .containsLeftA(icon("heart").is(SMALL)))
-                .containsRight(Basic.div().contains(delete())));
+                                .addLeftA(icon("reply").is(SMALL))
+                                .addLeftA(icon("retweet").is(SMALL))
+                                .addLeftA(icon("heart").is(SMALL)))
+                .addRight(div().content(delete())));
 
         // the aria-label and img-alt where not in the docs
         then(div).rendersAs("""
@@ -85,14 +85,14 @@ class MediaTest {
     }
 
     @Test void shouldRenderMediaObjectWithTextarea() {
-        var div = Basic.div().style("width: 400px;").contains(media()
-                .containsLeft(figure().contains(imageP(_64x64).contains(
+        var div = div().style("width: 400px;").content(media()
+                .left(figure().content(imageP(_64x64).content(
                         img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
-                .containsContent(
-                        field().containsControl(textarea().placeholder("Add a comment...")),
+                .addContent(
+                        field().control(textarea().placeholder("Add a comment...")),
                         level()
-                                .containsLeft(a("Submit").button().is(INFO))
-                                .containsRight(checkbox().contains("Press enter to submit"))));
+                                .addLeft(a("Submit").button().is(INFO))
+                                .addRight(checkbox().content("Press enter to submit"))));
 
         // the img-alt was not in the docs
         then(div).rendersAs("""
@@ -131,36 +131,36 @@ class MediaTest {
     }
 
     @Test void shouldRenderNestedMediaObjects() {
-        var div = Basic.div().style("width: 800px;").contains(media()
-                        .containsLeft(figure().contains(imageP(_64x64).contains(
+        var div = div().style("width: 800px;").content(media()
+                        .left(figure().content(imageP(_64x64).content(
                                 img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
-                        .containsContent(content_().contains(
-                                        Basic.p().contains(
-                                                Basic.strong("Barbara Middleton"), Basic.br(),
-                                                loremIpsumS(), Basic.br(),
-                                                Basic.small().contains(a("Like"), string("·"), a("Reply"), string("·"), string("3 hrs")))),
+                        .addContent(content_().content(
+                                        p().content(
+                                                strong("Barbara Middleton"), br(),
+                                                loremIpsumS(), br(),
+                                                small().content(a("Like"), string("·"), a("Reply"), string("·"), string("3 hrs")))),
                                 media()
-                                        .containsLeft(figure().contains(imageP(_48x48).contains(
+                                        .left(figure().content(imageP(_48x48).content(
                                                 img("https://bulma.io/images/placeholders/96x96.png", "bulma"))))
-                                        .containsContent(content_().contains(Basic.p().contains(
-                                                        Basic.strong("Sean Brown"), Basic.br(),
-                                                        loremIpsumS(), Basic.br(),
-                                                        Basic.small().contains(a("Like"), string("·"), a("Reply"), string("·"), string("2 hrs")))),
-                                                media().containsContent("Vivamus quis semper metus, non tincidunt dolor. Vivamus in mi eu lorem cursus ullamcorper sit amet nec massa."),
-                                                media().containsContent("Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.")),
+                                        .addContent(content_().content(p().content(
+                                                        strong("Sean Brown"), br(),
+                                                        loremIpsumS(), br(),
+                                                        small().content(a("Like"), string("·"), a("Reply"), string("·"), string("2 hrs")))),
+                                                media().addContent("Vivamus quis semper metus, non tincidunt dolor. Vivamus in mi eu lorem cursus ullamcorper sit amet nec massa."),
+                                                media().addContent("Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.")),
                                 media()
-                                        .containsLeft(figure().contains(imageP(_48x48).contains(
+                                        .left(figure().content(imageP(_48x48).content(
                                                 img("https://bulma.io/images/placeholders/96x96.png", "bulma"))))
-                                        .containsContent(content_().contains(Basic.p().contains(
-                                                Basic.strong("Kayli Eunice"), Basic.br(),
-                                                loremIpsumS(), Basic.br(),
-                                                Basic.small().contains(a("Like"), string("·"), a("Reply"), string("·"), string("2 hrs")))))),
+                                        .addContent(content_().content(p().content(
+                                                strong("Kayli Eunice"), br(),
+                                                loremIpsumS(), br(),
+                                                small().content(a("Like"), string("·"), a("Reply"), string("·"), string("2 hrs")))))),
                 media()
-                        .containsLeft(figure().contains(imageP(_64x64).contains(
+                        .left(figure().content(imageP(_64x64).content(
                                 img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
-                        .containsContent(
-                                field().containsControl(textarea().placeholder("Add a comment...")),
-                                field().containsControl(button("Post comment"))));
+                        .addContent(
+                                field().control(textarea().placeholder("Add a comment...")),
+                                field().control(button("Post comment"))));
 
         // the img-alts where not in the docs
         then(div).rendersAs("""

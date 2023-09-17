@@ -1,21 +1,31 @@
 package com.github.t1.bulmajava.basic;
 
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
+
+import java.util.Comparator;
 
 public interface Attribute extends Renderable {
-    static Attribute noValueAttribute(@NonNull String key) {
-        return new Attribute() {
-            @Override public String key() {return key;}
-
-            @Override public boolean matches(Attribute attribute) {return attribute.hasKey(attribute.key());}
-
-            @Override public void render(Renderer renderer) {renderer.append(key());}
-
-            @Override public void renderValue(Renderer renderer) {}
+    /**
+     * We want some attributes to be in a specific order:
+     * <ol>
+     *     <li><code>id</code></li>
+     *     <li><code>class</code></li>
+     *     <li><code>rel</code></li>
+     *     <li><code>href</code></li>
+     *     <li>everything else</li>
+     * </ol>
+     */
+    Comparator<String> KEY_COMPARATOR = (left, right) -> {
+        if (left.equals(right)) return 0;
+        return switch (left) {
+            case "id" -> -1;
+            case "class" -> right.equals("id") ? 1 : -1;
+            case "rel" -> right.equals("id") || right.equals("class") ? 1 : -1;
+            case "href" -> right.equals("id") || right.equals("class") || right.equals("rel") ? 1 : -1;
+            default -> 0;
         };
-    }
+    };
+    Comparator<Attribute> COMPARATOR = (left, right) -> KEY_COMPARATOR.compare(left.key(), right.key());
 
 
     String key();
@@ -34,12 +44,8 @@ public interface Attribute extends Renderable {
 
     default Attribute and(Attribute attribute) {throw new UnsupportedOperationException();}
 
-    @Value @RequiredArgsConstructor
-    class StringAttribute implements Attribute {
+    record StringAttribute(String key, String value) implements Attribute {
         public static Attribute stringAttribute(@NonNull String key, @NonNull String value) {return new StringAttribute(key, value);}
-
-        @NonNull String key;
-        @NonNull String value;
 
         @Override public boolean matches(Attribute attribute) {
             return hasKey(attribute.key()) && attribute instanceof StringAttribute str && value.equals(str.value);
@@ -54,5 +60,17 @@ public interface Attribute extends Renderable {
         }
 
         @Override public void renderValue(Renderer renderer) {renderer.append(value);}
+    }
+
+    record NoValueAttribute(String key) implements Attribute {
+        public static Attribute noValueAttribute(@NonNull String key) {return new NoValueAttribute(key);}
+
+        @Override public String key() {return key;}
+
+        @Override public boolean matches(Attribute attribute) {return attribute.hasKey(attribute.key());}
+
+        @Override public void render(Renderer renderer) {renderer.append(key());}
+
+        @Override public void renderValue(Renderer renderer) {}
     }
 }

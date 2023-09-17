@@ -7,7 +7,7 @@ import static com.github.t1.bulmajava.basic.Basic.div;
 
 public class Message {
     public static AbstractElement<?> message(AbstractElement<?>... elements) {
-        return element("article").classes("message").contains(elements);
+        return element("article").classes("message").content(elements);
     }
 
     public static AbstractElement<?> messageHeader() {return div().classes("message-header");}

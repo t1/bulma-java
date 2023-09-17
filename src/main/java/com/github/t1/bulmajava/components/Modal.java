@@ -11,7 +11,7 @@ import static com.github.t1.bulmajava.elements.Button.button;
 
 public class Modal {
     public static AbstractElement<?> modal() {
-        return div().classes("modal").contains(
+        return div().classes("modal").content(
                 div().classes("modal-background"));
     }
 

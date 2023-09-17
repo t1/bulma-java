@@ -12,8 +12,8 @@ import static test.CustomAssertions.then;
 class RadioTest {
     @Test void shouldRenderRadio() {
         var field = field()
-                .containsControl(radio("answer").contains("Yes"))
-                .containsControl(radio("answer").contains("No"));
+                .control(radio("answer").content("Yes"))
+                .control(radio("answer").content("No"));
 
         then(field).rendersAs("""
                 <div class="field">
@@ -33,9 +33,9 @@ class RadioTest {
 
     @Test void shouldRenderDisabledRadio() {
         var field = field()
-                .containsControl(radio("rsvp").contains("Going"))
-                .containsControl(radio("rsvp").contains("Not going"))
-                .containsControl(radio("rsvp").contains("Maybe").disabled());
+                .control(radio("rsvp").content("Going"))
+                .control(radio("rsvp").content("Not going"))
+                .control(radio("rsvp").content("Maybe").disabled());
 
         //noinspection HtmlUnknownAttribute // the disabled label is actually correct
         then(field).rendersAs("""
@@ -60,8 +60,8 @@ class RadioTest {
 
     @Test void shouldRenderCheckedRadio() {
         var field = field()
-                .containsControl(radio("foobar").contains("Foo"))
-                .containsControl(radio("foobar").contains("Bar").checked());
+                .control(radio("foobar").content("Foo"))
+                .control(radio("foobar").content("Bar").checked());
 
         then(field).rendersAs("""
                 <div class="field">

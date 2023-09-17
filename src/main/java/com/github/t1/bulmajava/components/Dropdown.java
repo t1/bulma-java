@@ -1,14 +1,12 @@
 package com.github.t1.bulmajava.components;
 
 import com.github.t1.bulmajava.basic.*;
-import com.github.t1.bulmajava.elements.Icon;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import java.util.stream.Stream;
-
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Basic.span;
+import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.elements.Button.button;
 
@@ -24,32 +22,31 @@ public class Dropdown extends AbstractElement<Dropdown> {
 
     private Dropdown(String id, String buttonTitle, String icon) {
         super("div", Attributes.of(Classes.of("dropdown")),
-                theContent(id, buttonTitle, icon));
+                concat(trigger(id, buttonTitle, icon), menu(id)));
     }
 
-    private static Renderable theContent(String id, String buttonTitle, String icon) {
-        return ConcatenatedRenderable.concat(div().classes("dropdown-trigger").contains(
-                        button(span(buttonTitle))
-                                .attr("aria-haspopup", "true")
-                                .attr("aria-controls", id)
-                                .icon(icon).isIcon(SMALL).icon(Icon::ariaHidden)),
-                div().classes("dropdown-menu").id(id).attr("role", "menu").contains(
-                        div().classes("dropdown-content")));
+    private static Element trigger(String id, String buttonTitle, String icon) {
+        return div().classes("dropdown-trigger").content(button(span(buttonTitle))
+                .attr("aria-haspopup", "true")
+                .attr("aria-controls", id)
+                .icon(icon).isIcon(SMALL).icon(i -> i.ariaHidden(true)));
+    }
+
+    private static Element menu(String id) {
+        return div().classes("dropdown-menu").id(id).attr("role", "menu")
+                .content(div().classes("dropdown-content"));
     }
 
     @Override
-    public Dropdown contains(Renderable renderable) {return contains(new Renderable[]{renderable});}
+    public Dropdown content(Renderable renderable) {
+        menu().content(item(renderable));
+        return this;
+    }
 
-    @Override
-    public Dropdown contains(Renderable... renderable) {
-        var triggerAndMenu = concatContent();
+    private Element menu() {
+        var triggerAndMenu = contentAs(ConcatenatedRenderable.class);
         var menu = (Element) triggerAndMenu.renderables().get(1);
-        var content = (Element) menu.content();
-        var newItems = Stream.of(renderable).map(Dropdown::item);
-        var newContent = content.contains(newItems);
-        var newMenu = menu.content(newContent);
-        var newTriggerAndMenu = triggerAndMenu.replace(menu, newMenu);
-        return content(newTriggerAndMenu);
+        return menu.contentAs(Element.class);
     }
 
     private static Renderable item(Renderable renderable) {

@@ -17,7 +17,7 @@ import static test.RenderTestExtension.loremIpsumS;
 @ExtendWith(RenderTestExtension.class)
 class NotificationTest {
     @Test void shouldRenderNotification() {
-        var notification = notification().contains(
+        var notification = notification().content(
                 delete(),
                 loremIpsumS()
         );
@@ -31,7 +31,7 @@ class NotificationTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderColorNotification(Color color) {
-        var notification = notification().is(color).contains(
+        var notification = notification().is(color).content(
                 delete(),
                 loremIpsumS()
         );
@@ -47,7 +47,7 @@ class NotificationTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderLightColorNotification(Color color) {
-        var notification = notification().is(color).is(LIGHT).contains(
+        var notification = notification().is(color).is(LIGHT).content(
                 delete(),
                 loremIpsumS()
         );

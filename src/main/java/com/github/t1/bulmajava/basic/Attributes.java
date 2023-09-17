@@ -1,11 +1,9 @@
 package com.github.t1.bulmajava.basic;
 
 import lombok.NonNull;
-import lombok.Value;
-import lombok.With;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -13,17 +11,16 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
-import static java.util.Collections.unmodifiableList;
-import static lombok.AccessLevel.PRIVATE;
+import static java.util.stream.Collectors.toList;
 
-@Value @Accessors(fluent = true)
+@RequiredArgsConstructor @Accessors(fluent = true, chain = true)
 public class Attributes implements Renderable {
     public static Attributes of(Attribute... attributes) {
-        return new Attributes(Stream.of(attributes).filter(Objects::nonNull).toList());
+        return new Attributes(Stream.of(attributes).filter(Objects::nonNull).collect(toList()));
     }
 
 
-    @With(PRIVATE) @NonNull List<Attribute> attributes;
+    private final List<Attribute> attributes;
 
     @Override public String toString() {return render();}
 
@@ -45,8 +42,8 @@ public class Attributes implements Renderable {
     public boolean isEmpty() {return attributes.isEmpty();}
 
 
-    public Attributes and(@NonNull Attribute attribute) {
-        var copy = new ArrayList<>(this.attributes);
+    public Attributes add(@NonNull Attribute attribute) {
+        var copy = this.attributes;
         boolean found = false;
         for (int i = 0; i < copy.size(); i++) {
             var item = copy.get(i);
@@ -56,29 +53,26 @@ public class Attributes implements Renderable {
                 break;
             }
         }
-        if (!found) {
-            // the href and class attributes are most relevant when developing, so we always put it first
-            if (attribute.hasKey("href") || attribute.hasKey("class"))
-                copy.add(0, attribute);
-            else copy.add(attribute);
-        }
-        return withAttributes(unmodifiableList(copy));
+        if (!found) copy.add(attribute);
+        copy.sort(Attribute.COMPARATOR);
+        return this;
     }
 
+    public void remove(Attribute attribute) {replace(attribute, null);}
+
     public Attributes replace(Attribute existing, Attribute replacement) {
-        var copy = new ArrayList<>(this.attributes);
         boolean found = false;
-        for (int i = 0; i < copy.size(); i++) {
-            var item = copy.get(i);
+        for (int i = 0; i < this.attributes.size(); i++) {
+            var item = this.attributes.get(i);
             if (item.hasKey(existing.key())) {
                 found = true;
-                if (replacement == null) copy.remove(i);
-                else copy.set(i, replacement);
+                if (replacement == null) this.attributes.remove(i);
+                else this.attributes.set(i, replacement);
                 break;
             }
         }
         if (!found) throw new IllegalStateException("exiting not found");
-        return withAttributes(unmodifiableList(copy));
+        return this;
     }
 
     public void render(Renderer renderer) {

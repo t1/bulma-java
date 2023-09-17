@@ -1,12 +1,14 @@
 package test.layout;
 
-import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.elements.Box;
 import com.github.t1.bulmajava.elements.Content;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
+import java.util.stream.Stream;
+
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.*;
 import static com.github.t1.bulmajava.basic.Style.FULLWIDTH;
 import static com.github.t1.bulmajava.elements.Box.articleBox;
@@ -25,7 +27,7 @@ import static test.RenderTestExtension.loremIpsumS;
 @ExtendWith(RenderTestExtension.class)
 class TileTest {
     @Test void shouldRenderMagicalTile() {
-        var tile = tile().contains(Basic.comment("The magical tile element!"), Basic.br());
+        var tile = tile().content(comment(" The magical tile element! "), br());
 
         then(tile).rendersAs("""
                 <div class="tile">
@@ -36,32 +38,32 @@ class TileTest {
     }
 
     @Test void shouldRenderTile() {
-        var tile = ancestorTile().style("width: 950px;").contains(
-                tile().vertical().is(8).contains(
-                        tile().contains(
-                                parentTile().vertical().containsChild(
-                                        Basic.article().classes("notification").is(PRIMARY).contains(
+        var tile = ancestorTile().style("width: 950px;").content(
+                tile().vertical().is(8).content(
+                        tile().content(
+                                parentTile().vertical().child(
+                                        article().classes("notification").is(PRIMARY).content(
                                                 titleP("Vertical..."),
-                                                subtitleP("Top tile"))).containsChild(
-                                        Basic.article().classes("notification").is(WARNING).contains(
+                                                subtitleP("Top tile"))).child(
+                                        article().classes("notification").is(WARNING).content(
                                                 titleP("...tiles"),
                                                 subtitleP("Bottom tile"))),
-                                parentTile().containsChild(
-                                        Basic.article().classes("notification").is(INFO).contains(
+                                parentTile().child(
+                                        article().classes("notification").is(INFO).content(
                                                 titleP("Middle tile"),
                                                 subtitleP("With an image"),
                                                 image(_4by3, "https://bulma.io/images/placeholders/640x480.png", "bulma")))),
-                        parentTile().containsChild(
-                                Basic.article().classes("notification").is(DANGER).contains(
+                        parentTile().child(
+                                article().classes("notification").is(DANGER).content(
                                         titleP("Wide tile"),
                                         subtitleP("Aligned with the right tile"),
-                                        content_().contains("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.")))),
-                parentTile().containsChild(
-                        Basic.article().classes("notification").is(SUCCESS).contains(
-                                content_().contains(
+                                        content_().content("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.")))),
+                parentTile().child(
+                        article().classes("notification").is(SUCCESS).content(
+                                content_().content(
                                         titleP("Tall tile"),
                                         subtitleP("With even more content"),
-                                        content_().contains(loremIpsumS(), Basic.br(), loremIpsumS())))));
+                                        content_().content(loremIpsumS(), br(), loremIpsumS())))));
 
         // the img-alt tags where missing
         then(tile).rendersAs("""
@@ -114,9 +116,9 @@ class TileTest {
     }
 
     @Test void shouldRenderAncestorTile() {
-        var tile = ancestorTile().style("width: 950px;").contains(
-                tile().contains(button("Content 1").is(LINK, FULLWIDTH)),
-                tile().contains(button("Content 2").is(PRIMARY, FULLWIDTH)));
+        var tile = ancestorTile().style("width: 950px;").content(
+                tile().content(button("Content 1").is(LINK, FULLWIDTH)),
+                tile().content(button("Content 2").is(PRIMARY, FULLWIDTH)));
 
         then(tile).rendersAs("""
                 <div class="tile is-ancestor" style="width: 950px;">
@@ -131,9 +133,9 @@ class TileTest {
     }
 
     @Test void shouldRenderSizedAncestorTile() {
-        var tile = ancestorTile().style("width: 950px;").contains(
-                tile().is(4).contains(button("Content 1").is(LINK, FULLWIDTH)),
-                tile().contains(button("Content 2").is(PRIMARY, FULLWIDTH)));
+        var tile = ancestorTile().style("width: 950px;").content(
+                tile().is(4).content(button("Content 1").is(LINK, FULLWIDTH)),
+                tile().content(button("Content 2").is(PRIMARY, FULLWIDTH)));
 
         then(tile).rendersAs("""
                 <div class="tile is-ancestor" style="width: 950px;">
@@ -148,11 +150,11 @@ class TileTest {
     }
 
     @Test void shouldRenderVerticalAncestorTile() {
-        var tile = ancestorTile().style("width: 950px;").contains(
-                tile().is(4).vertical().contains(
-                        tile().contains(button("Content Top").is(LINK, FULLWIDTH)),
-                        tile().contains(button("Content Bottom").is(PRIMARY, FULLWIDTH))),
-                tile().contains(
+        var tile = ancestorTile().style("width: 950px;").content(
+                tile().is(4).vertical().content(
+                        tile().content(button("Content Top").is(LINK, FULLWIDTH)),
+                        tile().content(button("Content Bottom").is(PRIMARY, FULLWIDTH))),
+                tile().content(
                         box(loremIpsum())));
 
         then(tile).rendersAs("""
@@ -173,16 +175,13 @@ class TileTest {
     }
 
     @Test void shouldRenderContentTile() {
-        var tile = ancestorTile().style("width: 950px;").contains(
+        var tile = ancestorTile().style("width: 950px;").content(
                 parentTile().is(4).vertical()
-                        .containsChild(box().contains(
-                                titleP("One"),
-                                loremIpsumS()))
-                        .containsChild(box().contains(
-                                titleP("Two"),
-                                loremIpsumS())),
+                        .child(Stream.of("One", "Two").map(title -> box().content(
+                                titleP(title),
+                                loremIpsumS()))),
                 parentTile()
-                        .containsChild(box().contains(
+                        .child(box().content(
                                 titleP("Three"),
                                 loremIpsumS())));
 
@@ -209,34 +208,34 @@ class TileTest {
     }
 
     @Test void shouldRenderFourColumnsTiles() {
-        var div = Basic.div().style("width: 950px;").contains(
-                ancestorTile().contains(
-                        parentTile().containsChild(aBox("One")),
-                        parentTile().containsChild(aBox("Two")),
-                        parentTile().containsChild(aBox("Three")),
-                        parentTile().containsChild(aBox("Four"))),
-                ancestorTile().contains(
-                        tile().vertical().is(9).contains(
-                                tile().contains(
-                                        parentTile().containsChild(aBox("Five").contains(loremIpsumP())),
-                                        tile().is(8).vertical().contains(
-                                                tile().contains(
-                                                        parentTile().containsChild(aBox("Six")),
-                                                        parentTile().containsChild(aBox("Seven"))),
-                                                parentTile().containsChild(aBox("Eight")))
+        var div = div().style("width: 950px;").content(
+                ancestorTile().content(
+                        parentTile().child(aBox("One")),
+                        parentTile().child(aBox("Two")),
+                        parentTile().child(aBox("Three")),
+                        parentTile().child(aBox("Four"))),
+                ancestorTile().content(
+                        tile().vertical().is(9).content(
+                                tile().content(
+                                        parentTile().child(aBox("Five").content(loremIpsumP())),
+                                        tile().is(8).vertical().content(
+                                                tile().content(
+                                                        parentTile().child(aBox("Six")),
+                                                        parentTile().child(aBox("Seven"))),
+                                                parentTile().child(aBox("Eight")))
                                 ),
-                                tile().contains(
-                                        parentTile().is(8).containsChild(aBox("Nine").contains(loremIpsumP())),
-                                        parentTile().containsChild(aBox("Ten").contains(loremIpsumP())))
+                                tile().content(
+                                        parentTile().is(8).child(aBox("Nine").content(loremIpsumP())),
+                                        parentTile().child(aBox("Ten").content(loremIpsumP())))
                         ),
-                        parentTile().containsChild(articleBox().contains(content_().contains(
-                                titleP("Eleven"), subtitleP("Subtitle")).contains(
-                                content_().contains(
-                                        Basic.p(loremIpsum()), Basic.p(loremIpsum())))))),
-                ancestorTile().contains(
-                        parentTile().containsChild(aBox("Twelve").contains(loremIpsumP())),
-                        parentTile().is(6).containsChild(aBox("Thirteen").contains(loremIpsumP())),
-                        parentTile().containsChild(aBox("Fourteen").contains(loremIpsumP()))));
+                        parentTile().child(articleBox().content(content_().content(
+                                titleP("Eleven"), subtitleP("Subtitle")).content(
+                                content_().content(
+                                        p(loremIpsum()), p(loremIpsum())))))),
+                ancestorTile().content(
+                        parentTile().child(aBox("Twelve").content(loremIpsumP())),
+                        parentTile().is(6).child(aBox("Thirteen").content(loremIpsumP())),
+                        parentTile().child(aBox("Fourteen").content(loremIpsumP()))));
 
         then(div).rendersAs("""
                 <div style="width: 950px;">
@@ -369,11 +368,11 @@ class TileTest {
     }
 
     private static Content loremIpsumP() {
-        return content_().contains(Basic.p(loremIpsum()));
+        return content_().content(p(loremIpsum()));
     }
 
     private static Box aBox(String title) {
-        return articleBox().contains(
+        return articleBox().content(
                 titleP(title), subtitleP("Subtitle"));
     }
 }

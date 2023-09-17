@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.abbr;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.State.SELECTED;
 import static com.github.t1.bulmajava.basic.Style.FULLWIDTH;
@@ -20,9 +20,9 @@ import static test.CustomAssertions.then;
 class TableTest {
     @Test void shouldRenderTable() {
         var table = table()
-                .containsHead(abbr("Position", "Pos"), string("Team"), abbr("Played", "Pld"))
-                .containsFoot(abbr("Position", "#"), string("T"), abbr("Played", "P"))
-                .containsBody(
+                .head(abbr("Position", "Pos"), string("Team"), abbr("Played", "Pld"))
+                .foot(abbr("Position", "#"), string("T"), abbr("Played", "P"))
+                .body(
                         rowH(string("1"),
                                 a("Leicester City").href("https://en.wikipedia.org/wiki/Leicester_City_F.C.")
                                         .title("Leicester City F.C."),
@@ -78,8 +78,8 @@ class TableTest {
 
     @ParameterizedTest @EnumSource void shouldRenderStyledTable(TableStyle style) {
         var table = table().is(style)
-                .containsHead(string("One"), string("Two"))
-                .containsBody(
+                .head(string("One"), string("Two"))
+                .body(
                         row(string("Three"), string("Four")),
                         row(string("Five"), string("Six")),
                         row(string("Seven"), string("Eight")),
@@ -91,8 +91,8 @@ class TableTest {
 
     @Test void shouldRenderFullwidthTable() {
         var table = table().is(FULLWIDTH)
-                .containsHead(string("One"), string("Two"))
-                .containsBody(
+                .head(string("One"), string("Two"))
+                .body(
                         row(string("Three"), string("Four")),
                         row(string("Five"), string("Six")),
                         row(string("Seven"), string("Eight")),
@@ -104,8 +104,8 @@ class TableTest {
 
     @Test void shouldRenderAllStylesTable() {
         var table = table().is(BORDERED, STRIPED, NARROW, HOVERABLE, FULLWIDTH)
-                .containsHead(string("One"), string("Two"))
-                .containsBody(
+                .head(string("One"), string("Two"))
+                .body(
                         row(string("Three"), string("Four")),
                         row(string("Five"), string("Six")),
                         row(string("Seven"), string("Eight")),
@@ -151,8 +151,8 @@ class TableTest {
     }
 
     @Test void shouldRenderScrollableTable() {
-        var div = tableContainer().contains(
-                table().containsBody(
+        var div = tableContainer().content(
+                table().body(
                         row(string("One"), string("Two")),
                         row(string("Three"), string("Four"))));
 
@@ -171,6 +171,31 @@ class TableTest {
                         </tbody>
                     </table>
                 </div>
+                """);
+    }
+
+    @Test void shouldRenderTableWithStyledCells() {
+        var table = table().body(
+                row(em("One"), div().style("word-break: keep-all;").content("Two")),
+                row(em("Three"), div().style("word-break: keep-all;").content("Four")));
+
+        then(table).rendersAs("""
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td><em>One</em></td>
+                            <td>
+                                <div style="word-break: keep-all;">Two</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><em>Three</em></td>
+                            <td>
+                                <div style="word-break: keep-all;">Four</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 """);
     }
 }

@@ -5,29 +5,30 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
 import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
-import static com.github.t1.bulmajava.basic.Attribute.noValueAttribute;
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 
-@Accessors(fluent = true) @SuperBuilder(toBuilder = true)
+@Accessors(fluent = true, chain = true) @SuperBuilder(toBuilder = true)
 public class AbstractElement<SELF extends AbstractElement<?>> implements Renderable {
 
-    private final boolean close;
-    @Getter private final boolean rendersOnSeparateLines;
-    @NonNull private final String name;
-    private final Attributes attributes;
-    @Getter private final Renderable content;
+    private boolean close;
+    @Getter private boolean rendersOnSeparateLines;
+    @NonNull private String name;
+    private Attributes attributes;
+    private Renderable content;
     // TODO get rid of the mapFunction mechanism
-    @NonNull private final Function<Renderable, Renderable> mapFunction;
+    @NonNull private Function<Renderable, Renderable> mapFunction;
 
     protected AbstractElement(@NonNull String name, String... classes) {this(name, Attributes.of(Classes.of(classes)));}
 
@@ -54,103 +55,140 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return attributes != null && attributes.find(Classes.class).map(classes -> classes.hasClass(name)).orElse(false);
     }
 
-    public Element contentElement() {return (Element) content;}
+    public Renderable content() {return content;}
 
-    public ConcatenatedRenderable concatContent() {return (ConcatenatedRenderable) content;}
+    public <T extends Renderable> T contentAs(Class<T> type) {return type.cast(content);}
+
+    public <T extends Renderable> boolean contentIsA(Class<T> type) {return type.isAssignableFrom(content.getClass());}
 
 
     @SuppressWarnings("unchecked")
     protected SELF self() {return (SELF) this;}
 
 
-    public SELF close(boolean close) {return with(e -> e.close(close));}
-
-    public SELF rendersOnSeparateLines(boolean b) {return with(e -> e.rendersOnSeparateLines(b));}
-
-    public SELF attributes(Attributes attributes) {return with(e -> e.attributes(attributes));}
-
-    public SELF content(Renderable content) {return with(e -> e.content(content));}
-
-    public SELF mapFunction(Function<Renderable, Renderable> mapFunction) {return with(e -> e.mapFunction(mapFunction));}
-
-    private SELF with(Consumer<AbstractElementBuilder<?, ?, ?>> build) {
-        var builder = self().toBuilder();
-        build.accept(builder);
-        //noinspection unchecked
-        return (SELF) builder.build();
+    public SELF close(boolean close) {
+        this.close = close;
+        return self();
     }
+
+    public SELF rendersOnSeparateLines(boolean rendersOnSeparateLines) {
+        this.rendersOnSeparateLines = rendersOnSeparateLines;
+        return self();
+    }
+
+    public SELF id(String id) {return attr("id", id);}
 
     public SELF classes(String... classes) {return classes(Classes.of(classes));}
 
     private SELF classes(Classes classes) {return (classes == null || classes.empty()) ? self() : attr(classes);}
 
+    public SELF notClasses(String... classes) {return notClasses(Classes.of(classes));}
+
+    public SELF notClasses(Classes removing) {
+        if (attributes == null) return self();
+        attributes.find(Classes.class).ifPresent(existing -> {
+            existing.minus(removing);
+            if (existing.empty()) attributes.remove(existing);
+        });
+        return self();
+    }
+
     public SELF is(Modifier... modifiers) {
         return classes(Stream.of(modifiers).map(Modifier::className).toArray(String[]::new));
     }
 
-    public SELF ariaHidden() {
-        return ((attributes != null) && attributes.hasAttribute("aria-hidden", "true")) ? self() : attr("aria-hidden", "true");
-    }
+    public SELF is(int size) {return classes("is-" + size);}
+
+    public SELF isPulledLeft() {return classes("is-pulled-left");}
+
+    public SELF isPulledRight() {return classes("is-pulled-right");}
+
+    public SELF style(String style) {return attr("style", style);}
+
+    public SELF ariaHidden(boolean hidden) {return ariaHidden(Boolean.toString(hidden));}
+
+    public SELF ariaHidden(String hidden) {return attr("aria-hidden", hidden);}
 
     public SELF ariaLabel(String label) {return attr("aria-label", label);}
 
     public SELF attr(String name, String value) {return attr(stringAttribute(name, value));}
 
     public SELF attr(Attribute attribute) {
-        return attributes(attributes == null ? Attributes.of(attribute) : attributes.and(attribute));
+        if (attributes == null) Attributes.of(attribute);
+        else attributes.add(attribute);
+        return self();
     }
+
+    public SELF hasText(Modifier modifier) {return classes("has-text-" + modifier.key());}
+
+    public SELF hasBackground(Modifier modifier) {return classes("has-background-" + modifier.key());}
+
+    public SELF dataValue(String value) {return attr("data-value", value);}
 
     public SELF disabled() {return attr(noValueAttribute("disabled"));}
 
-    public SELF size(int size) {return classes("is-" + size);}
 
-    public SELF contains(String content) {return contains(string(content));}
-
-    public SELF contains(Stream<Renderable> content) {return contains(content.toArray(Renderable[]::new));}
-
-    @SuppressWarnings("unchecked")
-    public SELF contains(Renderable... content) {
-        var out = self();
-        for (var renderable : content)
-            if (renderable != null)
-                out = (SELF) out.contains(renderable);
-        return out;
+    public SELF map(Function<Renderable, Renderable> function) {
+        this.mapFunction = function;
+        return self();
     }
 
-    public SELF contains(Renderable content) {
+    /**
+     * Insert this {@link Renderable} as the first content element.
+     *
+     * @see #content(Renderable)
+     */
+    public SELF firstContent(Renderable content) {
         var mapped = mapFunction.apply(content);
-        return content((this.content == null) ? mapped : concat(this.content, mapped));
+        this.content = (this.content == null) ? mapped : concat(mapped, this.content);
+        return self();
     }
 
-    public SELF id(String id) {return attr("id", id);}
+    public SELF content(String content) {return content(string(content));}
 
-    public SELF map(Function<Renderable, Renderable> function) {return mapFunction(function);}
+    public SELF content(Renderable... content) {return content(Arrays.stream(content));}
 
-    public <ELEMENT extends AbstractElement<?>> SELF replace(ELEMENT existing, Function<ELEMENT, ELEMENT> function) {
-        return replace((Function<SELF, ELEMENT>) x -> existing, function);
+    public SELF content(Stream<Renderable> content) {
+        content.filter(Objects::nonNull).forEach(this::content);
+        return self();
     }
 
-    public <ELEMENT extends AbstractElement<?>> SELF replace(Function<SELF, ELEMENT> existing, Function<ELEMENT, ELEMENT> function) {
-        var existingElement = existing.apply(self());
-        return replace(existingElement, function.apply(existingElement));
+    public SELF content(Renderable content) {
+        var mapped = mapFunction.apply(content);
+        this.content = (this.content == null) ? mapped : concat(this.content, mapped);
+        return self();
     }
 
-    public SELF replace(Renderable existing, Renderable replacement) {
-        return content(content.equals(existing) ? replacement : content.replace(existing, replacement));
+    public final SELF content(String className, Function<AbstractElement<?>, AbstractElement<?>> function) {
+        return content(e -> e.hasClass(className), function, () -> div().classes(className));
     }
 
-    public SELF style(String style) {return attr("style", style);}
-
-    public SELF notClasses(String... classes) {return notClasses(Classes.of(classes));}
-
-    public SELF notClasses(Classes classes) {
-        if (attributes == null) return self();
-        return attributes.find(Classes.class)
-                .map(existing -> attributes(attributes.replace(existing, existing.minus(classes))))
-                .orElse(self());
+    public SELF content(
+            Predicate<AbstractElement<?>> predicate,
+            Function<AbstractElement<?>, AbstractElement<?>> function,
+            Supplier<AbstractElement<?>> generator) {
+        var element = findElement(predicate);
+        element.ifPresentOrElse(function::apply, () -> content(function.apply(generator.get())));
+        return self();
     }
 
-    public SELF dataValue(String value) {return attr("data-value", value);}
+    public <T extends AbstractElement<?>> T getOrCreate(String className, Supplier<T> generator) {
+        //noinspection unchecked
+        return (T) findElement(className).orElseGet(() -> {
+            var generated = generator.get();
+            content(generated);
+            return generated;
+        });
+    }
+
+
+    public Optional<AbstractElement<?>> findElement(String className) {return findElement(e -> e.hasClass(className));}
+
+    public Optional<AbstractElement<?>> findElement(Predicate<AbstractElement<?>> predicate) {
+        return (content() == null) ? Optional.empty() :
+                content().find(renderable -> renderable instanceof AbstractElement<?> e && predicate.test(e))
+                        .map(obj -> (AbstractElement<?>) obj);
+    }
 
 
     @Override public void render(Renderer renderer) {
@@ -174,28 +212,4 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         }
         if (rendersOnSeparateLines) renderer.nl();
     }
-
-    public Optional<AbstractElement<?>> findContent(String className) {return findContent(e -> e.hasClass(className));}
-
-    public Optional<AbstractElement<?>> findContent(Predicate<AbstractElement<?>> predicate) {
-        return (content() == null) ? Optional.empty() :
-                content().find(renderable -> renderable instanceof AbstractElement<?> e && predicate.test(e))
-                        .map(obj -> (AbstractElement<?>) obj);
-    }
-
-    public SELF element(String className, Function<AbstractElement<?>, AbstractElement<?>> function) {
-        return element(e -> e.hasClass(className), function, () -> div().classes(className));
-    }
-
-    public SELF element(
-            Predicate<AbstractElement<?>> predicate,
-            Function<AbstractElement<?>, AbstractElement<?>> function,
-            Supplier<AbstractElement<?>> generator) {
-        var element = findContent(predicate);
-        return element.isPresent() ? replace(element.get(), function) : contains(function.apply(generator.get()));
-    }
-
-    public SELF hasText(Modifier modifier) {return classes("has-text-" + modifier.key());}
-
-    public SELF hasBackground(Modifier modifier) {return classes("has-background-" + modifier.key());}
 }

@@ -18,9 +18,9 @@ import static test.CustomAssertions.then;
 @NoSectionWrapper
 class SectionTest {
     @Test void shouldRenderSection() {
-        var section = section().contains(
+        var section = section().content(
                 title("Section"),
-                subtitle(2).contains(
+                subtitle(2).content(
                         string("A simple container to divide your page into "),
                         strong("sections"),
                         string(", like the one you're currently reading.")
@@ -36,9 +36,9 @@ class SectionTest {
     }
 
     @Test void shouldRenderMediumSection() {
-        var section = section().is(MEDIUM).contains(
+        var section = section().is(MEDIUM).content(
                 title("Medium section"),
-                subtitle(2).contains(
+                subtitle(2).content(
                         string("A simple container to divide your page into "),
                         strong("sections"),
                         string(", like the one you're currently reading.")
@@ -54,9 +54,9 @@ class SectionTest {
     }
 
     @Test void shouldRenderLargeSection() {
-        var section = section().is(LARGE).contains(
+        var section = section().is(LARGE).content(
                 title("Large section"),
-                subtitle(2).contains(
+                subtitle(2).content(
                         string("A simple container to divide your page into "),
                         strong("sections"),
                         string(", like the one you're currently reading.")

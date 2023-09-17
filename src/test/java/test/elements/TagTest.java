@@ -63,7 +63,7 @@ class TagTest {
     }
 
     @Test void shouldRenderSizeTag() {
-        var tag = div().contains(
+        var tag = div().content(
                 tag("Normal").is(LINK, NORMAL),
                 tag("Medium").is(PRIMARY, MEDIUM),
                 tag("Large").is(INFO, LARGE));
@@ -78,7 +78,7 @@ class TagTest {
     }
 
     @Test void shouldRenderMediumTags() {
-        var tag = tags().classes("are-medium").contains(
+        var tag = tags().classes("are-medium").content(
                 tag("All"),
                 tag("Medium"),
                 tag("Size"));
@@ -93,7 +93,7 @@ class TagTest {
     }
 
     @Test void shouldRenderLargeTags() {
-        var tag = tags().classes("are-large").contains(
+        var tag = tags().classes("are-large").content(
                 tag("All"),
                 tag("Medium"),
                 tag("Size"));
@@ -124,8 +124,8 @@ class TagTest {
     }
 
     @Test void shouldRenderDeleteTagBlock() {
-        var tag = block().contains(
-                tag().is(SUCCESS).contains(
+        var tag = block().content(
+                tag().is(SUCCESS).content(
                         string("Hello World"),
                         delete().is(SMALL)));
 
@@ -140,10 +140,10 @@ class TagTest {
     }
 
     @Test void shouldRenderTagCombinations() {
-        var tags = tags().contains(
-                tag("Bar").is(SUCCESS).contains(delete().is(SMALL)),
-                tag("Hello").is(WARNING, MEDIUM).contains(delete().is(SMALL)),
-                tag("World").is(DANGER, LARGE).contains(delete()));
+        var tags = tags().content(
+                tag("Bar").is(SUCCESS).content(delete().is(SMALL)),
+                tag("Hello").is(WARNING, MEDIUM).content(delete().is(SMALL)),
+                tag("World").is(DANGER, LARGE).content(delete()));
 
         then(tags).rendersAs("""
                 <div class="tags">
@@ -164,7 +164,7 @@ class TagTest {
     }
 
     @Test void shouldRenderTagsAddon() {
-        var tags = tagsAddon().contains(
+        var tags = tagsAddon().content(
                 tag("Package"),
                 tag("Bulma").is(PRIMARY));
 
@@ -177,7 +177,7 @@ class TagTest {
     }
 
     @Test void shouldRenderTagDeleteAddon() {
-        var tags = tagsAddon().contains(
+        var tags = tagsAddon().content(
                 tag("Alex Smith").is(DANGER),
                 tagA().is(DELETE));
 
@@ -190,10 +190,10 @@ class TagTest {
     }
 
     @Test void shouldRenderMultilineAddonTags() {
-        var tags = multilineGroup().contains(
-                tagsAddon().contains(tag("npm").is(DARK), tag("0.9.4").is(INFO)),
-                tagsAddon().contains(tag("build").is(DARK), tag("passing").is(SUCCESS)),
-                tagsAddon().contains(tag("chat").is(DARK), tag("on gitter").is(PRIMARY))
+        var tags = multilineGroup().content(
+                tagsAddon().content(tag("npm").is(DARK), tag("0.9.4").is(INFO)),
+                tagsAddon().content(tag("build").is(DARK), tag("passing").is(SUCCESS)),
+                tagsAddon().content(tag("chat").is(DARK), tag("on gitter").is(PRIMARY))
         ).style("width: 240px;").classes("has-background-grey-lighter");
 
         then(tags).rendersAs("""

@@ -1,5 +1,7 @@
 "use strict";
 
+// this is basically © bulma.io; Source code licensed https://opensource.org/licenses/mit-license.php
+
 document.addEventListener("DOMContentLoaded", function () {
     // Search
 

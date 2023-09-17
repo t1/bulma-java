@@ -1,8 +1,8 @@
 package test.components;
 
 import com.github.t1.bulmajava.basic.Alignment;
-import com.github.t1.bulmajava.components.BreadcrumbSeparator;
 import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.bulmajava.components.BreadcrumbSeparator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +11,6 @@ import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
 import static com.github.t1.bulmajava.basic.Basic.span;
-import static com.github.t1.bulmajava.components.Breadcrumb.active;
 import static com.github.t1.bulmajava.components.Breadcrumb.breadcrumb;
 import static com.github.t1.bulmajava.elements.Icon.icon;
 import static test.CustomAssertions.then;
@@ -19,11 +18,11 @@ import static test.CustomAssertions.then;
 @ExtendWith(RenderTestExtension.class)
 class BreadcrumbTest {
     @Test void shouldRenderBreadcrumb() {
-        var nav = breadcrumb().contains(
-                a().href("#").contains("Bulma"),
-                a().href("#").contains("Documentation"),
-                a().href("#").contains("Components"),
-                active(a().href("#").contains("Breadcrumb")));
+        var nav = breadcrumb().content(
+                a().href("#").content("Bulma"),
+                a().href("#").content("Documentation"),
+                a().href("#").content("Components"),
+                a().href("#").content("Breadcrumb").active());
 
         then(nav).rendersAs("""
                 <nav class="breadcrumb" aria-label="breadcrumbs">
@@ -46,11 +45,11 @@ class BreadcrumbTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderAlignedBreadcrumb(Alignment alignment) {
-        var nav = breadcrumb().contains(
-                        a().href("#").contains("Bulma"),
-                        a().href("#").contains("Documentation"),
-                        a().href("#").contains("Components"),
-                        active(a().href("#").contains("Breadcrumb")))
+        var nav = breadcrumb().content(
+                        a().href("#").content("Bulma"),
+                        a().href("#").content("Documentation"),
+                        a().href("#").content("Components"),
+                        a().href("#").content("Breadcrumb").active())
                 .is(alignment);
 
         then(nav).rendersAs("""
@@ -74,11 +73,11 @@ class BreadcrumbTest {
     }
 
     @Test void shouldRenderBreadcrumbWithIcons() {
-        var nav = breadcrumb().contains(
-                a().contains(icon("home"), span("Bulma")).href("#"),
-                a().contains(icon("book"), span("Documentation")).href("#"),
-                a().contains(icon("puzzle-piece"), span("Components")).href("#"),
-                active(a().contains(icon("thumbs-up"), span("Breadcrumb"))).href("#"));
+        var nav = breadcrumb().content(
+                a().content(icon("home"), span("Bulma")).href("#"),
+                a().content(icon("book"), span("Documentation")).href("#"),
+                a().content(icon("puzzle-piece"), span("Components")).href("#"),
+                a().content(icon("thumbs-up"), span("Breadcrumb")).href("#").active());
 
         then(nav).rendersAs("""
                 <nav class="breadcrumb" aria-label="breadcrumbs">
@@ -113,11 +112,11 @@ class BreadcrumbTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderBreadcrumbWithAlternateSeparators(BreadcrumbSeparator separator) {
-        var nav = breadcrumb().contains(
-                        a().href("#").contains("Bulma"),
-                        a().href("#").contains("Documentation"),
-                        a().href("#").contains("Components"),
-                        active(a().href("#").contains("Breadcrumb")))
+        var nav = breadcrumb().content(
+                        a().href("#").content("Bulma"),
+                        a().href("#").content("Documentation"),
+                        a().href("#").content("Components"),
+                        a().href("#").content("Breadcrumb").active())
                 .is(separator);
 
         then(nav).rendersAs("""
@@ -141,11 +140,11 @@ class BreadcrumbTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderSizedBreadcrumbs(Size size) {
-        var nav = breadcrumb().contains(
-                        a().href("#").contains("Bulma"),
-                        a().href("#").contains("Documentation"),
-                        a().href("#").contains("Components"),
-                        active(a().href("#").contains("Breadcrumb")))
+        var nav = breadcrumb().content(
+                        a().href("#").content("Bulma"),
+                        a().href("#").content("Documentation"),
+                        a().href("#").content("Components"),
+                        a().href("#").content("Breadcrumb").active())
                 .is(size);
 
         then(nav).rendersAs("""

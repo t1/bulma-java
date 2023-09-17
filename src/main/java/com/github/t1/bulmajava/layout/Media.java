@@ -5,6 +5,8 @@ import com.github.t1.bulmajava.basic.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
+import java.util.stream.Stream;
+
 import static com.github.t1.bulmajava.basic.Basic.div;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
@@ -13,19 +15,27 @@ public class Media extends AbstractElement<Media> {
 
     public Media() {super("article", "media");}
 
-    /** Use {@link #containsContent(Renderable...)} instead! */
+    /** Use {@link #addContent(Renderable...)} instead! */
     @Deprecated
-    @Override public Media contains(Renderable content) {return super.contains(content);}
+    @Override public Media content(String content) {return super.content(content);}
 
-    /** Use {@link #containsContent(Renderable...)} instead! */
+    /** Use {@link #addContent(Renderable...)} instead! */
     @Deprecated
-    @Override public Media contains(Renderable... content) {return super.contains(content);}
+    @Override public Media content(Renderable content) {return super.content(content);}
 
-    public Media containsLeft(AbstractElement<?> content) {return super.contains(content.classes("media-left"));}
+    /** Use {@link #addContent(Renderable...)} instead! */
+    @Deprecated
+    @Override public Media content(Renderable... content) {return super.content(content);}
 
-    public Media containsContent(String content) {return super.contains(content);}
+    /** Use {@link #addContent(Renderable...)} instead! */
+    @Deprecated
+    @Override public Media content(Stream<Renderable> content) {return super.content(content);}
 
-    public Media containsContent(Renderable... content) {return super.contains(div().classes("media-content").contains(content));}
+    public Media left(AbstractElement<?> content) {return super.content(content.classes("media-left"));}
 
-    public Media containsRight(AbstractElement<?> content) {return super.contains(content.classes("media-right"));}
+    public Media addContent(String content) {return super.content(content);}
+
+    public Media addContent(Renderable... content) {return super.content(div().classes("media-content").content(content));}
+
+    public Media addRight(AbstractElement<?> content) {return super.content(content.classes("media-right"));}
 }

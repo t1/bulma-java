@@ -11,7 +11,7 @@ import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Tag extends AbstractElement<Tag> {
-    public static AbstractElement<?> tag(String content) {return tag().contains(string(content));}
+    public static AbstractElement<?> tag(String content) {return tag().content(string(content));}
 
     public static AbstractElement<?> tag() {return new Tag();}
 

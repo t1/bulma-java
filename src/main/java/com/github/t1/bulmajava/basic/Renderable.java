@@ -1,10 +1,11 @@
 package com.github.t1.bulmajava.basic;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public interface Renderable {
     default <T extends Renderable> Optional<T> find(Class<T> type) {return find(type::isInstance).map(type::cast);}
@@ -24,19 +25,29 @@ public interface Renderable {
 
     default boolean rendersOnSeparateLines() {return false;}
 
-    default Renderable replace(Renderable existing, Renderable replacement) {
-        throw new UnsupportedOperationException("can't replace in " + getClass().getSimpleName());
+
+    record RenderableString(String string) implements Renderable {
+        public static Renderable string(String string) {return new RenderableString(string);}
+
+        @Override public void render(Renderer renderer) {renderer.safeAppend(string);}
     }
 
+    record UnsafeString(String string) implements Renderable {
+        public static Renderable unsafeString(String string) {return new UnsafeString(string);}
 
-    record RenderableString(String string, boolean raw) implements Renderable {
-        public static Renderable string(String string) {return new RenderableString(string, false);}
+        @Override public void render(Renderer renderer) {renderer.append(string);}
+    }
 
-        public static Renderable rawString(String string) {return new RenderableString(string, true);}
+    record Indented(Renderable renderable) implements Renderable {
+        public static Renderable indented(Renderable renderable) {return new Indented(renderable);}
 
         @Override public void render(Renderer renderer) {
-            if (raw) renderer.append(string);
-            else renderer.safeAppend(string);
+            renderer.nl().in();
+            renderable.render().lines().forEach(line -> {
+                if (!line.isBlank()) renderer.appendIndent().append(line);
+                renderer.append("\n");
+            });
+            renderer.out().appendIndent();
         }
     }
 
@@ -44,7 +55,7 @@ public interface Renderable {
         public static ConcatenatedRenderable concat(Renderable... renderables) {
             return new ConcatenatedRenderable(Stream.of(renderables)
                     .flatMap(ConcatenatedRenderable::merge)
-                    .toList());
+                    .collect(toList()));
         }
 
         private static Stream<Renderable> merge(Renderable renderable) {
@@ -53,21 +64,13 @@ public interface Renderable {
                     : Stream.of(renderable);
         }
 
-        public ConcatenatedRenderable contains(Renderable renderable) {return concat(this, renderable);}
+        public ConcatenatedRenderable content(Renderable renderable) {
+            renderables.add(renderable);
+            return this;
+        }
 
         @Override public Optional<Renderable> find(Predicate<Renderable> predicate) {
             return renderables.stream().filter(predicate).findFirst();
-        }
-
-        @Override public Renderable replace(Renderable existing, Renderable replacement) {
-            for (int i = 0; i < renderables.size(); i++) {
-                if (renderables.get(i) == existing) {
-                    var list = new ArrayList<>(renderables);
-                    list.set(i, replacement);
-                    return new ConcatenatedRenderable(list);
-                }
-            }
-            throw new IllegalStateException("existing not found");
         }
 
         @Override public boolean rendersOnSeparateLines() {
