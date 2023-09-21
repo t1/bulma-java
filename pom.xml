@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.t1</groupId>
     <artifactId>bulma-java</artifactId>
-    <version>1.0a1-SNAPSHOT</version>
+    <version>1.0a1</version>
     <description>A simple servers-side-html library based on Bulma components</description>
     <name>bulma-java</name>
     <url>https://github.com/t1/bulma-java</url>
@@ -20,7 +19,7 @@
     <scm>
         <developerConnection>scm:git:https://github.com/t1/bulma-java.git</developerConnection>
         <url>https://github.com/t1/bulma-java.git</url>
-        <tag>HEAD</tag>
+        <tag>v1.0a1</tag>
     </scm>
     <licenses>
         <license>
