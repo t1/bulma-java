@@ -1,4 +1,4 @@
-= Bulma Java
+= Bulma Java image:https://github.com/t1/bulma-java/actions/workflows/maven.yml/badge.svg[link=https://github.com/t1/bulma-java/actions/workflows/maven.yml]
 
 A simple servers-side-html library based on Bulma components.
 
