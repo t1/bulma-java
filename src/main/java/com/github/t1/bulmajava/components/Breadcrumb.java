@@ -1,6 +1,7 @@
 package com.github.t1.bulmajava.components;
 
 import com.github.t1.bulmajava.basic.*;
+import com.github.t1.bulmajava.elements.Icon;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
@@ -31,7 +32,9 @@ public class Breadcrumb extends AbstractElement<Breadcrumb> {
         var li = li();
         if (renderable instanceof Anchor a) {
             if (a.hasAttribute("aria-current", "page")) li = li.is(ACTIVE);
-            renderable = a.mapIcon(icon -> icon.is(SMALL).ariaHidden(true));
+            if (a.content() instanceof ConcatenatedRenderable concat) {
+                concat.find(Icon.class).ifPresent(icon -> icon.is(SMALL).ariaHidden(true));
+            }
         }
         return li.content(renderable);
     }
