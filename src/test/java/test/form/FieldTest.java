@@ -9,18 +9,19 @@ import test.RenderTestExtension;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
+import static com.github.t1.bulmajava.basic.Basic.div;
+import static com.github.t1.bulmajava.basic.Basic.p;
 import static com.github.t1.bulmajava.basic.Color.*;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.Size.*;
-import static com.github.t1.bulmajava.basic.Style.LIGHT;
-import static com.github.t1.bulmajava.basic.Style.STATIC;
+import static com.github.t1.bulmajava.basic.Style.*;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Button.buttons;
 import static com.github.t1.bulmajava.elements.IconSize.*;
 import static com.github.t1.bulmajava.elements.TableStyle.NARROW;
 import static com.github.t1.bulmajava.form.Field.*;
 import static com.github.t1.bulmajava.form.Input.input;
+import static com.github.t1.bulmajava.form.InputType.TEXT;
 import static com.github.t1.bulmajava.form.InputType.*;
 import static com.github.t1.bulmajava.form.Radio.radio;
 import static com.github.t1.bulmajava.form.Select.select;
@@ -28,36 +29,38 @@ import static com.github.t1.bulmajava.form.Textarea.textarea;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
-class GeneralTest {
+class FieldTest {
     @Test void shouldRenderForm() {
         var form = div().style("width: 400px;").content(
-                field().label("Name").control(
-                        input(TEXT).placeholder("Text input")),
-                field().label("Username").control(
-                                input(TEXT).is(SUCCESS).placeholder("Text input").value("bulma"))
+                field().label("Name")
+                        .control(input(TEXT).placeholder("Text input")),
+                field().label("Username")
+                        .control(input(TEXT).is(SUCCESS).placeholder("Text input").value("bulma"))
                         .iconLeft("user")
                         .iconRight("check")
                         .help("This username is available", SUCCESS),
-                field().label("Email").control(
-                                input(EMAIL).is(DANGER).placeholder("Email input").value("hello@"))
+                field().label("Email")
+                        .control(input(EMAIL).is(DANGER).placeholder("Email input").value("hello@"))
                         .iconLeft("envelope")
                         .iconRight("exclamation-triangle")
                         .help("This email is invalid", DANGER),
-                field().label("Subject").control(select(null)
-                        .option("1", "Select dropdown")
-                        .option("2", "With options")),
-                field().label("Message").control(
-                        textarea().placeholder("Textarea")),
-                field().control(
-                        Checkbox.checkbox().content(
+                field().label("Subject")
+                        .control(select(null)
+                                .option("1", "Select dropdown")
+                                .option("2", "With options")),
+                field().label("Message")
+                        .control(textarea().placeholder("Textarea")),
+                field()
+                        .control(Checkbox.checkbox().content(
                                 string("I agree to the"),
                                 a("terms and conditions").href("#"))),
                 field()
                         .control(radio("question").content(string("Yes")))
                         .control(radio("question").content(string("No"))),
-                field().control(buttons().content(
-                        button("Submit").is(LINK),
-                        button("Cancel").is(LINK, LIGHT))));
+                field()
+                        .control(buttons().content(
+                                button("Submit").is(LINK),
+                                button("Cancel").is(LINK, LIGHT))));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
@@ -137,8 +140,8 @@ class GeneralTest {
 
     @Test void shouldRenderFormField() {
         var form = div().style("width: 400px;").content(
-                field().label("Label").control(
-                                input(TEXT).placeholder("Text input"))
+                field().label("Label")
+                        .control(input(TEXT).placeholder("Text input"))
                         .help("This is a help text"));
 
         then(form).rendersAs("""
@@ -156,10 +159,10 @@ class GeneralTest {
 
     @Test void shouldRenderSpacedFormFields() {
         var form = div().style("width: 400px;").content(
-                field().label("Name").control(
-                        input(TEXT).placeholder("e.g Alex Smith")),
-                field().label("Email").control(
-                        input(EMAIL).placeholder("e.g. alexsmith@gmail.com")));
+                field().label("Name")
+                        .control(input(TEXT).placeholder("e.g Alex Smith")),
+                field().label("Email")
+                        .control(input(EMAIL).placeholder("e.g. alexsmith@gmail.com")));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
@@ -240,8 +243,8 @@ class GeneralTest {
 
     @Test void shouldRenderSmallInputWithIcon() {
         var form = div().style("width: 400px;").content(
-                field().label("Small input", SMALL).control(
-                                input(EMAIL).is(SMALL).placeholder("Normal"))
+                field().label("Small input", SMALL)
+                        .control(input(EMAIL).is(SMALL).placeholder("Normal"))
                         .iconLeft("envelope")
                         .iconRight("check"));
 
@@ -261,12 +264,13 @@ class GeneralTest {
 
     @Test void shouldRenderNormalSizeInputWithIcon() {
         var form = div().style("width: 400px;").content(
-                field().label("Normal input").control(
-                                input(EMAIL).placeholder("Extra small"))
+                field()
+                        .label("Normal input")
+                        .control(input(EMAIL).placeholder("Extra small"))
                         .iconLeft("envelope", XS)
                         .iconRight("check", XS),
-                field().control(
-                                input(EMAIL).placeholder("Normal"))
+                field()
+                        .control(input(EMAIL).placeholder("Normal"))
                         .iconLeft("envelope", NORMAL)
                         .iconRight("check", NORMAL));
 
@@ -293,16 +297,16 @@ class GeneralTest {
 
     @Test void shouldRenderMediumSizeInputWithIcon() {
         var form = div().style("width: 400px;").content(
-                field().label("Medium input", MEDIUM).control(
-                                input(EMAIL).is(MEDIUM).placeholder("Extra small"))
+                field().label("Medium input", MEDIUM)
+                        .control(input(EMAIL).is(MEDIUM).placeholder("Extra small"))
                         .iconLeft("envelope", XS)
                         .iconRight("check", XS),
-                field().control(
-                                input(EMAIL).is(MEDIUM).placeholder("Small"))
+                field()
+                        .control(input(EMAIL).is(MEDIUM).placeholder("Small"))
                         .iconLeft("envelope", SM, NORMAL)
                         .iconRight("check", SM, NORMAL),
-                field().control(
-                                input(EMAIL).is(MEDIUM).placeholder("Normal"))
+                field()
+                        .control(input(EMAIL).is(MEDIUM).placeholder("Normal"))
                         .iconLeft("envelope", MEDIUM)
                         .iconRight("check", MEDIUM));
 
@@ -336,20 +340,20 @@ class GeneralTest {
 
     @Test void shouldRenderLargeSizeInputWithIcon() {
         var form = div().style("width: 400px;").content(
-                field().label("Large input", LARGE).control(
-                                input(EMAIL).is(LARGE).placeholder("Extra small"))
+                field().label("Large input", LARGE)
+                        .control(input(EMAIL).is(LARGE).placeholder("Extra small"))
                         .iconLeft("envelope", XS)
                         .iconRight("check", XS),
-                field().control(
-                                input(EMAIL).is(LARGE).placeholder("Small"))
+                field()
+                        .control(input(EMAIL).is(LARGE).placeholder("Small"))
                         .iconLeft("envelope", SM, NORMAL)
                         .iconRight("check", SM, NORMAL),
-                field().control(
-                                input(EMAIL).is(LARGE).placeholder("Normal"))
+                field()
+                        .control(input(EMAIL).is(LARGE).placeholder("Normal"))
                         .iconLeft("envelope", LARGE)
                         .iconRight("check", LARGE),
-                field().control(
-                                input(EMAIL).is(LARGE).placeholder("Large"))
+                field()
+                        .control(input(EMAIL).is(LARGE).placeholder("Large"))
                         .iconLeft("envelope", LG, LARGE)
                         .iconRight("check", LG, LARGE));
 
@@ -530,7 +534,7 @@ class GeneralTest {
 
     @Test void shouldRenderFieldWithExpandedSelect() {
         var form = field()
-                .control(select("country").is(Style.FULLWIDTH)
+                .control(select("country").is(FULLWIDTH)
                         .options("Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador",
                                 "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"), EXPANDED)
                 .containsAddonRight(button("Choose").submit().is(PRIMARY));
@@ -634,7 +638,7 @@ class GeneralTest {
     }
 
     @Test void shouldRenderGroupedFieldsCentered() {
-        var form = field().grouped().classes("is-grouped-centered")
+        var form = field().groupedCentered()
                 .control(a("Submit").button().is(PRIMARY))
                 .control(a("Cancel").button().is(LIGHT));
 
@@ -651,7 +655,7 @@ class GeneralTest {
     }
 
     @Test void shouldRenderGroupedFieldsRight() {
-        var form = field().grouped().classes("is-grouped-right")
+        var form = field().groupedRight()
                 .control(a("Submit").button().is(PRIMARY))
                 .control(a("Cancel").button().is(LIGHT));
 
@@ -686,8 +690,9 @@ class GeneralTest {
 
     @Test void shouldRenderGroupedMultilineFieldsExpanded() {
         var form = div().style("width: 400px;").content(
-                field().grouped().classes("is-grouped-multiline").control(
-                        Stream.of("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen")
+                field().groupedMultiline()
+                        .control(Stream.of("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
+                                        "Nine", "Ten", "Eleven", "Twelve", "Thirteen")
                                 .map(name -> a(name).button())));
 
         then(form).rendersAs("""
@@ -739,53 +744,37 @@ class GeneralTest {
 
     @Test void shouldRenderHorizontalForm() {
         var form = div().style("width: 1000px;").content(
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").is(NORMAL).content(
-                                label("From")),
-                        div().classes("field-body").content(
-                                field().control(input(TEXT).placeholder("Name"), EXPANDED)
-                                        .iconLeft("user"),
-                                field().control(input(EMAIL).is(SUCCESS).placeholder("Email").value("alex@smith.com"), EXPANDED)
-                                        .iconLeft("envelope")
-                                        .iconRight("check"))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label"),
-                        div().classes("field-body").content(
-                                div().classes("field").is(EXPANDED).content(
-                                        field().control(a("+44").button().is(STATIC))
-                                                .containsAddonRight(input(TEL).placeholder("Your phone number"), EXPANDED),
-                                        p("Do not enter the first zero").classes("help")))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").is(NORMAL).content(
-                                label("Department")),
-                        div().classes("field-body").content(
-                                field().is(NARROW).control(select("department").is(Style.FULLWIDTH)
-                                        .options("Business development", "Marketing", "Sales")))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").content(
-                                label("Already a member?")),
-                        div().classes("field-body").content(
-                                field().is(NARROW)
-                                        .control(radio("member").content(string("Yes")))
-                                        .control(radio("member").content(string("No"))))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").is(NORMAL).content(
-                                label("Subject")),
-                        div().classes("field-body").content(
-                                field()
-                                        .control(input(TEXT).is(DANGER).placeholder("e.g. Partnership opportunity"))
-                                        .help("This field is required", DANGER))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").is(NORMAL).content(
-                                label("Question")),
-                        div().classes("field-body").content(
-                                field()
-                                        .control(textarea().placeholder("Explain how we can help you")))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label"),
-                        div().classes("field-body").content(
-                                field()
-                                        .control(button("Send message").is(PRIMARY)))));
+                field().horizontal()
+                        .label("From", NORMAL)
+                        .control(field().control(input(TEXT).placeholder("Name"), EXPANDED)
+                                .iconLeft("user"))
+                        .control(field().control(input(EMAIL).is(SUCCESS).placeholder("Email").value("alex@smith.com"), EXPANDED)
+                                .iconLeft("envelope")
+                                .iconRight("check")),
+                field().horizontal()
+                        .control(div().classes("field").is(EXPANDED).content(
+                                field().control(a("+44").button().is(STATIC))
+                                        .containsAddonRight(input(TEL).placeholder("Your phone number"), EXPANDED),
+                                p("Do not enter the first zero").classes("help"))),
+                field().horizontal()
+                        .label("Department", NORMAL)
+                        .control(field().is(NARROW).control(select("department").is(Style.FULLWIDTH)
+                                .options("Business development", "Marketing", "Sales"))),
+                field().horizontal()
+                        .label("Already a member?")
+                        .control(field().is(NARROW)
+                                .control(radio("member").content(string("Yes")))
+                                .control(radio("member").content(string("No")))),
+                field().horizontal()
+                        .label("Subject", NORMAL)
+                        .control(field()
+                                .control(input(TEXT).is(DANGER).placeholder("e.g. Partnership opportunity"))
+                                .help("This field is required", DANGER)),
+                field().horizontal()
+                        .label("Question", NORMAL)
+                        .control(field().control(textarea().placeholder("Explain how we can help you"))),
+                field().horizontal()
+                        .control(field().control(button("Send message").is(PRIMARY))));
 
         then(form).rendersAs("""
                 <div style="width: 1000px;">
@@ -903,31 +892,21 @@ class GeneralTest {
 
     @Test void shouldRenderHorizontalFormWithSizes() {
         var form = div().style("width: 1000px;").content(
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").content(
-                                label("No padding")),
-                        div().classes("field-body").content(
-                                field().control(Checkbox.checkbox().content("Checkbox")))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").is(SMALL).content(
-                                label("Small padding")),
-                        div().classes("field-body").content(
-                                field().control(input(TEXT).is(SMALL).placeholder("Small sized input")))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").is(NORMAL).content(
-                                label("Normal label")),
-                        div().classes("field-body").content(
-                                field().control(input(TEXT).placeholder("Normal sized input")))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").is(MEDIUM).content(
-                                label("Medium label")),
-                        div().classes("field-body").content(
-                                field().control(input(TEXT).is(MEDIUM).placeholder("Medium sized input")))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").is(LARGE).content(
-                                label("Large label")),
-                        div().classes("field-body").content(
-                                field().control(input(TEXT).is(LARGE).placeholder("Large sized input")))));
+                field().horizontal()
+                        .label("No padding")
+                        .control(field().control(Checkbox.checkbox().content("Checkbox"))),
+                field().horizontal()
+                        .label("Small padding", SMALL)
+                        .control(field().control(input(TEXT).is(SMALL).placeholder("Small sized input"))),
+                field().horizontal()
+                        .label("Normal label", NORMAL)
+                        .control(field().control(input(TEXT).placeholder("Normal sized input"))),
+                field().horizontal()
+                        .label("Medium label", MEDIUM)
+                        .control(field().control(input(TEXT).is(MEDIUM).placeholder("Medium sized input"))),
+                field().horizontal()
+                        .label("Large label", LARGE)
+                        .control(field().control(input(TEXT).is(LARGE).placeholder("Large sized input"))));
 
         then(form).rendersAs("""
                 <div style="width: 1000px;">

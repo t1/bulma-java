@@ -14,6 +14,8 @@ public interface Renderable {
         return predicate.test(this) ? Optional.of(this) : Optional.empty();
     }
 
+    default boolean hasClass(String name) {return false;}
+
 
     void render(Renderer renderer);
 

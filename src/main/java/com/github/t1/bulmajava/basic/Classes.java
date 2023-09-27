@@ -22,7 +22,7 @@ public record Classes(@NonNull Set<String> set) implements Attribute {
 
     public boolean empty() {return set.isEmpty();}
 
-    public boolean hasClass(String name) {return set.contains(name);}
+    @Override public boolean hasClass(String name) {return set.contains(name);}
 
     @Override public boolean matches(Attribute attribute) {
         return attribute instanceof Classes that && that.set.equals(this.set);

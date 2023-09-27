@@ -25,7 +25,7 @@ public class FileInput extends AbstractElement<FileInput> {
 
     public FileInput icon(String iconName) {
         return label(label -> {
-            var cta = (Element) label.find(renderable -> renderable instanceof AbstractElement<?> e && e.hasClass("file-cta")).orElseThrow();
+            var cta = (Element) label.find(renderable -> renderable.hasClass("file-cta")).orElseThrow();
             var icon = Icon.icon(iconName).notClasses("icon").classes("file-icon");
             cta.firstContent(icon);
             return label;

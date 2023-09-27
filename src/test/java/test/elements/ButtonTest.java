@@ -174,9 +174,9 @@ class ButtonTest {
 
     @Test void shouldRenderFieldAddons() {
         var buttons = fieldsAddon().content(
-                control().content(button().icon("align-left").content(span("Left"))),
-                control().content(button().icon("align-center").content(span("Center"))),
-                control().content(button().icon("align-right").content(span("Right"))));
+                button().icon("align-left").content(span("Left")),
+                button().icon("align-center").content(span("Center")),
+                button().icon("align-right").content(span("Right")));
 
         then(buttons).rendersAs("""
                 <div class="field has-addons">

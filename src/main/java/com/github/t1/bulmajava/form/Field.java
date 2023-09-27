@@ -9,6 +9,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Alignment.*;
+import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Basic.p;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 
@@ -28,41 +29,55 @@ public class Field extends AbstractElement<Field> {
     /** Adds the <code>is-grouped</code> class and creates separate controls for the content */
     public Field grouped() {return is(() -> "grouped");}
 
-    public Field label(String name, Modifier... modifiers) {return super.content(Basic.label(name).is(modifiers));}
+    public Field groupedRight() {return grouped().classes("is-grouped-right");}
+
+    public Field groupedCentered() {return grouped().classes("is-grouped-centered");}
+
+    public Field groupedMultiline() {return grouped().classes("is-grouped-multiline");}
+
+    /** Adds the <code>is-horizontal</code> class and already adds an empty <code>field-label</code> */
+    public Field horizontal() {return super.content(div().classes("field-label")).classes("is-horizontal");}
+
+    public Field label(String name, Modifier... modifiers) {
+        if (this.hasClass("is-horizontal"))
+            findElement("field-label").orElseThrow() // created in #horizontal()
+                    .is(modifiers).content(Basic.label(name));
+        else super.content(Basic.label(name).is(modifiers));
+        return this;
+    }
 
     public Field help(String text, Modifier... modifiers) {return super.content(p(text).classes("help").is(modifiers));}
 
-    /** Use {@link #control(Renderable, Modifier...)} instead! */
+    /** Use {@link #control(AbstractElement, Modifier...)} instead! */
     @Deprecated @Override public Field content(Renderable content) {return super.content(content);}
 
-    /** Use {@link #control(Renderable, Modifier...)} instead! */
+    /** Use {@link #control(AbstractElement, Modifier...)} instead! */
     @Deprecated @Override public Field content(Renderable... content) {return super.content(content);}
 
-    /** Use {@link #control(Renderable, Modifier...)} instead! */
+    /** Use {@link #control(AbstractElement, Modifier...)} instead! */
     @Deprecated @Override public Field content(Stream<Renderable> content) {return super.content(content);}
 
-    /** Use {@link #control(Renderable, Modifier...)} instead! */
+    /** Use {@link #control(AbstractElement, Modifier...)} instead! */
     @Deprecated @Override public Field content(String content) {return super.content(content);}
 
-    public Field control(Stream<Renderable> content, Modifier... modifiers) {
+    public Field control(Stream<AbstractElement<?>> content, Modifier... modifiers) {
         content.forEach(c -> control(c, modifiers));
         return this;
     }
 
-    public Field control(Renderable content, Modifier... modifiers) {
-        if (hasClass("is-grouped")) return super.content(newControl(content, modifiers));
+    public Field control(AbstractElement<?> content, Modifier... modifiers) {
+        if (this.hasClass("is-grouped")) return super.content(Basic.control().is(modifiers).content(content));
         return control(control -> control.is(modifiers).content(content));
     }
 
-    private static Element newControl(Renderable content, Modifier... modifiers) {
-        return Basic.control().is(modifiers).content(content);
+    private Field control(Function<AbstractElement<?>, AbstractElement<?>> function) {
+        var control = getOrCreate(e -> e.hasClass("control") || e.hasClass("field-body"), this::body);
+        function.apply(control);
+        return this;
     }
 
-    private Field control(Function<AbstractElement<?>, AbstractElement<?>> function) {
-        getOrCreate("control", Basic::control);
-        findElement("control").ifPresentOrElse(function::apply,
-                () -> super.content(function.apply(Basic.control())));
-        return this;
+    private Element body() {
+        return (this.hasClass("is-horizontal")) ? div().classes("field-body") : Basic.control();
     }
 
     public Field iconLeft(String iconName, Modifier... modifiers) {return icon(iconName, LEFT, modifiers);}
@@ -81,11 +96,11 @@ public class Field extends AbstractElement<Field> {
      *
      * @implNote We'd need some sort of meta-data mechanism for that
      */
-    public Field containsAddonLeft(Renderable content, Modifier... modifiers) {
-        return firstContent(newControl(content, modifiers)).classes("has-addons");
+    public Field containsAddonLeft(AbstractElement<?> content, Modifier... modifiers) {
+        return firstContent(Basic.control().is(modifiers).content(content)).classes("has-addons");
     }
 
-    public Field containsAddonRight(Renderable content, Modifier... modifiers) {
-        return super.content(newControl(content, modifiers)).classes("has-addons");
+    public Field containsAddonRight(AbstractElement<?> content, Modifier... modifiers) {
+        return super.content(Basic.control().is(modifiers).content(content)).classes("has-addons");
     }
 }

@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.function.Function;
 
+import static com.github.t1.bulmajava.basic.Basic.control;
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 
@@ -16,7 +17,11 @@ import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 public class Button extends AbstractElement<Button> {
     public static AbstractElement<?> buttons() {return div().classes("buttons");}
 
-    public static AbstractElement<?> fieldsAddon() {return div().classes("field", "has-addons");}
+    public static AbstractElement<?> fieldsAddon() {return div().classes("field", "has-addons").map(Button::inControl);}
+
+    private static Renderable inControl(Renderable renderable) {
+        return renderable.hasClass("control") ? renderable : control().content(renderable);
+    }
 
     public static AbstractElement<?> buttonsAddon() {return buttons().classes("has-addons");}
 

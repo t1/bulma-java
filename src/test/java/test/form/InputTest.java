@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.label;
 import static com.github.t1.bulmajava.basic.Size.*;
 import static com.github.t1.bulmajava.basic.State.LOADING;
 import static com.github.t1.bulmajava.basic.Style.ROUNDED;
@@ -154,16 +153,11 @@ class InputTest {
 
     @Test void shouldRenderReadonlyStaticInput() {
         var input = div().style("width: 800px;").content(
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").is(NORMAL).content(
-                                label("From")),
-                        div().classes("field-body").content(
-                                field().control(input(EMAIL).is(STATIC).value("me@example.com").readonly()))),
-                div().classes("field", "is-horizontal").content(
-                        div().classes("field-label").is(NORMAL).content(
-                                label("To")),
-                        div().classes("field-body").content(
-                                field().control(input(EMAIL).placeholder("Recipient email")))));
+                field().horizontal()
+                        .label("From", NORMAL)
+                        .control(field().control(input(EMAIL).is(STATIC).value("me@example.com").readonly())),
+                field().horizontal().label("To", NORMAL)
+                        .control(field().control(input(EMAIL).placeholder("Recipient email"))));
 
         then(input).rendersAs("""
                 <div style="width: 800px;">
