@@ -13,6 +13,10 @@ import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Basic.p;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 
+/**
+ * The Bulma docs is not explicit about the <code>field-label</code> and <code>field-body</code> classes,
+ * but they seem to be required when the field itself is {@link #horizontal()}
+ */
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Field extends AbstractElement<Field> {
     public static final Modifier EXPANDED = () -> "expanded";
