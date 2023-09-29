@@ -12,22 +12,17 @@ import test.RenderTestExtension;
 import static com.github.t1.bulmajava.basic.Anchor.a;
 import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
-import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.Style.DARK;
-import static com.github.t1.bulmajava.components.Message.*;
-import static com.github.t1.bulmajava.elements.Delete.delete;
+import static com.github.t1.bulmajava.components.Message.message;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class MessageTest {
     @Test void shouldRenderMessage() {
-        var message = message(
-                messageHeader().content(
-                        p("Hello World"),
-                        delete()),
-                messageBody().content(
-                        textItems()
-                )).style("width: 440px;");
+        var message = message().style("width: 440px;")
+                .header(p("Hello World"))
+                .delete()
+                .body(textItems());
 
         then(message).rendersAs("""
                 <article class="message" style="width: 440px;">
@@ -43,13 +38,10 @@ class MessageTest {
     }
 
     @Test void shouldRenderDarkMessage() {
-        var message = message(
-                messageHeader().content(
-                        p("Dark"),
-                        delete()),
-                messageBody().content(
-                        textItems()
-                )).is(DARK).style("width: 440px;");
+        var message = message().is(DARK).style("width: 440px;")
+                .header(p("Dark"))
+                .delete()
+                .body(textItems());
 
         then(message).rendersAs("""
                 <article class="message is-dark" style="width: 440px;">
@@ -65,13 +57,10 @@ class MessageTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderColorMessage(Color color) {
-        var message = message(
-                messageHeader().content(
-                        p(color.key()),
-                        delete()),
-                messageBody().content(
-                        textItems()
-                )).is(color).style("width: 440px;");
+        var message = message().is(color).style("width: 440px;")
+                .header(p(color.key()))
+                .delete()
+                .body(textItems());
 
         then(message).rendersAs("""
                 <article class="message is-$color" style="width: 440px;">
@@ -89,10 +78,8 @@ class MessageTest {
     }
 
     @Test void shouldRenderTextOnlyMessage() {
-        var message = message(
-                messageBody().content(
-                        textItems()
-                )).style("width: 440px;");
+        var message = message().style("width: 440px;")
+                .body(textItems());
 
         then(message).rendersAs("""
                 <article class="message" style="width: 440px;">
@@ -104,10 +91,8 @@ class MessageTest {
     }
 
     @Test void shouldRenderDarkTextOnlyMessage() {
-        var message = message(
-                messageBody().content(
-                        textItems()
-                )).is(DARK).style("width: 440px;");
+        var message = message().is(DARK).style("width: 440px;")
+                .body(textItems());
 
         then(message).rendersAs("""
                 <article class="message is-dark" style="width: 440px;">
@@ -119,10 +104,8 @@ class MessageTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderTextOnlyColorMessage(Color color) {
-        var message = message(
-                messageBody().content(
-                        textItems()
-                )).is(color).style("width: 440px;");
+        var message = message().is(color).style("width: 440px;")
+                .body(textItems());
 
         then(message).rendersAs("""
                 <article class="message is-$color" style="width: 440px;">
@@ -136,19 +119,16 @@ class MessageTest {
     }
 
     @ParameterizedTest @EnumSource void shouldRenderSizeMessage(Size size) {
-        var message = message(
-                messageHeader().content(
-                        p(size.key() + " message"),
-                        delete().is(SMALL)),
-                messageBody().content(
-                        textItems()
-                )).is(size).style("width: 440px;");
+        var message = message().is(size).style("width: 440px;")
+                .header(p(size.key() + " message"))
+                .delete()
+                .body(textItems());
 
         then(message).rendersAs("""
                 <article class="message is-$size" style="width: 440px;">
                     <div class="message-header">
                         <p>$size message</p>
-                        <button class="delete is-small" aria-label="delete"></button>
+                        <button class="delete is-$size" aria-label="delete"></button>
                     </div>
                     <div class="message-body">
                         $loremIpsum

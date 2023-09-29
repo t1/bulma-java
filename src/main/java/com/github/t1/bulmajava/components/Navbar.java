@@ -35,8 +35,6 @@ public class Navbar extends AbstractElement<Navbar> {
 
     public static Element navbarStart() {return div().classes("navbar-start").map(Navbar::item);}
 
-    public static Element navbarEnd() {return div().classes("navbar-end").map(Navbar::item);}
-
     public Navbar brand(Renderable... renderables) {
         return this.content(div().classes("navbar-brand").map(Navbar::item).content(renderables));
     }
@@ -89,7 +87,7 @@ public class Navbar extends AbstractElement<Navbar> {
 
     public Navbar end(Renderable... newEndContent) {
         var menu = getOrCreate("navbar-menu", this::navbarMenu);
-        var end = menu.getOrCreate("navbar-end", Navbar::navbarEnd);
+        var end = menu.getOrCreate("navbar-end", () -> div().map(Navbar::item));
         end.content(newEndContent);
         return this;
     }

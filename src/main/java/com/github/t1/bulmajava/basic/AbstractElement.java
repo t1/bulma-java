@@ -51,6 +51,8 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public boolean hasAttribute(String name, String value) {return attributes.hasAttribute(name, value);}
 
+    public boolean has(Modifier modifier) {return hasClass(modifier.className());}
+
     @Override public boolean hasClass(String name) {
         return attributes != null && attributes.find(Classes.class).map(classes -> classes.hasClass(name)).orElse(false);
     }
@@ -173,7 +175,8 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     }
 
     public <T extends AbstractElement<?>> T getOrCreate(String className, Supplier<T> generator) {
-        return getOrCreate(e -> e.hasClass(className), generator);
+        //noinspection unchecked
+        return (T) getOrCreate(e -> e.hasClass(className), () -> generator.get().classes(className));
     }
 
     public <T extends AbstractElement<?>> T getOrCreate(Predicate<AbstractElement<?>> predicate, Supplier<T> generator) {
