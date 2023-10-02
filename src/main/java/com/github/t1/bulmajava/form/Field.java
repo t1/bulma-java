@@ -59,7 +59,7 @@ public class Field extends AbstractElement<Field> {
     @Deprecated @Override public Field content(Renderable... content) {return super.content(content);}
 
     /** Use {@link #control(AbstractElement, Modifier...)} instead! */
-    @Deprecated @Override public Field content(Stream<Renderable> content) {return super.content(content);}
+    @Deprecated @Override public Field content(Stream<? extends Renderable> content) {return super.content(content);}
 
     /** Use {@link #control(AbstractElement, Modifier...)} instead! */
     @Deprecated @Override public Field content(String content) {return super.content(content);}

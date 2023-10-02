@@ -24,8 +24,8 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     private boolean close;
     @Getter private boolean rendersOnSeparateLines;
-    @NonNull private String name;
-    private Attributes attributes;
+    @Getter @NonNull private String name;
+    @Getter private Attributes attributes;
     private Renderable content;
     // TODO get rid of the mapFunction mechanism
     @NonNull private Function<Renderable, Renderable> mapFunction;
@@ -54,10 +54,21 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     public boolean has(Modifier modifier) {return hasClass(modifier.className());}
 
     @Override public boolean hasClass(String name) {
-        return attributes != null && attributes.find(Classes.class).map(classes -> classes.hasClass(name)).orElse(false);
+        return Optional.ofNullable(getClasses()).map(classes -> classes.hasClass(name)).orElse(false);
+    }
+
+    public Classes getClasses() {
+        return attributes == null ? null : attributes.find(Classes.class).orElse(null);
     }
 
     public Renderable content() {return content;}
+
+    public Stream<Renderable> contentStream() {
+        return (content == null) ? Stream.of()
+                : (contentIsA(ConcatenatedRenderable.class)
+                ? contentAs(ConcatenatedRenderable.class).renderables().stream()
+                : Stream.of(content));
+    }
 
     public <T extends Renderable> T contentAs(Class<T> type) {return type.cast(content);}
 
@@ -150,7 +161,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public SELF content(Renderable... content) {return content(Arrays.stream(content));}
 
-    public SELF content(Stream<Renderable> content) {
+    public SELF content(Stream<? extends Renderable> content) {
         content.filter(Objects::nonNull).forEach(this::content);
         return self();
     }
@@ -197,6 +208,10 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
                         .map(obj -> (AbstractElement<?>) obj);
     }
 
+
+    @Override public boolean equals(Object obj) {
+        return obj instanceof AbstractElement<?> that && this.render().equals(that.render());
+    }
 
     @Override public void render(Renderer renderer) {
         if (rendersOnSeparateLines) renderer.appendIndent();

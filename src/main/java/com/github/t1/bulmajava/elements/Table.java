@@ -63,7 +63,7 @@ public class Table extends AbstractElement<Table> {
 
     /** Use {@link #head(Renderable...)}, {@link #body(Renderable...)}, or {@link #foot(Renderable...)} instead! */
     @Deprecated
-    @Override public Table content(Stream<Renderable> content) {return super.content(content);}
+    @Override public Table content(Stream<? extends Renderable> content) {return super.content(content);}
 
     /** Use {@link #head(Renderable...)}, {@link #body(Renderable...)}, or {@link #foot(Renderable...)} instead! */
     @Deprecated

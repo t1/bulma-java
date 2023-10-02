@@ -29,7 +29,7 @@ public class Hero extends AbstractElement<Hero> {
     @Deprecated @Override public Hero content(Renderable... content) {return super.content(content);}
 
     /** Use {@link #body(Renderable...)} instead! */
-    @Deprecated @Override public Hero content(Stream<Renderable> content) {return super.content(content);}
+    @Deprecated @Override public Hero content(Stream<? extends Renderable> content) {return super.content(content);}
 
     public Hero head(Renderable content) {return content("hero-head", body -> body.content(content));}
 

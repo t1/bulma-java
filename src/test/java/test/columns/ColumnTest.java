@@ -2,7 +2,6 @@ package test.columns;
 
 import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.columns.ColumnSize;
-import com.github.t1.bulmajava.elements.Title;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,17 +25,19 @@ import static com.github.t1.bulmajava.columns.ScreenSize.MOBILE;
 import static com.github.t1.bulmajava.elements.Box.box;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Notification.notification;
+import static com.github.t1.bulmajava.elements.Title.subtitleP;
+import static com.github.t1.bulmajava.elements.Title.titleP;
 import static org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class ColumnTest {
     @Test void shouldRenderColumns() {
-        var cols = columns().content(
-                column().content("First column"),
-                column().content("Second column"),
-                column().content("Third column"),
-                column().content("Fourth column"));
+        var cols = columns()
+                .column("First column")
+                .column("Second column")
+                .column("Third column")
+                .column("Fourth column");
 
         then(cols).rendersAs("""
                 <div class="columns">
@@ -49,8 +50,8 @@ class ColumnTest {
     }
 
     @Test void shouldRenderFullWidthColumnSizes() {
-        var div = columns().content(
-                column(FULL).content(notificationWithCode(FULL.className())));
+        var div = columns()
+                .column(FULL, notificationWithCode(FULL.className()));
 
         then(div).rendersAs("""
                 <div class="columns">
@@ -63,10 +64,10 @@ class ColumnTest {
 
     @ParameterizedTest @EnumSource(mode = EXCLUDE, names = "FULL")
     void shouldRenderRationalColumnSizes(ColumnSize size) {
-        var div = columns().content(
-                column(size).content(notificationWithCode(size.className())),
-                column().content(notification().content("Auto").is(LIGHT)),
-                column().content(notification().content("Auto").is(LIGHT)));
+        var div = columns()
+                .column(size, notificationWithCode(size.className()))
+                .column(notification().content("Auto").is(LIGHT))
+                .column(notification().content("Auto").is(LIGHT));
 
         then(div).rendersAs("""
                 <div class="columns">
@@ -85,22 +86,22 @@ class ColumnTest {
 
     @ParameterizedTest @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
     void shouldRenderNumericColumnSizes(int size) {
-        var div = columns().content(
-                column(size).content(notificationWithCode("is-" + size)));
+        var columns = columns()
+                .column(size, notificationWithCode("is-" + size));
         for (int i = size; i < 12; i++)
-            div = div.content(column().content(notification().content("1")));
+            columns = columns.column(notification().content("1"));
 
-        then(div).rendersAs("""
-                                    <div class="columns">
-                                        <div class="column $size">
-                                            <div class="notification is-primary"><code class="html">$size</code></div>
-                                        </div>
-                                    """.replace("$size", "is-" + size) + """
-                                        <div class="column">
-                                            <div class="notification">1</div>
-                                        </div>
-                                    """.repeat(Math.max(0, 12 - size)) +
-                            "</div>\n");
+        then(columns).rendersAs("""
+                                        <div class="columns">
+                                            <div class="column $size">
+                                                <div class="notification is-primary"><code class="html">$size</code></div>
+                                            </div>
+                                        """.replace("$size", "is-" + size) + """
+                                            <div class="column">
+                                                <div class="notification">1</div>
+                                            </div>
+                                        """.repeat(Math.max(0, 12 - size)) +
+                                "</div>\n");
     }
 
     @Test void shouldRenderColumnsWithOffset() {
@@ -142,14 +143,13 @@ class ColumnTest {
 
     @Test void shouldRenderNarrowColumns() {
         var cols = columns().content(
-                column().narrow().content(
-                        box().style("width: 200px;").content(
-                                Title.titleP("Narrow column").classes("is-5"),
-                                Title.subtitleP("This column is only 200px wide."))),
-                column().content(
-                        box().content(
-                                Title.titleP("Flexible column").classes("is-5"),
-                                Title.subtitleP("This column will take up the remaining space available."))));
+                        column().narrow().content(
+                                box().style("width: 200px;").content(
+                                        titleP("Narrow column").classes("is-5"),
+                                        subtitleP("This column is only 200px wide."))))
+                .column(box().content(
+                        titleP("Flexible column").classes("is-5"),
+                        subtitleP("This column will take up the remaining space available.")));
 
         then(cols).rendersAs("""
                 <div class="columns">
@@ -177,11 +177,11 @@ class ColumnTest {
     //.is-narrow-fullhd
 
     @Test void shouldRenderMobileColumns() {
-        var cols = columns().is(MOBILE).content(
-                column().content(notificationWithCode("1")),
-                column().content(notificationWithCode("2")),
-                column().content(notificationWithCode("3")),
-                column().content(notificationWithCode("4")));
+        var cols = columns().is(MOBILE)
+                .column(notificationWithCode("1"))
+                .column(notificationWithCode("2"))
+                .column(notificationWithCode("3"))
+                .column(notificationWithCode("4"));
 
         then(cols).rendersAs("""
                 <div class="columns is-mobile">
@@ -202,11 +202,11 @@ class ColumnTest {
     }
 
     @Test void shouldRenderDesktopColumns() {
-        var cols = columns().is(DESKTOP).content(
-                column().content(notificationWithCode("1")),
-                column().content(notificationWithCode("2")),
-                column().content(notificationWithCode("3")),
-                column().content(notificationWithCode("4")));
+        var cols = columns().is(DESKTOP)
+                .column(notificationWithCode("1"))
+                .column(notificationWithCode("2"))
+                .column(notificationWithCode("3"))
+                .column(notificationWithCode("4"));
 
         then(cols).rendersAs("""
                 <div class="columns is-desktop">
@@ -228,16 +228,16 @@ class ColumnTest {
 
     @Test void shouldRenderResponsiveColumns() {
         var cols = columns().is(MOBILE).content(
-                column(THREE_QUARTERS, TWO_THIRDS, HALF, ONE_THIRD, ONE_QUARTER).content(
-                        notification().is(PRIMARY).content(
-                                code("is-three-quarters-mobile"), br(),
-                                code("is-two-thirds-tablet"), br(),
-                                code("is-half-desktop"), br(),
-                                code("is-one-third-widescreen"), br(),
-                                code("is-one-quarter-fullhd"))),
-                column().content(notificationWithCode("2")),
-                column().content(notificationWithCode("3")),
-                column().content(notificationWithCode("4")));
+                        column(THREE_QUARTERS, TWO_THIRDS, HALF, ONE_THIRD, ONE_QUARTER)
+                                .content(notification().is(PRIMARY).content(
+                                        code("is-three-quarters-mobile"), br(),
+                                        code("is-two-thirds-tablet"), br(),
+                                        code("is-half-desktop"), br(),
+                                        code("is-one-third-widescreen"), br(),
+                                        code("is-one-quarter-fullhd"))))
+                .column(notificationWithCode("2"))
+                .column(notificationWithCode("3"))
+                .column(notificationWithCode("4"));
 
         then(cols).rendersAs("""
                 <div class="columns is-mobile">
@@ -268,27 +268,16 @@ class ColumnTest {
     }
 
     @Test void shouldRenderNestedColumns() {
-        var cols = columns().content(
-                column().content(
-                        notification().content("First column").is(INFO),
+        var cols = columns()
+                .column(notification().content("First column").is(INFO),
+                        columns().is(MOBILE)
+                                .column(notification().content("First nested column").is(INFO))
+                                .column(notification().content("Second nested column").is(INFO)))
+                .column(notification().content("Second column").is(DANGER),
                         columns().is(MOBILE).content(
-                                column().content(
-                                        notification().content("First nested column").is(INFO)),
-                                column().content(
-                                        notification().content("Second nested column").is(INFO)
-                                ))),
-                column().content(
-                        notification().content("Second column").is(DANGER),
-                        columns().is(MOBILE).content(
-                                column(HALF).content(
-                                        notification().content("50%").is(DANGER)
-                                ),
-                                column().content(
-                                        notification().content("Auto").is(DANGER)
-                                ),
-                                column().content(
-                                        notification().content("Auto").is(DANGER)
-                                ))));
+                                        column(HALF).content(notification().content("50%").is(DANGER)))
+                                .column(notification().content("Auto").is(DANGER))
+                                .column(notification().content("Auto").is(DANGER)));
 
         then(cols).rendersAs("""
                 <div class="columns">
@@ -322,11 +311,11 @@ class ColumnTest {
     }
 
     @Test void shouldRenderGaplessColumns() {
-        var cols = columns().classes("is-gapless").content(
-                column().content(notification().content("First column").is(PRIMARY)),
-                column().content(notification().content("Second column").is(PRIMARY)),
-                column().content(notification().content("Third column").is(PRIMARY)),
-                column().content(notification().content("Fourth column").is(PRIMARY)));
+        var cols = columns().classes("is-gapless")
+                .column(notification().content("First column").is(PRIMARY))
+                .column(notification().content("Second column").is(PRIMARY))
+                .column(notification().content("Third column").is(PRIMARY))
+                .column(notification().content("Fourth column").is(PRIMARY));
 
         then(cols).rendersAs("""
                 <div class="columns is-gapless">
@@ -348,17 +337,15 @@ class ColumnTest {
 
     @Test void shouldRenderVariableGapColumns() {
         var cols = div().content(
-                columns().content(
-                        column(2).content(
-                                strong("Gap:").rendersOnSeparateLines(true).content(
-                                        code("2rem").id("klmnValue"))),
-                        column(5).offset(5).content(div().is(RIGHT).content(IntStream.range(0, 9).mapToObj(Integer::toString)
-                                .map(n -> button("is-" + n).is(SMALL, WARNING).classes("bd-klmn-gap").dataValue(n))))),
+                columns().column(2, strong("Gap:").rendersOnSeparateLines(true).content(
+                                code("2rem").id("klmnValue")))
+                        .content(
+                                column(5).offset(5).content(div().is(RIGHT).content(IntStream.range(0, 9).mapToObj(Integer::toString)
+                                        .map(n -> button("is-" + n).is(SMALL, WARNING).classes("bd-klmn-gap").dataValue(n))))),
                 div().content(
-                        columns().classes("is-variable bd-klmn-columns is-8").content(
-                                column(3).content(notification().is(PRIMARY).content("Side")),
-                                column(9).content(notification().is(PRIMARY).content("Main"))
-                        ),
+                        columns().classes("is-variable bd-klmn-columns is-8")
+                                .column(3, notification().is(PRIMARY).content("Side"))
+                                .column(9, notification().is(PRIMARY).content("Main")),
                         columns().classes("is-variable bd-klmn-columns is-8").content(
                                 IntStream.range(0, 3).mapToObj(n ->
                                         column(4).content(notification().is(PRIMARY).content("Three columns")))
@@ -479,9 +466,9 @@ class ColumnTest {
     }
 
     @Test void shouldRenderVerticallyAlignedColumns() {
-        var cols = columns().classes("is-vcentered").content(
-                column(8).content(notification().is(PRIMARY).content("First column")),
-                column().content(notification().is(PRIMARY).content("Second column with more content. This is so you can see the vertical alignment.")));
+        var cols = columns().classes("is-vcentered")
+                .column(8, notification().is(PRIMARY).content("First column"))
+                .column(notification().is(PRIMARY).content("Second column with more content. This is so you can see the vertical alignment."));
 
         then(cols).rendersAs("""
                 <div class="columns is-vcentered">
@@ -496,16 +483,16 @@ class ColumnTest {
     }
 
     @Test void shouldRenderMultilineColumns() {
-        var cols = columns().multiline().is(MOBILE).content(
-                column(ONE_QUARTER).content(notificationWithCode("is-one-quarter")),
-                column(ONE_QUARTER).content(notificationWithCode("is-one-quarter")),
-                column(ONE_QUARTER).content(notificationWithCode("is-one-quarter")),
-                column(ONE_QUARTER).content(notificationWithCode("is-one-quarter")),
-                column(HALF).content(notificationWithCode("is-half")),
-                column(ONE_QUARTER).content(notificationWithCode("is-one-quarter")),
-                column(ONE_QUARTER).content(notificationWithCode("is-one-quarter")),
-                column(ONE_QUARTER).content(notificationWithCode("is-one-quarter")),
-                column().content(notification().is(PRIMARY).content("Auto")));
+        var cols = columns().multiline().is(MOBILE)
+                .column(ONE_QUARTER, notificationWithCode("is-one-quarter"))
+                .column(ONE_QUARTER, notificationWithCode("is-one-quarter"))
+                .column(ONE_QUARTER, notificationWithCode("is-one-quarter"))
+                .column(ONE_QUARTER, notificationWithCode("is-one-quarter"))
+                .column(HALF, notificationWithCode("is-half"))
+                .column(ONE_QUARTER, notificationWithCode("is-one-quarter"))
+                .column(ONE_QUARTER, notificationWithCode("is-one-quarter"))
+                .column(ONE_QUARTER, notificationWithCode("is-one-quarter"))
+                .column(notification().is(PRIMARY).content("Auto"));
 
         then(cols).rendersAs("""
                 <div class="columns is-multiline is-mobile">
@@ -541,8 +528,8 @@ class ColumnTest {
     }
 
     @Test void shouldRenderCenteredColumns() {
-        var cols = columns().is(MOBILE, CENTERED).content(
-                column(HALF).content(notificationWithCode("is-half")));
+        var cols = columns().is(MOBILE, CENTERED)
+                .column(HALF, notificationWithCode("is-half"));
 
         then(cols).rendersAs("""
                 <div class="columns is-mobile is-centered">

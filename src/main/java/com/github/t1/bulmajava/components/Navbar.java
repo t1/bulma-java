@@ -64,7 +64,7 @@ public class Navbar extends AbstractElement<Navbar> {
 
     /** Use {@link #start(Renderable...)}/{@link #end(Renderable...)} instead! */
     @Deprecated
-    @Override public Navbar content(Stream<Renderable> content) {return super.content(content);}
+    @Override public Navbar content(Stream<? extends Renderable> content) {return super.content(content);}
 
     /** Use {@link #start(Renderable...)}/{@link #end(Renderable...)} instead! */
     @Deprecated

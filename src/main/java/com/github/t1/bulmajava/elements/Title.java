@@ -5,13 +5,13 @@ import com.github.t1.bulmajava.basic.Element;
 import static com.github.t1.bulmajava.basic.Basic.element;
 
 public class Title {
-    public static Element subtitle(int level) {return element("h" + level).classes("subtitle");}
+    public static Element subtitle(int level) {return element("h" + level).classes("subtitle").is(level);}
 
     public static Element subtitle(String text) {return subtitle(2, text);}
 
-    public static Element subtitle(int level, String text) {return subtitle(level).content(text);}
+    public static Element subtitle(int level, String text) {return subtitle(level).content(text).is(level);}
 
-    public static Element title(int level) {return element("h" + level).classes("title");}
+    public static Element title(int level) {return element("h" + level).classes("title").is(level);}
 
     public static Element title(String text) {return title(1, text);}
 

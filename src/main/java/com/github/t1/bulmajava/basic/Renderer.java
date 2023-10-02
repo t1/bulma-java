@@ -29,7 +29,7 @@ public class Renderer {
     }
 
     private char lastChar() {
-        return string.charAt(string.length() - 1);
+        return string.isEmpty() ? 0 : string.charAt(string.length() - 1);
     }
 
     public Renderer append(String string) {

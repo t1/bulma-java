@@ -1,5 +1,6 @@
 package com.github.t1.bulmajava.basic;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
@@ -13,7 +14,7 @@ import java.util.stream.Stream;
 import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
 import static java.util.stream.Collectors.toList;
 
-@RequiredArgsConstructor @Accessors(fluent = true, chain = true)
+@RequiredArgsConstructor @Accessors(fluent = true, chain = true) @EqualsAndHashCode
 public class Attributes implements Renderable {
     public static Attributes of(Attribute... attributes) {
         return new Attributes(Stream.of(attributes).filter(Objects::nonNull).collect(toList()));

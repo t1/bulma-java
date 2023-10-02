@@ -166,4 +166,22 @@ class ElementTest {
                 """.replace("$class", (listType.variant() == null) ? ""
                 : (" class=\"" + listType.variant() + "\"")));
     }
+
+    @Test void shouldGetEmptyContentStream() {
+        var element = div();
+
+        then(element.contentStream()).hasSize(0);
+    }
+
+    @Test void shouldGetSingleContentStream() {
+        var element = div().content(div());
+
+        then(element.contentStream()).hasSize(1);
+    }
+
+    @Test void shouldGetConcatenatedContentStream() {
+        var element = div().content(div(), div());
+
+        then(element.contentStream()).hasSize(2);
+    }
 }

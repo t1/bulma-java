@@ -32,7 +32,7 @@ class MediaTest {
         var div = div().style("width: 400px;").content(media()
                 .left(figure().content(imageP(_64x64).content(
                         img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
-                .addContent(
+                .content(
                         div().classes("content").content(p().content(
                                 strong("John Smith"), small("@johnsmith"), small("31m"),
                                 br(),
@@ -41,7 +41,7 @@ class MediaTest {
                                 .addLeftA(icon("reply").is(SMALL))
                                 .addLeftA(icon("retweet").is(SMALL))
                                 .addLeftA(icon("heart").is(SMALL)))
-                .addRight(div().content(delete())));
+                .right(div().content(delete())));
 
         // the aria-label and img-alt where not in the docs
         then(div).rendersAs("""
@@ -88,7 +88,7 @@ class MediaTest {
         var div = div().style("width: 400px;").content(media()
                 .left(figure().content(imageP(_64x64).content(
                         img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
-                .addContent(
+                .content(
                         field().control(textarea().placeholder("Add a comment...")),
                         level()
                                 .addLeft(a("Submit").button().is(INFO))
@@ -134,7 +134,7 @@ class MediaTest {
         var div = div().style("width: 800px;").content(media()
                         .left(figure().content(imageP(_64x64).content(
                                 img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
-                        .addContent(content_().content(
+                        .content(content_().content(
                                         p().content(
                                                 strong("Barbara Middleton"), br(),
                                                 loremIpsumS(), br(),
@@ -142,27 +142,28 @@ class MediaTest {
                                 media()
                                         .left(figure().content(imageP(_48x48).content(
                                                 img("https://bulma.io/images/placeholders/96x96.png", "bulma"))))
-                                        .addContent(content_().content(p().content(
+                                        .content(content_().content(p().content(
                                                         strong("Sean Brown"), br(),
                                                         loremIpsumS(), br(),
                                                         small().content(a("Like"), string("·"), a("Reply"), string("·"), string("2 hrs")))),
-                                                media().addContent("Vivamus quis semper metus, non tincidunt dolor. Vivamus in mi eu lorem cursus ullamcorper sit amet nec massa."),
-                                                media().addContent("Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.")),
+                                                media().content("Vivamus quis semper metus, non tincidunt dolor. Vivamus in mi eu lorem cursus ullamcorper sit amet nec massa."),
+                                                media().content("Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.")),
                                 media()
                                         .left(figure().content(imageP(_48x48).content(
                                                 img("https://bulma.io/images/placeholders/96x96.png", "bulma"))))
-                                        .addContent(content_().content(p().content(
+                                        .content(content_().content(p().content(
                                                 strong("Kayli Eunice"), br(),
                                                 loremIpsumS(), br(),
                                                 small().content(a("Like"), string("·"), a("Reply"), string("·"), string("2 hrs")))))),
                 media()
                         .left(figure().content(imageP(_64x64).content(
                                 img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
-                        .addContent(
+                        .content(
                                 field().control(textarea().placeholder("Add a comment...")),
                                 field().control(button("Post comment"))));
 
         // the img-alts where not in the docs
+        // the two article-only medias where missing the media-content in the docs
         then(div).rendersAs("""
                 <div style="width: 800px;">
                     <article class="media">
@@ -209,8 +210,12 @@ class MediaTest {
                                             </small>
                                         </p>
                                     </div>
-                                    <article class="media">Vivamus quis semper metus, non tincidunt dolor. Vivamus in mi eu lorem cursus ullamcorper sit amet nec massa.</article>
-                                    <article class="media">Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.</article>
+                                    <article class="media">
+                                        <div class="media-content">Vivamus quis semper metus, non tincidunt dolor. Vivamus in mi eu lorem cursus ullamcorper sit amet nec massa.</div>
+                                    </article>
+                                    <article class="media">
+                                        <div class="media-content">Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.</div>
+                                    </article>
                                 </div>
                             </article>
                             <article class="media">

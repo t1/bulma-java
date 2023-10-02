@@ -65,7 +65,7 @@ public class Select extends AbstractElement<Select> {
 
     /** Use {@link #options(String...)} )} instead! */
     @Deprecated
-    @Override public Select content(Stream<Renderable> content) {return super.content(content);}
+    @Override public Select content(Stream<? extends Renderable> content) {return super.content(content);}
 
     /** Marks the last option as <code>selected</code> */
     public Select selected() {

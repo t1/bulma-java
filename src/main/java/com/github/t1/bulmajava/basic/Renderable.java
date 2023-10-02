@@ -1,5 +1,7 @@
 package com.github.t1.bulmajava.basic;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -24,6 +26,8 @@ public interface Renderable {
         render(renderer);
         return renderer.render();
     }
+
+    default void render(OutputStream stream) {new PrintStream(stream).append(this.render());}
 
     default boolean rendersOnSeparateLines() {return false;}
 

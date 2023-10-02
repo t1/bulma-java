@@ -33,7 +33,7 @@ public class Level extends AbstractElement<Level> {
 
     /** Use {@link #addItem(Renderable, String...)} instead! */
     @Deprecated
-    @Override public Level content(Stream<Renderable> content) {return super.content(content);}
+    @Override public Level content(Stream<? extends Renderable> content) {return super.content(content);}
 
     public Level addItem(Renderable content, String... classNames) {
         return super.content(item(content).classes(classNames));

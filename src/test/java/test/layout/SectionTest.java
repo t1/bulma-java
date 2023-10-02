@@ -29,8 +29,8 @@ class SectionTest {
 
         then(section).rendersAs("""
                 <section class="section">
-                    <h1 class="title">Section</h1>
-                    <h2 class="subtitle">A simple container to divide your page into <strong>sections</strong>, like the one you&#x27;re currently reading.</h2>
+                    <h1 class="title is-1">Section</h1>
+                    <h2 class="subtitle is-2">A simple container to divide your page into <strong>sections</strong>, like the one you&#x27;re currently reading.</h2>
                 </section>
                 """);
     }
@@ -47,8 +47,8 @@ class SectionTest {
 
         then(section).rendersAs("""
                 <section class="section is-medium">
-                    <h1 class="title">Medium section</h1>
-                    <h2 class="subtitle">A simple container to divide your page into <strong>sections</strong>, like the one you&#x27;re currently reading.</h2>
+                    <h1 class="title is-1">Medium section</h1>
+                    <h2 class="subtitle is-2">A simple container to divide your page into <strong>sections</strong>, like the one you&#x27;re currently reading.</h2>
                 </section>
                 """);
     }
@@ -65,8 +65,8 @@ class SectionTest {
 
         then(section).rendersAs("""
                 <section class="section is-large">
-                    <h1 class="title">Large section</h1>
-                    <h2 class="subtitle">A simple container to divide your page into <strong>sections</strong>, like the one you&#x27;re currently reading.</h2>
+                    <h1 class="title is-1">Large section</h1>
+                    <h2 class="subtitle is-2">A simple container to divide your page into <strong>sections</strong>, like the one you&#x27;re currently reading.</h2>
                 </section>
                 """);
     }
