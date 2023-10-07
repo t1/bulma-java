@@ -1,7 +1,6 @@
 package com.github.t1.bulmajava.components;
 
 import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.elements.Delete;
 import lombok.EqualsAndHashCode;
@@ -18,7 +17,7 @@ public class Message extends AbstractElement<Message> {
 
 
     public Message header(Renderable... content) {
-        getOrCreate("message-header", Basic::div).content(content);
+        getOrCreate("message-header").content(content);
         return this;
     }
 

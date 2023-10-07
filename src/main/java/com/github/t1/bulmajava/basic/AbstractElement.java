@@ -185,6 +185,11 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return self();
     }
 
+    public <T extends AbstractElement<?>> T getOrCreate(String className) {
+        //noinspection unchecked
+        return (T) getOrCreate(className, Basic::div);
+    }
+
     public <T extends AbstractElement<?>> T getOrCreate(String className, Supplier<T> generator) {
         //noinspection unchecked
         return (T) getOrCreate(e -> e.hasClass(className), () -> generator.get().classes(className));

@@ -1,7 +1,6 @@
 package com.github.t1.bulmajava.layout;
 
 import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.Renderable;
 import lombok.EqualsAndHashCode;
@@ -16,7 +15,7 @@ public class Media extends AbstractElement<Media> {
     @Override public Media content(Renderable content) {
         if (content instanceof Element e && e.hasName("div") && e.hasClass("media-content"))
             return super.content(content); // break recursion
-        getOrCreate("media-content", Basic::div).content(content);
+        getOrCreate("media-content").content(content);
         return this;
     }
 
