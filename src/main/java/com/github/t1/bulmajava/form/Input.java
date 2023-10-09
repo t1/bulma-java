@@ -34,4 +34,8 @@ public class Input extends AbstractElement<Input> {
     public Input readonly() {return attr("readonly");}
 
     public Input required() {return attr("required");}
+
+    public Input minlength(int minlength) {return attr("minlength", Integer.toString(minlength));}
+
+    public Input maxlength(int maxlength) {return attr("maxlength", Integer.toString(maxlength));}
 }

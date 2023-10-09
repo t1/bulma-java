@@ -30,6 +30,40 @@ class ValidationTest {
                 """);
     }
 
+    @Test void shouldRenderMinlengthField() {
+        var form = div().style("width: 400px;").content(
+                field().label("Label")
+                        .control(input(TEXT).placeholder("Text input").minlength(5)));
+
+        then(form).rendersAs("""
+                <div style="width: 400px;">
+                    <div class="field">
+                        <label class="label">Label</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Text input" minlength="5">
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderMaxlengthField() {
+        var form = div().style("width: 400px;").content(
+                field().label("Label")
+                        .control(input(TEXT).placeholder("Text input").maxlength(5)));
+
+        then(form).rendersAs("""
+                <div style="width: 400px;">
+                    <div class="field">
+                        <label class="label">Label</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Text input" maxlength="5">
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
     @Test void shouldRenderFieldWithColorIcon() {
         var form = div().style("width: 400px;").content(
                 field().label("Label")
