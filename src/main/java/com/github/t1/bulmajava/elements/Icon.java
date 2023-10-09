@@ -53,6 +53,7 @@ public class Icon extends AbstractElement<Icon> {
     @Override public Icon is(Modifier... modifiers) {
         for (var modifier : modifiers)
             if (modifier instanceof IconSize) withI(i -> i.is(modifier));
+            else if (modifier instanceof Color) withI(i -> i.hasText(modifier));
             else if (modifier instanceof Size) notClasses(SMALL.className()).classes(modifier.className());
             else classes(modifier.className());
         return this;

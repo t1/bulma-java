@@ -4,8 +4,6 @@ import com.github.t1.bulmajava.basic.AbstractElement;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
-
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Textarea extends AbstractElement<Textarea> {
     public static Textarea textarea() {return new Textarea();}
@@ -18,7 +16,7 @@ public class Textarea extends AbstractElement<Textarea> {
 
     public Textarea rows(int rows) {return attr("rows", Integer.toString(rows));}
 
-    public Textarea readonly() {return attr(noValueAttribute("readonly"));}
+    public Textarea readonly() {return attr("readonly");}
 
     public Textarea fixedSize() {return classes("has-fixed-size");}
 }

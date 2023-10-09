@@ -4,7 +4,6 @@ import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Modifier;
 
-import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
 import static com.github.t1.bulmajava.basic.Basic.p;
 
 public class Image {
@@ -43,7 +42,7 @@ public class Image {
                 iframe(src, modifiers)
                         .classes("has-ratio")
                         .attr("width", width).attr("height", height)
-                        .attr(noValueAttribute("allowfullscreen")));
+                        .attr("allowfullscreen"));
     }
 
     public static AbstractElement<?> figure() {return Basic.element("figure");}

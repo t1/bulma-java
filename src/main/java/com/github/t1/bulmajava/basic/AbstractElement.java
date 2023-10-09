@@ -93,6 +93,8 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public SELF classes(String... classes) {return classes(Classes.of(classes));}
 
+    public SELF classes(Stream<String> classes) {return classes(Classes.of(classes));}
+
     private SELF classes(Classes classes) {return (classes == null || classes.empty()) ? self() : attr(classes);}
 
     public SELF notClasses(String... classes) {return notClasses(Classes.of(classes));}
@@ -106,8 +108,10 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return self();
     }
 
-    public SELF is(Modifier... modifiers) {
-        return classes(Stream.of(modifiers).map(Modifier::className).toArray(String[]::new));
+    public SELF is(Modifier... modifiers) {return is(Stream.of(modifiers));}
+
+    public SELF is(Stream<Modifier> modifiers) {
+        return classes(modifiers.map(Modifier::className).toArray(String[]::new));
     }
 
     public SELF is(int size) {return classes("is-" + size);}
@@ -124,6 +128,8 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public SELF ariaLabel(String label) {return attr("aria-label", label);}
 
+    public SELF attr(String name) {return attr(noValueAttribute(name));}
+
     public SELF attr(String name, String value) {return attr(stringAttribute(name, value));}
 
     public SELF attr(Attribute attribute) {
@@ -138,7 +144,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public SELF dataValue(String value) {return attr("data-value", value);}
 
-    public SELF disabled() {return attr(noValueAttribute("disabled"));}
+    public SELF disabled() {return attr("disabled");}
 
 
     public SELF map(Function<Renderable, Renderable> function) {

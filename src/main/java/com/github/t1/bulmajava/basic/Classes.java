@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 public record Classes(@NonNull Set<String> set) implements Attribute {
+    public static Classes of(Stream<String> classes) {return of(classes.toArray(String[]::new));}
+
     public static Classes of(String... classes) {
         return (classes.length == 0) ? null :
                 Classes.of(Set.of()).plus(classes); // ignore null classes

@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
 import static com.github.t1.bulmajava.basic.State.LOADING;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
@@ -69,7 +68,7 @@ public class Select extends AbstractElement<Select> {
 
     /** Marks the last option as <code>selected</code> */
     public Select selected() {
-        lastOption().attr(noValueAttribute("selected"));
+        lastOption().attr("selected");
         return this;
     }
 
@@ -86,7 +85,7 @@ public class Select extends AbstractElement<Select> {
     }
 
     public Select multiple() {
-        contentAs(Element.class).attr(noValueAttribute("multiple"));
+        contentAs(Element.class).attr("multiple");
         return classes("is-multiple");
     }
 
