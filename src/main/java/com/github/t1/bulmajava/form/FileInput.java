@@ -1,12 +1,16 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.bulmajava.basic.*;
+import com.github.t1.bulmajava.basic.AbstractElement;
+import com.github.t1.bulmajava.basic.Attributes;
+import com.github.t1.bulmajava.basic.Classes;
+import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.elements.Icon;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.function.Function;
 
+import static com.github.t1.bulmajava.basic.Basic.element;
 import static com.github.t1.bulmajava.basic.Basic.span;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.FILE;
@@ -17,7 +21,7 @@ public class FileInput extends AbstractElement<FileInput> {
 
     private FileInput(String title) {
         super("div", Attributes.of(Classes.of("file")),
-                Basic.element("label").classes("file-label").content(
+                element("label").classes("file-label").content(
                         input(FILE).notClasses("input").classes("file-input").name("resume"),
                         span().classes("file-cta").content(
                                 span(title).classes("file-label"))));
@@ -43,5 +47,29 @@ public class FileInput extends AbstractElement<FileInput> {
         return classes("has-name").label(label -> label.content(span(fileName).classes("file-name")));
     }
 
-    public FileInput isBoxed() {return classes("is-boxed");}
+    public FileInput boxed() {return classes("is-boxed");}
+
+    public FileInput accept(String... types) {
+        fileInputElement().attr("accept", String.join(",", types));
+        return this;
+    }
+
+    public FileInput captureUser() {
+        fileInputElement().attr("capture", "user");
+        return this;
+    }
+
+    public FileInput captureEnvironment() {
+        fileInputElement().attr("capture", "environment");
+        return this;
+    }
+
+    public FileInput multiple() {
+        fileInputElement().attr("multiple");
+        return this;
+    }
+
+    private AbstractElement<?> fileInputElement() {
+        return getOrCreate("file-label").getOrCreate("file-input");
+    }
 }

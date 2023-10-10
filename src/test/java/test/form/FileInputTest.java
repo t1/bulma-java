@@ -94,7 +94,7 @@ class FileInputTest {
     @Test void shouldRenderBoxedFileInput() {
         var field = fileInput("Choose a file…")
                 .icon("upload")
-                .isBoxed();
+                .boxed();
 
         then(field).rendersAs("""
                 <div class="file is-boxed">
@@ -113,7 +113,7 @@ class FileInputTest {
         var field = fileInput("Choose a file…")
                 .fileName("Screen Shot 2017-07-29 at 15.54.25.png")
                 .icon("upload")
-                .isBoxed();
+                .boxed();
 
         then(field).rendersAs("""
                 <div class="file has-name is-boxed">
@@ -169,7 +169,7 @@ class FileInputTest {
         var field = fileInput("Warning file…")
                 .is(WARNING)
                 .icon("cloud-upload-alt")
-                .isBoxed();
+                .boxed();
 
         then(field).rendersAs("""
                 <div class="file is-warning is-boxed">
@@ -189,7 +189,7 @@ class FileInputTest {
                 .is(DANGER)
                 .fileName("Screen Shot 2017-07-29 at 15.54.25.png")
                 .icon("cloud-upload-alt")
-                .isBoxed();
+                .boxed();
 
         then(field).rendersAs("""
                 <div class="file is-danger has-name is-boxed">
@@ -242,7 +242,7 @@ class FileInputTest {
     }
 
     @Test void shouldRenderCenteredBoxedSuccessFileInputWithName() {
-        var field = fileInput("Centered file…").is(CENTERED).isBoxed().is(SUCCESS)
+        var field = fileInput("Centered file…").is(CENTERED).boxed().is(SUCCESS)
                 .fileName("Screen Shot 2017-07-29 at 15.54.25.png")
                 .icon("upload");
 
@@ -275,6 +275,67 @@ class FileInputTest {
                             <span class="file-label">Right file…</span>
                         </span>
                         <span class="file-name">Screen Shot 2017-07-29 at 15.54.25.png</span>
+                    </label>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFileInputWithAccept() {
+        var field = fileInput("Choose a file…").accept(".doc", ".docx", ".xml", "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+
+        then(field).rendersAs("""
+                <div class="file">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="resume" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                        <span class="file-cta">
+                            <span class="file-label">Choose a file…</span>
+                        </span>
+                    </label>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFileInputWithCaptureUser() {
+        var field = fileInput("Choose a file…").captureUser();
+
+        then(field).rendersAs("""
+                <div class="file">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="resume" capture="user">
+                        <span class="file-cta">
+                            <span class="file-label">Choose a file…</span>
+                        </span>
+                    </label>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFileInputWithCaptureEnvironment() {
+        var field = fileInput("Choose a file…").captureEnvironment();
+
+        then(field).rendersAs("""
+                <div class="file">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="resume" capture="environment">
+                        <span class="file-cta">
+                            <span class="file-label">Choose a file…</span>
+                        </span>
+                    </label>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFileInputWithMultipleAccept() {
+        var field = fileInput("Choose a file…").multiple().accept("application/pdf");
+
+        then(field).rendersAs("""
+                <div class="file">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="resume" multiple accept="application/pdf">
+                        <span class="file-cta">
+                            <span class="file-label">Choose a file…</span>
+                        </span>
                     </label>
                 </div>
                 """);

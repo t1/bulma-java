@@ -46,7 +46,7 @@ class InputTest {
                 """);
     }
 
-    @ParameterizedTest @EnumSource void shouldRenderColorInput(Color color) {
+    @ParameterizedTest @EnumSource void shouldRenderColoredInput(Color color) {
         var input = input(TEXT).placeholder(color.key() + " input").is(color);
 
         then(input).rendersAs("""
@@ -291,4 +291,114 @@ class InputTest {
                 </div>
                 """);
     }
+
+    @Test void shouldRenderColorInput() {
+        var input = div().style("width: 500px;").content(
+                field().control(input(COLOR).value("#f6b73c")));
+
+        then(input).rendersAs("""
+                <div style="width: 500px;">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="color" value="#f6b73c">
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderDateInput() {
+        var input = div().style("width: 500px;").content(
+                field().control(input(DATE).value("2023-10-09")));
+
+        then(input).rendersAs("""
+                <div style="width: 500px;">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="date" value="2023-10-09">
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderDatetimeLocalInput() {
+        var input = div().style("width: 500px;").content(
+                field().control(input(DATETIME_LOCAL).value("2023-10-09T12:34")));
+
+        then(input).rendersAs("""
+                <div style="width: 500px;">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="datetime-local" value="2023-10-09T12:34">
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderEmailInput() {
+        var input = div().style("width: 500px;").content(
+                field().control(input(EMAIL).value("foo@bar.baz")));
+
+        then(input).rendersAs("""
+                <div style="width: 500px;">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="email" value="foo@bar.baz">
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderHiddenInput() {
+        var input = div().style("width: 500px;").content(
+                field().control(input(HIDDEN).value("secret-sauce")));
+
+        then(input).rendersAs("""
+                <div style="width: 500px;">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="hidden" value="secret-sauce">
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    // TODO IMAGE, MONTH, NUMBER
+
+    @Test void shouldRenderRawRangeInput() {
+        var input = div().style("width: 500px;").content(
+                input(RANGE).notClasses("input").name("cowbell").min(0).max(100).value(80).step(20));
+
+        then(input).rendersAs("""
+                <div style="width: 500px;">
+                    <input type="range" name="cowbell" min="0" max="100" value="80" step="20">
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderRangeField() {
+        var input = div().style("width: 500px;").content(
+                field()
+                        .label("Cowbell")
+                        .control(input(RANGE).name("cowbell").min(0).max(100).value(90).step(10)));
+
+        then(input).rendersAs("""
+                <div style="width: 500px;">
+                    <div class="field">
+                        <label class="label">Cowbell</label>
+                        <div class="control">
+                            <input class="input" type="range" name="cowbell" min="0" max="100" value="90" step="10">
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    // TODO RANGE-list, RANGE-orientation
+
+    // TODO SEARCH, TIME, URL, WEEK
 }
