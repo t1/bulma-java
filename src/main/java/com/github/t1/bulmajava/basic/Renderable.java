@@ -2,9 +2,12 @@ package com.github.t1.bulmajava.basic;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
+import java.util.Set;
+import java.util.function.*;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -58,8 +61,32 @@ public interface Renderable {
     }
 
     record ConcatenatedRenderable(List<Renderable> renderables) implements Renderable {
-        public static ConcatenatedRenderable concat(Renderable... renderables) {
-            return new ConcatenatedRenderable(Stream.of(renderables)
+        public static Collector<Renderable, List<Renderable>, ConcatenatedRenderable> toRenderable() {
+            return new Collector<>() {
+                @Override public Supplier<List<Renderable>> supplier() {return ArrayList::new;}
+
+                @Override public BiConsumer<List<Renderable>, Renderable> accumulator() {return List::add;}
+
+                @Override public BinaryOperator<List<Renderable>> combiner() {
+                    return (l1, l2) -> {
+                        l1.addAll(l2);
+                        return l1;
+                    };
+                }
+
+                @Override
+                public Function<List<Renderable>, ConcatenatedRenderable> finisher() {return ConcatenatedRenderable::new;}
+
+                @Override public Set<Characteristics> characteristics() {return Set.of();}
+            };
+        }
+
+        public static Renderable concat(Renderable... renderables) {
+            return concat(Stream.of(renderables));
+        }
+
+        public static Renderable concat(Stream<Renderable> renderables) {
+            return new ConcatenatedRenderable(renderables
                     .flatMap(ConcatenatedRenderable::merge)
                     .collect(toList()));
         }

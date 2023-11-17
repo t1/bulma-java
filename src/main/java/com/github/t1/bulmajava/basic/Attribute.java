@@ -59,7 +59,7 @@ public interface Attribute extends Renderable {
             throw new UnsupportedOperationException();
         }
 
-        @Override public void renderValue(Renderer renderer) {renderer.append(value);}
+        @Override public void renderValue(Renderer renderer) {renderer.safeAppend(value);}
     }
 
     record NoValueAttribute(String key) implements Attribute {

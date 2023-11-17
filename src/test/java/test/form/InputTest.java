@@ -151,6 +151,30 @@ class InputTest {
                 """);
     }
 
+    @Test void shouldRenderNullInput() {
+        var input = field().control(input(TEXT).value(null));
+
+        then(input).rendersAs("""
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text">
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderUnsafeInput() {
+        var input = field().control(input(TEXT).value("<>&\"'"));
+
+        then(input).rendersAs("""
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text" value="&lt;&gt;&amp;&quot;&#x27;">
+                    </div>
+                </div>
+                """);
+    }
+
     @Test void shouldRenderReadonlyStaticInput() {
         var input = div().style("width: 800px;").content(
                 field().horizontal()

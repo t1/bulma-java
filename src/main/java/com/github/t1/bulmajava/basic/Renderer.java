@@ -38,7 +38,7 @@ public class Renderer {
     }
 
     public Renderer safeAppend(String string) {
-        string.chars().forEach(this::safeAppend);
+        if (string != null) string.chars().forEach(this::safeAppend);
         return this;
     }
 

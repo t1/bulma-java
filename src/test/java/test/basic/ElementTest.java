@@ -1,20 +1,62 @@
 package test.basic;
 
 import com.github.t1.bulmajava.basic.ListType;
+import com.github.t1.bulmajava.basic.Renderable.RenderableString;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
+import java.util.stream.Stream;
+
 import static com.github.t1.bulmajava.basic.Anchor.a;
 import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.PRIMARY;
+import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
+import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.toRenderable;
+import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.elements.Content.content_;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class ElementTest {
+    @Test void shouldRenderString() {
+        var tag = string("hello");
+
+        then(tag).rendersAs("hello");
+    }
+
+    @Test void shouldRenderEmptyString() {
+        var tag = string("");
+
+        then(tag).rendersAs("");
+    }
+
+    @Test void shouldRenderNullString() {
+        var tag = string(null);
+
+        then(tag).rendersAs("");
+    }
+
+    @Test void shouldRenderStringArray() {
+        var tag = concat(string("1"), string("2"), string("3"));
+
+        then(tag).rendersAs("123");
+    }
+
+    @Test void shouldRenderStringStream() {
+        var tag = concat(Stream.of("1", "2", "3").map(RenderableString::string));
+
+        then(tag).rendersAs("123");
+    }
+
+    @Test void shouldRenderStringStreamCollector() {
+        var tag = Stream.of("1", "2", "3").map(RenderableString::string).collect(toRenderable());
+
+        then(tag).rendersAs("123");
+    }
+
     @Test void shouldRenderSpan() {
         var tag = span();
 

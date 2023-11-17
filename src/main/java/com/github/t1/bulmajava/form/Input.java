@@ -30,7 +30,7 @@ public class Input extends AbstractElement<Input> {
 
     public Input value(int value) {return value(Integer.toString(value));}
 
-    public Input value(String value) {return attr("value", value);}
+    public Input value(String value) {return (value == null) ? this : attr("value", value);}
 
     public Input placeholder(String placeholder) {return attr("placeholder", placeholder);}
 
