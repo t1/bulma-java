@@ -12,9 +12,10 @@ import static com.github.t1.bulmajava.basic.Anchor.a;
 import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.*;
 import static com.github.t1.bulmajava.basic.Size.LARGE;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.SELECTED;
 import static com.github.t1.bulmajava.basic.Style.LIGHT;
-import static com.github.t1.bulmajava.basic.Style.OUTLINED;
+import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static com.github.t1.bulmajava.elements.Button.*;
 import static test.CustomAssertions.then;
 
@@ -131,14 +132,84 @@ class ButtonTest {
     }
 
     @Test void shouldRenderIconAndTextButton() {
-        var button = button().content(span("Delete")).is(DANGER, OUTLINED).icon("times");
+        var button = button().content(span("Delete")).is(DANGER, ROUNDED).icon("times");
 
         then(button).rendersAs("""
-                <button class="button is-danger is-outlined">
+                <button class="button is-danger is-rounded">
                     <span>Delete</span>
                     <span class="icon"><i class="fas fa-times"></i></span>
                 </button>
                 """);
+    }
+
+    @Test void shouldRenderIconAndTextAddonButton() {
+        var button = buttonsAddon().content(
+                button().content(span("Print")).is(SMALL, ROUNDED),
+                button().icon("print").is(SMALL, ROUNDED));
+
+        then(button).rendersAs("""
+                <div class="buttons has-addons">
+                    <button class="button is-small is-rounded">
+                        <span>Print</span>
+                    </button>
+                    <button class="button is-small is-rounded">
+                        <span class="icon"><i class="fas fa-print"></i></span>
+                    </button>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderWideButtonsAddon() {
+        var button = buttonsAddon().content(
+                button().content(span("Print One")),
+                button().content(span("Print Two")),
+                button().content(span("Print Three")),
+                button().content(span("Print Four")),
+                button().content(span("Print Five")),
+                button().content(span("Print Six")),
+                button().content(span("Print Seven")),
+                button().content(span("Print Eight")),
+                button().content(span("Print Nine")),
+                button().content(span("Print Ten")),
+                button().icon("print"));
+
+        then(button).rendersAs("""
+                <div class="buttons has-addons">
+                    <button class="button">
+                        <span>Print One</span>
+                    </button>
+                    <button class="button">
+                        <span>Print Two</span>
+                    </button>
+                    <button class="button">
+                        <span>Print Three</span>
+                    </button>
+                    <button class="button">
+                        <span>Print Four</span>
+                    </button>
+                    <button class="button">
+                        <span>Print Five</span>
+                    </button>
+                    <button class="button">
+                        <span>Print Six</span>
+                    </button>
+                    <button class="button">
+                        <span>Print Seven</span>
+                    </button>
+                    <button class="button">
+                        <span>Print Eight</span>
+                    </button>
+                    <button class="button">
+                        <span>Print Nine</span>
+                    </button>
+                    <button class="button">
+                        <span>Print Ten</span>
+                    </button>
+                    <button class="button">
+                        <span class="icon"><i class="fas fa-print"></i></span>
+                    </button>
+                </div>
+                    """);
     }
 
     @Test void shouldRenderLargeIconOnlyButton() {

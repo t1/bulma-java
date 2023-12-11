@@ -6,7 +6,7 @@ import com.github.t1.bulmajava.basic.Renderable;
 import static com.github.t1.bulmajava.basic.Basic.*;
 
 public class Menu {
-    public static AbstractElement<?> menu() {return element("aside").classes("menu");}
+    public static AbstractElement<?> menu() {return aside().classes("menu");}
 
     public static AbstractElement<?> menuLabel(String text) {return p().classes("menu-label").content(text);}
 

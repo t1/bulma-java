@@ -11,6 +11,8 @@ public class Basic {
 
     public static Element article() {return element("article");}
 
+    public static Element aside() {return element("aside");}
+
     public static Element br() {return element("br").close(false);}
 
     public static Element code(String text) {return element("code").content(text).rendersOnSeparateLines(false);}
