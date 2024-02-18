@@ -9,8 +9,7 @@ import test.RenderTestExtension;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.p;
+import static com.github.t1.bulmajava.basic.Basic.*;
 import static com.github.t1.bulmajava.basic.Color.*;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.Size.*;
@@ -43,7 +42,7 @@ class FieldTest {
                         .control(input(EMAIL).is(DANGER).placeholder("Email input").value("hello@"))
                         .iconLeft("envelope")
                         .iconRight("exclamation-triangle")
-                        .help("This email is invalid", DANGER),
+                        .help(p().content(string("This email is "), em("invalid")), DANGER),
                 field().label("Subject")
                         .control(select(null)
                                 .option("1", "Select dropdown")
@@ -86,7 +85,7 @@ class FieldTest {
                             <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
                             <span class="icon is-small is-right"><i class="fas fa-exclamation-triangle"></i></span>
                         </div>
-                        <p class="help is-danger">This email is invalid</p>
+                        <p class="help is-danger">This email is <em>invalid</em></p>
                     </div>
                     <div class="field">
                         <label class="label">Subject</label>
@@ -479,6 +478,47 @@ class FieldTest {
                     </div>
                     <div class="control">
                         <a class="button">Transfer</a>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFieldWithDisabledAutofocus() {
+        var form = field()
+                .control(input(TEXT).disabled().autofocus(), EXPANDED);
+
+        then(form).rendersAs("""
+                <div class="field">
+                    <div class="control is-expanded">
+                        <input class="input" type="text" disabled autofocus>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFieldWithTabindex() {
+        var form = field()
+                .control(input(TEXT).tabindex(-1), EXPANDED);
+
+        then(form).rendersAs("""
+                <div class="field">
+                    <div class="control is-expanded">
+                        <input class="input" type="text" tabindex="-1">
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFieldPreventingEscapeKey() {
+        var form = field()
+                .control(input(TEXT).onkeydown("Escape", "event.preventDefault();"), EXPANDED);
+
+        // We accept the warning about `event`: see https://stackoverflow.com/a/58341967/3333174
+        //noinspection JSDeprecatedSymbols
+        then(form).rendersAs("""
+                <div class="field">
+                    <div class="control is-expanded">
+                        <input class="input" type="text" onkeydown="if (event.key === 'Escape') { event.preventDefault(); }">
                     </div>
                 </div>
                 """);

@@ -163,7 +163,7 @@ class InputTest {
                 """);
     }
 
-    @Test void shouldRenderUnsafeInput() {
+    @Test void shouldRenderUnsafeInputValue() {
         var input = field().control(input(TEXT).value("<>&\"'"));
 
         then(input).rendersAs("""

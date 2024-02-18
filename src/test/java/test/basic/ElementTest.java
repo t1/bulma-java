@@ -57,6 +57,12 @@ class ElementTest {
         then(tag).rendersAs("123");
     }
 
+    @Test void shouldRenderNonBreakingSpace() {
+        var tag = p().content(nbsp());
+
+        then(tag).rendersAs("<p>&nbsp;</p>\n");
+    }
+
     @Test void shouldRenderSpan() {
         var tag = span();
 
@@ -225,5 +231,23 @@ class ElementTest {
         var element = div().content(div(), div());
 
         then(element.contentStream()).hasSize(2);
+    }
+
+    // this is not proper html, but we must make sure it's safe
+    @Test void shouldRenderUnsafeElementName() {
+        var h1 = element("foo&<>\"'");
+
+        then(h1).rendersAs("""
+                <foo&amp;&lt;&gt;&quot;&#x27;></foo&amp;&lt;&gt;&quot;&#x27;>
+                """);
+    }
+
+    // this is not proper html, but we must make sure it's safe
+    @Test void shouldRenderUnsafeAttribute() {
+        var h1 = element("foo").attr("unsafe&amp;&lt;&gt;&quot;&#x27;");
+
+        then(h1).rendersAs("""
+                <foo unsafe&amp;&lt;&gt;&quot;&#x27;></foo>
+                """);
     }
 }

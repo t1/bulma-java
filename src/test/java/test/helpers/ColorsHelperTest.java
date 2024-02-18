@@ -74,5 +74,4 @@ class ColorsHelperTest {
         String colorName = color.key();
         return colorName.endsWith("light") ? "grey" : colorName.startsWith("white") ? "dark" : "light";
     }
-
 }

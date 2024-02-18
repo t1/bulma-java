@@ -21,10 +21,10 @@ public class Renderer {
         return this;
     }
 
-    public Renderer appendIndent() {return append(indentString.repeat(indent));}
+    public Renderer appendIndent() {return unsafeAppend(indentString.repeat(indent));}
 
     public Renderer nl() {
-        if (lastChar() != '\n') append("\n");
+        if (lastChar() != '\n') unsafeAppend("\n");
         return this;
     }
 
@@ -32,7 +32,7 @@ public class Renderer {
         return string.isEmpty() ? 0 : string.charAt(string.length() - 1);
     }
 
-    public Renderer append(String string) {
+    public Renderer unsafeAppend(String string) {
         this.string.append(string);
         return this;
     }

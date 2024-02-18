@@ -48,8 +48,8 @@ public record Classes(@NonNull Set<String> set) implements Attribute {
         var first = true;
         for (var aClass : set) {
             if (first) first = false;
-            else renderer.append(" ");
-            renderer.append(aClass);
+            else renderer.unsafeAppend(" ");
+            renderer.unsafeAppend(aClass);
         }
     }
 }

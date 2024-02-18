@@ -73,9 +73,10 @@ public class Select extends AbstractElement<Select> {
     }
 
     private Element lastOption() {
-        return (Element) (contentAs(Element.class).contentIsA(ConcatenatedRenderable.class) ?
-                contentAs(ConcatenatedRenderable.class).last() :
-                contentAs(Element.class).content());
+        var contentElement = contentAs(Element.class);
+        return (Element) (contentElement.contentIsA(ConcatenatedRenderable.class) ?
+                contentElement.contentAs(ConcatenatedRenderable.class).last() :
+                contentElement.content());
     }
 
     public Select multiple(int size) {

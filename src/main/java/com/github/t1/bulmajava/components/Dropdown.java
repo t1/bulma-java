@@ -1,6 +1,7 @@
 package com.github.t1.bulmajava.components;
 
 import com.github.t1.bulmajava.basic.*;
+import com.github.t1.bulmajava.elements.Button;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
@@ -8,10 +9,13 @@ import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Basic.span;
 import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
-import static com.github.t1.bulmajava.elements.Button.button;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Dropdown extends AbstractElement<Dropdown> {
+    public static Dropdown dropdown(String id) {
+        return new Dropdown(id, null, "angle-down");
+    }
+
     public static Dropdown dropdown(String buttonTitle, String id) {
         return new Dropdown(id, buttonTitle, "angle-down");
     }
@@ -26,10 +30,11 @@ public class Dropdown extends AbstractElement<Dropdown> {
     }
 
     private static Element trigger(String id, String buttonTitle, String icon) {
-        return div().classes("dropdown-trigger").content(button(span(buttonTitle))
-                .attr("aria-haspopup", "true")
-                .attr("aria-controls", id)
-                .icon(icon).isIcon(SMALL).icon(i -> i.ariaHidden(true)));
+        return div().classes("dropdown-trigger").content(
+                Button.button(buttonTitle == null ? null : span(buttonTitle))
+                        .attr("aria-haspopup", "true")
+                        .attr("aria-controls", id)
+                        .icon(icon).isIcon(SMALL).icon(i -> i.ariaHidden(true)));
     }
 
     private static Element menu(String id) {
@@ -54,5 +59,10 @@ public class Dropdown extends AbstractElement<Dropdown> {
         if (renderable instanceof Element e)
             return e.hasName("hr") ? e.classes("dropdown-divider") : e.classes("dropdown-item");
         return renderable;
+    }
+
+    public Button button() {
+        return (Button) findElement("dropdown-trigger").orElseThrow()
+                .findElement("button").orElseThrow();
     }
 }

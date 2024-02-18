@@ -43,7 +43,11 @@ public class Table extends AbstractElement<Table> {
     private Table() {super("table", "table");}
 
 
-    public Table head(Renderable... content) {
+    public Table head(String... content) {return head(Stream.of(content).map(RenderableString::string));}
+
+    public Table head(Renderable... content) {return head(Stream.of(content));}
+
+    public Table head(Stream<Renderable> content) {
         return content(Basic.element("thead").content(
                 tr().map(c -> th().content(c)).content(content)));
     }

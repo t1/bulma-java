@@ -40,9 +40,24 @@ public class Card extends AbstractElement<Card> {
 
     public static AbstractElement<?> cardImage() {return div().classes("card-image");}
 
-    public static AbstractElement<?> media() {return div().classes("media");}
+    public Card image(AbstractElement<?> image) {
+        getOrCreate("card-image", Card::cardImage).content(image);
+        return this;
+    }
 
-    public static AbstractElement<?> mediaContent() {return div().classes("media-content");}
+    @Override
+    public Card content(Renderable... components) {
+        getOrCreate("card-content", Card::cardContent).content(components);
+        return this;
+    }
 
-    public static AbstractElement<?> mediaLeft() {return div().classes("media-left");}
+    public Card header(Renderable... components) {
+        getOrCreate("card-header", Card::cardHeader).content(components);
+        return this;
+    }
+
+    public Card footer(Renderable... components) {
+        getOrCreate("card-footer", Card::cardFooter).content(components);
+        return this;
+    }
 }

@@ -225,4 +225,51 @@ class DropdownTest {
                 </div>
                 """);
     }
+
+    @Test void shouldRenderDropdownWithoutTitle() {
+        var dropdown = dropdown("dropdown-menu8").content(
+                        a("Dropdown item"),
+                        a("Other dropdown item"))
+                .is(ACTIVE).style("margin-bottom: 210px;");
+
+        then(dropdown).rendersAs("""
+                <div class="dropdown is-active" style="margin-bottom: 210px;">
+                    <div class="dropdown-trigger">
+                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu8">
+                            <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
+                        </button>
+                    </div>
+                    <div id="dropdown-menu8" class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <a class="dropdown-item">Dropdown item</a>
+                            <a class="dropdown-item">Other dropdown item</a>
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderDropdownWithoutTabindex() {
+        var dropdown = dropdown("dropdown-menu8").content(
+                        a("Dropdown item"),
+                        a("Other dropdown item"))
+                .is(ACTIVE).style("margin-bottom: 210px;");
+        dropdown.button().tabindex(-1);
+
+        then(dropdown).rendersAs("""
+                <div class="dropdown is-active" style="margin-bottom: 210px;">
+                    <div class="dropdown-trigger">
+                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu8" tabindex="-1">
+                            <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
+                        </button>
+                    </div>
+                    <div id="dropdown-menu8" class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <a class="dropdown-item">Dropdown item</a>
+                            <a class="dropdown-item">Other dropdown item</a>
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
 }

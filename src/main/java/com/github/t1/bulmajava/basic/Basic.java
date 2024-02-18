@@ -2,6 +2,8 @@ package com.github.t1.bulmajava.basic;
 
 import java.time.temporal.Temporal;
 
+import static com.github.t1.bulmajava.basic.Renderable.UnsafeString.unsafeString;
+
 public class Basic {
     public static Element element(String name) {return Element.element_(name);}
 
@@ -18,7 +20,7 @@ public class Basic {
     public static Element code(String text) {return element("code").content(text).rendersOnSeparateLines(false);}
 
     public static Renderable comment(String content) {
-        return renderer -> renderer.append("<!--").safeAppend(content).append("-->");
+        return renderer -> renderer.unsafeAppend("<!--").safeAppend(content).unsafeAppend("-->");
     }
 
     public static Element control() {return div().classes("control");}
@@ -63,6 +65,8 @@ public class Basic {
 
     public static Element i() {return element("i").rendersOnSeparateLines(false);}
 
+    public static Element i(String content) {return i().content(content);}
+
     public static Element label() {return element("label").classes("label");}
 
     public static Element label(String text) {return label().content(text);}
@@ -71,11 +75,15 @@ public class Basic {
 
     public static Element li(String text) {return li().content(text);}
 
+    public static Element li(Renderable content) {return li().content(content);}
+
     public static Element multilineGroup() {
         return group().classes("is-grouped-multiline").map(e -> control().content(e));
     }
 
     public static Element nav() {return element("nav");}
+
+    public static Renderable nbsp() {return unsafeString("&nbsp;");}
 
     public static Element ol() {return element("ol");}
 

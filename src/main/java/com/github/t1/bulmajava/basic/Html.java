@@ -98,7 +98,7 @@ public class Html extends AbstractElement<Html> {
 
 
     @Override public void render(Renderer renderer) {
-        renderer.append("<!DOCTYPE html>\n");
+        renderer.unsafeAppend("<!DOCTYPE html>\n");
         super.render(renderer);
     }
 }

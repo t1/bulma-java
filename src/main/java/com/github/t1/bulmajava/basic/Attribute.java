@@ -35,17 +35,19 @@ public interface Attribute extends Renderable {
     boolean matches(Attribute attribute);
 
     @Override default void render(Renderer renderer) {
-        renderer.append(key()).append("=\"");
+        renderer.unsafeAppend(key()).unsafeAppend("=\"");
         renderValue(renderer);
-        renderer.append("\"");
+        renderer.unsafeAppend("\"");
     }
 
     void renderValue(Renderer renderer);
 
     default Attribute and(Attribute attribute) {throw new UnsupportedOperationException();}
 
-    record StringAttribute(String key, String value) implements Attribute {
-        public static Attribute stringAttribute(@NonNull String key, @NonNull String value) {return new StringAttribute(key, value);}
+    record StringAttribute(String key, String value, boolean unsafe) implements Attribute {
+        public static Attribute stringAttribute(@NonNull String key, @NonNull String value) {return new StringAttribute(key, value, false);}
+
+        public static Attribute unsafeStringAttribute(@NonNull String key, @NonNull String value) {return new StringAttribute(key, value, true);}
 
         @Override public boolean matches(Attribute attribute) {
             return hasKey(attribute.key()) && attribute instanceof StringAttribute str && value.equals(str.value);
@@ -59,7 +61,10 @@ public interface Attribute extends Renderable {
             throw new UnsupportedOperationException();
         }
 
-        @Override public void renderValue(Renderer renderer) {renderer.safeAppend(value);}
+        @Override public void renderValue(Renderer renderer) {
+            if (unsafe) renderer.unsafeAppend(value);
+            else renderer.safeAppend(value);
+        }
     }
 
     record NoValueAttribute(String key) implements Attribute {
@@ -69,7 +74,7 @@ public interface Attribute extends Renderable {
 
         @Override public boolean matches(Attribute attribute) {return attribute.hasKey(attribute.key());}
 
-        @Override public void render(Renderer renderer) {renderer.append(key());}
+        @Override public void render(Renderer renderer) {renderer.unsafeAppend(key());}
 
         @Override public void renderValue(Renderer renderer) {}
     }

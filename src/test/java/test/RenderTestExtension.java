@@ -21,13 +21,13 @@ import static com.github.t1.bulmajava.layout.Section.section;
 public class RenderTestExtension implements Extension, BeforeAllCallback, BeforeEachCallback, AfterEachCallback, AfterAllCallback, LauncherSessionListener {
     @SuppressWarnings("HtmlUnknownTarget")
     private static final Renderer ALL = new Renderer()
-            .append(html("Bulma-Java Demo")
+            .unsafeAppend(html("Bulma-Java Demo")
                     .stylesheet("https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css")
                     .stylesheet("https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css")
                     .script("test-classes/main.js")
                     .script("test-classes/klmn.js")
                     .close(false).render())
-            .append("<body>\n");
+            .unsafeAppend("<body>\n");
     //            <!--suppress HtmlFormInputWithoutLabel -->
 
 
@@ -47,8 +47,8 @@ public class RenderTestExtension implements Extension, BeforeAllCallback, Before
 
     @Override public void beforeAll(ExtensionContext extensionContext) {
         if (addSectionWrapper(extensionContext))
-            ALL.append(section().content(container().close(false)).close(false).render()).in().in();
-        ALL.append("        " + title(extensionContext.getDisplayName()));
+            ALL.unsafeAppend(section().content(container().close(false)).close(false).render()).in().in();
+        ALL.unsafeAppend("        " + title(extensionContext.getDisplayName()));
     }
 
     private static boolean addSectionWrapper(ExtensionContext extensionContext) {
@@ -60,14 +60,14 @@ public class RenderTestExtension implements Extension, BeforeAllCallback, Before
         if (name.startsWith("[")) name = extensionContext.getParent().orElseThrow().getDisplayName() + ": " + name;
         if (name.startsWith("shouldRender")) name = name.substring(12);
         if (name.endsWith("()")) name = name.substring(0, name.length() - 2);
-        ALL.append("        " + hr() + "        " + title(6, name));
+        ALL.unsafeAppend("        " + hr() + "        " + title(6, name));
     }
 
     @Override public void afterEach(ExtensionContext extensionContext) {ALL.nl();}
 
     @Override public void afterAll(ExtensionContext extensionContext) {
         if (addSectionWrapper(extensionContext))
-            ALL.out().out().append("""
+            ALL.out().out().unsafeAppend("""
                         </div>
                     </section>
                                         
@@ -77,7 +77,7 @@ public class RenderTestExtension implements Extension, BeforeAllCallback, Before
 
     @SneakyThrows(IOException.class)
     @Override public void launcherSessionClosed(LauncherSession session) {
-        ALL.append("""
+        ALL.unsafeAppend("""
                 </body>
                 </html>
                 """);

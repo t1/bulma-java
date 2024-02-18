@@ -50,7 +50,9 @@ public class Field extends AbstractElement<Field> {
         return this;
     }
 
-    public Field help(String text, Modifier... modifiers) {return super.content(p(text).classes("help").is(modifiers));}
+    public Field help(String text, Modifier... modifiers) {return help(p(text), modifiers);}
+
+    public Field help(AbstractElement<?> content, Modifier... modifiers) {return super.content(content.classes("help").is(modifiers));}
 
     /** Use {@link #control(AbstractElement, Modifier...)} instead! */
     @Deprecated @Override public Field content(Renderable content) {return super.content(content);}
@@ -84,14 +86,18 @@ public class Field extends AbstractElement<Field> {
         return (this.hasClass("is-horizontal")) ? div().classes("field-body") : Basic.control();
     }
 
-    public Field iconLeft(String iconName, Modifier... modifiers) {return icon(iconName, LEFT, modifiers);}
+    public Field iconLeft(String iconName, Modifier... modifiers) {return iconLeft(Icon.icon(iconName), modifiers);}
 
-    public Field iconRight(String iconName, Modifier... modifiers) {return icon(iconName, RIGHT, modifiers);}
+    public Field iconLeft(Icon icon, Modifier... modifiers) {return icon(icon, LEFT, modifiers);}
 
-    private Field icon(String iconName, Alignment alignment, Modifier... modifiers) {
+    public Field iconRight(String iconName, Modifier... modifiers) {return iconRight(Icon.icon(iconName), modifiers);}
+
+    public Field iconRight(Icon icon, Modifier... modifiers) {return icon(icon, RIGHT, modifiers);}
+
+    private Field icon(Icon icon, Alignment alignment, Modifier... modifiers) {
         assert alignment != CENTERED;
         return control(control -> control.classes("has-icons-" + alignment.key()).content(
-                Icon.icon(iconName).is(SMALL).is(modifiers).is(alignment)));
+                icon.is(SMALL).is(modifiers).is(alignment)));
     }
 
     /**

@@ -44,7 +44,7 @@ public interface Renderable {
     record UnsafeString(String string) implements Renderable {
         public static Renderable unsafeString(String string) {return new UnsafeString(string);}
 
-        @Override public void render(Renderer renderer) {renderer.append(string);}
+        @Override public void render(Renderer renderer) {renderer.unsafeAppend(string);}
     }
 
     record Indented(Renderable renderable) implements Renderable {
@@ -53,8 +53,8 @@ public interface Renderable {
         @Override public void render(Renderer renderer) {
             renderer.nl().in();
             renderable.render().lines().forEach(line -> {
-                if (!line.isBlank()) renderer.appendIndent().append(line);
-                renderer.append("\n");
+                if (!line.isBlank()) renderer.appendIndent().unsafeAppend(line);
+                renderer.unsafeAppend("\n");
             });
             renderer.out().appendIndent();
         }

@@ -32,6 +32,23 @@ class SelectTest {
                 """);
     }
 
+    @Test void shouldRenderSelectWithSelected() {
+        var select = select(null)
+                .option("1", "One")
+                .option("2", "Two").selected()
+                .option("3", "Three");
+
+        then(select).rendersAs("""
+                <div class="select">
+                    <select>
+                        <option value="1">One</option>
+                        <option value="2" selected>Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                """);
+    }
+
     @Test void shouldRenderMultipleSelectWithoutSize() {
         var select = select(null).multiple()
                 .options("Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador", "Guyana",

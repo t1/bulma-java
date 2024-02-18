@@ -7,6 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
+import java.util.stream.Stream;
+
 import static com.github.t1.bulmajava.basic.Alignment.LEFT;
 import static com.github.t1.bulmajava.basic.Anchor.a;
 import static com.github.t1.bulmajava.basic.Basic.*;
@@ -183,5 +185,28 @@ class PanelTest {
                     </a>
                 </article>
                 """.replace("$color", color.key()));
+    }
+
+    @Test
+    void shouldRenderBlockStreamPanel() {
+        var panel = panel().style("width: 400px;")
+                .addHeading(p("Stream"))
+                .addBlocks(Stream.of("One", "Two", "Three")
+                        .map(text -> div().content(a(text))));
+
+        then(panel).rendersAs("""
+                <article class="panel" style="width: 400px;">
+                    <p class="panel-heading">Stream</p>
+                    <div class="panel-block">
+                        <a>One</a>
+                    </div>
+                    <div class="panel-block">
+                        <a>Two</a>
+                    </div>
+                    <div class="panel-block">
+                        <a>Three</a>
+                    </div>
+                </article>
+                """);
     }
 }

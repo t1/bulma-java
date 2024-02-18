@@ -17,6 +17,7 @@ import static com.github.t1.bulmajava.elements.Content.content_;
 import static com.github.t1.bulmajava.elements.Image.image;
 import static com.github.t1.bulmajava.elements.ImageRatio._4by3;
 import static com.github.t1.bulmajava.elements.ImageSize._48x48;
+import static com.github.t1.bulmajava.layout.Media.media;
 import static test.CustomAssertions.then;
 import static test.RenderTestExtension.loremIpsum;
 import static test.RenderTestExtension.loremIpsumS;
@@ -24,16 +25,14 @@ import static test.RenderTestExtension.loremIpsumS;
 @ExtendWith(RenderTestExtension.class)
 class CardTest {
     @Test void shouldRenderCard() {
-        var card = card().style("width: 260px;").content(
-                cardImage().content(
-                        image(_4by3, "https://bulma.io/images/placeholders/1280x960.png", "Placeholder image")),
-                cardContent().content(
-                        media().content(
-                                mediaLeft().content(
-                                        image(_48x48, "https://bulma.io/images/placeholders/96x96.png", "Small image")),
-                                mediaContent().content(
+        var card = card().style("width: 260px;")
+                .image(image(_4by3, "https://bulma.io/images/placeholders/1280x960.png", "Placeholder image"))
+                .content(
+                        media()
+                                .left(image(_48x48, "https://bulma.io/images/placeholders/96x96.png", "Small image"))
+                                .content(
                                         Title.titleP("John Smith").is(4),
-                                        Title.subtitleP("@johnsmith").is(6))),
+                                        Title.subtitleP("@johnsmith").is(6)),
                         content_().content(
                                 string("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris."),
                                 a("@bulmaio"),
@@ -41,7 +40,7 @@ class CardTest {
                                 a("#css").href("#"),
                                 a("#responsive").href("#"),
                                 br(),
-                                time(LocalDate.of(2016, 1, 1)).content("11:09 PM - 1 Jan 2016"))));
+                                time(LocalDate.of(2016, 1, 1)).content("11:09 PM - 1 Jan 2016")));
 
         then(card).rendersAs("""
                 <div class="card" style="width: 260px;">
@@ -51,17 +50,15 @@ class CardTest {
                         </figure>
                     </div>
                     <div class="card-content">
-                        <div class="media">
-                            <div class="media-left">
-                                <figure class="image is-48x48">
-                                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Small image">
-                                </figure>
-                            </div>
+                        <article class="media">
+                            <figure class="image is-48x48 media-left">
+                                <img src="https://bulma.io/images/placeholders/96x96.png" alt="Small image">
+                            </figure>
                             <div class="media-content">
                                 <p class="title is-4">John Smith</p>
                                 <p class="subtitle is-6">@johnsmith</p>
                             </div>
-                        </div>
+                        </article>
                         <div class="content">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
                             <a>@bulmaio</a>
@@ -161,22 +158,22 @@ class CardTest {
     }
 
     @Test void shouldRenderCardExample1() {
-        var card = card().style("width: 260px;").content(
-                cardHeader().content(
+        var card = card().style("width: 260px;")
+                .header(
                         p("Component"),
-                        button().ariaLabel("more options").icon("angle-down")),
-                cardContent().content(
+                        button().ariaLabel("more options").icon("angle-down"))
+                .content(
                         loremIpsumS(),
                         a("@bulmaio").href("#"),
                         string("."),
                         a("#css").href("#"),
                         a("#responsive").href("#"),
                         br(),
-                        time(LocalDate.of(2016, 1, 1)).content("11:09 PM - 1 Jan 2016")),
-                cardFooter().content(
+                        time(LocalDate.of(2016, 1, 1)).content("11:09 PM - 1 Jan 2016"))
+                .footer(
                         a("Save").href("#"),
                         a("Edit").href("#"),
-                        a("Delete").href("#")));
+                        a("Delete").href("#"));
 
         // the extra content-div is not necessary
         then(card).rendersAs("""
@@ -206,11 +203,11 @@ class CardTest {
     }
 
     @Test void shouldRenderCardExample2() {
-        var card = card().style("width: 260px;").content(
-                cardContent().content(
+        var card = card().style("width: 260px;")
+                .content(
                         Title.titleP("“There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors.”"),
-                        Title.subtitleP("Jeff Atwood")),
-                cardFooter().content(
+                        Title.subtitleP("Jeff Atwood"))
+                .footer(
                         p().content(
                                 span().content(
                                         string("View on"),
@@ -218,7 +215,7 @@ class CardTest {
                         p().content(
                                 span().content(
                                         string("Share on"),
-                                        a("Facebook").href("#")))));
+                                        a("Facebook").href("#"))));
 
         then(card).rendersAs("""
                 <div class="card" style="width: 260px;">

@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
 import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
+import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.unsafeStringAttribute;
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
@@ -146,6 +147,14 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public SELF disabled() {return attr("disabled");}
 
+    public SELF tabindex(int tabindex) {return attr("tabindex", Integer.toString(tabindex));}
+
+
+    public SELF onkeydown(String key, String action) {
+        // `event` is officially deprecated, but seems to be okay to use: https://stackoverflow.com/a/58341967/3333174
+        return attr(unsafeStringAttribute("onkeydown", "if (event.key === '" + key + "') { " + action + " }"));
+    }
+
 
     public SELF map(Function<Renderable, Renderable> function) {
         this.mapFunction = function;
@@ -226,12 +235,12 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     @Override public void render(Renderer renderer) {
         if (rendersOnSeparateLines) renderer.appendIndent();
-        renderer.append("<").append(name);
+        renderer.unsafeAppend("<").safeAppend(name);
         if (attributes != null && !attributes.isEmpty()) {
-            renderer.append(" ");
+            renderer.unsafeAppend(" ");
             attributes.render(renderer);
         }
-        renderer.append(">");
+        renderer.unsafeAppend(">");
         if (content != null) {
             if (content.rendersOnSeparateLines()) renderer.nl().in();
             content.render(renderer);
@@ -241,7 +250,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
             }
         }
         if (close) {
-            renderer.append("</").append(name).append(">");
+            renderer.unsafeAppend("</").safeAppend(name).unsafeAppend(">");
         }
         if (rendersOnSeparateLines) renderer.nl();
     }

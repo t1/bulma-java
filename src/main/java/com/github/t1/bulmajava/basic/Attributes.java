@@ -78,7 +78,7 @@ public class Attributes implements Renderable {
 
     public void render(Renderer renderer) {
         for (int i = 0; i < attributes.size(); i++) {
-            if (i > 0) renderer.append(" ");
+            if (i > 0) renderer.unsafeAppend(" ");
             attributes.get(i).render(renderer);
         }
     }

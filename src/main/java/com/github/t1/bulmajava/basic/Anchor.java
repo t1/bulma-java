@@ -3,6 +3,8 @@ package com.github.t1.bulmajava.basic;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
+import java.net.URI;
+
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Anchor extends AbstractElement<Anchor> {
     public static Anchor a() {return new Anchor();}
@@ -11,6 +13,8 @@ public class Anchor extends AbstractElement<Anchor> {
 
     private Anchor() {super("a");}
 
+
+    public Anchor href(URI href) {return attr("href", (href == null) ? null : href.toString());}
 
     public Anchor href(String href) {return attr("href", href);}
 
