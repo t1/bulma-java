@@ -150,6 +150,11 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     public SELF tabindex(int tabindex) {return attr("tabindex", Integer.toString(tabindex));}
 
 
+    public SELF onkeyup(String key, String action) {
+        // `event` is officially deprecated, but seems to be okay to use: https://stackoverflow.com/a/58341967/3333174
+        return attr(unsafeStringAttribute("onkeyup", "if (event.key === '" + key + "') { " + action + " }"));
+    }
+
     public SELF onkeydown(String key, String action) {
         // `event` is officially deprecated, but seems to be okay to use: https://stackoverflow.com/a/58341967/3333174
         return attr(unsafeStringAttribute("onkeydown", "if (event.key === '" + key + "') { " + action + " }"));

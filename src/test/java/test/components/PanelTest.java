@@ -29,45 +29,45 @@ import static test.CustomAssertions.then;
 class PanelTest {
     @Test void shouldRenderPanel() {
         var panel = panel("nav").style("width: 400px;")
-                .addHeading(p("Repositories"))
-                .addBlock(div().content(
+                .heading("Repositories")
+                .block(div().content(
                         p().classes("control has-icons-left").content(
                                 input(TEXT).placeholder("Search"),
                                 icon("search").is(LEFT).ariaHidden(true))))
-                .addTabs(
+                .tabs(
                         a("All").is(ACTIVE),
                         a("Public"),
                         a("Private"),
                         a("Sources"),
                         a("Forks"))
-                .addBlock(a().is(ACTIVE).content(
+                .block(a().is(ACTIVE).content(
                         span().classes("panel-icon").content(
                                 i().classes("fas fa-book").ariaHidden(true)),
                         string("bulma")))
-                .addBlock(a().content(
+                .block(a().content(
                         span().classes("panel-icon").content(
                                 i().classes("fas fa-book").ariaHidden(true)),
                         string("marksheet")))
-                .addBlock(a().content(
+                .block(a().content(
                         span().classes("panel-icon").content(
                                 i().classes("fas fa-book").ariaHidden(true)),
                         string("minireset.css")))
-                .addBlock(a().content(
+                .block(a().content(
                         span().classes("panel-icon").content(
                                 i().classes("fas fa-book").ariaHidden(true)),
                         string("jgthms.github.io")))
-                .addBlock(a().content(
+                .block(a().content(
                         span().classes("panel-icon").content(
                                 i().classes("fas fa-code-branch").ariaHidden(true)),
                         string("daniellowtw/infboard")))
-                .addBlock(a().content(
+                .block(a().content(
                         span().classes("panel-icon").content(
                                 i().classes("fas fa-code-branch").ariaHidden(true)),
                         string("mojs")))
-                .addBlock(element("label").content(
+                .block(element("label").content(
                         input(CHECKBOX).notClasses("input"),
                         string("remember me")))
-                .addBlock(div().content(
+                .block(div().content(
                         button("Reset all filters").is(LINK, OUTLINED, FULLWIDTH)));
 
         then(panel).rendersAs("""
@@ -123,30 +123,30 @@ class PanelTest {
 
     @ParameterizedTest @EnumSource void shouldRenderColorPanel(Color color) {
         var panel = panel().style("width: 400px;").is(color)
-                .addHeading(p(color.key()))
-                .addTabs(
+                .heading(p(color.key()))
+                .tabs(
                         a("All").is(ACTIVE),
                         a("Public"),
                         a("Private"),
                         a("Sources"),
                         a("Forks"))
-                .addBlock(div().content(
+                .block(div().content(
                         p().classes("control has-icons-left").content(
                                 input(TEXT).placeholder("Search").is(color),
                                 icon("search").is(LEFT).ariaHidden(true))))
-                .addBlock(a().is(ACTIVE).content(
+                .block(a().is(ACTIVE).content(
                         span().classes("panel-icon").content(
                                 i().classes("fas fa-book").ariaHidden(true)),
                         string("bulma")))
-                .addBlock(a().content(
+                .block(a().content(
                         span().classes("panel-icon").content(
                                 i().classes("fas fa-book").ariaHidden(true)),
                         string("marksheet")))
-                .addBlock(a().content(
+                .block(a().content(
                         span().classes("panel-icon").content(
                                 i().classes("fas fa-book").ariaHidden(true)),
                         string("minireset.css")))
-                .addBlock(a().content(
+                .block(a().content(
                         span().classes("panel-icon").content(
                                 i().classes("fas fa-book").ariaHidden(true)),
                         string("jgthms.github.io")));
@@ -190,8 +190,8 @@ class PanelTest {
     @Test
     void shouldRenderBlockStreamPanel() {
         var panel = panel().style("width: 400px;")
-                .addHeading(p("Stream"))
-                .addBlocks(Stream.of("One", "Two", "Three")
+                .heading(p("Stream"))
+                .blocks(Stream.of("One", "Two", "Three")
                         .map(text -> div().content(a(text))));
 
         then(panel).rendersAs("""

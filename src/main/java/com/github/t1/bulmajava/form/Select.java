@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -38,6 +39,8 @@ public class Select extends AbstractElement<Select> {
     }
 
     public Select options(String... options) {return options(Arrays.stream(options));}
+
+    public Select options(Collection<String> options) {return options(options.stream());}
 
     public Select option(String text) {return option(text, text);}
 

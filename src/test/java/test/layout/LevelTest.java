@@ -22,13 +22,13 @@ import static test.CustomAssertions.then;
 class LevelTest {
     @Test void shouldRenderLevel() {
         var level = level()
-                .addLeft(
+                .left(
                         p().classes("subtitle", "is-5").content(
                                 strong("123"), string(" posts")),
                         field()
                                 .control(input(TEXT).placeholder("Find a post"))
                                 .containsAddonRight(button("Search")))
-                .addRight(
+                .right(
                         p().content(strong("All")),
                         a("Published"),
                         a("Drafts"),
@@ -76,19 +76,19 @@ class LevelTest {
     }
 
     @Test void shouldRenderCenteredLevel() {
-        var level = level().addItem(div().content(
+        var level = level().item(div().content(
                                 p("Tweets").classes("heading"),
                                 p("3,456").classes("title")),
                         "has-text-centered")
-                .addItem(div().content(
+                .item(div().content(
                                 p("Following").classes("heading"),
                                 p("123").classes("title")),
                         "has-text-centered")
-                .addItem(div().content(
+                .item(div().content(
                                 p("Followers").classes("heading"),
                                 p("456K").classes("title")),
                         "has-text-centered")
-                .addItem(div().content(
+                .item(div().content(
                                 p("Likes").classes("heading"),
                                 p("789").classes("title")),
                         "has-text-centered");
@@ -125,11 +125,11 @@ class LevelTest {
 
     @Test void shouldRenderCenteredLevel2() {
         var level = level()
-                .addItem(a("Home").classes("link").is(INFO), "has-text-centered")
-                .addItem(a("Menu").classes("link").is(INFO), "has-text-centered")
-                .addItem(img("https://bulma.io/images/bulma-type.png", "").style("height: 30px;"), "has-text-centered")
-                .addItem(a("Reservations").classes("link").is(INFO), "has-text-centered")
-                .addItem(a("Contact").classes("link").is(INFO), "has-text-centered");
+                .item(a("Home").classes("link").is(INFO), "has-text-centered")
+                .item(a("Menu").classes("link").is(INFO), "has-text-centered")
+                .item(img("https://bulma.io/images/bulma-type.png", "").style("height: 30px;"), "has-text-centered")
+                .item(a("Reservations").classes("link").is(INFO), "has-text-centered")
+                .item(a("Contact").classes("link").is(INFO), "has-text-centered");
 
         then(level).rendersAs("""
                 <nav class="level">
@@ -153,19 +153,19 @@ class LevelTest {
     }
 
     @Test void shouldRenderMobileLevel() {
-        var level = level().is(MOBILE).addItem(div().content(
+        var level = level().is(MOBILE).item(div().content(
                                 p("Tweets").classes("heading"),
                                 p("3,456").classes("title")),
                         "has-text-centered")
-                .addItem(div().content(
+                .item(div().content(
                                 p("Following").classes("heading"),
                                 p("123").classes("title")),
                         "has-text-centered")
-                .addItem(div().content(
+                .item(div().content(
                                 p("Followers").classes("heading"),
                                 p("456K").classes("title")),
                         "has-text-centered")
-                .addItem(div().content(
+                .item(div().content(
                                 p("Likes").classes("heading"),
                                 p("789").classes("title")),
                         "has-text-centered");

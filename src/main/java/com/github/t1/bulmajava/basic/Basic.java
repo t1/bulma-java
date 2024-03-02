@@ -31,8 +31,6 @@ public class Basic {
 
     public static Element footer() {return element("footer");}
 
-    public static Element form() {return element("form");}
-
     public static Element group() {return div().classes("field", "is-grouped");}
 
     public static Element h1() {return element("h1");}

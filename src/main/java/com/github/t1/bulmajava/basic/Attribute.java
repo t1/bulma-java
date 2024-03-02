@@ -58,7 +58,7 @@ public interface Attribute extends Renderable {
         @Override public Attribute and(Attribute attribute) {
             if ("style".equals(key()))
                 return stringAttribute(key, value + " " + ((StringAttribute) attribute).value);
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException("can't add to a '" + key() + "' attribute");
         }
 
         @Override public void renderValue(Renderer renderer) {

@@ -38,9 +38,9 @@ class MediaTest {
                                 br(),
                                 loremIpsumS())),
                         level().is(MOBILE)
-                                .addLeftA(icon("reply").is(SMALL))
-                                .addLeftA(icon("retweet").is(SMALL))
-                                .addLeftA(icon("heart").is(SMALL)))
+                                .leftA(icon("reply").is(SMALL))
+                                .leftA(icon("retweet").is(SMALL))
+                                .leftA(icon("heart").is(SMALL)))
                 .right(div().content(delete())));
 
         // the aria-label and img-alt where not in the docs
@@ -91,8 +91,8 @@ class MediaTest {
                 .content(
                         field().control(textarea().placeholder("Add a comment...")),
                         level()
-                                .addLeft(a("Submit").button().is(INFO))
-                                .addRight(checkbox().content("Press enter to submit"))));
+                                .left(a("Submit").button().is(INFO))
+                                .right(checkbox().content("Press enter to submit"))));
 
         // the img-alt was not in the docs
         then(div).rendersAs("""

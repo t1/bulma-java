@@ -22,9 +22,24 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
+                            <span class="file-label">Choose a file…</span>
+                        </span>
+                    </label>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFileInputWithFieldName() {
+        var field = fileInput("Choose a file…").name("foo");
+
+        then(field).rendersAs("""
+                <div class="file">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="foo">
+                        <span class="file-cta">
                             <span class="file-label">Choose a file…</span>
                         </span>
                     </label>
@@ -40,7 +55,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file has-name">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">Choose a file…</span>
@@ -60,7 +75,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file has-name is-right">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">Choose a file…</span>
@@ -80,7 +95,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file has-name is-fullwidth">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">Choose a file…</span>
@@ -99,7 +114,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file is-boxed">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">Choose a file…</span>
@@ -118,7 +133,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file has-name is-boxed">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">Choose a file…</span>
@@ -135,7 +150,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file is-primary">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">Primary file…</span>
@@ -154,7 +169,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file is-info has-name">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">Info file…</span>
@@ -174,7 +189,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file is-warning is-boxed">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-cloud-upload-alt"></i></span>
                             <span class="file-label">Warning file…</span>
@@ -194,7 +209,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file is-danger has-name is-boxed">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-cloud-upload-alt"></i></span>
                             <span class="file-label">Danger file…</span>
@@ -211,7 +226,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file is-$size">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">$size file…</span>
@@ -230,7 +245,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file is-$size has-name">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">$size file…</span>
@@ -249,7 +264,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file is-centered is-boxed is-success has-name">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">Centered file…</span>
@@ -269,7 +284,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file is-right is-info has-name">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">Right file…</span>
@@ -287,7 +302,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                        <input class="file-input" type="file" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                         <span class="file-cta">
                             <span class="file-label">Choose a file…</span>
                         </span>
@@ -302,7 +317,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume" capture="user">
+                        <input class="file-input" type="file" capture="user">
                         <span class="file-cta">
                             <span class="file-label">Choose a file…</span>
                         </span>
@@ -317,7 +332,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume" capture="environment">
+                        <input class="file-input" type="file" capture="environment">
                         <span class="file-cta">
                             <span class="file-label">Choose a file…</span>
                         </span>
@@ -332,7 +347,7 @@ class FileInputTest {
         then(field).rendersAs("""
                 <div class="file">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume" multiple accept="application/pdf">
+                        <input class="file-input" type="file" multiple accept="application/pdf">
                         <span class="file-cta">
                             <span class="file-label">Choose a file…</span>
                         </span>

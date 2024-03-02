@@ -17,11 +17,13 @@ public class Panel extends AbstractElement<Panel> {
 
     private Panel(String name) {super(name, "panel");}
 
-    public Panel addHeading(AbstractElement<?> content) {return content(content.classes("panel-heading"));}
+    public Panel heading(String heading) {return heading(p(heading));}
 
-    public Panel addBlock(AbstractElement<?> content) {return content(content.classes("panel-block"));}
+    public Panel heading(AbstractElement<?> content) {return content(content.classes("panel-heading"));}
 
-    public Panel addBlocks(Stream<AbstractElement<?>> content) {return content(content.map(element -> element.classes("panel-block")));}
+    public Panel block(AbstractElement<?> content) {return content(content.classes("panel-block"));}
 
-    public Panel addTabs(Renderable... content) {return content(p().classes("panel-tabs").content(content));}
+    public Panel blocks(Stream<AbstractElement<?>> content) {return content(content.map(element -> element.classes("panel-block")));}
+
+    public Panel tabs(Renderable... content) {return content(p().classes("panel-tabs").content(content));}
 }

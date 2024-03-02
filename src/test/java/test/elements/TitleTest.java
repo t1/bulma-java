@@ -7,6 +7,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Basic.div;
+import static com.github.t1.bulmajava.basic.Basic.span;
+import static com.github.t1.bulmajava.basic.Color.DANGER;
+import static com.github.t1.bulmajava.basic.Color.WARNING;
+import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.Style.SPACED;
 import static com.github.t1.bulmajava.elements.Title.subtitle;
 import static com.github.t1.bulmajava.elements.Title.title;
@@ -85,6 +89,34 @@ class TitleTest {
                 <div>
                     <h2 class="title is-2 is-spaced">Title 2</h2>
                     <h4 class="subtitle is-4">Subtitle 4</h4>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderStyledTitle() {
+        var div = div().content(
+                title(2, string("Title With"), span("Color").hasText(DANGER)));
+
+        then(div).rendersAs("""
+                <div>
+                    <h2 class="title is-2">
+                        Title With
+                        <span class="has-text-danger">Color</span>
+                    </h2>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderStyledSubtitle() {
+        var div = div().content(
+                subtitle(2, string("Subtitle With"), span("Color").hasText(WARNING)));
+
+        then(div).rendersAs("""
+                <div>
+                    <h2 class="subtitle is-2">
+                        Subtitle With
+                        <span class="has-text-warning">Color</span>
+                    </h2>
                 </div>
                 """);
     }

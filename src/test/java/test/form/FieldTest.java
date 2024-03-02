@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
@@ -459,7 +460,7 @@ class FieldTest {
     @Test void shouldRenderFieldWithExpandedFieldAndLeftAndRightAddon() {
         var form = field()
                 .control(input(TEXT).placeholder("Amount of money"), EXPANDED)
-                .containsAddonLeft(select(null).options("$", "£", "€"))
+                .containsAddonLeft(select(null).options(List.of("$", "£", "€")))
                 .containsAddonRight(a("Transfer").button());
 
         then(form).rendersAs("""
@@ -519,6 +520,21 @@ class FieldTest {
                 <div class="field">
                     <div class="control is-expanded">
                         <input class="input" type="text" onkeydown="if (event.key === 'Escape') { event.preventDefault(); }">
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFieldLoggingEnterKey() {
+        var form = field()
+                .control(input(TEXT).onkeyup("Enter", "console.debug('enter pressed');"), EXPANDED);
+
+        // We accept the warning about `event`: see https://stackoverflow.com/a/58341967/3333174
+        //noinspection JSDeprecatedSymbols
+        then(form).rendersAs("""
+                <div class="field">
+                    <div class="control is-expanded">
+                        <input class="input" type="text" onkeyup="if (event.key === 'Enter') { console.debug('enter pressed'); }">
                     </div>
                 </div>
                 """);

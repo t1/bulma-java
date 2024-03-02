@@ -12,7 +12,6 @@ import java.util.function.Function;
 
 import static com.github.t1.bulmajava.basic.Basic.element;
 import static com.github.t1.bulmajava.basic.Basic.span;
-import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.FILE;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
@@ -22,7 +21,7 @@ public class FileInput extends AbstractElement<FileInput> {
     private FileInput(String title) {
         super("div", Attributes.of(Classes.of("file")),
                 element("label").classes("file-label").content(
-                        input(FILE).notClasses("input").classes("file-input").name("resume"),
+                        Input.input(FILE).notClasses("input").classes("file-input"),
                         span().classes("file-cta").content(
                                 span(title).classes("file-label"))));
     }
@@ -50,26 +49,31 @@ public class FileInput extends AbstractElement<FileInput> {
     public FileInput boxed() {return classes("is-boxed");}
 
     public FileInput accept(String... types) {
-        fileInputElement().attr("accept", String.join(",", types));
+        input().attr("accept", String.join(",", types));
         return this;
     }
 
     public FileInput captureUser() {
-        fileInputElement().attr("capture", "user");
+        input().attr("capture", "user");
         return this;
     }
 
     public FileInput captureEnvironment() {
-        fileInputElement().attr("capture", "environment");
+        input().attr("capture", "environment");
         return this;
     }
 
     public FileInput multiple() {
-        fileInputElement().attr("multiple");
+        input().attr("multiple");
         return this;
     }
 
-    private AbstractElement<?> fileInputElement() {
+    public FileInput name(String name) {
+        input().name(name);
+        return this;
+    }
+
+    public Input input() {
         return getOrCreate("file-label").getOrCreate("file-input");
     }
 }

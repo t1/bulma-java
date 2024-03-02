@@ -44,18 +44,17 @@ public class Attributes implements Renderable {
 
 
     public Attributes add(@NonNull Attribute attribute) {
-        var copy = this.attributes;
         boolean found = false;
-        for (int i = 0; i < copy.size(); i++) {
-            var item = copy.get(i);
+        for (int i = 0; i < this.attributes.size(); i++) {
+            var item = this.attributes.get(i);
             if (item.hasKey(attribute.key())) {
                 found = true;
-                copy.set(i, item.and(attribute));
+                this.attributes.set(i, item.and(attribute));
                 break;
             }
         }
-        if (!found) copy.add(attribute);
-        copy.sort(Attribute.COMPARATOR);
+        if (!found) this.attributes.add(attribute);
+        this.attributes.sort(Attribute.COMPARATOR);
         return this;
     }
 
