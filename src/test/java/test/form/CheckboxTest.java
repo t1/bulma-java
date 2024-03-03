@@ -13,13 +13,13 @@ import static test.CustomAssertions.then;
 @ExtendWith(RenderTestExtension.class)
 class CheckboxTest {
     @Test void shouldRenderCheckbox() {
-        var field = field().control(checkbox().content("Remember me"));
+        var field = field().control(checkbox().id("foo").name("bar").content("Remember me"));
 
         then(field).rendersAs("""
                 <div class="field">
                     <div class="control">
                         <label class="checkbox">
-                            <input type="checkbox">
+                            <input id="foo" type="checkbox" name="bar">
                             Remember me
                         </label>
                     </div>
