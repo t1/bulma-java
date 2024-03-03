@@ -17,12 +17,12 @@ import static test.CustomAssertions.then;
 @ExtendWith(RenderTestExtension.class)
 class FileInputTest {
     @Test void shouldRenderFileInput() {
-        var field = fileInput("Choose a file…").icon("upload");
+        var field = fileInput("Choose a file…").id("foo").icon("upload");
 
         then(field).rendersAs("""
                 <div class="file">
                     <label class="file-label">
-                        <input class="file-input" type="file">
+                        <input id="foo" class="file-input" type="file">
                         <span class="file-cta">
                             <span class="file-icon"><i class="fas fa-upload"></i></span>
                             <span class="file-label">Choose a file…</span>

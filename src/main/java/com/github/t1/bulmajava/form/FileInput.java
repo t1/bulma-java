@@ -35,6 +35,11 @@ public class FileInput extends AbstractElement<FileInput> {
         });
     }
 
+    public FileInput id(String id) {
+        input().id(id);
+        return this;
+    }
+
     private FileInput label(Function<ConcatenatedRenderable, ConcatenatedRenderable> function) {
         var div = contentAs(Element.class);
         var label = div.contentAs(ConcatenatedRenderable.class);
