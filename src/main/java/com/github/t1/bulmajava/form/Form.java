@@ -25,4 +25,13 @@ public class Form extends AbstractElement<Form> {
     public Form dialog(String action) {return dialog().action(action);}
 
     public Form method(String method) {return attr("method", method);}
+
+    public Form multipart() {return enctype("multipart/form-data");}
+
+    /** this is the default */
+    public Form urlencoded() {return enctype("application/x-www-form-urlencoded");}
+
+    public Form plain() {return enctype("text/plain");}
+
+    public Form enctype(String enctype) {return attr("enctype", enctype);}
 }
