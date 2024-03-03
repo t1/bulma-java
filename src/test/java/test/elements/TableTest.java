@@ -23,11 +23,11 @@ class TableTest {
                 .head(abbr("Position", "Pos"), string("Team"), abbr("Played", "Pld"))
                 .foot(abbr("Position", "#"), string("T"), abbr("Played", "P"))
                 .body(
-                        rowH(string("1"),
+                        rowH("1",
                                 a("Leicester City").href("https://en.wikipedia.org/wiki/Leicester_City_F.C.")
                                         .title("Leicester City F.C."),
                                 string("38")),
-                        rowH(string("2"),
+                        rowH("2",
                                 a("Arsenal").href("https://en.wikipedia.org/wiki/Arsenal_F.C.").title("Arsenal F.C."),
                                 string("38"))
                                 .is(SELECTED));
@@ -193,6 +193,29 @@ class TableTest {
                             <td>
                                 <div style="word-break: keep-all;">Four</div>
                             </td>
+                        </tr>
+                    </tbody>
+                </table>
+                """);
+    }
+
+    @Test void shouldRenderTableWithTrAndTd() {
+        var table = table().body(
+                tr().content(td(em("One")), td(div().content("Two"))),
+                tr().content(th("Three"), td("Four")));
+
+        then(table).rendersAs("""
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td><em>One</em></td>
+                            <td>
+                                <div>Two</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Three</th>
+                            <td>Four</td>
                         </tr>
                     </tbody>
                 </table>

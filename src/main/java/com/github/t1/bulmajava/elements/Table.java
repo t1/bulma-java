@@ -10,16 +10,20 @@ import lombok.experimental.SuperBuilder;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Basic.div;
+import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Table extends AbstractElement<Table> {
-    public static Element row(Renderable... cols) {return tr().map(e -> td().content(e)).content(cols);}
+    public static Element row(Renderable... cols) {return tr().map(Table::td).content(cols);}
+
+    /** First colum is a header column <code>th</code>, the rest are regular <code>td</code> */
+    public static Element rowH(String hCol, Renderable... cols) {return rowH(string(hCol), cols);}
 
     /** First colum is a header column <code>th</code>, the rest are regular <code>td</code> */
     public static Element rowH(Renderable hCol, Renderable... cols) {
         return tr()
-                .content(th().content(hCol))
-                .map(renderable -> td().content(renderable))
+                .content(th(hCol))
+                .map(Table::td)
                 .content(cols);
     }
 
@@ -33,7 +37,15 @@ public class Table extends AbstractElement<Table> {
 
     public static Element td() {return Basic.element("td");}
 
+    public static Element td(String content) {return td().content(content);}
+
+    public static Element td(Renderable... content) {return td().content(content);}
+
     public static Element th() {return Basic.element("th");}
+
+    public static Element th(String content) {return th().content(content);}
+
+    public static Element th(Renderable... content) {return th().content(content);}
 
     public static Element tr() {return Basic.element("tr");}
 
