@@ -19,17 +19,16 @@ import static com.github.t1.bulmajava.elements.ImageRatio._4by3;
 import static com.github.t1.bulmajava.elements.ImageSize._48x48;
 import static com.github.t1.bulmajava.layout.Media.media;
 import static test.CustomAssertions.then;
-import static test.RenderTestExtension.loremIpsum;
-import static test.RenderTestExtension.loremIpsumS;
+import static test.RenderTestExtension.*;
 
 @ExtendWith(RenderTestExtension.class)
 class CardTest {
     @Test void shouldRenderCard() {
         var card = card().style("width: 260px;")
-                .image(image(_4by3, "https://bulma.io/images/placeholders/1280x960.png", "Placeholder image"))
+                .image(image(_4by3, placeholder("1280x960"), "Placeholder image"))
                 .content(
                         media()
-                                .left(image(_48x48, "https://bulma.io/images/placeholders/96x96.png", "Small image"))
+                                .left(image(_48x48, placeholder("96x96"), "Small image"))
                                 .content(
                                         Title.titleP("John Smith").is(4),
                                         Title.subtitleP("@johnsmith").is(6)),
@@ -46,13 +45,13 @@ class CardTest {
                 <div class="card" style="width: 260px;">
                     <div class="card-image">
                         <figure class="image is-4by3">
-                            <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                            <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image">
                         </figure>
                     </div>
                     <div class="card-content">
                         <article class="media">
                             <figure class="image is-48x48 media-left">
-                                <img src="https://bulma.io/images/placeholders/96x96.png" alt="Small image">
+                                <img src="https://bulma.io/assets/images/placeholders/96x96.png" alt="Small image">
                             </figure>
                             <div class="media-content">
                                 <p class="title is-4">John Smith</p>
@@ -114,13 +113,13 @@ class CardTest {
     @Test void shouldRenderCardImage() {
         var card = card().style("width: 260px;").content(
                 cardImage().content(
-                        image(_4by3, "https://bulma.io/images/placeholders/1280x960.png", "Placeholder image")));
+                        image(_4by3, placeholder("1280x960"), "Placeholder image")));
 
         then(card).rendersAs("""
                 <div class="card" style="width: 260px;">
                     <div class="card-image">
                         <figure class="image is-4by3">
-                            <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                            <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image">
                         </figure>
                     </div>
                 </div>

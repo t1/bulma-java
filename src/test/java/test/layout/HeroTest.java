@@ -183,7 +183,7 @@ class HeroTest {
         var div = hero().is(PRIMARY, MEDIUM)
                 .head(navbar("navbarMenuHeroA")
                         .brand(a().content(
-                                img("https://bulma.io/images/bulma-type-white.png", "Logo")))
+                                img("https://bulma.io/assets/images/bulma-type-white.png", "Logo")))
                         .burger()
                         .end(
                                 a("Home").is(ACTIVE),
@@ -210,7 +210,7 @@ class HeroTest {
                         <nav class="navbar" role="navigation" aria-label="navigation">
                             <div class="navbar-brand">
                                 <a class="navbar-item">
-                                    <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo">
+                                    <img src="https://bulma.io/assets/images/bulma-type-white.png" alt="Logo">
                                 </a>
                                 <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMenuHeroA">
                                     <span aria-hidden="true"></span>
@@ -271,7 +271,7 @@ class HeroTest {
         var div = hero().is(INFO, LARGE)
                 .head(navbar("navbarMenuHeroB")
                         .brand(a().content(
-                                img("https://bulma.io/images/bulma-type-white.png", "Logo")))
+                                img("https://bulma.io/assets/images/bulma-type-white.png", "Logo")))
                         .burger()
                         .end(
                                 a("Home").is(ACTIVE),
@@ -298,7 +298,7 @@ class HeroTest {
                         <nav class="navbar" role="navigation" aria-label="navigation">
                             <div class="navbar-brand">
                                 <a class="navbar-item">
-                                    <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo">
+                                    <img src="https://bulma.io/assets/images/bulma-type-white.png" alt="Logo">
                                 </a>
                                 <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMenuHeroB">
                                     <span aria-hidden="true"></span>
@@ -359,7 +359,7 @@ class HeroTest {
         var div = hero().is(SUCCESS, FULLHEIGHT)
                 .head(navbar("navbarMenuHeroC")
                         .brand(a().content(
-                                img("https://bulma.io/images/bulma-type-white.png", "Logo")))
+                                img("https://bulma.io/assets/images/bulma-type-white.png", "Logo")))
                         .burger()
                         .end(
                                 a("Home").is(ACTIVE),
@@ -386,7 +386,7 @@ class HeroTest {
                         <nav class="navbar" role="navigation" aria-label="navigation">
                             <div class="navbar-brand">
                                 <a class="navbar-item">
-                                    <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo">
+                                    <img src="https://bulma.io/assets/images/bulma-type-white.png" alt="Logo">
                                 </a>
                                 <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMenuHeroC">
                                     <span aria-hidden="true"></span>

@@ -127,7 +127,7 @@ class LevelTest {
         var level = level()
                 .item(a("Home").classes("link").is(INFO), "has-text-centered")
                 .item(a("Menu").classes("link").is(INFO), "has-text-centered")
-                .item(img("https://bulma.io/images/bulma-type.png", "").style("height: 30px;"), "has-text-centered")
+                .item(img("https://bulma.io/assets/images/bulma-type.png", "").style("height: 30px;"), "has-text-centered")
                 .item(a("Reservations").classes("link").is(INFO), "has-text-centered")
                 .item(a("Contact").classes("link").is(INFO), "has-text-centered");
 
@@ -140,7 +140,7 @@ class LevelTest {
                         <a class="link is-info">Menu</a>
                     </div>
                     <div class="level-item has-text-centered">
-                        <img src="https://bulma.io/images/bulma-type.png" alt="" style="height: 30px;">
+                        <img src="https://bulma.io/assets/images/bulma-type.png" alt="" style="height: 30px;">
                     </div>
                     <div class="level-item has-text-centered">
                         <a class="link is-info">Reservations</a>

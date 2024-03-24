@@ -51,7 +51,7 @@ class NavbarTest {
                     <nav class="navbar" role="navigation" aria-label="navigation">
                         <div class="navbar-brand">
                             <a class="navbar-item" href="https://bulma.io">
-                                <img src="https://bulma.io/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
+                                <img src="https://bulma.io/assets/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
                             </a>
                             <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                                 <span aria-hidden="true"></span>
@@ -113,7 +113,7 @@ class NavbarTest {
                     <nav class="navbar" role="navigation" aria-label="navigation">
                         <div class="navbar-brand">
                             <a class="navbar-item" href="https://bulma.io">
-                                <img src="https://bulma.io/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
+                                <img src="https://bulma.io/assets/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
                             </a>
                             <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMenuRightExample">
                                 <span aria-hidden="true"></span>
@@ -170,7 +170,7 @@ class NavbarTest {
                     <nav class="navbar" role="navigation" aria-label="navigation">
                         <div class="navbar-brand">
                             <a class="navbar-item" href="https://bulma.io">
-                                <img src="https://bulma.io/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
+                                <img src="https://bulma.io/assets/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
                             </a>
                             <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMenuNoLeftButRightExample">
                                 <span aria-hidden="true"></span>
@@ -209,7 +209,7 @@ class NavbarTest {
                     <nav class="navbar" role="navigation" aria-label="navigation">
                         <div class="navbar-brand">
                             <a class="navbar-item" href="https://bulma.io">
-                                <img src="https://bulma.io/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
+                                <img src="https://bulma.io/assets/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
                             </a>
                             <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false">
                                 <span aria-hidden="true"></span>
@@ -234,7 +234,7 @@ class NavbarTest {
                     <nav class="navbar is-transparent" role="navigation" aria-label="navigation">
                         <div class="navbar-brand">
                             <a class="navbar-item" href="https://bulma.io">
-                                <img src="https://bulma.io/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
+                                <img src="https://bulma.io/assets/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
                             </a>
                             <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false">
                                 <span aria-hidden="true"></span>
@@ -258,7 +258,7 @@ class NavbarTest {
                     <nav class="navbar is-fixed-top" role="navigation" aria-label="navigation">
                         <div class="navbar-brand">
                             <a class="navbar-item" href="https://bulma.io">
-                                <img src="https://bulma.io/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
+                                <img src="https://bulma.io/assets/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
                             </a>
                             <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false">
                                 <span aria-hidden="true"></span>
@@ -282,7 +282,7 @@ class NavbarTest {
                     <nav class="navbar is-fixed-bottom" role="navigation" aria-label="navigation">
                         <div class="navbar-brand">
                             <a class="navbar-item" href="https://bulma.io">
-                                <img src="https://bulma.io/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
+                                <img src="https://bulma.io/assets/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
                             </a>
                             <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false">
                                 <span aria-hidden="true"></span>
@@ -439,7 +439,7 @@ class NavbarTest {
                     <nav class="navbar is-$color" role="navigation" aria-label="navigation">
                         <div class="navbar-brand">
                             <a class="navbar-item" href="https://bulma.io">
-                                <img src="https://bulma.io/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
+                                <img src="https://bulma.io/assets/images/bulma-logo.png" alt="bulma logo" width="112" height="28">
                             </a>
                         </div>
                         <div id="$menuId" class="navbar-menu">
@@ -472,7 +472,7 @@ class NavbarTest {
 
     private static Anchor bulmaLogo() {
         return a().href("https://bulma.io").content(
-                img("https://bulma.io/images/bulma-logo.png", "bulma logo", "112", "28"));
+                img("https://bulma.io/assets/images/bulma-logo.png", "bulma logo", "112", "28"));
     }
 
     private static Renderable[] menu() {

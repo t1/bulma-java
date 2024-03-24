@@ -17,8 +17,7 @@ import static com.github.t1.bulmajava.elements.Image.img;
 import static com.github.t1.bulmajava.elements.ImageRatio._4by3;
 import static com.github.t1.bulmajava.layout.Section.section;
 import static test.CustomAssertions.then;
-import static test.RenderTestExtension.loremIpsum;
-import static test.RenderTestExtension.loremIpsumS;
+import static test.RenderTestExtension.*;
 
 @ExtendWith(RenderTestExtension.class)
 class ModalTest {
@@ -48,7 +47,7 @@ class ModalTest {
         var modal = div().content(
                 modal().id("modal-2").content(
                         modalContent().content(
-                                imageP(_4by3).content(img("https://bulma.io/images/placeholders/1280x960.png", "xxx"))),
+                                imageP(_4by3).content(img(placeholder("1280x960"), "xxx"))),
                         modalCloseButton()),
                 openModalButton("modal-2"));
 
@@ -58,7 +57,7 @@ class ModalTest {
                         <div class="modal-background"></div>
                         <div class="modal-content">
                             <p class="image is-4by3">
-                                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="xxx">
+                                <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="xxx">
                             </p>
                         </div>
                         <button class="modal-close is-large" aria-label="close"></button>

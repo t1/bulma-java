@@ -2,6 +2,7 @@ package test;
 
 import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.basic.Renderer;
+import com.github.t1.bulmajava.elements.ImageSize;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.extension.*;
 import org.junit.platform.launcher.LauncherSession;
@@ -23,7 +24,7 @@ public class RenderTestExtension implements Extension, BeforeAllCallback, Before
     private static final Renderer ALL = new Renderer()
             .unsafeAppend(html("Bulma-Java Demo")
                     .stylesheet("https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css")
-                    .stylesheet("https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css")
+                    .stylesheet("https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.0/css/bulma.min.css")
                     .script("test-classes/main.js")
                     .script("test-classes/klmn.js")
                     .close(false).render())
@@ -43,6 +44,12 @@ public class RenderTestExtension implements Extension, BeforeAllCallback, Before
                "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " +
                "Excepteur sint obcaecat cupiditat non proident, sunt in culpa " +
                "qui officia deserunt mollit anim id est laborum.";
+    }
+
+    public static String placeholder(ImageSize size) {return placeholder(size.key());}
+
+    public static String placeholder(String size) {
+        return "https://bulma.io/assets/images/placeholders/" + size + ".png";
     }
 
     @Override public void beforeAll(ExtensionContext extensionContext) {

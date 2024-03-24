@@ -9,44 +9,45 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Basic.div;
+import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static com.github.t1.bulmajava.elements.Image.image;
 import static com.github.t1.bulmajava.elements.Image.movie;
 import static com.github.t1.bulmajava.elements.ImageRatio._16by9;
 import static com.github.t1.bulmajava.elements.ImageSize._128x128;
-import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static test.CustomAssertions.then;
+import static test.RenderTestExtension.placeholder;
 
 @ExtendWith(RenderTestExtension.class)
 class ImageTest {
     @ParameterizedTest @EnumSource void shouldRenderImage(ImageSize size) {
-        var image = image(size, src(size), "xxx");
+        var image = image(size, placeholder(size), "xxx");
 
         //noinspection HtmlUnknownTarget
         then(image).rendersAs("""
                 <figure class="image is-$size">
-                    <img src="https://bulma.io/images/placeholders/$size.png" alt="xxx">
+                    <img src="https://bulma.io/assets/images/placeholders/$size.png" alt="xxx">
                 </figure>
                 """.replace("$size", size.key()));
     }
 
     @ParameterizedTest @EnumSource void shouldRenderRoundedImage(ImageSize size) {
-        var image = image(size, src(size), "xxx", ROUNDED);
+        var image = image(size, placeholder(size), "xxx", ROUNDED);
 
         //noinspection HtmlUnknownTarget
         then(image).rendersAs("""
                 <figure class="image is-$size">
-                    <img class="is-rounded" src="https://bulma.io/images/placeholders/$size.png" alt="xxx">
+                    <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/$size.png" alt="xxx">
                 </figure>
                 """.replace("$size", size.key()));
     }
 
     @Test void shouldRenderRetinaImage() {
-        var image = image(_128x128, "https://bulma.io/images/placeholders/256x256.png", "xyz");
+        var image = image(_128x128, placeholder("256x256"), "xyz");
 
         //noinspection HtmlUnknownTarget
         then(image).rendersAs("""
                 <figure class="image is-128x128">
-                    <img src="https://bulma.io/images/placeholders/256x256.png" alt="xyz">
+                    <img src="https://bulma.io/assets/images/placeholders/256x256.png" alt="xyz">
                 </figure>
                 """);
     }
@@ -54,13 +55,13 @@ class ImageTest {
     @ParameterizedTest @EnumSource void shouldRenderImageRatios(ImageRatio imageRatio) {
         var fileName = fileNameFor(imageRatio);
         var image = div().style("width: 240px;").content(
-                image(imageRatio, src(fileName), "xxx"));
+                image(imageRatio, placeholder(fileName), "xxx"));
 
         //noinspection HtmlUnknownTarget
         then(image).rendersAs("""
                 <div style="width: 240px;">
                     <figure class="image $size">
-                        <img src="https://bulma.io/images/placeholders/$file.png" alt="xxx">
+                        <img src="https://bulma.io/assets/images/placeholders/$file.png" alt="xxx">
                     </figure>
                 </div>
                 """.replace("$size", imageRatio.className()).replace("$file", fileName));
@@ -95,8 +96,4 @@ class ImageTest {
                 </figure>
                 """);
     }
-
-    private static String src(ImageSize size) {return src(size.key());}
-
-    private static String src(String name) {return "https://bulma.io/images/placeholders/" + name + ".png";}
 }

@@ -15,23 +15,21 @@ import static com.github.t1.bulmajava.elements.Content.content_;
 import static com.github.t1.bulmajava.elements.Delete.delete;
 import static com.github.t1.bulmajava.elements.Icon.icon;
 import static com.github.t1.bulmajava.elements.Image.*;
-import static com.github.t1.bulmajava.elements.ImageSize._48x48;
-import static com.github.t1.bulmajava.elements.ImageSize._64x64;
+import static com.github.t1.bulmajava.elements.ImageSize.*;
 import static com.github.t1.bulmajava.form.Checkbox.checkbox;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Textarea.textarea;
 import static com.github.t1.bulmajava.layout.Level.level;
 import static com.github.t1.bulmajava.layout.Media.media;
 import static test.CustomAssertions.then;
-import static test.RenderTestExtension.loremIpsum;
-import static test.RenderTestExtension.loremIpsumS;
+import static test.RenderTestExtension.*;
 
 @ExtendWith(RenderTestExtension.class)
 class MediaTest {
     @Test void shouldRenderMediaObject() {
         var div = div().style("width: 400px;").content(media()
                 .left(figure().content(imageP(_64x64).content(
-                        img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
+                        img(placeholder(_128x128), "bulma"))))
                 .content(
                         div().classes("content").content(p().content(
                                 strong("John Smith"), small("@johnsmith"), small("31m"),
@@ -49,7 +47,7 @@ class MediaTest {
                     <article class="media">
                         <figure class="media-left">
                             <p class="image is-64x64">
-                                <img src="https://bulma.io/images/placeholders/128x128.png" alt="bulma">
+                                <img src="https://bulma.io/assets/images/placeholders/128x128.png" alt="bulma">
                             </p>
                         </figure>
                         <div class="media-content">
@@ -87,7 +85,7 @@ class MediaTest {
     @Test void shouldRenderMediaObjectWithTextarea() {
         var div = div().style("width: 400px;").content(media()
                 .left(figure().content(imageP(_64x64).content(
-                        img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
+                        img(placeholder(_128x128), "bulma"))))
                 .content(
                         field().control(textarea().placeholder("Add a comment...")),
                         level()
@@ -100,7 +98,7 @@ class MediaTest {
                     <article class="media">
                         <figure class="media-left">
                             <p class="image is-64x64">
-                                <img src="https://bulma.io/images/placeholders/128x128.png" alt="bulma">
+                                <img src="https://bulma.io/assets/images/placeholders/128x128.png" alt="bulma">
                             </p>
                         </figure>
                         <div class="media-content">
@@ -133,7 +131,7 @@ class MediaTest {
     @Test void shouldRenderNestedMediaObjects() {
         var div = div().style("width: 800px;").content(media()
                         .left(figure().content(imageP(_64x64).content(
-                                img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
+                                img(placeholder(_128x128), "bulma"))))
                         .content(content_().content(
                                         p().content(
                                                 strong("Barbara Middleton"), br(),
@@ -141,7 +139,7 @@ class MediaTest {
                                                 small().content(a("Like"), string("·"), a("Reply"), string("·"), string("3 hrs")))),
                                 media()
                                         .left(figure().content(imageP(_48x48).content(
-                                                img("https://bulma.io/images/placeholders/96x96.png", "bulma"))))
+                                                img(placeholder("96x96"), "bulma"))))
                                         .content(content_().content(p().content(
                                                         strong("Sean Brown"), br(),
                                                         loremIpsumS(), br(),
@@ -150,14 +148,14 @@ class MediaTest {
                                                 media().content("Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.")),
                                 media()
                                         .left(figure().content(imageP(_48x48).content(
-                                                img("https://bulma.io/images/placeholders/96x96.png", "bulma"))))
+                                                img(placeholder("96x96"), "bulma"))))
                                         .content(content_().content(p().content(
                                                 strong("Kayli Eunice"), br(),
                                                 loremIpsumS(), br(),
                                                 small().content(a("Like"), string("·"), a("Reply"), string("·"), string("2 hrs")))))),
                 media()
                         .left(figure().content(imageP(_64x64).content(
-                                img("https://bulma.io/images/placeholders/128x128.png", "bulma"))))
+                                img("https://bulma.io/assets/images/placeholders/128x128.png", "bulma"))))
                         .content(
                                 field().control(textarea().placeholder("Add a comment...")),
                                 field().control(button("Post comment"))));
@@ -169,7 +167,7 @@ class MediaTest {
                     <article class="media">
                         <figure class="media-left">
                             <p class="image is-64x64">
-                                <img src="https://bulma.io/images/placeholders/128x128.png" alt="bulma">
+                                <img src="https://bulma.io/assets/images/placeholders/128x128.png" alt="bulma">
                             </p>
                         </figure>
                         <div class="media-content">
@@ -191,7 +189,7 @@ class MediaTest {
                             <article class="media">
                                 <figure class="media-left">
                                     <p class="image is-48x48">
-                                        <img src="https://bulma.io/images/placeholders/96x96.png" alt="bulma">
+                                        <img src="https://bulma.io/assets/images/placeholders/96x96.png" alt="bulma">
                                     </p>
                                 </figure>
                                 <div class="media-content">
@@ -221,7 +219,7 @@ class MediaTest {
                             <article class="media">
                                 <figure class="media-left">
                                     <p class="image is-48x48">
-                                        <img src="https://bulma.io/images/placeholders/96x96.png" alt="bulma">
+                                        <img src="https://bulma.io/assets/images/placeholders/96x96.png" alt="bulma">
                                     </p>
                                 </figure>
                                 <div class="media-content">
@@ -247,7 +245,7 @@ class MediaTest {
                     <article class="media">
                         <figure class="media-left">
                             <p class="image is-64x64">
-                                <img src="https://bulma.io/images/placeholders/128x128.png" alt="bulma">
+                                <img src="https://bulma.io/assets/images/placeholders/128x128.png" alt="bulma">
                             </p>
                         </figure>
                         <div class="media-content">
