@@ -54,7 +54,7 @@ class GridTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
     void shouldRenderSmartGridWithMinWidth(int n) {
-        var button = grid().classes("is-col-min-" + n).content(range(1, 25).mapToObj(GridTest::roundedCell));
+        var button = grid().colMin(n).content(range(1, 25).mapToObj(GridTest::roundedCell));
 
         then(button).rendersAs("""
                 <div class="grid is-col-min-$n">
@@ -89,7 +89,7 @@ class GridTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8})
     void shouldRenderSmartGridWithGap(int n) {
-        var button = grid().classes("is-gap-" + n).content(range(1, 25).mapToObj(GridTest::roundedCell));
+        var button = grid().gap(n).content(range(1, 25).mapToObj(GridTest::roundedCell));
 
         then(button).rendersAs("""
                 <div class="grid is-gap-$n">
@@ -124,7 +124,7 @@ class GridTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8})
     void shouldRenderSmartGridWithColumnGap(int n) {
-        var button = grid().classes("is-column-gap-" + n).content(range(1, 25).mapToObj(GridTest::roundedCell));
+        var button = grid().colGap(n).content(range(1, 25).mapToObj(GridTest::roundedCell));
 
         then(button).rendersAs("""
                 <div class="grid is-column-gap-$n">
@@ -159,7 +159,7 @@ class GridTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8})
     void shouldRenderSmartGridWithRowGap(int n) {
-        var button = grid().classes("is-row-gap-" + n).content(range(1, 25).mapToObj(GridTest::roundedCell));
+        var button = grid().rowGap(n).content(range(1, 25).mapToObj(GridTest::roundedCell));
 
         then(button).rendersAs("""
                 <div class="grid is-row-gap-$n">

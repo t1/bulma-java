@@ -15,6 +15,14 @@ public class Grid extends AbstractElement<Grid> {
 
     private Grid() {super("div", "grid");}
 
+    public Grid colMin(int n) {return classes("is-col-min-" + n);}
+
+    public Grid gap(int n) {return classes("is-gap-" + n);}
+
+    public Grid colGap(int n) {return classes("is-column-gap-" + n);}
+
+    public Grid rowGap(int n) {return classes("is-row-gap-" + n);}
+
 
     public static class FixedGrid extends AbstractElement<FixedGrid> {
         private FixedGrid(int columns) {
