@@ -12,6 +12,7 @@ import java.util.function.Function;
 import static com.github.t1.bulmajava.basic.Basic.control;
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static java.util.Locale.ROOT;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Button extends AbstractElement<Button> {
@@ -53,4 +54,6 @@ public class Button extends AbstractElement<Button> {
     }
 
     public Button isIcon(Modifier... modifiers) {return icon(icon -> icon.is(modifiers));}
+
+    public Button type(ButtonType buttonType) {return attr("type", buttonType.name().toLowerCase(ROOT));}
 }

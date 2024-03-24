@@ -17,6 +17,7 @@ import static com.github.t1.bulmajava.basic.State.SELECTED;
 import static com.github.t1.bulmajava.basic.Style.LIGHT;
 import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static com.github.t1.bulmajava.elements.Button.*;
+import static com.github.t1.bulmajava.elements.ButtonType.*;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
@@ -330,6 +331,30 @@ class ButtonTest {
                     <button class="button">Maybe</button>
                     <button class="button is-danger is-selected">No</button>
                 </div>
+                """);
+    }
+
+    @Test void shouldRenderSubmitButton() {
+        var button = button("Button").type(SUBMIT);
+
+        then(button).rendersAs("""
+                <button class="button" type="submit">Button</button>
+                """);
+    }
+
+    @Test void shouldRenderResetButton() {
+        var button = button("Button").type(RESET);
+
+        then(button).rendersAs("""
+                <button class="button" type="reset">Button</button>
+                """);
+    }
+
+    @Test void shouldRenderButtonButton() {
+        var button = button("Button").type(BUTTON);
+
+        then(button).rendersAs("""
+                <button class="button" type="button">Button</button>
                 """);
     }
 }
