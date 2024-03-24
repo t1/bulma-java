@@ -164,6 +164,12 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return attr(unsafeStringAttribute("on" + event, action));
     }
 
+    public SELF with(Consumer<SELF> consumer) {
+        consumer.accept(self());
+        return self();
+    }
+
+
     public SELF map(Function<Renderable, Renderable> function) {
         this.mapFunction = function;
         return self();

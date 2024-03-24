@@ -1,5 +1,6 @@
 package test.basic;
 
+import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.ListType;
 import com.github.t1.bulmajava.basic.Renderable.RenderableString;
 import org.junit.jupiter.api.Test;
@@ -250,4 +251,15 @@ class ElementTest {
                 <foo unsafe&amp;&lt;&gt;&quot;&#x27;></foo>
                 """);
     }
+
+    @Test void shouldRenderDivWithConsumer() {
+        var tag = div().content("hello").with(this::foobar);
+
+        //noinspection HtmlUnknownAttribute
+        then(tag).rendersAs("""
+                <div foo="bar">hello</div>
+                """);
+    }
+
+    private void foobar(Element element) {element.attr("foo", "bar");}
 }
