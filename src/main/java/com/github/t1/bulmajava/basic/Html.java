@@ -6,11 +6,12 @@ import lombok.experimental.SuperBuilder;
 import java.util.function.Function;
 
 import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
-import static com.github.t1.bulmajava.basic.Renderable.Indented.indented;
-import static com.github.t1.bulmajava.basic.Renderable.UnsafeString.unsafeString;
+import static com.github.t1.bulmajava.basic.Body.scriptSrc;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Html extends AbstractElement<Html> {
+    public static final String APPLICATION_JAVASCRIPT = "application/javascript";
+
     /**
      * It generally makes sense to give the html head a title;
      * if you really don't want it, pass <code>null</code>.
@@ -59,24 +60,25 @@ public class Html extends AbstractElement<Html> {
         return head(Basic.element("link").attr("rel", "stylesheet").close(false).attr("href", href));
     }
 
-    public Html script(String src) {return head(scriptElement(src));}
+    public Html script(String src) {return head(scriptSrc(src));}
 
-    public Html script(String src, String type) {return head(scriptElement(src).attr("type", type));}
+    public Html scriptBody(String src) {return body(scriptSrc(src));}
 
-    private Element scriptElement(String src) {return Basic.element("script").attr("src", src);}
+    public Html script(String src, String type) {return head(scriptSrc(src, type));}
 
-    public Html javaScript(String src) {return script(src, "application/javascript");}
+    public Html scriptBody(String src, String type) {return body(scriptSrc(src, type));}
+
+    public Html javaScript(String src) {return script(src, APPLICATION_JAVASCRIPT);}
+
+    public Html javaScriptBody(String src) {return body(scriptSrc(src, APPLICATION_JAVASCRIPT));}
 
     /**
-     * Add a <code>script</code> header element with <code>type="application/javascript</code>,
+     * Add a <code>script</code> element to the body with <code>type="application/javascript</code>,
      * and the script code you provide indented to the current level.
      * <br/>
      * Note that the code is <em>unsafe</em>!
      */
-    public Html javaScriptCode(String code) {
-        return head(Basic.element("script").attr("type", "application/javascript")
-                .content(indented(unsafeString(code))));
-    }
+    public Html javaScriptCode(String code) {return body(Body.javaScriptCode(code));}
 
     public Html head(Renderable content) {return head((AbstractElement<?> e) -> e.content(content));}
 
@@ -93,7 +95,7 @@ public class Html extends AbstractElement<Html> {
     public Html body(Renderable content) {return body((AbstractElement<?> e) -> e.content(content));}
 
     public Html body(Function<AbstractElement<?>, AbstractElement<?>> function) {
-        return content(e -> e.hasName("body"), function, () -> Basic.element("body"));
+        return content(e -> e.hasName("body"), function, Body::body);
     }
 
 
