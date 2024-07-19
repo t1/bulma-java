@@ -3,11 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.t1</groupId>
-    <artifactId>bulma-java</artifactId>
+    <artifactId>html-java-parent</artifactId>
     <version>1.0a10-SNAPSHOT</version>
-    <description>A simple servers-side-html library based on Bulma components</description>
-    <name>bulma-java</name>
+    <description>A simple servers-side-html library to build html components</description>
+    <name>html-java</name>
     <url>https://github.com/t1/bulma-java</url>
+    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -44,6 +45,11 @@
             <name>Rüdiger zu Dohna</name>
         </developer>
     </developers>
+
+    <modules>
+        <module>html-java</module>
+        <module>bulma-java</module>
+    </modules>
 
     <dependencies>
         <dependency>
