@@ -48,16 +48,16 @@ public class Grid extends AbstractElement<Grid> {
             super("div", "cell");
         }
 
-        public Renderable isColStart(int col) {return classes("is-col-start-" + col);}
+        public Cell isColStart(int col) {return classes("is-col-start-" + col);}
 
-        public Renderable isColFromEnd(int col) {return classes("is-col-from-end-" + col);}
+        public Cell isColFromEnd(int col) {return classes("is-col-from-end-" + col);}
 
-        public Renderable isColSpan(int col) {return classes("is-col-span-" + col);}
+        public Cell isColSpan(int col) {return classes("is-col-span-" + col);}
 
-        public Renderable isRowStart(int row) {return classes("is-row-start-" + row);}
+        public Cell isRowStart(int row) {return classes("is-row-start-" + row);}
 
-        public Renderable isRowFromEnd(int row) {return classes("is-row-from-end-" + row);}
+        public Cell isRowFromEnd(int row) {return classes("is-row-from-end-" + row);}
 
-        public Renderable isRowSpan(int row) {return classes("is-row-span-" + row);}
+        public Cell isRowSpan(int row) {return classes("is-row-span-" + row);}
     }
 }

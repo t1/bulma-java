@@ -25,8 +25,11 @@ import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 public class AbstractElement<SELF extends AbstractElement<?>> implements Renderable {
 
     private boolean close;
+
     @Getter private boolean rendersOnSeparateLines;
+
     @Getter @NonNull private String name;
+
     @Getter private Attributes attributes;
     private Renderable content;
     // TODO get rid of the mapFunction mechanism

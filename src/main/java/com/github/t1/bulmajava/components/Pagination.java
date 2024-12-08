@@ -8,7 +8,9 @@ import lombok.experimental.SuperBuilder;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
 import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
-import static com.github.t1.bulmajava.basic.Basic.*;
+import static com.github.t1.bulmajava.basic.Basic.li;
+import static com.github.t1.bulmajava.basic.Basic.span;
+import static com.github.t1.bulmajava.basic.Basic.ul;
 import static com.github.t1.bulmajava.basic.Renderable.UnsafeString.unsafeString;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)

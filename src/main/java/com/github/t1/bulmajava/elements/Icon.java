@@ -1,12 +1,19 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.bulmajava.basic.*;
+import com.github.t1.bulmajava.basic.AbstractElement;
+import com.github.t1.bulmajava.basic.Color;
+import com.github.t1.bulmajava.basic.Element;
+import com.github.t1.bulmajava.basic.FontSize;
+import com.github.t1.bulmajava.basic.Modifier;
+import com.github.t1.bulmajava.basic.Size;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.function.Function;
 
-import static com.github.t1.bulmajava.basic.Basic.*;
+import static com.github.t1.bulmajava.basic.Basic.div;
+import static com.github.t1.bulmajava.basic.Basic.i;
+import static com.github.t1.bulmajava.basic.Basic.span;
 import static com.github.t1.bulmajava.basic.Size.LARGE;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.elements.IconStyle.SOLID;
@@ -28,7 +35,7 @@ public class Icon extends AbstractElement<Icon> {
     }
 
     /** FontAwesome only allows stacking two icons */
-    public static AbstractElement<?> iconStack(Icon... icons) {
+    public static Element iconStack(Icon... icons) {
         var stack = span().classes("fa-stack fa-lg");
         for (int i = 0; i < icons.length; i++)
             stack = stack.content(icons[i].getI().classes("fa-stack-" + (i + 1) + "x"));
@@ -37,9 +44,9 @@ public class Icon extends AbstractElement<Icon> {
 
     private AbstractElement<?> getI() {return (AbstractElement<?>) content();}
 
-    public static AbstractElement<?> iconText() {return span().classes("icon-text");}
+    public static Element iconText() {return span().classes("icon-text");}
 
-    public static AbstractElement<?> iconTextFlex() {return div().classes("icon-text");}
+    public static Element iconTextFlex() {return div().classes("icon-text");}
 
 
     private Icon() {super("span", "icon");}

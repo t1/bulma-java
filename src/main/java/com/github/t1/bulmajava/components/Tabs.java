@@ -1,6 +1,11 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.bulmajava.basic.*;
+import com.github.t1.bulmajava.basic.AbstractElement;
+import com.github.t1.bulmajava.basic.Attributes;
+import com.github.t1.bulmajava.basic.Basic;
+import com.github.t1.bulmajava.basic.Classes;
+import com.github.t1.bulmajava.basic.Element;
+import com.github.t1.bulmajava.basic.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 

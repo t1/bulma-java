@@ -2,6 +2,7 @@ package com.github.t1.bulmajava.components;
 
 import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Basic;
+import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.elements.Button;
 import lombok.EqualsAndHashCode;
@@ -15,9 +16,9 @@ public class Card extends AbstractElement<Card> {
 
     private Card() {super("div", "card");}
 
-    public static AbstractElement<?> cardContent() {return div().classes("card-content");}
+    public static Element cardContent() {return div().classes("card-content");}
 
-    public static AbstractElement<?> cardFooter() {
+    public static Element cardFooter() {
         return Basic.element("footer").classes("card-footer").map(Card::footerElement);
     }
 
@@ -26,7 +27,7 @@ public class Card extends AbstractElement<Card> {
         return renderable;
     }
 
-    public static AbstractElement<?> cardHeader() {
+    public static Element cardHeader() {
         return Basic.element("header").classes("card-header").map(Card::headerElement);
     }
 
@@ -38,7 +39,7 @@ public class Card extends AbstractElement<Card> {
         return renderable;
     }
 
-    public static AbstractElement<?> cardImage() {return div().classes("card-image");}
+    public static Element cardImage() {return div().classes("card-image");}
 
     public Card image(AbstractElement<?> image) {
         getOrCreate("card-image", Card::cardImage).content(image);

@@ -1,6 +1,12 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.bulmajava.basic.*;
+import com.github.t1.bulmajava.basic.AbstractElement;
+import com.github.t1.bulmajava.basic.Anchor;
+import com.github.t1.bulmajava.basic.Attributes;
+import com.github.t1.bulmajava.basic.Basic;
+import com.github.t1.bulmajava.basic.Classes;
+import com.github.t1.bulmajava.basic.Element;
+import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.elements.Icon;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
@@ -28,7 +34,7 @@ public class Breadcrumb extends AbstractElement<Breadcrumb> {
 
     private Element ul() {return contentAs(Element.class);}
 
-    private static AbstractElement<?> item(Renderable renderable) {
+    private static Element item(Renderable renderable) {
         var li = li();
         if (renderable instanceof Anchor a) {
             if (a.hasAttribute("aria-current", "page")) li = li.is(ACTIVE);

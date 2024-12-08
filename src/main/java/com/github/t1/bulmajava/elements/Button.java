@@ -1,6 +1,7 @@
 package com.github.t1.bulmajava.elements;
 
 import com.github.t1.bulmajava.basic.AbstractElement;
+import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.FontSize;
 import com.github.t1.bulmajava.basic.Modifier;
 import com.github.t1.bulmajava.basic.Renderable;
@@ -16,15 +17,15 @@ import static java.util.Locale.ROOT;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Button extends AbstractElement<Button> {
-    public static AbstractElement<?> buttons() {return div().classes("buttons");}
+    public static Element buttons() {return div().classes("buttons");}
 
-    public static AbstractElement<?> fieldsAddon() {return div().classes("field", "has-addons").map(Button::inControl);}
+    public static Element fieldsAddon() {return div().classes("field", "has-addons").map(Button::inControl);}
 
     private static Renderable inControl(Renderable renderable) {
         return renderable.hasClass("control") ? renderable : control().content(renderable);
     }
 
-    public static AbstractElement<?> buttonsAddon() {return buttons().classes("has-addons");}
+    public static Element buttonsAddon() {return buttons().classes("has-addons");}
 
     public static Button button(String content) {return button(string(content));}
 

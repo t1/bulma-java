@@ -1,35 +1,35 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Basic;
+import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.Modifier;
 
 import static com.github.t1.bulmajava.basic.Basic.p;
 
 public class Image {
-    public static AbstractElement<?> iframe(String src, Modifier... modifiers) {
+    public static Element iframe(String src, Modifier... modifiers) {
         return Basic.element("iframe").is(modifiers).attr("src", src);
     }
 
-    public static AbstractElement<?> image(ImageDimension dimension, String src, String alt, Modifier... modifiers) {
+    public static Element image(ImageDimension dimension, String src, String alt, Modifier... modifiers) {
         return image(dimension).content(img(src, alt, modifiers));
     }
 
-    public static AbstractElement<?> image(ImageDimension dimension) {
+    public static Element image(ImageDimension dimension) {
         return figure().classes("image").classes(dimension.className());
     }
 
-    public static AbstractElement<?> imageP(ImageDimension dimension) {
+    public static Element imageP(ImageDimension dimension) {
         return p().classes("image").classes(dimension.className());
     }
 
-    public static AbstractElement<?> img(String src, String alt, String width, String height, Modifier... modifiers) {
+    public static Element img(String src, String alt, String width, String height, Modifier... modifiers) {
         return img(src, alt, modifiers)
                 .attr("width", width)
                 .attr("height", height);
     }
 
-    public static AbstractElement<?> img(String src, String alt, Modifier... modifiers) {
+    public static Element img(String src, String alt, Modifier... modifiers) {
         var img = Basic.element("img").close(false)
                 .is(modifiers)
                 .attr("src", src);
@@ -37,7 +37,7 @@ public class Image {
         return img;
     }
 
-    public static AbstractElement<?> movie(ImageRatio ratio, String src, String width, String height, Modifier... modifiers) {
+    public static Element movie(ImageRatio ratio, String src, String width, String height, Modifier... modifiers) {
         return image(ratio).content(
                 iframe(src, modifiers)
                         .classes("has-ratio")
@@ -45,5 +45,5 @@ public class Image {
                         .attr("allowfullscreen"));
     }
 
-    public static AbstractElement<?> figure() {return Basic.element("figure");}
+    public static Element figure() {return Basic.element("figure");}
 }

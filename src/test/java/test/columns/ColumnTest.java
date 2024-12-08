@@ -1,7 +1,7 @@
 package test.columns;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.columns.ColumnSize;
+import com.github.t1.bulmajava.elements.Notification;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,12 +13,25 @@ import java.util.stream.IntStream;
 
 import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
 import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Color.*;
+import static com.github.t1.bulmajava.basic.Basic.br;
+import static com.github.t1.bulmajava.basic.Basic.code;
+import static com.github.t1.bulmajava.basic.Basic.div;
+import static com.github.t1.bulmajava.basic.Basic.strong;
+import static com.github.t1.bulmajava.basic.Color.DANGER;
+import static com.github.t1.bulmajava.basic.Color.INFO;
+import static com.github.t1.bulmajava.basic.Color.PRIMARY;
+import static com.github.t1.bulmajava.basic.Color.WARNING;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.Style.LIGHT;
 import static com.github.t1.bulmajava.columns.Column.column;
-import static com.github.t1.bulmajava.columns.ColumnSize.*;
+import static com.github.t1.bulmajava.columns.ColumnSize.FULL;
+import static com.github.t1.bulmajava.columns.ColumnSize.HALF;
+import static com.github.t1.bulmajava.columns.ColumnSize.ONE_FIFTH;
+import static com.github.t1.bulmajava.columns.ColumnSize.ONE_QUARTER;
+import static com.github.t1.bulmajava.columns.ColumnSize.ONE_THIRD;
+import static com.github.t1.bulmajava.columns.ColumnSize.THREE_FIFTHS;
+import static com.github.t1.bulmajava.columns.ColumnSize.THREE_QUARTERS;
+import static com.github.t1.bulmajava.columns.ColumnSize.TWO_THIRDS;
 import static com.github.t1.bulmajava.columns.Columns.columns;
 import static com.github.t1.bulmajava.columns.ScreenSize.DESKTOP;
 import static com.github.t1.bulmajava.columns.ScreenSize.MOBILE;
@@ -589,7 +602,7 @@ class ColumnTest {
                 """);
     }
 
-    private static AbstractElement<?> notificationWithCode(String code) {
+    private static Notification notificationWithCode(String code) {
         return notification().is(PRIMARY).content(code(code).classes("html"));
     }
 }

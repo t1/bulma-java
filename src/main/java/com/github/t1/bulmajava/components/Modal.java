@@ -1,6 +1,7 @@
 package com.github.t1.bulmajava.components;
 
 import com.github.t1.bulmajava.basic.AbstractElement;
+import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.elements.Button;
 
@@ -10,12 +11,12 @@ import static com.github.t1.bulmajava.basic.Size.LARGE;
 import static com.github.t1.bulmajava.elements.Button.button;
 
 public class Modal {
-    public static AbstractElement<?> modal() {
+    public static Element modal() {
         return div().classes("modal").content(
                 div().classes("modal-background"));
     }
 
-    public static AbstractElement<?> modalCard() {return div().classes("modal-card").map(Modal::part);}
+    public static Element modalCard() {return div().classes("modal-card").map(Modal::part);}
 
     private static Renderable part(Renderable renderable) {
         if (renderable instanceof AbstractElement<?> e) {
@@ -26,12 +27,12 @@ public class Modal {
         return renderable;
     }
 
-    public static AbstractElement<?> modalCardTitle(String text) {return p(text).classes("modal-card-title");}
+    public static Element modalCardTitle(String text) {return p(text).classes("modal-card-title");}
 
 
     public static Button modalCloseButton() {
         return button().notClasses("button").classes("modal-close").is(LARGE).ariaLabel("close");
     }
 
-    public static AbstractElement<?> modalContent() {return div().classes("modal-content");}
+    public static Element modalContent() {return div().classes("modal-content");}
 }
