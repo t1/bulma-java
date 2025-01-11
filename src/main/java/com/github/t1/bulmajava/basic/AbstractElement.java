@@ -143,6 +143,13 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return self();
     }
 
+    public SELF attrs(Attribute... attributes) {return attrs(Stream.of(attributes));}
+
+    public SELF attrs(Stream<Attribute> attributes) {
+        attributes.forEach(this::attr);
+        return self();
+    }
+
     public SELF hasText(Modifier modifier) {return classes("has-text-" + modifier.key());}
 
     public SELF hasBackground(Modifier modifier) {return classes("has-background-" + modifier.key());}

@@ -110,8 +110,8 @@ public class Field extends AbstractElement<Field> {
     /**
      * You must call this after all the regular {@link #content(Renderable)}, as we can't distinguish between the
      * different controls in the field.
-     *
-     * @implNote We'd need some sort of meta-data mechanism for that
+     * <p>
+     * TODO We'd need some sort of meta-data mechanism for that
      */
     public Field containsAddonLeft(AbstractElement<?> content, Modifier... modifiers) {
         return firstContent(Basic.control().is(modifiers).content(content)).classes("has-addons");

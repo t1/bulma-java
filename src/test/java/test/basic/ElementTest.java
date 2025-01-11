@@ -9,10 +9,27 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
+import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
+import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
+import static com.github.t1.bulmajava.basic.Basic.div;
+import static com.github.t1.bulmajava.basic.Basic.element;
+import static com.github.t1.bulmajava.basic.Basic.h1;
+import static com.github.t1.bulmajava.basic.Basic.h2;
+import static com.github.t1.bulmajava.basic.Basic.h3;
+import static com.github.t1.bulmajava.basic.Basic.h4;
+import static com.github.t1.bulmajava.basic.Basic.h5;
+import static com.github.t1.bulmajava.basic.Basic.h6;
+import static com.github.t1.bulmajava.basic.Basic.li;
+import static com.github.t1.bulmajava.basic.Basic.nav;
+import static com.github.t1.bulmajava.basic.Basic.nbsp;
+import static com.github.t1.bulmajava.basic.Basic.ol;
+import static com.github.t1.bulmajava.basic.Basic.p;
+import static com.github.t1.bulmajava.basic.Basic.span;
+import static com.github.t1.bulmajava.basic.Basic.ul;
 import static com.github.t1.bulmajava.basic.Color.PRIMARY;
 import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
 import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.toRenderable;
@@ -243,12 +260,44 @@ class ElementTest {
                 """);
     }
 
+    @Test void shouldRenderAttribute() {
+        var h1 = element("foo").attr("bar", "baz");
+
+        then(h1).rendersAs("""
+                <foo bar="baz"></foo>
+                """);
+    }
+
+    @Test void shouldRenderNoValAttribute() {
+        var h1 = element("foo").attr("bar");
+
+        then(h1).rendersAs("""
+                <foo bar></foo>
+                """);
+    }
+
     // this is not proper html, but we must make sure it's safe
     @Test void shouldRenderUnsafeAttribute() {
         var h1 = element("foo").attr("unsafe&amp;&lt;&gt;&quot;&#x27;");
 
         then(h1).rendersAs("""
                 <foo unsafe&amp;&lt;&gt;&quot;&#x27;></foo>
+                """);
+    }
+
+    @Test void shouldRenderVarargsAttributes() {
+        var h1 = element("foo").attrs(noValueAttribute("bar"), stringAttribute("baz", "qux"));
+
+        then(h1).rendersAs("""
+                <foo bar baz="qux"></foo>
+                """);
+    }
+
+    @Test void shouldRenderAttributesStream() {
+        var h1 = element("foo").attrs(IntStream.range(1, 4).mapToObj(i -> noValueAttribute("x" + i)));
+
+        then(h1).rendersAs("""
+                <foo x1 x2 x3></foo>
                 """);
     }
 
