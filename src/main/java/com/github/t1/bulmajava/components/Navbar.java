@@ -2,6 +2,7 @@ package com.github.t1.bulmajava.components;
 
 import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Anchor;
+import com.github.t1.bulmajava.basic.Attribute;
 import com.github.t1.bulmajava.basic.Attributes;
 import com.github.t1.bulmajava.basic.Classes;
 import com.github.t1.bulmajava.basic.Element;
@@ -15,7 +16,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Basic.span;
 
@@ -28,8 +28,8 @@ public class Navbar extends AbstractElement<Navbar> {
     private Navbar(String menuId) {
         super("nav", Attributes.of(
                 Classes.of("navbar"),
-                stringAttribute("role", "navigation"),
-                stringAttribute("aria-label", "navigation")));
+                Attribute.of("role", "navigation"),
+                Attribute.of("aria-label", "navigation")));
         this.menuId = menuId;
     }
 

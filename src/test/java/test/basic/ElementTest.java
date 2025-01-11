@@ -1,5 +1,6 @@
 package test.basic;
 
+import com.github.t1.bulmajava.basic.Attribute;
 import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.ListType;
 import com.github.t1.bulmajava.basic.Renderable.RenderableString;
@@ -13,8 +14,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
-import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Basic.element;
 import static com.github.t1.bulmajava.basic.Basic.h1;
@@ -286,7 +285,7 @@ class ElementTest {
     }
 
     @Test void shouldRenderVarargsAttributes() {
-        var h1 = element("foo").attrs(noValueAttribute("bar"), stringAttribute("baz", "qux"));
+        var h1 = element("foo").attrs(Attribute.of("bar"), Attribute.of("baz", "qux"));
 
         then(h1).rendersAs("""
                 <foo bar baz="qux"></foo>
@@ -294,7 +293,7 @@ class ElementTest {
     }
 
     @Test void shouldRenderAttributesStream() {
-        var h1 = element("foo").attrs(IntStream.range(1, 4).mapToObj(i -> noValueAttribute("x" + i)));
+        var h1 = element("foo").attrs(IntStream.range(1, 4).mapToObj(i -> Attribute.of("x" + i)));
 
         then(h1).rendersAs("""
                 <foo x1 x2 x3></foo>

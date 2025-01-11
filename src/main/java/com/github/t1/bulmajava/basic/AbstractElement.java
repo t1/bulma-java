@@ -14,8 +14,6 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static com.github.t1.bulmajava.basic.Attribute.NoValueAttribute.noValueAttribute;
-import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
 import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.unsafeStringAttribute;
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
@@ -133,9 +131,9 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public SELF ariaLabel(String label) {return attr("aria-label", label);}
 
-    public SELF attr(String name) {return attr(noValueAttribute(name));}
+    public SELF attr(String name) {return attr(Attribute.of(name));}
 
-    public SELF attr(String name, String value) {return attr(stringAttribute(name, value));}
+    public SELF attr(String name, String value) {return attr(Attribute.of(name, value));}
 
     public SELF attr(Attribute attribute) {
         if (attributes == null) Attributes.of(attribute);

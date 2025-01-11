@@ -2,6 +2,7 @@ package com.github.t1.bulmajava.components;
 
 import com.github.t1.bulmajava.basic.AbstractElement;
 import com.github.t1.bulmajava.basic.Anchor;
+import com.github.t1.bulmajava.basic.Attribute;
 import com.github.t1.bulmajava.basic.Attributes;
 import com.github.t1.bulmajava.basic.Basic;
 import com.github.t1.bulmajava.basic.Classes;
@@ -11,7 +12,6 @@ import com.github.t1.bulmajava.elements.Icon;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
 import static com.github.t1.bulmajava.basic.Basic.li;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.ACTIVE;
@@ -23,7 +23,7 @@ public class Breadcrumb extends AbstractElement<Breadcrumb> {
     private Breadcrumb() {
         super("nav", Attributes.of(
                         Classes.of("breadcrumb"),
-                        stringAttribute("aria-label", "breadcrumbs")),
+                        Attribute.of("aria-label", "breadcrumbs")),
                 Basic.ul());
     }
 

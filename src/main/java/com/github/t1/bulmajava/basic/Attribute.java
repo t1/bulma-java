@@ -5,6 +5,10 @@ import lombok.NonNull;
 import java.util.Comparator;
 
 public interface Attribute extends Renderable {
+    static Attribute of(@NonNull String key) {return new NoValueAttribute(key);}
+
+    static Attribute of(@NonNull String key, @NonNull String value) {return new StringAttribute(key, value, false);}
+
     /**
      * We want some attributes to be in a specific order:
      * <ol>
@@ -45,8 +49,6 @@ public interface Attribute extends Renderable {
     default Attribute and(Attribute attribute) {throw new UnsupportedOperationException();}
 
     record StringAttribute(String key, String value, boolean unsafe) implements Attribute {
-        public static Attribute stringAttribute(@NonNull String key, @NonNull String value) {return new StringAttribute(key, value, false);}
-
         public static Attribute unsafeStringAttribute(@NonNull String key, @NonNull String value) {return new StringAttribute(key, value, true);}
 
         @Override public boolean matches(Attribute attribute) {
@@ -57,7 +59,7 @@ public interface Attribute extends Renderable {
 
         @Override public Attribute and(Attribute attribute) {
             if ("style".equals(key()))
-                return stringAttribute(key, value + " " + ((StringAttribute) attribute).value);
+                return Attribute.of(key, value + " " + ((StringAttribute) attribute).value);
             throw new UnsupportedOperationException("can't add to a '" + key() + "' attribute");
         }
 
@@ -68,8 +70,6 @@ public interface Attribute extends Renderable {
     }
 
     record NoValueAttribute(String key) implements Attribute {
-        public static Attribute noValueAttribute(@NonNull String key) {return new NoValueAttribute(key);}
-
         @Override public String key() {return key;}
 
         @Override public boolean matches(Attribute attribute) {return attribute.hasKey(attribute.key());}

@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor @Accessors(fluent = true, chain = true) @EqualsAndHashCode
@@ -30,7 +29,7 @@ public class Attributes implements Renderable {
         return attributes.stream().filter(predicate).findFirst().map(Renderable.class::cast);
     }
 
-    public boolean hasAttribute(String key, String value) {return hasAttribute(stringAttribute(key, value));}
+    public boolean hasAttribute(String key, String value) {return hasAttribute(Attribute.of(key, value));}
 
     public boolean hasAttribute(Attribute attribute) {return hasAttribute(attribute::matches);}
 

@@ -5,7 +5,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.function.Function;
 
-import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.stringAttribute;
 import static com.github.t1.bulmajava.basic.Body.scriptSrc;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
@@ -19,7 +18,7 @@ public class Html extends AbstractElement<Html> {
     public static Html html(String title) {return new Html(title);}
 
     protected Html(String title) {
-        super("html", Attributes.of(stringAttribute("lang", "en")),
+        super("html", Attributes.of(Attribute.of("lang", "en")),
                 Basic.element("head").content(
                         meta_("charset", "utf-8"),
                         meta_("http-equiv", "X-UA-Compatible", "IE=edge"),
