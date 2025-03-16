@@ -2,6 +2,10 @@ package test.basic;
 
 import com.github.t1.bulmajava.basic.Attribute;
 import com.github.t1.bulmajava.basic.Element;
+import com.github.t1.bulmajava.basic.FontAlignment;
+import com.github.t1.bulmajava.basic.FontFamily;
+import com.github.t1.bulmajava.basic.FontTransformation;
+import com.github.t1.bulmajava.basic.FontWeight;
 import com.github.t1.bulmajava.basic.ListType;
 import com.github.t1.bulmajava.basic.Renderable.RenderableString;
 import org.junit.jupiter.api.Test;
@@ -106,6 +110,38 @@ class ElementTest {
         then(tag).rendersAs("""
                 <span>Hello World</span>
                 """);
+    }
+
+    @ParameterizedTest @EnumSource void shouldRenderFontAlignment(FontAlignment fontAlignment) {
+        var tag = div().content("Hello World").is(fontAlignment);
+
+        then(tag).rendersAs("""
+                <div class="${class-name}">Hello World</div>
+                """.replace("${class-name}", fontAlignment.className()));
+    }
+
+    @ParameterizedTest @EnumSource void shouldRenderFontTransformation(FontTransformation fontTransformation) {
+        var tag = span("hello World").is(fontTransformation);
+
+        then(tag).rendersAs("""
+                <span class="${class-name}">hello World</span>
+                """.replace("${class-name}", fontTransformation.className()));
+    }
+
+    @ParameterizedTest @EnumSource void shouldRenderFontWeight(FontWeight fontWeight) {
+        var tag = span("Hello World").is(fontWeight);
+
+        then(tag).rendersAs("""
+                <span class="${class-name}">Hello World</span>
+                """.replace("${class-name}", fontWeight.className()));
+    }
+
+    @ParameterizedTest @EnumSource void shouldRenderFontFamily(FontFamily fontFamily) {
+        var tag = span("Hello World").is(fontFamily);
+
+        then(tag).rendersAs("""
+                <span class="${class-name}">Hello World</span>
+                """.replace("${class-name}", fontFamily.className()));
     }
 
     @Test void shouldRenderH1() {

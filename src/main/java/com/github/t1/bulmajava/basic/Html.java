@@ -3,6 +3,7 @@ package com.github.t1.bulmajava.basic;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
+import java.net.URI;
 import java.util.function.Function;
 
 import static com.github.t1.bulmajava.basic.Body.scriptSrc;
@@ -55,9 +56,13 @@ public class Html extends AbstractElement<Html> {
 
     public Html title(String title) {return head(Basic.element("title").content(title));}
 
+    public Html stylesheet(URI href) {return stylesheet(href.toString());}
+
     public Html stylesheet(String href) {
         return head(Basic.element("link").attr("rel", "stylesheet").close(false).attr("href", href));
     }
+
+    public Html script(URI src) {return script(src.toString());}
 
     public Html script(String src) {return head(scriptSrc(src));}
 

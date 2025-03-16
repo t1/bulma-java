@@ -3,6 +3,8 @@ package test.basic;
 import com.github.t1.bulmajava.basic.Renderer;
 import org.junit.jupiter.api.Test;
 
+import java.net.URI;
+
 import static com.github.t1.bulmajava.basic.Basic.h1;
 import static com.github.t1.bulmajava.basic.Basic.p;
 import static com.github.t1.bulmajava.basic.Html.html;
@@ -63,7 +65,7 @@ class HtmlTest {
                 """);
     }
 
-    @Test void shouldRenderHtmlWithStylesheet() {
+    @Test void shouldRenderHtmlWithStylesheetString() {
         var tag = html(null).stylesheet("bulma.min.css");
 
         //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
@@ -80,8 +82,42 @@ class HtmlTest {
                 """);
     }
 
-    @Test void shouldRenderHtmlWithScript() {
+    @Test void shouldRenderHtmlWithStylesheetUri() {
+        var tag = html(null).stylesheet(URI.create("bulma.min.css"));
+
+        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
+        then(tag).rendersAs_notAll("""
+                <!DOCTYPE html>
+                <html lang="en">
+                    <head>
+                        <meta charset="utf-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                        <link rel="stylesheet" href="bulma.min.css">
+                    </head>
+                </html>
+                """);
+    }
+
+    @Test void shouldRenderHtmlWithScriptString() {
         var tag = html(null).script("main.js");
+
+        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
+        then(tag).rendersAs_notAll("""
+                <!DOCTYPE html>
+                <html lang="en">
+                    <head>
+                        <meta charset="utf-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                        <script src="main.js"></script>
+                    </head>
+                </html>
+                """);
+    }
+
+    @Test void shouldRenderHtmlWithScriptUri() {
+        var tag = html(null).script(URI.create("main.js"));
 
         //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
         then(tag).rendersAs_notAll("""
@@ -213,17 +249,15 @@ class HtmlTest {
                 """);
     }
 
-    @SuppressWarnings("TrailingWhitespacesInTextBlock")
     @Test void shouldRenderHtmlWithJavaScriptCode() {
         @SuppressWarnings("JSUnusedLocalSymbols")
         var tag = html(null).body(p("foo")).javaScriptCode("""
                 function bodyFoo() {
                     console.log("foo");
                 }
-
+                
                 function bodyBar() {
                     console.log("bar");
-                    
                     console.log("baz");
                 }
                 """);
@@ -243,10 +277,9 @@ class HtmlTest {
                             function bodyFoo() {
                                 console.log("foo");
                             }
-                            
+                
                             function bodyBar() {
                                 console.log("bar");
-                                
                                 console.log("baz");
                             }
                         </script>
