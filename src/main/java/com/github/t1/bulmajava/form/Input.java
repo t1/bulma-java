@@ -37,8 +37,6 @@ public class Input extends AbstractElement<Input> {
     public Input name(String name) {return attr("name", name);}
 
 
-    public Input autofocus() {return attr("autofocus");}
-
     public Input readonly() {return attr("readonly");}
 
     public Input required() {return attr("required");}

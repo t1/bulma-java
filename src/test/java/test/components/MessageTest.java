@@ -10,10 +10,13 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
+import static com.github.t1.bulmajava.basic.Basic.em;
+import static com.github.t1.bulmajava.basic.Basic.p;
+import static com.github.t1.bulmajava.basic.Basic.strong;
 import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.basic.Style.DARK;
 import static com.github.t1.bulmajava.components.Message.message;
+import static com.github.t1.bulmajava.components.Message.messageBody;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
@@ -30,6 +33,20 @@ class MessageTest {
                         <p>Hello World</p>
                         <button class="delete" aria-label="delete"></button>
                     </div>
+                    <div class="message-body">
+                        $loremIpsum
+                    </div>
+                </article>
+                """.replace("$loremIpsum", loremIpsumWithStyle()));
+    }
+
+    @Test void shouldRenderMessageBody() {
+        var message = message().style("width: 440px;");
+
+        message.content(messageBody().content(textItems()));
+
+        then(message).rendersAs("""
+                <article class="message" style="width: 440px;">
                     <div class="message-body">
                         $loremIpsum
                     </div>
