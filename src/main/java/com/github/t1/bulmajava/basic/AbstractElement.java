@@ -131,6 +131,8 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public SELF ariaLabel(String label) {return attr("aria-label", label);}
 
+    public SELF autofocus() {return attr("autofocus");}
+
     public SELF attr(String name) {return attr(Attribute.of(name));}
 
     public SELF attr(String name, String value) {return attr(Attribute.of(name, value));}

@@ -1,6 +1,7 @@
 package com.github.t1.bulmajava.components;
 
 import com.github.t1.bulmajava.basic.AbstractElement;
+import com.github.t1.bulmajava.basic.Element;
 import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.elements.Delete;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,9 @@ import static com.github.t1.bulmajava.basic.Size.sizes;
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Message extends AbstractElement<Message> {
     public static Message message() {return new Message();}
+
+    /// Sometimes, you can't call the #message method, because you have to build the body separately
+    public static Element messageBody() {return div().classes("message-body");}
 
     private Message() {super("article", "message");}
 
@@ -30,5 +34,5 @@ public class Message extends AbstractElement<Message> {
         return header(delete);
     }
 
-    public Message body(Renderable... content) {return super.content(div().classes("message-body").content(content));}
+    public Message body(Renderable... content) {return super.content(messageBody().content(content));}
 }
