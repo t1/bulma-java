@@ -176,12 +176,12 @@ class InputTest {
     }
 
     @Test void shouldRenderReadonlyFalseInput() {
-        var input = field().control(input(TEXT).value("This text is readonly").readonly(false));
+        var input = field().control(input(TEXT).value("This text is not readonly").readonly(false));
 
         then(input).rendersAs("""
                 <div class="field">
                     <div class="control">
-                        <input class="input" type="text" value="This text is readonly">
+                        <input class="input" type="text" value="This text is not readonly">
                     </div>
                 </div>
                 """);

@@ -18,5 +18,11 @@ public class Textarea extends AbstractElement<Textarea> {
 
     public Textarea readonly() {return attr("readonly");}
 
+    public Textarea readonly(boolean readonly) {return readonly ? readonly() : this;}
+
+    public Textarea required() {return attr("required");}
+
+    public Textarea required(boolean required) {return required ? required() : this;}
+
     public Textarea fixedSize() {return classes("has-fixed-size");}
 }

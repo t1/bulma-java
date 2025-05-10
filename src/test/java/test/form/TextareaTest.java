@@ -9,8 +9,12 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Size.*;
-import static com.github.t1.bulmajava.basic.State.*;
+import static com.github.t1.bulmajava.basic.Size.LARGE;
+import static com.github.t1.bulmajava.basic.Size.MEDIUM;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.bulmajava.basic.State.FOCUSED;
+import static com.github.t1.bulmajava.basic.State.HOVERED;
+import static com.github.t1.bulmajava.basic.State.LOADING;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Textarea.textarea;
 import static test.CustomAssertions.then;
@@ -142,6 +146,71 @@ class TextareaTest {
                 <div class="field">
                     <div class="control">
                         <textarea class="textarea" readonly>This content is readonly</textarea>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderReadonlyTrueTextArea() {
+        var textarea = field().control(
+                textarea().content("This content is readonly").readonly(true));
+
+        then(textarea).rendersAs("""
+                <div class="field">
+                    <div class="control">
+                        <textarea class="textarea" readonly>This content is readonly</textarea>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderReadonlyFalseTextArea() {
+        var textarea = field().control(
+                textarea().content("This content is not readonly").readonly(false));
+
+        then(textarea).rendersAs("""
+                <div class="field">
+                    <div class="control">
+                        <textarea class="textarea">This content is not readonly</textarea>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderRequiredTextArea() {
+        var textarea = field().control(
+                textarea().content("This content is required").required());
+
+        then(textarea).rendersAs("""
+                <div class="field">
+                    <div class="control">
+                        <textarea class="textarea" required>This content is required</textarea>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderRequiredTrueTextArea() {
+        var textarea = field().control(
+                textarea().content("This content is required").required(true));
+
+        then(textarea).rendersAs("""
+                <div class="field">
+                    <div class="control">
+                        <textarea class="textarea" required>This content is required</textarea>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderRequiredFalseTextArea() {
+        var textarea = field().control(
+                textarea().content("This content is not required").required(false));
+
+        then(textarea).rendersAs("""
+                <div class="field">
+                    <div class="control">
+                        <textarea class="textarea">This content is not required</textarea>
                     </div>
                 </div>
                 """);
