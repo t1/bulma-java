@@ -7,7 +7,9 @@ import test.RenderTestExtension;
 import java.time.LocalDate;
 
 import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Color.*;
+import static com.github.t1.bulmajava.basic.Color.PRIMARY;
+import static com.github.t1.bulmajava.basic.Color.SUCCESS;
+import static com.github.t1.bulmajava.basic.Color.WARNING;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.DATE;
@@ -48,6 +50,40 @@ class ValidationTest {
                         <label class="label">Label</label>
                         <div class="control">
                             <input class="input" type="text" placeholder="Text input" required>
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderRequiredTrueField() {
+        var form = div().style("width: 400px;").content(
+                field().label("Label")
+                        .control(input(TEXT).placeholder("Text input").required(true)));
+
+        then(form).rendersAs("""
+                <div style="width: 400px;">
+                    <div class="field">
+                        <label class="label">Label</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Text input" required>
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderRequiredFalseField() {
+        var form = div().style("width: 400px;").content(
+                field().label("Label")
+                        .control(input(TEXT).placeholder("Text input").required(false)));
+
+        then(form).rendersAs("""
+                <div style="width: 400px;">
+                    <div class="field">
+                        <label class="label">Label</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Text input">
                         </div>
                     </div>
                 </div>

@@ -10,13 +10,25 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Size.*;
+import static com.github.t1.bulmajava.basic.Size.LARGE;
+import static com.github.t1.bulmajava.basic.Size.MEDIUM;
+import static com.github.t1.bulmajava.basic.Size.NORMAL;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.LOADING;
 import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static com.github.t1.bulmajava.basic.Style.STATIC;
 import static com.github.t1.bulmajava.form.Field.field;
-import static com.github.t1.bulmajava.form.Input.*;
-import static com.github.t1.bulmajava.form.InputType.*;
+import static com.github.t1.bulmajava.form.Input.input;
+import static com.github.t1.bulmajava.form.Input.reset;
+import static com.github.t1.bulmajava.form.Input.submit;
+import static com.github.t1.bulmajava.form.InputType.COLOR;
+import static com.github.t1.bulmajava.form.InputType.DATE;
+import static com.github.t1.bulmajava.form.InputType.DATETIME_LOCAL;
+import static com.github.t1.bulmajava.form.InputType.EMAIL;
+import static com.github.t1.bulmajava.form.InputType.HIDDEN;
+import static com.github.t1.bulmajava.form.InputType.PASSWORD;
+import static com.github.t1.bulmajava.form.InputType.RANGE;
+import static com.github.t1.bulmajava.form.InputType.TEXT;
 import static org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE;
 import static test.CustomAssertions.then;
 
@@ -146,6 +158,30 @@ class InputTest {
                 <div class="field">
                     <div class="control">
                         <input class="input" type="text" value="This text is readonly" readonly>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderReadonlyTrueInput() {
+        var input = field().control(input(TEXT).value("This text is readonly").readonly(true));
+
+        then(input).rendersAs("""
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text" value="This text is readonly" readonly>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderReadonlyFalseInput() {
+        var input = field().control(input(TEXT).value("This text is readonly").readonly(false));
+
+        then(input).rendersAs("""
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text" value="This text is readonly">
                     </div>
                 </div>
                 """);

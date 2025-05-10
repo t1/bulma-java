@@ -39,7 +39,11 @@ public class Input extends AbstractElement<Input> {
 
     public Input readonly() {return attr("readonly");}
 
+    public Input readonly(boolean readonly) {return readonly ? readonly() : this;}
+
     public Input required() {return attr("required");}
+
+    public Input required(boolean required) {return required ? required() : this;}
 
 
     public Input minlength(int minlength) {return attr("minlength", Integer.toString(minlength));}
