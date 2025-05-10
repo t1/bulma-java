@@ -7,6 +7,8 @@ import java.net.URI;
 import java.util.function.Function;
 
 import static com.github.t1.bulmajava.basic.Body.scriptSrc;
+import static com.github.t1.bulmajava.basic.Renderable.Indented.indented;
+import static com.github.t1.bulmajava.basic.Renderable.UnsafeString.unsafeString;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Html extends AbstractElement<Html> {
@@ -60,6 +62,13 @@ public class Html extends AbstractElement<Html> {
 
     public Html stylesheet(String href) {
         return head(Basic.element("link").attr("rel", "stylesheet").close(false).attr("href", href));
+    }
+
+    /// Add a `style` element to the `head` containing that CSS, indented to the current level.
+    ///
+    /// Note that the style is _unsafe_!
+    public Html styleElement(String style) {
+        return head(Basic.element("style").content(indented(unsafeString(style))));
     }
 
     public Html script(URI src) {return script(src.toString());}

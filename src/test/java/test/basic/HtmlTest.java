@@ -99,6 +99,27 @@ class HtmlTest {
                 """);
     }
 
+    @Test void shouldRenderHtmlWithStyleElement() {
+        var tag = html(null).styleElement("body {\n    background-color: #f0f0f0;\n}");
+
+        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
+        then(tag).rendersAs_notAll("""
+                <!DOCTYPE html>
+                <html lang="en">
+                    <head>
+                        <meta charset="utf-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                        <style>
+                            body {
+                                background-color: #f0f0f0;
+                            }
+                        </style>
+                    </head>
+                </html>
+                """);
+    }
+
     @Test void shouldRenderHtmlWithScriptString() {
         var tag = html(null).script("main.js");
 
