@@ -1,6 +1,6 @@
 package test.components;
 
-import com.github.t1.bulmajava.basic.Color;
+import com.github.t1.htmljava.Color;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,14 +9,18 @@ import test.RenderTestExtension;
 
 import java.util.stream.Stream;
 
-import static com.github.t1.bulmajava.basic.Alignment.LEFT;
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Color.LINK;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
-import static com.github.t1.bulmajava.basic.State.ACTIVE;
-import static com.github.t1.bulmajava.basic.Style.FULLWIDTH;
-import static com.github.t1.bulmajava.basic.Style.OUTLINED;
+import static com.github.t1.htmljava.Alignment.LEFT;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.element;
+import static com.github.t1.htmljava.Basic.i;
+import static com.github.t1.htmljava.Basic.p;
+import static com.github.t1.htmljava.Basic.span;
+import static com.github.t1.htmljava.Color.LINK;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.State.ACTIVE;
+import static com.github.t1.htmljava.Style.FULLWIDTH;
+import static com.github.t1.htmljava.Style.OUTLINED;
 import static com.github.t1.bulmajava.components.Panel.panel;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Icon.icon;

@@ -1,7 +1,7 @@
 package test.elements;
 
-import com.github.t1.bulmajava.basic.Color;
-import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.htmljava.Color;
+import com.github.t1.htmljava.Size;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

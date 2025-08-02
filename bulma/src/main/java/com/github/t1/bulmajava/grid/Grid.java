@@ -1,7 +1,7 @@
 package com.github.t1.bulmajava.grid;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Renderable;
 
 public class Grid extends AbstractElement<Grid> {
     public static Cell cell() {return new Cell();}

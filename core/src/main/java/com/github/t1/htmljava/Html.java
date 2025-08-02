@@ -1,4 +1,4 @@
-package com.github.t1.bulmajava.basic;
+package com.github.t1.htmljava;
 
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
@@ -6,9 +6,9 @@ import lombok.experimental.SuperBuilder;
 import java.net.URI;
 import java.util.function.Function;
 
-import static com.github.t1.bulmajava.basic.Body.scriptSrc;
-import static com.github.t1.bulmajava.basic.Renderable.Indented.indented;
-import static com.github.t1.bulmajava.basic.Renderable.UnsafeString.unsafeString;
+import static com.github.t1.htmljava.Body.scriptSrc;
+import static com.github.t1.htmljava.Renderable.Indented.indented;
+import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Html extends AbstractElement<Html> {

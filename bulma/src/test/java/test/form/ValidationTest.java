@@ -6,10 +6,10 @@ import test.RenderTestExtension;
 
 import java.time.LocalDate;
 
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Color.PRIMARY;
-import static com.github.t1.bulmajava.basic.Color.SUCCESS;
-import static com.github.t1.bulmajava.basic.Color.WARNING;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Color.PRIMARY;
+import static com.github.t1.htmljava.Color.SUCCESS;
+import static com.github.t1.htmljava.Color.WARNING;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.DATE;

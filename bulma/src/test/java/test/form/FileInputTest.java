@@ -1,16 +1,20 @@
 package test.form;
 
-import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.htmljava.Size;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
-import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
-import static com.github.t1.bulmajava.basic.Color.*;
-import static com.github.t1.bulmajava.basic.Style.FULLWIDTH;
+import static com.github.t1.htmljava.Alignment.CENTERED;
+import static com.github.t1.htmljava.Alignment.RIGHT;
+import static com.github.t1.htmljava.Color.DANGER;
+import static com.github.t1.htmljava.Color.INFO;
+import static com.github.t1.htmljava.Color.PRIMARY;
+import static com.github.t1.htmljava.Color.SUCCESS;
+import static com.github.t1.htmljava.Color.WARNING;
+import static com.github.t1.htmljava.Style.FULLWIDTH;
 import static com.github.t1.bulmajava.form.FileInput.fileInput;
 import static test.CustomAssertions.then;
 

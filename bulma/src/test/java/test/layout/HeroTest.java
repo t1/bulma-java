@@ -1,6 +1,6 @@
 package test.layout;
 
-import com.github.t1.bulmajava.basic.Color;
+import com.github.t1.htmljava.Color;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,10 +8,18 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.NoSectionWrapper;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Color.*;
-import static com.github.t1.bulmajava.basic.Style.*;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.li;
+import static com.github.t1.htmljava.Basic.span;
+import static com.github.t1.htmljava.Color.DANGER;
+import static com.github.t1.htmljava.Color.INFO;
+import static com.github.t1.htmljava.Color.LINK;
+import static com.github.t1.htmljava.Color.PRIMARY;
+import static com.github.t1.htmljava.Color.SUCCESS;
+import static com.github.t1.htmljava.Style.DARK;
+import static com.github.t1.htmljava.Style.FULLWIDTH;
+import static com.github.t1.htmljava.Style.INVERTED;
 import static com.github.t1.bulmajava.components.Navbar.navbar;
 import static com.github.t1.bulmajava.components.Tabs.navTabs;
 import static com.github.t1.bulmajava.elements.Button.buttons;
@@ -22,7 +30,11 @@ import static com.github.t1.bulmajava.elements.MenuActivationType.ACTIVE;
 import static com.github.t1.bulmajava.elements.Title.subtitleP;
 import static com.github.t1.bulmajava.elements.Title.titleP;
 import static com.github.t1.bulmajava.layout.Hero.hero;
-import static com.github.t1.bulmajava.layout.HeroSize.*;
+import static com.github.t1.bulmajava.layout.HeroSize.FULLHEIGHT;
+import static com.github.t1.bulmajava.layout.HeroSize.HALFHEIGHT;
+import static com.github.t1.bulmajava.layout.HeroSize.LARGE;
+import static com.github.t1.bulmajava.layout.HeroSize.MEDIUM;
+import static com.github.t1.bulmajava.layout.HeroSize.SMALL;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.strong;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.strong;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.elements.Block.block;
 import static test.CustomAssertions.then;
 import static test.RenderTestExtension.loremIpsum;

@@ -1,16 +1,16 @@
 package com.github.t1.bulmajava.layout;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Anchor;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Anchor;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.stream.Stream;
 
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.div;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.div;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Level extends AbstractElement<Level> {

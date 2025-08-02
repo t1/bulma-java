@@ -1,20 +1,20 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Anchor;
-import com.github.t1.bulmajava.basic.Attribute;
-import com.github.t1.bulmajava.basic.Attributes;
-import com.github.t1.bulmajava.basic.Basic;
-import com.github.t1.bulmajava.basic.Classes;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Anchor;
+import com.github.t1.htmljava.Attribute;
+import com.github.t1.htmljava.Attributes;
+import com.github.t1.htmljava.Basic;
+import com.github.t1.htmljava.Classes;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.Renderable;
 import com.github.t1.bulmajava.elements.Icon;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Basic.li;
-import static com.github.t1.bulmajava.basic.Size.SMALL;
-import static com.github.t1.bulmajava.basic.State.ACTIVE;
+import static com.github.t1.htmljava.Basic.li;
+import static com.github.t1.htmljava.Size.SMALL;
+import static com.github.t1.htmljava.State.ACTIVE;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Breadcrumb extends AbstractElement<Breadcrumb> {

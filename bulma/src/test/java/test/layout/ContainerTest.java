@@ -4,9 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Color.PRIMARY;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Basic.code;
+import static com.github.t1.htmljava.Basic.em;
+import static com.github.t1.htmljava.Basic.strong;
+import static com.github.t1.htmljava.Color.PRIMARY;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.columns.ScreenSize.FULLHD;
 import static com.github.t1.bulmajava.columns.ScreenSize.WIDESCREEN;
 import static com.github.t1.bulmajava.elements.Notification.notification;

@@ -1,21 +1,21 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Color;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.FontSize;
-import com.github.t1.bulmajava.basic.Modifier;
-import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Color;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.FontSize;
+import com.github.t1.htmljava.Modifier;
+import com.github.t1.htmljava.Size;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.function.Function;
 
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.i;
-import static com.github.t1.bulmajava.basic.Basic.span;
-import static com.github.t1.bulmajava.basic.Size.LARGE;
-import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.i;
+import static com.github.t1.htmljava.Basic.span;
+import static com.github.t1.htmljava.Size.LARGE;
+import static com.github.t1.htmljava.Size.SMALL;
 import static com.github.t1.bulmajava.elements.IconStyle.SOLID;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)

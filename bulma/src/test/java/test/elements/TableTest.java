@@ -7,13 +7,24 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
-import static com.github.t1.bulmajava.basic.State.SELECTED;
-import static com.github.t1.bulmajava.basic.Style.FULLWIDTH;
-import static com.github.t1.bulmajava.elements.Table.*;
-import static com.github.t1.bulmajava.elements.TableStyle.*;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.abbr;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.em;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.State.SELECTED;
+import static com.github.t1.htmljava.Style.FULLWIDTH;
+import static com.github.t1.bulmajava.elements.Table.row;
+import static com.github.t1.bulmajava.elements.Table.rowH;
+import static com.github.t1.bulmajava.elements.Table.table;
+import static com.github.t1.bulmajava.elements.Table.tableContainer;
+import static com.github.t1.bulmajava.elements.Table.td;
+import static com.github.t1.bulmajava.elements.Table.th;
+import static com.github.t1.bulmajava.elements.Table.tr;
+import static com.github.t1.bulmajava.elements.TableStyle.BORDERED;
+import static com.github.t1.bulmajava.elements.TableStyle.HOVERABLE;
+import static com.github.t1.bulmajava.elements.TableStyle.NARROW;
+import static com.github.t1.bulmajava.elements.TableStyle.STRIPED;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

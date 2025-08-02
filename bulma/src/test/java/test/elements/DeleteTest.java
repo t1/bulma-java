@@ -1,17 +1,17 @@
 package test.elements;
 
-import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.htmljava.Size;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.element;
-import static com.github.t1.bulmajava.basic.Color.DANGER;
-import static com.github.t1.bulmajava.basic.Color.INFO;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.element;
+import static com.github.t1.htmljava.Color.DANGER;
+import static com.github.t1.htmljava.Color.INFO;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.elements.Delete.delete;
 import static test.CustomAssertions.then;
 import static test.RenderTestExtension.loremIpsum;

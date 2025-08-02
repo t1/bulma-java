@@ -1,11 +1,11 @@
-package com.github.t1.bulmajava.basic;
+package com.github.t1.htmljava;
 
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Basic.element;
-import static com.github.t1.bulmajava.basic.Renderable.Indented.indented;
-import static com.github.t1.bulmajava.basic.Renderable.UnsafeString.unsafeString;
+import static com.github.t1.htmljava.Basic.element;
+import static com.github.t1.htmljava.Renderable.Indented.indented;
+import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Body extends AbstractElement<Body> {

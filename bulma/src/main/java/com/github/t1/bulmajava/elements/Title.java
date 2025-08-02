@@ -1,10 +1,10 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.Renderable;
 
-import static com.github.t1.bulmajava.basic.Basic.element;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Basic.element;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 public class Title {
     public static Element subtitle(int level) {return element("h" + level).classes("subtitle").is(level);}

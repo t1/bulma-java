@@ -1,7 +1,7 @@
 package test;
 
-import com.github.t1.bulmajava.basic.Renderable;
-import com.github.t1.bulmajava.basic.Renderer;
+import com.github.t1.htmljava.Renderable;
+import com.github.t1.htmljava.Renderer;
 import com.github.t1.bulmajava.elements.ImageSize;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.extension.AfterAllCallback;
@@ -17,9 +17,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static com.github.t1.bulmajava.basic.Basic.hr;
-import static com.github.t1.bulmajava.basic.Html.html;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Basic.hr;
+import static com.github.t1.htmljava.Html.html;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.elements.Title.title;
 import static com.github.t1.bulmajava.layout.Container.container;
 import static com.github.t1.bulmajava.layout.Section.section;

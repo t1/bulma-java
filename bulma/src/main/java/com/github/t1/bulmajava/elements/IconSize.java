@@ -1,6 +1,6 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.bulmajava.basic.Modifier;
+import com.github.t1.htmljava.Modifier;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;

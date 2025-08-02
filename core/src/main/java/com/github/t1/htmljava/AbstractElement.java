@@ -1,4 +1,4 @@
-package com.github.t1.bulmajava.basic;
+package com.github.t1.htmljava;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -14,10 +14,10 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static com.github.t1.bulmajava.basic.Attribute.StringAttribute.unsafeStringAttribute;
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Attribute.StringAttribute.unsafeStringAttribute;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Renderable.ConcatenatedRenderable.concat;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 @Accessors(fluent = true, chain = true) @SuperBuilder(toBuilder = true)
 public class AbstractElement<SELF extends AbstractElement<?>> implements Renderable {

@@ -1,10 +1,10 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.bulmajava.basic.Basic;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.Modifier;
+import com.github.t1.htmljava.Basic;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.Modifier;
 
-import static com.github.t1.bulmajava.basic.Basic.p;
+import static com.github.t1.htmljava.Basic.p;
 
 public class Image {
     public static Element iframe(String src, Modifier... modifiers) {

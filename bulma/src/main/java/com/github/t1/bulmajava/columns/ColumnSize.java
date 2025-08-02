@@ -1,6 +1,6 @@
 package com.github.t1.bulmajava.columns;
 
-import com.github.t1.bulmajava.basic.Modifier;
+import com.github.t1.htmljava.Modifier;
 
 public enum ColumnSize implements Modifier {
     FULL,

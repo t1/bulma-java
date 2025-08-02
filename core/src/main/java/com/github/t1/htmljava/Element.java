@@ -1,4 +1,4 @@
-package com.github.t1.bulmajava.basic;
+package com.github.t1.htmljava;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 public class Element extends AbstractElement<Element> {
     /**
      * The method name <code>element</code> clashes with the super method;
-     * you can use {@link com.github.t1.bulmajava.basic.Basic#element(String)} ()}
+     * you can use {@link Basic#element(String)} ()}
      */
     public static Element element_(String name) {return new Element(name);}
 

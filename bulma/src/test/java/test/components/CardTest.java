@@ -7,11 +7,18 @@ import test.RenderTestExtension;
 
 import java.time.LocalDate;
 
-import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
-import static com.github.t1.bulmajava.components.Card.*;
+import static com.github.t1.htmljava.Alignment.CENTERED;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.br;
+import static com.github.t1.htmljava.Basic.p;
+import static com.github.t1.htmljava.Basic.span;
+import static com.github.t1.htmljava.Basic.time;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
+import static com.github.t1.bulmajava.components.Card.card;
+import static com.github.t1.bulmajava.components.Card.cardContent;
+import static com.github.t1.bulmajava.components.Card.cardFooter;
+import static com.github.t1.bulmajava.components.Card.cardHeader;
+import static com.github.t1.bulmajava.components.Card.cardImage;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Content.content_;
 import static com.github.t1.bulmajava.elements.Image.image;
@@ -19,7 +26,9 @@ import static com.github.t1.bulmajava.elements.ImageRatio._4by3;
 import static com.github.t1.bulmajava.elements.ImageSize._48x48;
 import static com.github.t1.bulmajava.layout.Media.media;
 import static test.CustomAssertions.then;
-import static test.RenderTestExtension.*;
+import static test.RenderTestExtension.loremIpsum;
+import static test.RenderTestExtension.loremIpsumS;
+import static test.RenderTestExtension.placeholder;
 
 @ExtendWith(RenderTestExtension.class)
 class CardTest {

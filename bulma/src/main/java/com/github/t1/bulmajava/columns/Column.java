@@ -1,6 +1,6 @@
 package com.github.t1.bulmajava.columns;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
+import com.github.t1.htmljava.AbstractElement;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 

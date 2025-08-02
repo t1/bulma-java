@@ -1,4 +1,4 @@
-package com.github.t1.bulmajava.basic;
+package com.github.t1.htmljava;
 
 @SuppressWarnings("UnusedReturnValue")
 public class Renderer {

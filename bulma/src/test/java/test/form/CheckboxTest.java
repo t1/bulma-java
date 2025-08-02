@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.form.Checkbox.checkbox;
 import static com.github.t1.bulmajava.form.Field.field;
 import static test.CustomAssertions.then;

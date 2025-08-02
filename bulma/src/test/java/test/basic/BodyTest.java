@@ -2,7 +2,7 @@ package test.basic;
 
 import org.junit.jupiter.api.Test;
 
-import static com.github.t1.bulmajava.basic.Body.body;
+import static com.github.t1.htmljava.Body.body;
 import static test.CustomAssertions.then;
 
 class BodyTest {

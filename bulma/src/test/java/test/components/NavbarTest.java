@@ -1,8 +1,8 @@
 package test.components;
 
-import com.github.t1.bulmajava.basic.Anchor;
-import com.github.t1.bulmajava.basic.Color;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.Anchor;
+import com.github.t1.htmljava.Color;
+import com.github.t1.htmljava.Renderable;
 import com.github.t1.bulmajava.elements.Title;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,12 +10,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Color.PRIMARY;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
-import static com.github.t1.bulmajava.basic.Style.LIGHT;
+import static com.github.t1.htmljava.Alignment.RIGHT;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.control;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.hr;
+import static com.github.t1.htmljava.Basic.strong;
+import static com.github.t1.htmljava.Color.PRIMARY;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Style.LIGHT;
 import static com.github.t1.bulmajava.components.Navbar.NavbarDropdown.navbarDropdown;
 import static com.github.t1.bulmajava.components.Navbar.navbar;
 import static com.github.t1.bulmajava.elements.Button.buttons;

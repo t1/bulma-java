@@ -5,10 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Color.PRIMARY;
-import static com.github.t1.bulmajava.basic.Color.SUCCESS;
-import static com.github.t1.bulmajava.components.Modal.*;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.footer;
+import static com.github.t1.htmljava.Basic.h1;
+import static com.github.t1.htmljava.Basic.header;
+import static com.github.t1.htmljava.Color.PRIMARY;
+import static com.github.t1.htmljava.Color.SUCCESS;
+import static com.github.t1.bulmajava.components.Modal.modal;
+import static com.github.t1.bulmajava.components.Modal.modalCard;
+import static com.github.t1.bulmajava.components.Modal.modalCardTitle;
+import static com.github.t1.bulmajava.components.Modal.modalCloseButton;
+import static com.github.t1.bulmajava.components.Modal.modalContent;
 import static com.github.t1.bulmajava.elements.Box.box;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Delete.close;
@@ -17,7 +24,9 @@ import static com.github.t1.bulmajava.elements.Image.img;
 import static com.github.t1.bulmajava.elements.ImageRatio._4by3;
 import static com.github.t1.bulmajava.layout.Section.section;
 import static test.CustomAssertions.then;
-import static test.RenderTestExtension.*;
+import static test.RenderTestExtension.loremIpsum;
+import static test.RenderTestExtension.loremIpsumS;
+import static test.RenderTestExtension.placeholder;
 
 @ExtendWith(RenderTestExtension.class)
 class ModalTest {

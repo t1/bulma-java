@@ -1,19 +1,19 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Anchor;
-import com.github.t1.bulmajava.basic.Attributes;
-import com.github.t1.bulmajava.basic.Classes;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Anchor;
+import com.github.t1.htmljava.Attributes;
+import com.github.t1.htmljava.Classes;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.Renderable;
 import com.github.t1.bulmajava.elements.Button;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.span;
-import static com.github.t1.bulmajava.basic.Renderable.ConcatenatedRenderable.concat;
-import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.span;
+import static com.github.t1.htmljava.Renderable.ConcatenatedRenderable.concat;
+import static com.github.t1.htmljava.Size.SMALL;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Dropdown extends AbstractElement<Dropdown> {

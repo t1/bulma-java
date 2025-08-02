@@ -1,7 +1,7 @@
 package test.elements;
 
-import com.github.t1.bulmajava.basic.FontSize;
-import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.htmljava.FontSize;
+import com.github.t1.htmljava.Size;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,12 +12,17 @@ import test.RenderTestExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.p;
+import static com.github.t1.htmljava.Basic.span;
+import static com.github.t1.htmljava.Basic.strong;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.elements.Block.blockP;
 import static com.github.t1.bulmajava.elements.Content.content_;
-import static com.github.t1.bulmajava.elements.Icon.*;
+import static com.github.t1.bulmajava.elements.Icon.icon;
+import static com.github.t1.bulmajava.elements.Icon.iconStack;
+import static com.github.t1.bulmajava.elements.Icon.iconText;
+import static com.github.t1.bulmajava.elements.Icon.iconTextFlex;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

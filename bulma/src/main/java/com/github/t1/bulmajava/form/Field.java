@@ -1,11 +1,11 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Alignment;
-import com.github.t1.bulmajava.basic.Basic;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.Modifier;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Alignment;
+import com.github.t1.htmljava.Basic;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.Modifier;
+import com.github.t1.htmljava.Renderable;
 import com.github.t1.bulmajava.elements.Icon;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
@@ -13,12 +13,12 @@ import lombok.experimental.SuperBuilder;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
-import static com.github.t1.bulmajava.basic.Alignment.LEFT;
-import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.p;
-import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.htmljava.Alignment.CENTERED;
+import static com.github.t1.htmljava.Alignment.LEFT;
+import static com.github.t1.htmljava.Alignment.RIGHT;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.p;
+import static com.github.t1.htmljava.Size.SMALL;
 
 /**
  * The Bulma docs is not explicit about the <code>field-label</code> and <code>field-body</code> classes,

@@ -1,13 +1,13 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.stream.Stream;
 
-import static com.github.t1.bulmajava.basic.Basic.p;
+import static com.github.t1.htmljava.Basic.p;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Panel extends AbstractElement<Panel> {

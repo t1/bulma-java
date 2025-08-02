@@ -4,25 +4,35 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Color.INFO;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
-import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.br;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.p;
+import static com.github.t1.htmljava.Basic.small;
+import static com.github.t1.htmljava.Basic.strong;
+import static com.github.t1.htmljava.Color.INFO;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Size.SMALL;
 import static com.github.t1.bulmajava.columns.ScreenSize.MOBILE;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Content.content_;
 import static com.github.t1.bulmajava.elements.Delete.delete;
 import static com.github.t1.bulmajava.elements.Icon.icon;
-import static com.github.t1.bulmajava.elements.Image.*;
-import static com.github.t1.bulmajava.elements.ImageSize.*;
+import static com.github.t1.bulmajava.elements.Image.figure;
+import static com.github.t1.bulmajava.elements.Image.imageP;
+import static com.github.t1.bulmajava.elements.Image.img;
+import static com.github.t1.bulmajava.elements.ImageSize._128x128;
+import static com.github.t1.bulmajava.elements.ImageSize._48x48;
+import static com.github.t1.bulmajava.elements.ImageSize._64x64;
 import static com.github.t1.bulmajava.form.Checkbox.checkbox;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Textarea.textarea;
 import static com.github.t1.bulmajava.layout.Level.level;
 import static com.github.t1.bulmajava.layout.Media.media;
 import static test.CustomAssertions.then;
-import static test.RenderTestExtension.*;
+import static test.RenderTestExtension.loremIpsum;
+import static test.RenderTestExtension.loremIpsumS;
+import static test.RenderTestExtension.placeholder;
 
 @ExtendWith(RenderTestExtension.class)
 class MediaTest {

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Basic.h1;
+import static com.github.t1.htmljava.Basic.h1;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

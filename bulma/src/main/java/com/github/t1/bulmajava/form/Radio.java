@@ -1,8 +1,8 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Attributes;
-import com.github.t1.bulmajava.basic.Classes;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Attributes;
+import com.github.t1.htmljava.Classes;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 

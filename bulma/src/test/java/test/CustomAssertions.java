@@ -1,6 +1,6 @@
 package test;
 
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.Renderable;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.BDDAssertions;
 

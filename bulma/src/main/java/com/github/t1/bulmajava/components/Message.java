@@ -1,14 +1,14 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.Renderable;
 import com.github.t1.bulmajava.elements.Delete;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Size.sizes;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Size.sizes;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Message extends AbstractElement<Message> {

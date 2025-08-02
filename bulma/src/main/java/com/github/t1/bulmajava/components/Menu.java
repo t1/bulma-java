@@ -1,13 +1,13 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.Renderable;
 
-import static com.github.t1.bulmajava.basic.Basic.aside;
-import static com.github.t1.bulmajava.basic.Basic.li;
-import static com.github.t1.bulmajava.basic.Basic.p;
-import static com.github.t1.bulmajava.basic.Basic.ul;
+import static com.github.t1.htmljava.Basic.aside;
+import static com.github.t1.htmljava.Basic.li;
+import static com.github.t1.htmljava.Basic.p;
+import static com.github.t1.htmljava.Basic.ul;
 
 public class Menu {
     public static Element menu() {return aside().classes("menu");}

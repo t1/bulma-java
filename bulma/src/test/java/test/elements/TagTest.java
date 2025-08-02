@@ -1,23 +1,36 @@
 package test.elements;
 
-import com.github.t1.bulmajava.basic.Color;
-import com.github.t1.bulmajava.basic.Style;
+import com.github.t1.htmljava.Color;
+import com.github.t1.htmljava.Style;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Color.*;
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Basic.multilineGroup;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Basic.multilineGroup;
+import static com.github.t1.htmljava.Color.DANGER;
+import static com.github.t1.htmljava.Color.INFO;
+import static com.github.t1.htmljava.Color.LINK;
+import static com.github.t1.htmljava.Color.PRIMARY;
+import static com.github.t1.htmljava.Color.SUCCESS;
+import static com.github.t1.htmljava.Color.WARNING;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Size.LARGE;
+import static com.github.t1.htmljava.Size.MEDIUM;
+import static com.github.t1.htmljava.Size.NORMAL;
+import static com.github.t1.htmljava.Size.SMALL;
+import static com.github.t1.htmljava.Style.DARK;
+import static com.github.t1.htmljava.Style.LIGHT;
+import static com.github.t1.htmljava.Style.ROUNDED;
 import static com.github.t1.bulmajava.elements.Block.block;
 import static com.github.t1.bulmajava.elements.Delete.DELETE;
 import static com.github.t1.bulmajava.elements.Delete.delete;
-import static com.github.t1.bulmajava.basic.Size.*;
-import static com.github.t1.bulmajava.basic.Style.*;
-import static com.github.t1.bulmajava.elements.Tag.*;
+import static com.github.t1.bulmajava.elements.Tag.tag;
+import static com.github.t1.bulmajava.elements.Tag.tagA;
+import static com.github.t1.bulmajava.elements.Tag.tags;
+import static com.github.t1.bulmajava.elements.Tag.tagsAddon;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

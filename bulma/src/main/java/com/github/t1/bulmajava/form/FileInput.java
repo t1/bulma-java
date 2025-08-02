@@ -1,17 +1,17 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Attributes;
-import com.github.t1.bulmajava.basic.Classes;
-import com.github.t1.bulmajava.basic.Element;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Attributes;
+import com.github.t1.htmljava.Classes;
+import com.github.t1.htmljava.Element;
 import com.github.t1.bulmajava.elements.Icon;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.function.Function;
 
-import static com.github.t1.bulmajava.basic.Basic.element;
-import static com.github.t1.bulmajava.basic.Basic.span;
+import static com.github.t1.htmljava.Basic.element;
+import static com.github.t1.htmljava.Basic.span;
 import static com.github.t1.bulmajava.form.InputType.FILE;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)

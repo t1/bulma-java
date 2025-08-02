@@ -1,8 +1,8 @@
 package test.helpers;
 
-import com.github.t1.bulmajava.basic.Color;
-import com.github.t1.bulmajava.basic.Modifier;
-import com.github.t1.bulmajava.basic.Style;
+import com.github.t1.htmljava.Color;
+import com.github.t1.htmljava.Modifier;
+import com.github.t1.htmljava.Style;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

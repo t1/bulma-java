@@ -1,13 +1,13 @@
 package test.basic;
 
-import com.github.t1.bulmajava.basic.Renderer;
+import com.github.t1.htmljava.Renderer;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 
-import static com.github.t1.bulmajava.basic.Basic.h1;
-import static com.github.t1.bulmajava.basic.Basic.p;
-import static com.github.t1.bulmajava.basic.Html.html;
+import static com.github.t1.htmljava.Basic.h1;
+import static com.github.t1.htmljava.Basic.p;
+import static com.github.t1.htmljava.Html.html;
 import static test.CustomAssertions.then;
 
 class HtmlTest {

@@ -1,13 +1,15 @@
 package test.elements;
 
-import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.htmljava.Size;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Basic.*;
+import static com.github.t1.htmljava.Basic.h1;
+import static com.github.t1.htmljava.Basic.h2;
+import static com.github.t1.htmljava.Basic.p;
 import static com.github.t1.bulmajava.elements.Content.content_;
 import static test.CustomAssertions.then;
 import static test.RenderTestExtension.loremIpsum;

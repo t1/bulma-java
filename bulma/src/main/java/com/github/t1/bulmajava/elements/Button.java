@@ -1,18 +1,18 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Element;
-import com.github.t1.bulmajava.basic.FontSize;
-import com.github.t1.bulmajava.basic.Modifier;
-import com.github.t1.bulmajava.basic.Renderable;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.FontSize;
+import com.github.t1.htmljava.Modifier;
+import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.function.Function;
 
-import static com.github.t1.bulmajava.basic.Basic.control;
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Basic.control;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static java.util.Locale.ROOT;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)

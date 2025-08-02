@@ -1,17 +1,17 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Attribute;
-import com.github.t1.bulmajava.basic.Attributes;
-import com.github.t1.bulmajava.basic.Classes;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Attribute;
+import com.github.t1.htmljava.Attributes;
+import com.github.t1.htmljava.Classes;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.li;
-import static com.github.t1.bulmajava.basic.Basic.span;
-import static com.github.t1.bulmajava.basic.Basic.ul;
-import static com.github.t1.bulmajava.basic.Renderable.UnsafeString.unsafeString;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.li;
+import static com.github.t1.htmljava.Basic.span;
+import static com.github.t1.htmljava.Basic.ul;
+import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Pagination extends AbstractElement<Pagination> {

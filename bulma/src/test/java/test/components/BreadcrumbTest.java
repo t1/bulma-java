@@ -1,7 +1,7 @@
 package test.components;
 
-import com.github.t1.bulmajava.basic.Alignment;
-import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.htmljava.Alignment;
+import com.github.t1.htmljava.Size;
 import com.github.t1.bulmajava.components.BreadcrumbSeparator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,8 +9,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.span;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.span;
 import static com.github.t1.bulmajava.components.Breadcrumb.breadcrumb;
 import static com.github.t1.bulmajava.elements.Icon.icon;
 import static test.CustomAssertions.then;

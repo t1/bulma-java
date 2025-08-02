@@ -1,14 +1,14 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.bulmajava.basic.AbstractElement;
-import com.github.t1.bulmajava.basic.Anchor;
-import com.github.t1.bulmajava.basic.Element;
+import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.Anchor;
+import com.github.t1.htmljava.Element;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.div;
-import static com.github.t1.bulmajava.basic.Renderable.RenderableString.string;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Tag extends AbstractElement<Tag> {

@@ -1,8 +1,8 @@
-package com.github.t1.bulmajava.basic;
+package com.github.t1.htmljava;
 
 import java.time.temporal.Temporal;
 
-import static com.github.t1.bulmajava.basic.Renderable.UnsafeString.unsafeString;
+import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
 public class Basic {
     public static Element element(String name) {return Element.element_(name);}
