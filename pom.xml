@@ -3,11 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.t1</groupId>
-    <artifactId>bulma-java</artifactId>
+    <artifactId>bulma-java-parent</artifactId>
     <version>1.0a17-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <description>A simple servers-side-html library based on Bulma components</description>
-    <name>bulma-java</name>
+    <name>bulma-java Parent</name>
     <url>https://github.com/t1/bulma-java</url>
+
+    <modules>
+        <module>bulma</module>
+        <module>core</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -67,6 +73,7 @@
         <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.3.1</version>
                 <executions>
@@ -79,6 +86,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.11.2</version>
                 <executions>
@@ -94,6 +102,7 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
@@ -125,6 +134,7 @@
                     <!-- always run source+javadoc => see problems early & source available in local repo -->
                     <plugin>
                         <!-- but don't run gpg everywhere, esp. not in github actions -->
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>3.2.8</version>
                         <executions>
