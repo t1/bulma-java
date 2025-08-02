@@ -1,6 +1,11 @@
 package test.elements;
 
-import com.github.t1.bulmajava.basic.*;
+import com.github.t1.bulmajava.basic.Alignment;
+import com.github.t1.bulmajava.basic.Color;
+import com.github.t1.bulmajava.basic.FontSize;
+import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.bulmajava.basic.State;
+import com.github.t1.bulmajava.basic.Style;
 import com.github.t1.bulmajava.elements.Button;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,15 +14,25 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
-import static com.github.t1.bulmajava.basic.Basic.*;
-import static com.github.t1.bulmajava.basic.Color.*;
+import static com.github.t1.bulmajava.basic.Basic.control;
+import static com.github.t1.bulmajava.basic.Basic.group;
+import static com.github.t1.bulmajava.basic.Basic.span;
+import static com.github.t1.bulmajava.basic.Color.DANGER;
+import static com.github.t1.bulmajava.basic.Color.INFO;
+import static com.github.t1.bulmajava.basic.Color.LINK;
+import static com.github.t1.bulmajava.basic.Color.SUCCESS;
 import static com.github.t1.bulmajava.basic.Size.LARGE;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.SELECTED;
 import static com.github.t1.bulmajava.basic.Style.LIGHT;
 import static com.github.t1.bulmajava.basic.Style.ROUNDED;
-import static com.github.t1.bulmajava.elements.Button.*;
-import static com.github.t1.bulmajava.elements.ButtonType.*;
+import static com.github.t1.bulmajava.elements.Button.button;
+import static com.github.t1.bulmajava.elements.Button.buttons;
+import static com.github.t1.bulmajava.elements.Button.buttonsAddon;
+import static com.github.t1.bulmajava.elements.Button.fieldsAddon;
+import static com.github.t1.bulmajava.elements.ButtonType.BUTTON;
+import static com.github.t1.bulmajava.elements.ButtonType.RESET;
+import static com.github.t1.bulmajava.elements.ButtonType.SUBMIT;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
@@ -210,7 +225,7 @@ class ButtonTest {
                         <span class="icon"><i class="fas fa-print"></i></span>
                     </button>
                 </div>
-                    """);
+                """);
     }
 
     @Test void shouldRenderLargeIconOnlyButton() {

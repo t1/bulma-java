@@ -18,6 +18,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.github.t1.bulmajava.basic.Anchor.a;
+import static com.github.t1.bulmajava.basic.Basic.comment;
 import static com.github.t1.bulmajava.basic.Basic.div;
 import static com.github.t1.bulmajava.basic.Basic.element;
 import static com.github.t1.bulmajava.basic.Basic.h1;
@@ -346,4 +347,10 @@ class ElementTest {
     }
 
     private void foobar(Element element) {element.attr("foo", "bar");}
+
+    @Test void shouldRenderComment() {
+        var h1 = comment("foo");
+
+        then(h1).rendersAs("<!--foo-->");
+    }
 }

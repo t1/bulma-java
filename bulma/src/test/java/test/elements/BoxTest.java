@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
+import static com.github.t1.bulmajava.elements.Box.articleBox;
 import static com.github.t1.bulmajava.elements.Box.box;
 import static test.CustomAssertions.then;
 
@@ -14,6 +15,14 @@ class BoxTest {
 
         then(box).rendersAs("""
                 <div class="box">I am in a box.</div>
+                """);
+    }
+
+    @Test void shouldRenderArticleBox() {
+        var box = articleBox().content("I am in a box.");
+
+        then(box).rendersAs("""
+                <article class="box">I am in a box.</article>
                 """);
     }
 }

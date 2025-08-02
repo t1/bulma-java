@@ -4,7 +4,12 @@ import com.github.t1.bulmajava.basic.Renderable;
 import com.github.t1.bulmajava.basic.Renderer;
 import com.github.t1.bulmajava.elements.ImageSize;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.Extension;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.platform.launcher.LauncherSession;
 import org.junit.platform.launcher.LauncherSessionListener;
 
@@ -77,8 +82,6 @@ public class RenderTestExtension implements Extension, BeforeAllCallback, Before
             ALL.out().out().unsafeAppend("""
                         </div>
                     </section>
-                                        
-                                        
                     """);
     }
 
