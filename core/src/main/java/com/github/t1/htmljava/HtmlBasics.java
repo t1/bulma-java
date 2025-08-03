@@ -4,8 +4,8 @@ import java.time.temporal.Temporal;
 
 import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
-public class Basic {
-    public static Element element(String name) {return Element.element_(name);}
+public class HtmlBasics {
+    public static Element element(String name) {return new Element(name);}
 
     public static Element abbr(String title, String abbr) {
         return element("abbr").attr("title", title).content(abbr);
@@ -23,15 +23,11 @@ public class Basic {
         return renderer -> renderer.unsafeAppend("<!--").safeAppend(content).unsafeAppend("-->");
     }
 
-    public static Element control() {return div().classes("control");}
-
     public static Element div() {return element("div");}
 
     public static Element em(String text) {return element("em").content(text).rendersOnSeparateLines(false);}
 
     public static Element footer() {return element("footer");}
-
-    public static Element group() {return div().classes("field", "is-grouped");}
 
     public static Element h1() {return element("h1");}
 
@@ -65,19 +61,11 @@ public class Basic {
 
     public static Element i(String content) {return i().content(content);}
 
-    public static Element label() {return element("label").classes("label");}
-
-    public static Element label(String text) {return label().content(text);}
-
     public static Element li() {return element("li");}
 
     public static Element li(String text) {return li().content(text);}
 
     public static Element li(Renderable content) {return li().content(content);}
-
-    public static Element multilineGroup() {
-        return group().classes("is-grouped-multiline").map(e -> control().content(e));
-    }
 
     public static Element nav() {return element("nav");}
 
@@ -85,7 +73,7 @@ public class Basic {
 
     public static Element ol() {return element("ol");}
 
-    public static Element ol(ListType type) {return ol().attr("type", type.code());}
+    public static Element ol(Modifier modifier) {return ol().is(modifier);}
 
     public static Element p() {return element("p");}
 

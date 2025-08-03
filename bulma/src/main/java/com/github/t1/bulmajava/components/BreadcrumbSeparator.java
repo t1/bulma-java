@@ -1,10 +1,10 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.htmljava.Modifier;
+import com.github.t1.bulmajava.basic.HasModifier;
 
 /** These are only the alternative separators; i.e., the default <code>/</code> is not in here */
-public enum BreadcrumbSeparator implements Modifier {
+public enum BreadcrumbSeparator implements HasModifier {
     ARROW, BULLET, DOT, SUCCEEDS;
 
-    @Override public String className() {return "has-" + key() + "-separator";}
+    @Override public String key() {return HasModifier.super.key() + "-separator";}
 }

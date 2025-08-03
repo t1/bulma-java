@@ -1,21 +1,21 @@
 package test.form;
 
-import com.github.t1.htmljava.Color;
-import com.github.t1.htmljava.Size;
+import com.github.t1.bulmajava.basic.Color;
+import com.github.t1.bulmajava.basic.Size;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Size.LARGE;
-import static com.github.t1.htmljava.Size.MEDIUM;
-import static com.github.t1.htmljava.Size.NORMAL;
-import static com.github.t1.htmljava.Size.SMALL;
-import static com.github.t1.htmljava.State.FOCUSED;
-import static com.github.t1.htmljava.State.HOVERED;
-import static com.github.t1.htmljava.State.LOADING;
-import static com.github.t1.htmljava.Style.ROUNDED;
+import static com.github.t1.bulmajava.basic.Size.LARGE;
+import static com.github.t1.bulmajava.basic.Size.MEDIUM;
+import static com.github.t1.bulmajava.basic.Size.NORMAL;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.bulmajava.basic.State.FOCUSED;
+import static com.github.t1.bulmajava.basic.State.HOVERED;
+import static com.github.t1.bulmajava.basic.State.LOADING;
+import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Select.select;
 import static test.CustomAssertions.then;

@@ -1,14 +1,16 @@
 package com.github.t1.bulmajava.components;
 
+import com.github.t1.bulmajava.basic.BulmaElement;
+import com.github.t1.bulmajava.elements.MenuActivationType;
 import com.github.t1.htmljava.AbstractElement;
 import com.github.t1.htmljava.Anchor;
 import com.github.t1.htmljava.Attribute;
 import com.github.t1.htmljava.Attributes;
+import com.github.t1.htmljava.ClassModifier;
 import com.github.t1.htmljava.Classes;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Modifier;
 import com.github.t1.htmljava.Renderable;
-import com.github.t1.bulmajava.elements.MenuActivationType;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
@@ -16,11 +18,14 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.span;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.span;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Navbar extends AbstractElement<Navbar> {
+public class Navbar extends BulmaElement<Navbar> {
+    public static final ClassModifier NAVBAR_FIXED_TOP = () -> "has-navbar-fixed-top";
+    public static final ClassModifier NAVBAR_FIXED_BOTTOM = () -> "has-navbar-fixed-bottom";
+
     public static Navbar navbar(String menuId) {return new Navbar(menuId);}
 
     private String menuId;
@@ -101,7 +106,7 @@ public class Navbar extends AbstractElement<Navbar> {
     private Element navbarMenu() {return div().classes("navbar-menu").id(menuId);}
 
     @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-    public static class NavbarDropdown extends AbstractElement<NavbarDropdown> {
+    public static class NavbarDropdown extends BulmaElement<NavbarDropdown> {
         public static NavbarDropdown navbarDropdown(String dropdownName, MenuActivationType activationType) {
             return new NavbarDropdown().is(activationType).content(
                     a(dropdownName).classes("navbar-link"),
@@ -124,8 +129,8 @@ public class Navbar extends AbstractElement<Navbar> {
 
         @Override public NavbarDropdown is(Modifier... modifiers) {
             for (var modifier : modifiers) {
-                if (modifier instanceof MenuActivationType) classes(modifier.className());
-                else findDropdown().orElseThrow().classes(modifier.className());
+                if (modifier instanceof MenuActivationType) modifier.apply(this);
+                else modifier.apply(findDropdown().orElseThrow());
             }
             return this;
         }

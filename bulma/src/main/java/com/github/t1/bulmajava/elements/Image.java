@@ -1,14 +1,14 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.htmljava.Basic;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Modifier;
 
-import static com.github.t1.htmljava.Basic.p;
+import static com.github.t1.htmljava.HtmlBasics.element;
+import static com.github.t1.htmljava.HtmlBasics.p;
 
 public class Image {
     public static Element iframe(String src, Modifier... modifiers) {
-        return Basic.element("iframe").is(modifiers).attr("src", src);
+        return element("iframe").is(modifiers).attr("src", src);
     }
 
     public static Element image(ImageDimension dimension, String src, String alt, Modifier... modifiers) {
@@ -30,7 +30,7 @@ public class Image {
     }
 
     public static Element img(String src, String alt, Modifier... modifiers) {
-        var img = Basic.element("img").close(false)
+        var img = element("img").close(false)
                 .is(modifiers)
                 .attr("src", src);
         if (alt != null) img = img.attr("alt", alt);
@@ -45,5 +45,5 @@ public class Image {
                         .attr("allowfullscreen"));
     }
 
-    public static Element figure() {return Basic.element("figure");}
+    public static Element figure() {return element("figure");}
 }

@@ -1,5 +1,6 @@
 package com.github.t1.bulmajava.layout;
 
+import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.AbstractElement;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Renderable;
@@ -7,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Media extends AbstractElement<Media> {
+public class Media extends BulmaElement<Media> {
     public static Media media() {return new Media();}
 
     public Media() {super("article", "media");}

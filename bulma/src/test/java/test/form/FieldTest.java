@@ -1,7 +1,8 @@
 package test.form;
 
-import com.github.t1.htmljava.Style;
+import com.github.t1.bulmajava.basic.Style;
 import com.github.t1.bulmajava.form.Checkbox;
+import com.github.t1.htmljava.Anchor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
@@ -9,23 +10,18 @@ import test.RenderTestExtension;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.em;
-import static com.github.t1.htmljava.Basic.p;
-import static com.github.t1.htmljava.Color.DANGER;
-import static com.github.t1.htmljava.Color.INFO;
-import static com.github.t1.htmljava.Color.LINK;
-import static com.github.t1.htmljava.Color.PRIMARY;
-import static com.github.t1.htmljava.Color.SUCCESS;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
-import static com.github.t1.htmljava.Size.LARGE;
-import static com.github.t1.htmljava.Size.MEDIUM;
-import static com.github.t1.htmljava.Size.NORMAL;
-import static com.github.t1.htmljava.Size.SMALL;
-import static com.github.t1.htmljava.Style.FULLWIDTH;
-import static com.github.t1.htmljava.Style.LIGHT;
-import static com.github.t1.htmljava.Style.STATIC;
+import static com.github.t1.bulmajava.basic.Color.DANGER;
+import static com.github.t1.bulmajava.basic.Color.INFO;
+import static com.github.t1.bulmajava.basic.Color.LINK;
+import static com.github.t1.bulmajava.basic.Color.PRIMARY;
+import static com.github.t1.bulmajava.basic.Color.SUCCESS;
+import static com.github.t1.bulmajava.basic.Size.LARGE;
+import static com.github.t1.bulmajava.basic.Size.MEDIUM;
+import static com.github.t1.bulmajava.basic.Size.NORMAL;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.bulmajava.basic.Style.FULLWIDTH;
+import static com.github.t1.bulmajava.basic.Style.LIGHT;
+import static com.github.t1.bulmajava.basic.Style.STATIC;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Button.buttons;
 import static com.github.t1.bulmajava.elements.IconSize.LG;
@@ -43,6 +39,11 @@ import static com.github.t1.bulmajava.form.InputType.TEXT;
 import static com.github.t1.bulmajava.form.Radio.radio;
 import static com.github.t1.bulmajava.form.Select.select;
 import static com.github.t1.bulmajava.form.Textarea.textarea;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.em;
+import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
@@ -412,7 +413,7 @@ class FieldTest {
     @Test void shouldRenderFieldWithButtonAddon() {
         var form = div().style("width: 400px;").content(field()
                 .control(input(TEXT).placeholder("Find a repository"))
-                .containsAddonRight(a("Search").button().is(INFO)));
+                .addonRight(a("Search").is(INFO)));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
@@ -421,7 +422,7 @@ class FieldTest {
                             <input class="input" type="text" placeholder="Find a repository">
                         </div>
                         <div class="control">
-                            <a class="button is-info">Search</a>
+                            <a class="is-info button">Search</a>
                         </div>
                     </div>
                 </div>
@@ -431,7 +432,7 @@ class FieldTest {
     @Test void shouldRenderFieldWithStaticButtonAddon() {
         var form = div().style("width: 400px;").content(field()
                 .control(input(TEXT).placeholder("Your email"))
-                .containsAddonRight(a("@gmail.com").button().is(STATIC)));
+                .addonRight(a("@gmail.com").is(STATIC)));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
@@ -440,7 +441,7 @@ class FieldTest {
                             <input class="input" type="text" placeholder="Your email">
                         </div>
                         <div class="control">
-                            <a class="button is-static">@gmail.com</a>
+                            <a class="is-static button">@gmail.com</a>
                         </div>
                     </div>
                 </div>
@@ -450,8 +451,8 @@ class FieldTest {
     @Test void shouldRenderFieldWithLeftAndRightAddon() {
         var form = field()
                 .control(input(TEXT).placeholder("Amount of money"))
-                .containsAddonLeft(select(null).options("$", "£", "€"))
-                .containsAddonRight(a("Transfer").button());
+                .addonLeft(select(null).options("$", "£", "€"))
+                .addonRight(a("Transfer"));
 
         then(form).rendersAs("""
                 <div class="field has-addons">
@@ -477,8 +478,8 @@ class FieldTest {
     @Test void shouldRenderFieldWithExpandedFieldAndLeftAndRightAddon() {
         var form = field()
                 .control(input(TEXT).placeholder("Amount of money"), EXPANDED)
-                .containsAddonLeft(select(null).options(List.of("$", "£", "€")))
-                .containsAddonRight(a("Transfer").button());
+                .addonLeft(select(null).options(List.of("$", "£", "€")))
+                .addonRight(a("Transfer"));
 
         then(form).rendersAs("""
                 <div class="field has-addons">
@@ -560,8 +561,8 @@ class FieldTest {
     @Test void shouldRenderFieldWithFieldAndLeftAndExpandedRightAddon() {
         var form = field()
                 .control(input(TEXT).placeholder("Amount of money"))
-                .containsAddonLeft(select(null).options("$", "£", "€"))
-                .containsAddonRight(input(TEXT).placeholder("Target account"), EXPANDED);
+                .addonLeft(select(null).options("$", "£", "€"))
+                .addonRight(input(TEXT).placeholder("Target account"), EXPANDED);
 
         then(form).rendersAs("""
                 <div class="field has-addons">
@@ -587,8 +588,8 @@ class FieldTest {
     @Test void shouldRenderFieldWithFieldAndExpandedLeftAddonAndRightAddon() {
         var form = field()
                 .control(input(TEXT).placeholder("Amount of money"))
-                .containsAddonLeft(input(TEXT).placeholder("Currency"), EXPANDED)
-                .containsAddonRight(a("Transfer").button());
+                .addonLeft(input(TEXT).placeholder("Currency"), EXPANDED)
+                .addonRight(a("Transfer"));
 
         then(form).rendersAs("""
                 <div class="field has-addons">
@@ -610,7 +611,7 @@ class FieldTest {
                 .control(select("country").is(FULLWIDTH)
                         .options("Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador",
                                 "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"), EXPANDED)
-                .containsAddonRight(button("Choose").submit().is(PRIMARY));
+                .addonRight(button("Choose").submit().is(PRIMARY));
 
         then(form).rendersAs("""
                 <div class="field has-addons">
@@ -642,8 +643,8 @@ class FieldTest {
     @Test void shouldRenderCenteredFieldWithAddons() {
         var form = field().classes("has-addons-centered")
                 .control(input(TEXT).placeholder("Amount of money"))
-                .containsAddonLeft(select("currency").options("$", "£", "€"))
-                .containsAddonRight(a("Transfer").button().is(PRIMARY));
+                .addonLeft(select("currency").options("$", "£", "€"))
+                .addonRight(a("Transfer").is(PRIMARY));
 
         then(form).rendersAs("""
                 <div class="field has-addons-centered has-addons">
@@ -660,7 +661,7 @@ class FieldTest {
                         <input class="input" type="text" placeholder="Amount of money">
                     </div>
                     <div class="control">
-                        <a class="button is-primary">Transfer</a>
+                        <a class="is-primary button">Transfer</a>
                     </div>
                 </div>
                 """);
@@ -669,8 +670,8 @@ class FieldTest {
     @Test void shouldRenderRightFieldWithAddons() {
         var form = field().classes("has-addons-right")
                 .control(input(TEXT).placeholder("Amount of money"))
-                .containsAddonLeft(select("currency").options("$", "£", "€"))
-                .containsAddonRight(a("Transfer").button().is(PRIMARY));
+                .addonLeft(select("currency").options("$", "£", "€"))
+                .addonRight(a("Transfer").is(PRIMARY));
 
         then(form).rendersAs("""
                 <div class="field has-addons-right has-addons">
@@ -687,7 +688,7 @@ class FieldTest {
                         <input class="input" type="text" placeholder="Amount of money">
                     </div>
                     <div class="control">
-                        <a class="button is-primary">Transfer</a>
+                        <a class="is-primary button">Transfer</a>
                     </div>
                 </div>
                 """);
@@ -695,16 +696,16 @@ class FieldTest {
 
     @Test void shouldRenderGroupedFields() {
         var form = field().grouped()
-                .control(a("Submit").button().is(PRIMARY))
-                .control(a("Cancel").button().is(LIGHT));
+                .control(a("Submit").is(PRIMARY))
+                .control(a("Cancel").is(LIGHT));
 
         then(form).rendersAs("""
                 <div class="field is-grouped">
                     <div class="control">
-                        <a class="button is-primary">Submit</a>
+                        <a class="is-primary button">Submit</a>
                     </div>
                     <div class="control">
-                        <a class="button is-light">Cancel</a>
+                        <a class="is-light button">Cancel</a>
                     </div>
                 </div>
                 """);
@@ -712,16 +713,16 @@ class FieldTest {
 
     @Test void shouldRenderGroupedFieldsCentered() {
         var form = field().groupedCentered()
-                .control(a("Submit").button().is(PRIMARY))
-                .control(a("Cancel").button().is(LIGHT));
+                .control(a("Submit").is(PRIMARY))
+                .control(a("Cancel").is(LIGHT));
 
         then(form).rendersAs("""
                 <div class="field is-grouped is-grouped-centered">
                     <div class="control">
-                        <a class="button is-primary">Submit</a>
+                        <a class="is-primary button">Submit</a>
                     </div>
                     <div class="control">
-                        <a class="button is-light">Cancel</a>
+                        <a class="is-light button">Cancel</a>
                     </div>
                 </div>
                 """);
@@ -729,16 +730,16 @@ class FieldTest {
 
     @Test void shouldRenderGroupedFieldsRight() {
         var form = field().groupedRight()
-                .control(a("Submit").button().is(PRIMARY))
-                .control(a("Cancel").button().is(LIGHT));
+                .control(a("Submit").is(PRIMARY))
+                .control(a("Cancel").is(LIGHT));
 
         then(form).rendersAs("""
                 <div class="field is-grouped is-grouped-right">
                     <div class="control">
-                        <a class="button is-primary">Submit</a>
+                        <a class="is-primary button">Submit</a>
                     </div>
                     <div class="control">
-                        <a class="button is-light">Cancel</a>
+                        <a class="is-light button">Cancel</a>
                     </div>
                 </div>
                 """);
@@ -747,7 +748,7 @@ class FieldTest {
     @Test void shouldRenderGroupedFieldsExpanded() {
         var form = field().grouped()
                 .control(input(TEXT).placeholder("Find a repository"), EXPANDED)
-                .control(a("Search").button().is(INFO));
+                .control(a("Search").is(INFO));
 
         then(form).rendersAs("""
                 <div class="field is-grouped">
@@ -755,7 +756,7 @@ class FieldTest {
                         <input class="input" type="text" placeholder="Find a repository">
                     </div>
                     <div class="control">
-                        <a class="button is-info">Search</a>
+                        <a class="is-info button">Search</a>
                     </div>
                 </div>
                 """);
@@ -764,9 +765,9 @@ class FieldTest {
     @Test void shouldRenderGroupedMultilineFieldsExpanded() {
         var form = div().style("width: 400px;").content(
                 field().groupedMultiline()
-                        .control(Stream.of("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
+                        .controls(Stream.of("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
                                         "Nine", "Ten", "Eleven", "Twelve", "Thirteen")
-                                .map(name -> a(name).button())));
+                                .map(Anchor::a)));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
@@ -826,8 +827,8 @@ class FieldTest {
                                 .iconRight("check")),
                 field().horizontal()
                         .control(div().classes("field").is(EXPANDED).content(
-                                field().control(a("+44").button().is(STATIC))
-                                        .containsAddonRight(input(TEL).placeholder("Your phone number"), EXPANDED),
+                                field().control(a("+44").is(STATIC))
+                                        .addonRight(input(TEL).placeholder("Your phone number"), EXPANDED),
                                 p("Do not enter the first zero").classes("help"))),
                 field().horizontal()
                         .label("Department", NORMAL)
@@ -877,7 +878,7 @@ class FieldTest {
                             <div class="field is-expanded">
                                 <div class="field has-addons">
                                     <div class="control">
-                                        <a class="button is-static">+44</a>
+                                        <a class="is-static button">+44</a>
                                     </div>
                                     <div class="control is-expanded">
                                         <input class="input" type="tel" placeholder="Your phone number">

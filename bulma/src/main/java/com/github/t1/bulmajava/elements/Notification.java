@@ -1,11 +1,11 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Notification extends AbstractElement<Notification> {
+public class Notification extends BulmaElement<Notification> {
     public static Notification notification() {return new Notification();}
 
     public Notification() {super("div", "notification");}

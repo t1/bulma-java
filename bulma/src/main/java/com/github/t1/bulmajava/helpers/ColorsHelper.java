@@ -1,9 +1,9 @@
 package com.github.t1.bulmajava.helpers;
 
-import com.github.t1.htmljava.Modifier;
+import com.github.t1.bulmajava.basic.IsModifier;
 
 public class ColorsHelper {
-    public static Modifier light(Modifier color) {return () -> color.key() + "-light";}
+    public static IsModifier light(IsModifier color) {return () -> color.key() + "-light";}
 
-    public static Modifier dark(Modifier color) {return () -> color.key() + "-dark";}
+    public static IsModifier dark(IsModifier color) {return () -> color.key() + "-dark";}
 }

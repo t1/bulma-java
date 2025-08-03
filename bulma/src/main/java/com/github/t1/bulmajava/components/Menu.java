@@ -4,10 +4,10 @@ import com.github.t1.htmljava.AbstractElement;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Renderable;
 
-import static com.github.t1.htmljava.Basic.aside;
-import static com.github.t1.htmljava.Basic.li;
-import static com.github.t1.htmljava.Basic.p;
-import static com.github.t1.htmljava.Basic.ul;
+import static com.github.t1.htmljava.HtmlBasics.aside;
+import static com.github.t1.htmljava.HtmlBasics.li;
+import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.HtmlBasics.ul;
 
 public class Menu {
     public static Element menu() {return aside().classes("menu");}

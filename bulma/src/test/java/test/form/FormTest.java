@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.element;
 import static com.github.t1.bulmajava.form.FileInput.fileInput;
 import static com.github.t1.bulmajava.form.Form.form;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.FILE;
 import static com.github.t1.bulmajava.form.InputType.TEXT;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.element;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

@@ -6,14 +6,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.span;
-import static com.github.t1.htmljava.Color.DANGER;
-import static com.github.t1.htmljava.Color.WARNING;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
-import static com.github.t1.htmljava.Style.SPACED;
+import static com.github.t1.bulmajava.basic.BulmaElement.TextModifier.text;
+import static com.github.t1.bulmajava.basic.Color.DANGER;
+import static com.github.t1.bulmajava.basic.Color.WARNING;
+import static com.github.t1.bulmajava.basic.Style.SPACED;
 import static com.github.t1.bulmajava.elements.Title.subtitle;
 import static com.github.t1.bulmajava.elements.Title.title;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.span;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
@@ -95,7 +96,7 @@ class TitleTest {
 
     @Test void shouldRenderStyledTitle() {
         var div = div().content(
-                title(2, string("Title With"), span("Color").hasText(DANGER)));
+                title(2, string("Title With"), span("Color").has(text(DANGER))));
 
         then(div).rendersAs("""
                 <div>
@@ -109,7 +110,7 @@ class TitleTest {
 
     @Test void shouldRenderStyledSubtitle() {
         var div = div().content(
-                subtitle(2, string("Subtitle With"), span("Color").hasText(WARNING)));
+                subtitle(2, string("Subtitle With"), span("Color").has(text(WARNING))));
 
         then(div).rendersAs("""
                 <div>

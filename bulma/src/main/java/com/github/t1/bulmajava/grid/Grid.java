@@ -1,9 +1,11 @@
 package com.github.t1.bulmajava.grid;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.Renderable;
+import lombok.experimental.SuperBuilder;
 
-public class Grid extends AbstractElement<Grid> {
+@SuperBuilder(toBuilder = true)
+public class Grid extends BulmaElement<Grid> {
     public static Cell cell() {return new Cell();}
 
     public static Grid grid() {return new Grid();}
@@ -24,7 +26,8 @@ public class Grid extends AbstractElement<Grid> {
     public Grid rowGap(int n) {return classes("is-row-gap-" + n);}
 
 
-    public static class FixedGrid extends AbstractElement<FixedGrid> {
+    @SuperBuilder(toBuilder = true)
+    public static class FixedGrid extends BulmaElement<FixedGrid> {
         private FixedGrid(int columns) {
             this();
             classes("has-" + columns + "-cols");
@@ -43,7 +46,8 @@ public class Grid extends AbstractElement<Grid> {
         public FixedGrid autoCount() {return classes("has-auto-count");}
     }
 
-    public static class Cell extends AbstractElement<Cell> {
+    @SuperBuilder(toBuilder = true)
+    public static class Cell extends BulmaElement<Cell> {
         private Cell() {
             super("div", "cell");
         }

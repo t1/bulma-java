@@ -4,16 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.br;
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.p;
-import static com.github.t1.htmljava.Basic.small;
-import static com.github.t1.htmljava.Basic.strong;
-import static com.github.t1.htmljava.Color.INFO;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
-import static com.github.t1.htmljava.Size.SMALL;
+import static com.github.t1.bulmajava.basic.Color.INFO;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.columns.ScreenSize.MOBILE;
+import static com.github.t1.bulmajava.elements.Button.BUTTON;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Content.content_;
 import static com.github.t1.bulmajava.elements.Delete.delete;
@@ -29,6 +23,13 @@ import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Textarea.textarea;
 import static com.github.t1.bulmajava.layout.Level.level;
 import static com.github.t1.bulmajava.layout.Media.media;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.br;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.HtmlBasics.small;
+import static com.github.t1.htmljava.HtmlBasics.strong;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 import static test.RenderTestExtension.loremIpsum;
 import static test.RenderTestExtension.loremIpsumS;
@@ -99,7 +100,7 @@ class MediaTest {
                 .content(
                         field().control(textarea().placeholder("Add a comment...")),
                         level()
-                                .left(a("Submit").button().is(INFO))
+                                .left(a("Submit").is(BUTTON, INFO))
                                 .right(checkbox().content("Press enter to submit"))));
 
         // the img-alt was not in the docs

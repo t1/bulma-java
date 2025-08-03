@@ -1,13 +1,12 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
+import com.github.t1.bulmajava.basic.State;
 import com.github.t1.htmljava.Attributes;
-import com.github.t1.htmljava.Basic;
 import com.github.t1.htmljava.Classes;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Modifier;
 import com.github.t1.htmljava.Renderable;
-import com.github.t1.htmljava.State;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
@@ -16,10 +15,11 @@ import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static com.github.t1.htmljava.State.LOADING;
+import static com.github.t1.bulmajava.basic.State.LOADING;
+import static com.github.t1.htmljava.HtmlBasics.element;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Select extends AbstractElement<Select> {
+public class Select extends BulmaElement<Select> {
 
     private static final Function<Select, Element> CONTENT_ELEMENT = select -> select.contentAs(Element.class);
 
@@ -34,7 +34,7 @@ public class Select extends AbstractElement<Select> {
     }
 
     private static Element selectElement(String name) {
-        var select = Basic.element("select");
+        var select = element("select");
         if (name != null) select = select.attr("name", name);
         return select;
     }
@@ -52,7 +52,7 @@ public class Select extends AbstractElement<Select> {
     public Select option(String text) {return option(text, text);}
 
     public Select option(String value, String text) {
-        var option = Basic.element("option");
+        var option = element("option");
         if (value != null) option = option.attr("value", value);
         contentAs(Element.class).content(option.content(text));
         return this;
@@ -101,11 +101,11 @@ public class Select extends AbstractElement<Select> {
     }
 
     @Override public Select is(Modifier... modifiers) {
-        for (var modifier : modifiers)
-            if (modifier instanceof State && modifier != LOADING) withS(i -> i.is(modifier));
-            else classes(modifier.className());
+        for (var modifier : modifiers) {
+            if (modifier instanceof State && modifier != LOADING)
+                contentAs(Element.class).is(modifier);
+            else super.is(modifier);
+        }
         return this;
     }
-
-    private void withS(Function<Element, Element> function) {function.apply(contentAs(Element.class));}
 }

@@ -1,14 +1,14 @@
 package com.github.t1.bulmajava.components;
 
+import com.github.t1.bulmajava.elements.Button;
 import com.github.t1.htmljava.AbstractElement;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Renderable;
-import com.github.t1.bulmajava.elements.Button;
 
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.p;
-import static com.github.t1.htmljava.Size.LARGE;
+import static com.github.t1.bulmajava.basic.Size.LARGE;
 import static com.github.t1.bulmajava.elements.Button.button;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.p;
 
 public class Modal {
     public static Element modal() {

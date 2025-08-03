@@ -3,7 +3,7 @@ package com.github.t1.htmljava;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.htmljava.Basic.element;
+import static com.github.t1.htmljava.HtmlBasics.element;
 import static com.github.t1.htmljava.Renderable.Indented.indented;
 import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
@@ -21,9 +21,4 @@ public class Body extends AbstractElement<Body> {
     public static Body body() {return new Body();}
 
     public Body() {super("body");}
-
-
-    public Body hasNavbarFixedTop() {return classes("has-navbar-fixed-top");}
-
-    public Body hasNavbarFixedBottom() {return classes("has-navbar-fixed-bottom");}
 }

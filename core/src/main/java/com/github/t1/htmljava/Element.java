@@ -6,11 +6,5 @@ import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Element extends AbstractElement<Element> {
-    /**
-     * The method name <code>element</code> clashes with the super method;
-     * you can use {@link Basic#element(String)} ()}
-     */
-    public static Element element_(String name) {return new Element(name);}
-
-    private Element(@NonNull String name) {super(name);}
+    Element(@NonNull String name) {super(name);}
 }

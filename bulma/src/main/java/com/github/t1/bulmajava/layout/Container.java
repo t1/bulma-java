@@ -1,11 +1,11 @@
 package com.github.t1.bulmajava.layout;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Container extends AbstractElement<Container> {
+public class Container extends BulmaElement<Container> {
     public static Container container() {return new Container();}
 
     public Container() {super("div", "container");}

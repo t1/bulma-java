@@ -7,6 +7,7 @@ import java.net.URI;
 import java.util.function.Function;
 
 import static com.github.t1.htmljava.Body.scriptSrc;
+import static com.github.t1.htmljava.HtmlBasics.element;
 import static com.github.t1.htmljava.Renderable.Indented.indented;
 import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
@@ -22,11 +23,11 @@ public class Html extends AbstractElement<Html> {
 
     protected Html(String title) {
         super("html", Attributes.of(Attribute.of("lang", "en")),
-                Basic.element("head").content(
+                element("head").content(
                         meta_("charset", "utf-8"),
                         meta_("http-equiv", "X-UA-Compatible", "IE=edge"),
                         meta_name("viewport", "width=device-width, initial-scale=1"),
-                        (title == null) ? null : Basic.element("title").content(title)));
+                        (title == null) ? null : element("title").content(title)));
     }
 
 
@@ -39,7 +40,7 @@ public class Html extends AbstractElement<Html> {
     }
 
     private static Element meta_(String name, String value) {
-        return Basic.element("meta").close(false).attr(name, value);
+        return element("meta").close(false).attr(name, value);
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -56,19 +57,19 @@ public class Html extends AbstractElement<Html> {
         return meta_(name1, value1).attr(name2, value2);
     }
 
-    public Html title(String title) {return head(Basic.element("title").content(title));}
+    public Html title(String title) {return head(element("title").content(title));}
 
     public Html stylesheet(URI href) {return stylesheet(href.toString());}
 
     public Html stylesheet(String href) {
-        return head(Basic.element("link").attr("rel", "stylesheet").close(false).attr("href", href));
+        return head(element("link").attr("rel", "stylesheet").close(false).attr("href", href));
     }
 
     /// Add a `style` element to the `head` containing that CSS, indented to the current level.
     ///
     /// Note that the style is _unsafe_!
     public Html styleElement(String style) {
-        return head(Basic.element("style").content(indented(unsafeString(style))));
+        return head(element("style").content(indented(unsafeString(style))));
     }
 
     public Html script(URI src) {return script(src.toString());}
@@ -96,7 +97,7 @@ public class Html extends AbstractElement<Html> {
     public Html head(Renderable content) {return head((AbstractElement<?> e) -> e.content(content));}
 
     public Html head(Function<AbstractElement<?>, AbstractElement<?>> function) {
-        return content(e -> e.hasName("head"), function, () -> Basic.element("head"));
+        return content(e -> e.hasName("head"), function, () -> element("head"));
     }
 
     @Override

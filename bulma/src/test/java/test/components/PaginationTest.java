@@ -1,6 +1,6 @@
 package test.components;
 
-import com.github.t1.htmljava.Modifier;
+import com.github.t1.bulmajava.basic.IsModifier;
 import com.github.t1.bulmajava.components.Pagination;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -8,14 +8,14 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Alignment.CENTERED;
-import static com.github.t1.htmljava.Alignment.RIGHT;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
-import static com.github.t1.htmljava.Size.LARGE;
-import static com.github.t1.htmljava.Size.MEDIUM;
-import static com.github.t1.htmljava.Size.SMALL;
-import static com.github.t1.htmljava.Style.ROUNDED;
+import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
+import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
+import static com.github.t1.bulmajava.basic.Size.LARGE;
+import static com.github.t1.bulmajava.basic.Size.MEDIUM;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static com.github.t1.bulmajava.components.Pagination.pagination;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static org.assertj.core.api.Assertions.catchException;
 import static org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import static test.CustomAssertions.then;
@@ -547,7 +547,7 @@ class PaginationTest {
                 .pages();
     }
 
-    private static String styledPagination(Modifier modifier) {
+    private static String styledPagination(IsModifier modifier) {
         return """
                 <nav class="pagination $style" role="navigation" aria-label="pagination">
                     <a class="pagination-previous">Previous</a>

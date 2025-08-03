@@ -4,11 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
+import static com.github.t1.bulmajava.basic.State.ACTIVE;
+import static com.github.t1.bulmajava.components.Menu.menu;
+import static com.github.t1.bulmajava.components.Menu.menuLabel;
+import static com.github.t1.bulmajava.components.Menu.menuList;
 import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.li;
-import static com.github.t1.htmljava.Basic.ul;
-import static com.github.t1.bulmajava.components.Menu.*;
-import static com.github.t1.htmljava.State.ACTIVE;
+import static com.github.t1.htmljava.HtmlBasics.li;
+import static com.github.t1.htmljava.HtmlBasics.ul;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

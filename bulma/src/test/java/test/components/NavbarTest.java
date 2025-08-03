@@ -1,24 +1,20 @@
 package test.components;
 
-import com.github.t1.htmljava.Anchor;
-import com.github.t1.htmljava.Color;
-import com.github.t1.htmljava.Renderable;
+import com.github.t1.bulmajava.basic.Color;
 import com.github.t1.bulmajava.elements.Title;
+import com.github.t1.htmljava.Anchor;
+import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.Renderable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Alignment.RIGHT;
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.control;
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.hr;
-import static com.github.t1.htmljava.Basic.strong;
-import static com.github.t1.htmljava.Color.PRIMARY;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
-import static com.github.t1.htmljava.Style.LIGHT;
+import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
+import static com.github.t1.bulmajava.basic.BulmaElement.control;
+import static com.github.t1.bulmajava.basic.Color.PRIMARY;
+import static com.github.t1.bulmajava.basic.Style.LIGHT;
 import static com.github.t1.bulmajava.components.Navbar.NavbarDropdown.navbarDropdown;
 import static com.github.t1.bulmajava.components.Navbar.navbar;
 import static com.github.t1.bulmajava.elements.Button.buttons;
@@ -26,12 +22,18 @@ import static com.github.t1.bulmajava.elements.Image.img;
 import static com.github.t1.bulmajava.elements.MenuActivationType.ACTIVE;
 import static com.github.t1.bulmajava.elements.MenuActivationType.HOVERABLE;
 import static com.github.t1.bulmajava.layout.Section.section;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.hr;
+import static com.github.t1.htmljava.HtmlBasics.strong;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class NavbarTest {
     @Test void shouldRenderNavbar() {
-        var nav = control().content(navbar("navbarBasicExample")
+        var nav = navbarContainer().content(
+                navbar("navbarBasicExample")
                         .brand(bulmaLogo())
                         .burger()
                         .start(
@@ -46,8 +48,7 @@ class NavbarTest {
                         .end(div().content(
                                 buttons().content(
                                         a().content(strong("Sign up")).classes("button").is(PRIMARY),
-                                        a("Log in").classes("button").is(LIGHT)))))
-                .style("margin-bottom: 200px;");
+                                        a("Log in").classes("button").is(LIGHT)))));
 
         then(nav).rendersAs("""
                 <div class="control" style="margin-bottom: 200px;">
@@ -91,8 +92,11 @@ class NavbarTest {
                 """);
     }
 
+    private static Element navbarContainer() {return control().style("margin-bottom: 200px;");}
+
     @Test void shouldRenderNavbarWithMenuRight() {
-        var nav = control().content(navbar("navbarMenuRightExample")
+        var nav = navbarContainer().content(
+                navbar("navbarMenuRightExample")
                         .brand(bulmaLogo())
                         .burger()
                         .start(
@@ -108,8 +112,7 @@ class NavbarTest {
                                         a("Jobs"),
                                         a("Contact"),
                                         hr(),
-                                        a("Report an issue"))))
-                .style("margin-bottom: 200px;");
+                                        a("Report an issue"))));
 
         then(nav).rendersAs("""
                 <div class="control" style="margin-bottom: 200px;">
@@ -154,7 +157,8 @@ class NavbarTest {
     }
 
     @Test void shouldRenderNavbarNoLeftButMenuRight() {
-        var nav = control().content(navbar("navbarMenuNoLeftButRightExample")
+        var nav = navbarContainer().content(
+                navbar("navbarMenuNoLeftButRightExample")
                         .brand(bulmaLogo())
                         .burger()
                         .end(
@@ -165,8 +169,7 @@ class NavbarTest {
                                         a("Jobs"),
                                         a("Contact"),
                                         hr(),
-                                        a("Report an issue"))))
-                .style("margin-bottom: 200px;");
+                                        a("Report an issue"))));
 
         then(nav).rendersAs("""
                 <div class="control" style="margin-bottom: 200px;">
@@ -354,17 +357,16 @@ class NavbarTest {
     }
 
     @Test void shouldRenderDropupNavbar() {
-        var div = control().content(
-                        section().classes("hero").is(PRIMARY).content(
-                                div().classes("hero-body").content(
-                                        Title.titleP("Docs"),
-                                        Title.subtitleP("Everything you need to ").content(
-                                                strong("create a website"),
-                                                string(" with Bulma")))),
-                        navbar("navbarDropupMenu").start(
-                                navbarDropdown("Dropup", ACTIVE).content(
-                                        menu()).classes("has-dropdown-up")))
-                .style("width: 400px");
+        var div = control().style("width: 400px").content(
+                section().classes("hero").is(PRIMARY).content(
+                        div().classes("hero-body").content(
+                                Title.titleP("Docs"),
+                                Title.subtitleP("Everything you need to ").content(
+                                        strong("create a website"),
+                                        string(" with Bulma")))),
+                navbar("navbarDropupMenu").start(
+                        navbarDropdown("Dropup", ACTIVE).content(
+                                menu()).classes("has-dropdown-up")));
 
         then(div).rendersAs("""
                 <div class="control" style="width: 400px">
@@ -395,12 +397,11 @@ class NavbarTest {
     }
 
     @Test void shouldRenderArrowlessDropdownNavbar() {
-        var navbar = control().content(
-                        navbar("arrowlessNavbarDropupMenu")
-                                .start(
-                                        navbarDropdown("Link without arrow", HOVERABLE).arrowless()
-                                                .content(menu())))
-                .style("margin-bottom: 200px;");
+        var navbar = navbarContainer().content(
+                navbar("arrowlessNavbarDropupMenu")
+                        .start(
+                                navbarDropdown("Link without arrow", HOVERABLE).arrowless()
+                                        .content(menu())));
 
         then(navbar).rendersAs("""
                 <div class="control" style="margin-bottom: 200px;">

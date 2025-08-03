@@ -1,11 +1,11 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Textarea extends AbstractElement<Textarea> {
+public class Textarea extends BulmaElement<Textarea> {
     public static Textarea textarea() {return new Textarea();}
 
 

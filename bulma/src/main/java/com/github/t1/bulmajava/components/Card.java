@@ -1,17 +1,18 @@
 package com.github.t1.bulmajava.components;
 
+import com.github.t1.bulmajava.basic.BulmaElement;
+import com.github.t1.bulmajava.elements.Button;
 import com.github.t1.htmljava.AbstractElement;
-import com.github.t1.htmljava.Basic;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Renderable;
-import com.github.t1.bulmajava.elements.Button;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.element;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Card extends AbstractElement<Card> {
+public class Card extends BulmaElement<Card> {
     public static Card card() {return new Card();}
 
     private Card() {super("div", "card");}
@@ -19,7 +20,7 @@ public class Card extends AbstractElement<Card> {
     public static Element cardContent() {return div().classes("card-content");}
 
     public static Element cardFooter() {
-        return Basic.element("footer").classes("card-footer").map(Card::footerElement);
+        return element("footer").classes("card-footer").map(Card::footerElement);
     }
 
     private static Renderable footerElement(Renderable renderable) {
@@ -28,7 +29,7 @@ public class Card extends AbstractElement<Card> {
     }
 
     public static Element cardHeader() {
-        return Basic.element("header").classes("card-header").map(Card::headerElement);
+        return element("header").classes("card-header").map(Card::headerElement);
     }
 
     private static Renderable headerElement(Renderable renderable) {

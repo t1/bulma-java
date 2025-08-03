@@ -1,8 +1,8 @@
 package test;
 
+import com.github.t1.bulmajava.elements.ImageSize;
 import com.github.t1.htmljava.Renderable;
 import com.github.t1.htmljava.Renderer;
-import com.github.t1.bulmajava.elements.ImageSize;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
@@ -17,12 +17,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static com.github.t1.htmljava.Basic.hr;
-import static com.github.t1.htmljava.Html.html;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.elements.Title.title;
 import static com.github.t1.bulmajava.layout.Container.container;
 import static com.github.t1.bulmajava.layout.Section.section;
+import static com.github.t1.htmljava.Html.html;
+import static com.github.t1.htmljava.HtmlBasics.hr;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 public class RenderTestExtension implements Extension, BeforeAllCallback, BeforeEachCallback, AfterEachCallback, AfterAllCallback, LauncherSessionListener {
     @SuppressWarnings("HtmlUnknownTarget")

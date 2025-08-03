@@ -1,6 +1,6 @@
 package com.github.t1.bulmajava.layout;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.Anchor;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Renderable;
@@ -10,10 +10,10 @@ import lombok.experimental.SuperBuilder;
 import java.util.stream.Stream;
 
 import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.HtmlBasics.div;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Level extends AbstractElement<Level> {
+public class Level extends BulmaElement<Level> {
     public static Level level() {return new Level();}
 
     public Level() {super("nav", "level");}

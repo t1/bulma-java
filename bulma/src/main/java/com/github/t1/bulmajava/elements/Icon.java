@@ -1,25 +1,27 @@
 package com.github.t1.bulmajava.elements;
 
+import com.github.t1.bulmajava.basic.BulmaElement;
+import com.github.t1.bulmajava.basic.Color;
+import com.github.t1.bulmajava.basic.FontSize;
+import com.github.t1.bulmajava.basic.Size;
 import com.github.t1.htmljava.AbstractElement;
-import com.github.t1.htmljava.Color;
 import com.github.t1.htmljava.Element;
-import com.github.t1.htmljava.FontSize;
 import com.github.t1.htmljava.Modifier;
-import com.github.t1.htmljava.Size;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.function.Function;
 
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.i;
-import static com.github.t1.htmljava.Basic.span;
-import static com.github.t1.htmljava.Size.LARGE;
-import static com.github.t1.htmljava.Size.SMALL;
+import static com.github.t1.bulmajava.basic.BulmaElement.TextModifier.text;
+import static com.github.t1.bulmajava.basic.Size.LARGE;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.elements.IconStyle.SOLID;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.i;
+import static com.github.t1.htmljava.HtmlBasics.span;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Icon extends AbstractElement<Icon> {
+public class Icon extends BulmaElement<Icon> {
     public static Icon icon(String name, String... classes) {return icon(name, (FontSize) null, classes);}
 
     public static Icon icon(String name, IconStyle style, String... classes) {
@@ -60,9 +62,10 @@ public class Icon extends AbstractElement<Icon> {
     @Override public Icon is(Modifier... modifiers) {
         for (var modifier : modifiers)
             if (modifier instanceof IconSize) withI(i -> i.is(modifier));
-            else if (modifier instanceof Color) withI(i -> i.hasText(modifier));
-            else if (modifier instanceof Size) notClasses(SMALL.className()).classes(modifier.className());
-            else classes(modifier.className());
+            else if (modifier instanceof Color c) withI(i -> i.has(text(c)));
+            else if (modifier instanceof Size s) {
+                not(SMALL); super.is(s);
+            } else modifier.apply(this);
         return this;
     }
 

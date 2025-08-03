@@ -8,12 +8,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Style.ROUNDED;
+import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static com.github.t1.bulmajava.elements.Image.image;
 import static com.github.t1.bulmajava.elements.Image.movie;
 import static com.github.t1.bulmajava.elements.ImageRatio._16by9;
 import static com.github.t1.bulmajava.elements.ImageSize._128x128;
+import static com.github.t1.htmljava.HtmlBasics.div;
 import static test.CustomAssertions.then;
 import static test.RenderTestExtension.placeholder;
 

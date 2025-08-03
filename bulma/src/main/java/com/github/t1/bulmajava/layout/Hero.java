@@ -1,6 +1,6 @@
 package com.github.t1.bulmajava.layout;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.Attributes;
 import com.github.t1.htmljava.Classes;
 import com.github.t1.htmljava.Renderable;
@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import java.util.stream.Stream;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Hero extends AbstractElement<Hero> {
+public class Hero extends BulmaElement<Hero> {
     public static Hero hero() {return new Hero();}
 
     public Hero() {super("section", Attributes.of(Classes.of("hero")));}

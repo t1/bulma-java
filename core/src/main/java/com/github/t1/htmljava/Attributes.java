@@ -29,6 +29,8 @@ public class Attributes implements Renderable {
         return attributes.stream().filter(predicate).findFirst().map(Renderable.class::cast);
     }
 
+    public boolean hasAttribute(String key) {return findAttribute(attribute -> attribute.key().equals(key)).isPresent();}
+
     public boolean hasAttribute(String key, String value) {return hasAttribute(Attribute.of(key, value));}
 
     public boolean hasAttribute(Attribute attribute) {return hasAttribute(attribute::matches);}
@@ -56,6 +58,8 @@ public class Attributes implements Renderable {
         this.attributes.sort(Attribute.COMPARATOR);
         return this;
     }
+
+    public void remove(String key) {remove(Attribute.of(key));}
 
     public void remove(Attribute attribute) {replace(attribute, null);}
 

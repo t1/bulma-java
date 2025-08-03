@@ -1,23 +1,23 @@
 package test.components;
 
-import com.github.t1.htmljava.Size;
+import com.github.t1.bulmajava.basic.Size;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Alignment.CENTERED;
-import static com.github.t1.htmljava.Alignment.RIGHT;
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.li;
-import static com.github.t1.htmljava.Basic.span;
-import static com.github.t1.htmljava.Size.SMALL;
-import static com.github.t1.htmljava.State.ACTIVE;
-import static com.github.t1.htmljava.Style.FULLWIDTH;
+import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
+import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.bulmajava.basic.State.ACTIVE;
+import static com.github.t1.bulmajava.basic.Style.FULLWIDTH;
 import static com.github.t1.bulmajava.components.Tabs.tabs;
 import static com.github.t1.bulmajava.elements.Icon.icon;
 import static com.github.t1.bulmajava.elements.IconStyle.REGULAR;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.li;
+import static com.github.t1.htmljava.HtmlBasics.span;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

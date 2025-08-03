@@ -1,22 +1,22 @@
 package test.components;
 
-import com.github.t1.htmljava.Color;
+import com.github.t1.bulmajava.basic.Color;
+import com.github.t1.bulmajava.basic.Size;
 import com.github.t1.htmljava.Renderable;
-import com.github.t1.htmljava.Size;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.em;
-import static com.github.t1.htmljava.Basic.p;
-import static com.github.t1.htmljava.Basic.strong;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
-import static com.github.t1.htmljava.Style.DARK;
+import static com.github.t1.bulmajava.basic.Style.DARK;
 import static com.github.t1.bulmajava.components.Message.message;
 import static com.github.t1.bulmajava.components.Message.messageBody;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.em;
+import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.HtmlBasics.strong;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

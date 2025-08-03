@@ -1,8 +1,9 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
+import com.github.t1.bulmajava.basic.FontSize;
+import com.github.t1.htmljava.ClassModifier;
 import com.github.t1.htmljava.Element;
-import com.github.t1.htmljava.FontSize;
 import com.github.t1.htmljava.Modifier;
 import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
@@ -10,13 +11,15 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.function.Function;
 
-import static com.github.t1.htmljava.Basic.control;
-import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static java.util.Locale.ROOT;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Button extends AbstractElement<Button> {
+public class Button extends BulmaElement<Button> {
+    /// Use this to turn, e.g., an {@link com.github.t1.htmljava.Anchor Anchor} into a button
+    public static final ClassModifier BUTTON = () -> "button";
+
     public static Element buttons() {return div().classes("buttons");}
 
     public static Element fieldsAddon() {return div().classes("field", "has-addons").map(Button::inControl);}
@@ -37,7 +40,7 @@ public class Button extends AbstractElement<Button> {
     private Button() {super("button", "button");}
 
 
-    public Button responsive() {return is(() -> "responsive");}
+    public Button responsive() {return is(RESPONSIVE);}
 
     public Button submit() {return attr("type", "submit");}
 

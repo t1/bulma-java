@@ -5,13 +5,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import test.NoSectionWrapper;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Basic.strong;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
-import static com.github.t1.htmljava.Size.LARGE;
-import static com.github.t1.htmljava.Size.MEDIUM;
+import static com.github.t1.bulmajava.basic.Size.LARGE;
+import static com.github.t1.bulmajava.basic.Size.MEDIUM;
 import static com.github.t1.bulmajava.elements.Title.subtitle;
 import static com.github.t1.bulmajava.elements.Title.title;
 import static com.github.t1.bulmajava.layout.Section.section;
+import static com.github.t1.htmljava.HtmlBasics.strong;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

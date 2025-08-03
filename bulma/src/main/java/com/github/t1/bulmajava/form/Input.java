@@ -1,6 +1,6 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.Attribute;
 import com.github.t1.htmljava.Attributes;
 import com.github.t1.htmljava.Classes;
@@ -14,7 +14,7 @@ import static com.github.t1.bulmajava.form.InputType.SUBMIT;
 import static java.time.format.DateTimeFormatter.ISO_DATE;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Input extends AbstractElement<Input> {
+public class Input extends BulmaElement<Input> {
     public static Input submit(String value) {return inputButton(SUBMIT, value);}
 
     public static Input reset(String value) {return inputButton(RESET, value);}

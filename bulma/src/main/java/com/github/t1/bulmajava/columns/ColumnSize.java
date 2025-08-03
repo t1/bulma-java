@@ -1,8 +1,8 @@
 package com.github.t1.bulmajava.columns;
 
-import com.github.t1.htmljava.Modifier;
+import com.github.t1.bulmajava.basic.IsModifier;
 
-public enum ColumnSize implements Modifier {
+public enum ColumnSize implements IsModifier {
     FULL,
     FOUR_FIFTHS,
     THREE_QUARTERS,

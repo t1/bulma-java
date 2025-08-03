@@ -1,6 +1,6 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.Attributes;
 import com.github.t1.htmljava.Classes;
 import lombok.EqualsAndHashCode;
@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 import static com.github.t1.bulmajava.form.InputType.CHECKBOX;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Checkbox extends AbstractElement<Checkbox> {
+public class Checkbox extends BulmaElement<Checkbox> {
     public static Checkbox checkbox() {return new Checkbox();}
 
     private Checkbox() {

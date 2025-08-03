@@ -1,6 +1,6 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.htmljava.Modifier;
+import com.github.t1.htmljava.ClassModifier;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE) @Getter @Accessors(fluent = true)
-public enum IconSize implements Modifier {
+public enum IconSize implements ClassModifier {
     XXS("2xs"), XS("xs"), SM("sm"),
     N(null) {
         @Override public String className() {return null;}

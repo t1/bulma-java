@@ -1,11 +1,11 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Form extends AbstractElement<Form> {
+public class Form extends BulmaElement<Form> {
     public static Form form() {return new Form();}
 
     private Form() {super("form");}

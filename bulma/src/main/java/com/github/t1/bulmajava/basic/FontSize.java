@@ -1,4 +1,4 @@
-package com.github.t1.htmljava;
+package com.github.t1.bulmajava.basic;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

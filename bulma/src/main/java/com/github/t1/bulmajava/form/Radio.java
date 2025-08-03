@@ -1,6 +1,6 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.Attributes;
 import com.github.t1.htmljava.Classes;
 import lombok.EqualsAndHashCode;
@@ -10,7 +10,7 @@ import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.RADIO;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Radio extends AbstractElement<Radio> {
+public class Radio extends BulmaElement<Radio> {
     /**
      * It generally makes sense to give the radio a name; if you really don't want it, pass <code>null</code>.
      */

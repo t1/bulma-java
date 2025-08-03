@@ -4,19 +4,19 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Alignment.LEFT;
-import static com.github.t1.htmljava.Alignment.RIGHT;
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.code;
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.hr;
-import static com.github.t1.htmljava.Basic.p;
-import static com.github.t1.htmljava.Basic.strong;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
-import static com.github.t1.htmljava.State.ACTIVE;
+import static com.github.t1.bulmajava.basic.Alignment.LEFT;
+import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
+import static com.github.t1.bulmajava.basic.State.ACTIVE;
 import static com.github.t1.bulmajava.components.Dropdown.dropdown;
 import static com.github.t1.bulmajava.components.Dropdown.dropup;
 import static com.github.t1.bulmajava.elements.TableStyle.HOVERABLE;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.code;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.hr;
+import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.HtmlBasics.strong;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

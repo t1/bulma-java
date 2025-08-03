@@ -1,6 +1,6 @@
 package test.layout;
 
-import com.github.t1.htmljava.Color;
+import com.github.t1.bulmajava.basic.Color;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,20 +8,17 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.NoSectionWrapper;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.li;
-import static com.github.t1.htmljava.Basic.span;
-import static com.github.t1.htmljava.Color.DANGER;
-import static com.github.t1.htmljava.Color.INFO;
-import static com.github.t1.htmljava.Color.LINK;
-import static com.github.t1.htmljava.Color.PRIMARY;
-import static com.github.t1.htmljava.Color.SUCCESS;
-import static com.github.t1.htmljava.Style.DARK;
-import static com.github.t1.htmljava.Style.FULLWIDTH;
-import static com.github.t1.htmljava.Style.INVERTED;
+import static com.github.t1.bulmajava.basic.Color.DANGER;
+import static com.github.t1.bulmajava.basic.Color.INFO;
+import static com.github.t1.bulmajava.basic.Color.LINK;
+import static com.github.t1.bulmajava.basic.Color.PRIMARY;
+import static com.github.t1.bulmajava.basic.Color.SUCCESS;
+import static com.github.t1.bulmajava.basic.Style.DARK;
+import static com.github.t1.bulmajava.basic.Style.FULLWIDTH;
+import static com.github.t1.bulmajava.basic.Style.INVERTED;
 import static com.github.t1.bulmajava.components.Navbar.navbar;
 import static com.github.t1.bulmajava.components.Tabs.navTabs;
+import static com.github.t1.bulmajava.elements.Button.BUTTON;
 import static com.github.t1.bulmajava.elements.Button.buttons;
 import static com.github.t1.bulmajava.elements.Icon.icon;
 import static com.github.t1.bulmajava.elements.IconStyle.BOLD;
@@ -35,6 +32,10 @@ import static com.github.t1.bulmajava.layout.HeroSize.HALFHEIGHT;
 import static com.github.t1.bulmajava.layout.HeroSize.LARGE;
 import static com.github.t1.bulmajava.layout.HeroSize.MEDIUM;
 import static com.github.t1.bulmajava.layout.HeroSize.SMALL;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.li;
+import static com.github.t1.htmljava.HtmlBasics.span;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
@@ -202,7 +203,7 @@ class HeroTest {
                                 a("Examples"),
                                 a("Documentation"),
                                 div().content(
-                                        a().button().is(PRIMARY, INVERTED).content(icon("github", BOLD), span("Download")))))
+                                        a().is(BUTTON, PRIMARY, INVERTED).content(icon("github", BOLD), span("Download")))))
                 .body(div().classes("container", "has-text-centered").content(
                         titleP("Title"),
                         subtitleP("Subtitle")))
@@ -290,7 +291,7 @@ class HeroTest {
                                 a("Examples"),
                                 a("Documentation"),
                                 div().content(
-                                        a().button().is(INFO, INVERTED).content(icon("github", BOLD), span("Download")))))
+                                        a().is(BUTTON, INFO, INVERTED).content(icon("github", BOLD), span("Download")))))
                 .body(div().classes("container", "has-text-centered").content(
                         titleP("Title"),
                         subtitleP("Subtitle")))
@@ -378,7 +379,7 @@ class HeroTest {
                                 a("Examples"),
                                 a("Documentation"),
                                 div().content(
-                                        a().button().is(SUCCESS, INVERTED).content(icon("github", BOLD), span("Download")))))
+                                        a().is(BUTTON, SUCCESS, INVERTED).content(icon("github", BOLD), span("Download")))))
                 .body(div().classes("container", "has-text-centered").content(
                         titleP("Title"),
                         subtitleP("Subtitle")))

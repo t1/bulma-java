@@ -1,11 +1,11 @@
 package test.elements;
 
-import com.github.t1.htmljava.Alignment;
-import com.github.t1.htmljava.Color;
-import com.github.t1.htmljava.FontSize;
-import com.github.t1.htmljava.Size;
-import com.github.t1.htmljava.State;
-import com.github.t1.htmljava.Style;
+import com.github.t1.bulmajava.basic.Alignment;
+import com.github.t1.bulmajava.basic.Color;
+import com.github.t1.bulmajava.basic.FontSize;
+import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.bulmajava.basic.State;
+import com.github.t1.bulmajava.basic.Style;
 import com.github.t1.bulmajava.elements.Button;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,19 +13,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.control;
-import static com.github.t1.htmljava.Basic.group;
-import static com.github.t1.htmljava.Basic.span;
-import static com.github.t1.htmljava.Color.DANGER;
-import static com.github.t1.htmljava.Color.INFO;
-import static com.github.t1.htmljava.Color.LINK;
-import static com.github.t1.htmljava.Color.SUCCESS;
-import static com.github.t1.htmljava.Size.LARGE;
-import static com.github.t1.htmljava.Size.SMALL;
-import static com.github.t1.htmljava.State.SELECTED;
-import static com.github.t1.htmljava.Style.LIGHT;
-import static com.github.t1.htmljava.Style.ROUNDED;
+import static com.github.t1.bulmajava.basic.Color.DANGER;
+import static com.github.t1.bulmajava.basic.Color.INFO;
+import static com.github.t1.bulmajava.basic.Color.LINK;
+import static com.github.t1.bulmajava.basic.Color.SUCCESS;
+import static com.github.t1.bulmajava.basic.Size.LARGE;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.bulmajava.basic.State.SELECTED;
+import static com.github.t1.bulmajava.basic.Style.LIGHT;
+import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Button.buttons;
 import static com.github.t1.bulmajava.elements.Button.buttonsAddon;
@@ -33,6 +29,9 @@ import static com.github.t1.bulmajava.elements.Button.fieldsAddon;
 import static com.github.t1.bulmajava.elements.ButtonType.BUTTON;
 import static com.github.t1.bulmajava.elements.ButtonType.RESET;
 import static com.github.t1.bulmajava.elements.ButtonType.SUBMIT;
+import static com.github.t1.bulmajava.form.Field.group;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.span;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
@@ -239,10 +238,10 @@ class ButtonTest {
     }
 
     @Test void shouldRenderButtonGroup() {
-        var button = group().content(
-                control().content(button("Save changes").is(LINK)),
-                control().content(button("Cancel")),
-                control().content(button("Delete post").is(DANGER)));
+        var button = group().controls(
+                button("Save changes").is(LINK),
+                button("Cancel"),
+                button("Delete post").is(DANGER));
 
         then(button).rendersAs("""
                 <div class="field is-grouped">

@@ -4,15 +4,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Basic.code;
-import static com.github.t1.htmljava.Basic.em;
-import static com.github.t1.htmljava.Basic.strong;
-import static com.github.t1.htmljava.Color.PRIMARY;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
+import static com.github.t1.bulmajava.basic.Color.PRIMARY;
 import static com.github.t1.bulmajava.columns.ScreenSize.FULLHD;
 import static com.github.t1.bulmajava.columns.ScreenSize.WIDESCREEN;
 import static com.github.t1.bulmajava.elements.Notification.notification;
 import static com.github.t1.bulmajava.layout.Container.container;
+import static com.github.t1.htmljava.HtmlBasics.code;
+import static com.github.t1.htmljava.HtmlBasics.em;
+import static com.github.t1.htmljava.HtmlBasics.strong;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

@@ -1,6 +1,6 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.Attribute;
 import com.github.t1.htmljava.Attributes;
 import com.github.t1.htmljava.Classes;
@@ -8,13 +8,13 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.li;
-import static com.github.t1.htmljava.Basic.span;
-import static com.github.t1.htmljava.Basic.ul;
+import static com.github.t1.htmljava.HtmlBasics.li;
+import static com.github.t1.htmljava.HtmlBasics.span;
+import static com.github.t1.htmljava.HtmlBasics.ul;
 import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Pagination extends AbstractElement<Pagination> {
+public class Pagination extends BulmaElement<Pagination> {
 
     public static Pagination pagination(int min, int current, int max) {return new Pagination(min, current, max);}
 

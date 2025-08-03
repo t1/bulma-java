@@ -1,5 +1,8 @@
 = Bulma Java image:https://maven-badges.herokuapp.com/maven-central/com.github.t1/bulma-java/badge.svg[link=https://search.maven.org/artifact/com.github.t1/bulma-java] image:https://github.com/t1/bulma-java/actions/workflows/maven.yml/badge.svg[link=https://github.com/t1/bulma-java/actions/workflows/maven.yml]
 
+
+NOTE: This has `alpha` status, i.e. new versions can contain breaking changes and the documentation is at most rudimentary. If you want to keep up, your best choice is to look at the tests and see what's changed.
+
 A simple servers-side-html library based on Bulma components.
 
 Everything is fluent and chainable, i.e. no builders, no withers.
@@ -46,4 +49,4 @@ For a little demo based on https://quarkus.io[Quarkus] and https://htmx.org/docs
 
 == Restrictions
 
-Currently, the only icons supported, is https://fontawesome.com[fontawesome].
+Currently, the only icons supported, are https://fontawesome.com[fontawesome].

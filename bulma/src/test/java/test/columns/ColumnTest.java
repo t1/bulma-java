@@ -11,18 +11,14 @@ import test.RenderTestExtension;
 
 import java.util.stream.IntStream;
 
-import static com.github.t1.htmljava.Alignment.CENTERED;
-import static com.github.t1.htmljava.Alignment.RIGHT;
-import static com.github.t1.htmljava.Basic.br;
-import static com.github.t1.htmljava.Basic.code;
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.strong;
-import static com.github.t1.htmljava.Color.DANGER;
-import static com.github.t1.htmljava.Color.INFO;
-import static com.github.t1.htmljava.Color.PRIMARY;
-import static com.github.t1.htmljava.Color.WARNING;
-import static com.github.t1.htmljava.Size.SMALL;
-import static com.github.t1.htmljava.Style.LIGHT;
+import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
+import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
+import static com.github.t1.bulmajava.basic.Color.DANGER;
+import static com.github.t1.bulmajava.basic.Color.INFO;
+import static com.github.t1.bulmajava.basic.Color.PRIMARY;
+import static com.github.t1.bulmajava.basic.Color.WARNING;
+import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.bulmajava.basic.Style.LIGHT;
 import static com.github.t1.bulmajava.columns.Column.column;
 import static com.github.t1.bulmajava.columns.ColumnSize.FULL;
 import static com.github.t1.bulmajava.columns.ColumnSize.HALF;
@@ -40,6 +36,10 @@ import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Notification.notification;
 import static com.github.t1.bulmajava.elements.Title.subtitleP;
 import static com.github.t1.bulmajava.elements.Title.titleP;
+import static com.github.t1.htmljava.HtmlBasics.br;
+import static com.github.t1.htmljava.HtmlBasics.code;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.strong;
 import static org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE;
 import static test.CustomAssertions.then;
 

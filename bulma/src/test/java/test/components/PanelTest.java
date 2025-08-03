@@ -1,6 +1,6 @@
 package test.components;
 
-import com.github.t1.htmljava.Color;
+import com.github.t1.bulmajava.basic.Color;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,24 +9,24 @@ import test.RenderTestExtension;
 
 import java.util.stream.Stream;
 
-import static com.github.t1.htmljava.Alignment.LEFT;
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.element;
-import static com.github.t1.htmljava.Basic.i;
-import static com.github.t1.htmljava.Basic.p;
-import static com.github.t1.htmljava.Basic.span;
-import static com.github.t1.htmljava.Color.LINK;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
-import static com.github.t1.htmljava.State.ACTIVE;
-import static com.github.t1.htmljava.Style.FULLWIDTH;
-import static com.github.t1.htmljava.Style.OUTLINED;
+import static com.github.t1.bulmajava.basic.Alignment.LEFT;
+import static com.github.t1.bulmajava.basic.Color.LINK;
+import static com.github.t1.bulmajava.basic.State.ACTIVE;
+import static com.github.t1.bulmajava.basic.Style.FULLWIDTH;
+import static com.github.t1.bulmajava.basic.Style.OUTLINED;
 import static com.github.t1.bulmajava.components.Panel.panel;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Icon.icon;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.CHECKBOX;
 import static com.github.t1.bulmajava.form.InputType.TEXT;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.element;
+import static com.github.t1.htmljava.HtmlBasics.i;
+import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.HtmlBasics.span;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)

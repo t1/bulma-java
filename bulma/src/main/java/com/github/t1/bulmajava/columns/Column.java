@@ -1,11 +1,11 @@
 package com.github.t1.bulmajava.columns;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Column extends AbstractElement<Column> {
+public class Column extends BulmaElement<Column> {
     public static Column column() {return new Column();}
 
     public static Column column(ColumnSize size) {return column().is(size);}

@@ -1,17 +1,17 @@
 package com.github.t1.bulmajava.components;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
+import com.github.t1.bulmajava.elements.Delete;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Renderable;
-import com.github.t1.bulmajava.elements.Delete;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Size.sizes;
+import static com.github.t1.bulmajava.basic.Size.sizes;
+import static com.github.t1.htmljava.HtmlBasics.div;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Message extends AbstractElement<Message> {
+public class Message extends BulmaElement<Message> {
     public static Message message() {return new Message();}
 
     /// Sometimes, you can't call the #message method, because you have to build the body separately
@@ -28,7 +28,7 @@ public class Message extends AbstractElement<Message> {
     public Message delete() {
         var delete = Delete.delete();
         sizes()
-                .filter(this::has)
+                .filter(this::hasModifier)
                 .findFirst()
                 .ifPresent(delete::is);
         return header(delete);

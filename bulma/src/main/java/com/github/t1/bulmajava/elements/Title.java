@@ -3,11 +3,12 @@ package com.github.t1.bulmajava.elements;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Renderable;
 
-import static com.github.t1.htmljava.Basic.element;
+import static com.github.t1.bulmajava.basic.SizeModifier.size;
+import static com.github.t1.htmljava.HtmlBasics.element;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 public class Title {
-    public static Element subtitle(int level) {return element("h" + level).classes("subtitle").is(level);}
+    public static Element subtitle(int level) {return element("h" + level).classes("subtitle").is(size(level));}
 
     public static Element subtitle(String text) {return subtitle(2, text);}
 
@@ -15,9 +16,9 @@ public class Title {
 
     public static Element subtitle(int level, String text) {return subtitle(level, string(text));}
 
-    public static Element subtitle(int level, Renderable... content) {return subtitle(level).content(content).is(level);}
+    public static Element subtitle(int level, Renderable... content) {return subtitle(level).content(content).is(size(level));}
 
-    public static Element title(int level) {return element("h" + level).classes("title").is(level);}
+    public static Element title(int level) {return element("h" + level).classes("title").is(size(level));}
 
     public static Element title(String text) {return title(1, text);}
 

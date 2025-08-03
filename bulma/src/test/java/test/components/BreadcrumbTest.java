@@ -1,7 +1,7 @@
 package test.components;
 
-import com.github.t1.htmljava.Alignment;
-import com.github.t1.htmljava.Size;
+import com.github.t1.bulmajava.basic.Alignment;
+import com.github.t1.bulmajava.basic.Size;
 import com.github.t1.bulmajava.components.BreadcrumbSeparator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,10 +9,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.span;
 import static com.github.t1.bulmajava.components.Breadcrumb.breadcrumb;
 import static com.github.t1.bulmajava.elements.Icon.icon;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.span;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
@@ -120,7 +120,7 @@ class BreadcrumbTest {
                 .is(separator);
 
         then(nav).rendersAs("""
-                <nav class="breadcrumb has-$separator-separator" aria-label="breadcrumbs">
+                <nav class="breadcrumb has-$separator" aria-label="breadcrumbs">
                     <ul>
                         <li>
                             <a href="#">Bulma</a>

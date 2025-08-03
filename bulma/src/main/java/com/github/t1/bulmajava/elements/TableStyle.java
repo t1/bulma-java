@@ -1,7 +1,7 @@
 package com.github.t1.bulmajava.elements;
 
-import com.github.t1.htmljava.Modifier;
+import com.github.t1.bulmajava.basic.IsModifier;
 
-public enum TableStyle implements Modifier {
+public enum TableStyle implements IsModifier {
     BORDERED, STRIPED, NARROW, HOVERABLE // FULLWIDTH is a generic style
 }

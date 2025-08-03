@@ -1,15 +1,15 @@
 package test.elements;
 
-import com.github.t1.htmljava.Color;
+import com.github.t1.bulmajava.basic.Color;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
+import static com.github.t1.bulmajava.basic.Style.LIGHT;
 import static com.github.t1.bulmajava.elements.Delete.delete;
 import static com.github.t1.bulmajava.elements.Notification.notification;
-import static com.github.t1.htmljava.Style.LIGHT;
 import static test.CustomAssertions.then;
 import static test.RenderTestExtension.loremIpsum;
 import static test.RenderTestExtension.loremIpsumS;

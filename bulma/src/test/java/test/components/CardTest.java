@@ -1,19 +1,13 @@
 package test.components;
 
-import com.github.t1.bulmajava.elements.Title;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
 import java.time.LocalDate;
 
-import static com.github.t1.htmljava.Alignment.CENTERED;
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.br;
-import static com.github.t1.htmljava.Basic.p;
-import static com.github.t1.htmljava.Basic.span;
-import static com.github.t1.htmljava.Basic.time;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
+import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
+import static com.github.t1.bulmajava.basic.SizeModifier.size;
 import static com.github.t1.bulmajava.components.Card.card;
 import static com.github.t1.bulmajava.components.Card.cardContent;
 import static com.github.t1.bulmajava.components.Card.cardFooter;
@@ -24,7 +18,15 @@ import static com.github.t1.bulmajava.elements.Content.content_;
 import static com.github.t1.bulmajava.elements.Image.image;
 import static com.github.t1.bulmajava.elements.ImageRatio._4by3;
 import static com.github.t1.bulmajava.elements.ImageSize._48x48;
+import static com.github.t1.bulmajava.elements.Title.subtitleP;
+import static com.github.t1.bulmajava.elements.Title.titleP;
 import static com.github.t1.bulmajava.layout.Media.media;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.br;
+import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.HtmlBasics.span;
+import static com.github.t1.htmljava.HtmlBasics.time;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 import static test.RenderTestExtension.loremIpsum;
 import static test.RenderTestExtension.loremIpsumS;
@@ -39,8 +41,8 @@ class CardTest {
                         media()
                                 .left(image(_48x48, placeholder("96x96"), "Small image"))
                                 .content(
-                                        Title.titleP("John Smith").is(4),
-                                        Title.subtitleP("@johnsmith").is(6)),
+                                        titleP("John Smith").is(size(4)),
+                                        subtitleP("@johnsmith").is(size(6))),
                         content_().content(
                                 string("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris."),
                                 a("@bulmaio"),
@@ -213,8 +215,8 @@ class CardTest {
     @Test void shouldRenderCardExample2() {
         var card = card().style("width: 260px;")
                 .content(
-                        Title.titleP("“There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors.”"),
-                        Title.subtitleP("Jeff Atwood"))
+                        titleP("“There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors.”"),
+                        subtitleP("Jeff Atwood"))
                 .footer(
                         p().content(
                                 span().content(

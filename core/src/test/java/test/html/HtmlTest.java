@@ -1,21 +1,21 @@
-package test.basic;
+package test.html;
 
 import com.github.t1.htmljava.Renderer;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 
-import static com.github.t1.htmljava.Basic.h1;
-import static com.github.t1.htmljava.Basic.p;
 import static com.github.t1.htmljava.Html.html;
-import static test.CustomAssertions.then;
+import static com.github.t1.htmljava.HtmlBasics.h1;
+import static com.github.t1.htmljava.HtmlBasics.p;
+import static org.assertj.core.api.BDDAssertions.then;
 
+@SuppressWarnings("HtmlUnknownTarget")
 class HtmlTest {
     @Test void shouldRenderHtml() {
         var tag = html(null);
 
-        //noinspection HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -33,7 +33,6 @@ class HtmlTest {
         var tag = html(null);
 
         tag.render(renderer);
-        //noinspection HtmlRequiredTitleElement
         then(renderer.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
@@ -52,7 +51,6 @@ class HtmlTest {
         var tag = html(null);
 
         tag.render(renderer);
-        //noinspection HtmlRequiredTitleElement
         then(renderer.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
@@ -68,8 +66,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithStylesheetString() {
         var tag = html(null).stylesheet("bulma.min.css");
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -85,8 +82,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithStylesheetUri() {
         var tag = html(null).stylesheet(URI.create("bulma.min.css"));
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -102,8 +98,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithStyleElement() {
         var tag = html(null).styleElement("body {\n    background-color: #f0f0f0;\n}");
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -123,8 +118,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithScriptString() {
         var tag = html(null).script("main.js");
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -140,8 +134,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithScriptUri() {
         var tag = html(null).script(URI.create("main.js"));
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -157,8 +150,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithEcmascript() {
         var tag = html(null).script("main.js", "application/ecmascript");
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -174,8 +166,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithScriptBody() {
         var tag = html(null).body(p("foo")).scriptBody("main.js");
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -194,8 +185,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithEcmascriptScriptBody() {
         var tag = html(null).body(p("foo")).scriptBody("main.js", "application/ecmascript");
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -214,8 +204,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithJavascriptBody() {
         var tag = html(null).body(p("foo")).javaScriptBody("main.js");
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -235,8 +224,7 @@ class HtmlTest {
         @SuppressWarnings("JSUnusedLocalSymbols")
         var tag = html(null).javaScript("foo");
 
-        //noinspection HtmlRequiredTitleElement,HtmlUnknownTarget
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -253,8 +241,7 @@ class HtmlTest {
         @SuppressWarnings("JSUnusedLocalSymbols")
         var tag = html(null).body(p("body")).javaScript("foo");
 
-        //noinspection HtmlRequiredTitleElement,HtmlUnknownTarget
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -283,8 +270,7 @@ class HtmlTest {
                 }
                 """);
 
-        //noinspection HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -312,8 +298,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithMeta() {
         var tag = html(null).meta("about", "foo");
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -329,8 +314,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithNamedMeta() {
         var tag = html(null).metaName("author", "me");
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -346,8 +330,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithTwoPartMeta() {
         var tag = html(null).meta("http-equiv", "refresh", "content", "3;url=https://example.org");
 
-        //noinspection HtmlUnknownTarget,HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -363,7 +346,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithTitle() {
         var tag = html("The Title");
 
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -379,7 +362,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithExplicitTitle() {
         var tag = html(null).title("The Title");
 
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -395,8 +378,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithBody() {
         var tag = html(null).body(h1("Hello"));
 
-        //noinspection HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>
@@ -414,8 +396,7 @@ class HtmlTest {
     @Test void shouldRenderHtmlWithImplicitBody() {
         var tag = html(null).content(h1("Hello"));
 
-        //noinspection HtmlRequiredTitleElement
-        then(tag).rendersAs_notAll("""
+        then(tag.render()).isEqualTo("""
                 <!DOCTYPE html>
                 <html lang="en">
                     <head>

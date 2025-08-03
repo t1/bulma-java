@@ -4,13 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Basic.div;
-import static com.github.t1.htmljava.Basic.p;
-import static com.github.t1.htmljava.Basic.strong;
-import static com.github.t1.htmljava.Color.INFO;
-import static com.github.t1.htmljava.Color.SUCCESS;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
+import static com.github.t1.bulmajava.basic.Color.INFO;
+import static com.github.t1.bulmajava.basic.Color.SUCCESS;
 import static com.github.t1.bulmajava.columns.ScreenSize.MOBILE;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Image.img;
@@ -18,6 +13,11 @@ import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.TEXT;
 import static com.github.t1.bulmajava.layout.Level.level;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.div;
+import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.HtmlBasics.strong;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
@@ -29,7 +29,7 @@ class LevelTest {
                                 strong("123"), string(" posts")),
                         field()
                                 .control(input(TEXT).placeholder("Find a post"))
-                                .containsAddonRight(button("Search")))
+                                .addonRight(button("Search")))
                 .right(
                         p().content(strong("All")),
                         a("Published"),

@@ -1,5 +1,6 @@
 package com.github.t1.bulmajava.components;
 
+import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.AbstractElement;
 import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
@@ -7,10 +8,10 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.stream.Stream;
 
-import static com.github.t1.htmljava.Basic.p;
+import static com.github.t1.htmljava.HtmlBasics.p;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class Panel extends AbstractElement<Panel> {
+public class Panel extends BulmaElement<Panel> {
     public static Panel panel() {return panel("article");}
 
     public static Panel panel(String elementName) {return new Panel(elementName);}

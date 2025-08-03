@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static com.github.t1.htmljava.Attribute.StringAttribute.unsafeStringAttribute;
-import static com.github.t1.htmljava.Basic.div;
+import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.Renderable.ConcatenatedRenderable.concat;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
@@ -52,9 +52,11 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public boolean hasName(String name) {return this.name.equals(name);}
 
+    public boolean hasAttribute(String name) {return attributes.hasAttribute(name);}
+
     public boolean hasAttribute(String name, String value) {return attributes.hasAttribute(name, value);}
 
-    public boolean has(Modifier modifier) {return hasClass(modifier.className());}
+    public boolean hasModifier(Modifier modifier) {return modifier.check(this);}
 
     @Override public boolean hasClass(String name) {
         return Optional.ofNullable(getClasses()).map(classes -> classes.hasClass(name)).orElse(false);
@@ -111,17 +113,23 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return self();
     }
 
+    public SELF has(Modifier... modifiers) {return is(modifiers);}
+
+    public SELF has(Stream<Modifier> modifiers) {return is(modifiers);}
+
     public SELF is(Modifier... modifiers) {return is(Stream.of(modifiers));}
 
     public SELF is(Stream<Modifier> modifiers) {
-        return classes(modifiers.map(Modifier::className).toArray(String[]::new));
+        modifiers.forEach(m -> m.apply(this));
+        return self();
     }
 
-    public SELF is(int size) {return classes("is-" + size);}
+    public SELF not(Modifier... modifiers) {return not(Stream.of(modifiers));}
 
-    public SELF isPulledLeft() {return classes("is-pulled-left");}
-
-    public SELF isPulledRight() {return classes("is-pulled-right");}
+    public SELF not(Stream<Modifier> modifiers) {
+        modifiers.forEach(m -> m.unapply(this));
+        return self();
+    }
 
     public SELF style(String style) {return attr("style", style);}
 
@@ -149,10 +157,6 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         attributes.forEach(this::attr);
         return self();
     }
-
-    public SELF hasText(Modifier modifier) {return classes("has-text-" + modifier.key());}
-
-    public SELF hasBackground(Modifier modifier) {return classes("has-background-" + modifier.key());}
 
     public SELF dataValue(String value) {return attr("data-value", value);}
 
@@ -226,7 +230,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public <T extends AbstractElement<?>> T getOrCreate(String className) {
         //noinspection unchecked
-        return (T) getOrCreate(className, Basic::div);
+        return (T) getOrCreate(className, HtmlBasics::div);
     }
 
     public <T extends AbstractElement<?>> T getOrCreate(String className, Supplier<T> generator) {

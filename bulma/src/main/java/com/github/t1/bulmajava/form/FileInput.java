@@ -1,21 +1,21 @@
 package com.github.t1.bulmajava.form;
 
-import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.bulmajava.basic.BulmaElement;
+import com.github.t1.bulmajava.elements.Icon;
 import com.github.t1.htmljava.Attributes;
 import com.github.t1.htmljava.Classes;
 import com.github.t1.htmljava.Element;
-import com.github.t1.bulmajava.elements.Icon;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.function.Function;
 
-import static com.github.t1.htmljava.Basic.element;
-import static com.github.t1.htmljava.Basic.span;
 import static com.github.t1.bulmajava.form.InputType.FILE;
+import static com.github.t1.htmljava.HtmlBasics.element;
+import static com.github.t1.htmljava.HtmlBasics.span;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-public class FileInput extends AbstractElement<FileInput> {
+public class FileInput extends BulmaElement<FileInput> {
     public static FileInput fileInput(String title) {return new FileInput(title);}
 
     private FileInput(String title) {
