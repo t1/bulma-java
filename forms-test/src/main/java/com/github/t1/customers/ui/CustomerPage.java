@@ -15,13 +15,6 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import static com.github.t1.bulmajava.elements.Image.figure;
-import static com.github.t1.bulmajava.elements.Image.imageP;
-import static com.github.t1.bulmajava.elements.Image.img;
-import static com.github.t1.bulmajava.elements.ImageSize._128x128;
-import static com.github.t1.bulmajava.elements.ImageSize._64x64;
-import static com.github.t1.bulmajava.layout.Media.media;
-import static com.github.t1.htmljava.HtmlBasics.p;
 import static jakarta.ws.rs.core.MediaType.TEXT_HTML;
 
 @Provider
@@ -29,6 +22,7 @@ import static jakarta.ws.rs.core.MediaType.TEXT_HTML;
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class CustomerPage implements MessageBodyWriter<Customer> {
     private final Page page;
+    private final Customer$Form form;
 
     @Override
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
@@ -38,10 +32,7 @@ public class CustomerPage implements MessageBodyWriter<Customer> {
     @Override
     public void writeTo(Customer customer, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) {
         page.title(customer.getName())
-                .content(media()
-                        .left(figure().content(imageP(_64x64).content(
-                                img(customerImage(_128x128), customer.getName()))))
-                        .content(p(customer.getEmail())))
+                .content(form.content(customer))
                 .render(entityStream);
     }
 
