@@ -165,6 +165,8 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     public SELF tabindex(int tabindex) {return attr("tabindex", Integer.toString(tabindex));}
 
 
+    public SELF onclick(String action) {return on("click", action);}
+
     public SELF onkeyup(String key, String action) {return onkey("up", key, action);}
 
     public SELF onkeydown(String key, String action) {return onkey("down", key, action);}

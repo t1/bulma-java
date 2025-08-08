@@ -543,6 +543,19 @@ class FieldTest {
                 """);
     }
 
+    @Test void shouldRenderFieldWithOnclick() {
+        var form = field()
+                .control(input(TEXT).onclick("window.location.href='about:blank'"), EXPANDED);
+
+        then(form).rendersAs("""
+                <div class="field">
+                    <div class="control is-expanded">
+                        <input class="input" type="text" onclick="window.location.href='about:blank'">
+                    </div>
+                </div>
+                """);
+    }
+
     @Test void shouldRenderFieldLoggingEnterKey() {
         var form = field()
                 .control(input(TEXT).onkeyup("Enter", "console.debug('enter pressed');"), EXPANDED);
