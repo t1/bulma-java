@@ -1,0 +1,12 @@
+quarkus:
+#  log:
+#    category:
+#      "io.quarkus":
+#        # noinspection QsYaml
+#        level: WARN
+  swagger-ui:
+    always-include: true
+    deep-linking: true
+    display-request-duration: true
+    theme: feeling-blue
+    try-it-out-enabled: true

@@ -13,6 +13,7 @@
     <modules>
         <module>bulma</module>
         <module>core</module>
+        <module>forms-test</module>
     </modules>
 
     <properties>
