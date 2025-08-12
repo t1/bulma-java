@@ -10,8 +10,8 @@ import static com.github.t1.bulmajava.form.InputType.RADIO;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Radio extends BulmaElement<Radio> {
-    /// Use {@link RadioGroup#radioGroup(String)} to set the (field) `name` of all radios contained.
-    public static Radio radio(String value, String label) {return new Radio(value, label);}
+    /// A radio group (a single radio button without a group doesn't make sense)
+    public static Radios radios(String name) {return new Radios(name);}
 
     private final Input input;
 
@@ -23,31 +23,34 @@ public class Radio extends BulmaElement<Radio> {
         content(label);
     }
 
-    @Override public Radio disabled() {
-        input.disabled();
-        return super.disabled();
-    }
-
-    public Radio checked() {
-        input.attr("checked");
-        return this;
-    }
-
     @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
-    public static class RadioGroup extends BulmaElement<RadioGroup> {
-        /// All radios in this group will get the same `name` attribute.
-        public static RadioGroup radioGroup(String name) {return new RadioGroup(name);}
-
+    public static class Radios extends BulmaElement<Radios> {
         private String name;
+        private Radio lastRadio;
 
-        private RadioGroup(String name) {
+        private Radios(String name) {
             super("div", "radios");
             this.name = name;
         }
 
-        @Override public RadioGroup content(Renderable content, boolean first) {
+        @Override public Radios content(Renderable content, boolean first) {
             if (content instanceof Radio radio) radio.input.attr("name", this.name);
             return super.content(content, first);
+        }
+
+        public Radios option(String value, String label) {
+            return content(lastRadio = new Radio(value, label));
+        }
+
+        @Override public Radios disabled() {
+            lastRadio.input.disabled();
+            lastRadio.disabled();
+            return this;
+        }
+
+        public Radios checked() {
+            lastRadio.input.attr("checked");
+            return this;
         }
     }
 }

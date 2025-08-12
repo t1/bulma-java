@@ -225,7 +225,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
      *
      * @see #content(Renderable)
      */
-    public SELF firstContent(Renderable content) {
+    public final SELF firstContent(Renderable content) {
         return content(content, true);
     }
 
@@ -240,7 +240,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public SELF content(Renderable content) {return content(content, false);}
 
-    protected SELF content(Renderable content, boolean first) {
+    public SELF content(Renderable content, boolean first) {
         var mapped = mapFunction.apply(content);
         this.content = (this.content == null) ? mapped :
                 first ? concat(mapped, this.content): concat(this.content, mapped);
@@ -251,7 +251,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return content(e -> e.hasClass(className), function, () -> div().classes(className));
     }
 
-    public SELF content(
+    public final SELF content(
             Predicate<AbstractElement<?>> predicate,
             Function<AbstractElement<?>, AbstractElement<?>> function,
             Supplier<AbstractElement<?>> generator) {

@@ -30,7 +30,6 @@ import static com.github.t1.bulmajava.elements.Button.buttons;
 import static com.github.t1.bulmajava.elements.IconSize.LG;
 import static com.github.t1.bulmajava.elements.IconSize.SM;
 import static com.github.t1.bulmajava.elements.IconSize.XS;
-import static com.github.t1.bulmajava.elements.TableStyle.NARROW;
 import static com.github.t1.bulmajava.form.Checkbox.checkbox;
 import static com.github.t1.bulmajava.form.Field.EXPANDED;
 import static com.github.t1.bulmajava.form.Field.field;
@@ -40,8 +39,7 @@ import static com.github.t1.bulmajava.form.InputType.EMAIL;
 import static com.github.t1.bulmajava.form.InputType.PASSWORD;
 import static com.github.t1.bulmajava.form.InputType.TEL;
 import static com.github.t1.bulmajava.form.InputType.TEXT;
-import static com.github.t1.bulmajava.form.Radio.RadioGroup.radioGroup;
-import static com.github.t1.bulmajava.form.Radio.radio;
+import static com.github.t1.bulmajava.form.Radio.radios;
 import static com.github.t1.bulmajava.form.Select.select;
 import static com.github.t1.bulmajava.form.Textarea.textarea;
 import static com.github.t1.htmljava.Anchor.a;
@@ -76,9 +74,9 @@ class FieldTest {
                 field().content(
                         checkbox().content(
                                 string("I agree to the"), a("terms and conditions").href("#"))),
-                field().content(radioGroup("question").content(
-                        radio("y", "Yes"),
-                        radio("n", "No"))),
+                field().content(radios("question")
+                        .option("y", "Yes")
+                        .option("n", "No")),
                 field().content(buttons().content(
                         button("Submit").is(LINK),
                         button("Cancel").is(LINK, LIGHT))));
@@ -841,37 +839,34 @@ class FieldTest {
         var form = div().style("width: 1000px;").content(
                 field().horizontal()
                         .label("From", NORMAL)
-                        .content(field().content(input(TEXT).placeholder("Name").is(EXPANDED))
-                                .iconLeft("user"))
-                        .content(field().content(input(EMAIL).is(SUCCESS).placeholder("Email").value("alex@smith.com").is(EXPANDED))
-                                .iconLeft("envelope")
-                                .iconRight("check")),
+                        .content(input(TEXT).placeholder("Name").is(EXPANDED))
+                        .iconLeft("user")
+                        .content(input(EMAIL).is(SUCCESS).placeholder("Email").value("alex@smith.com").is(EXPANDED))
+                        .iconLeft("envelope")
+                        .iconRight("check"),
                 field().horizontal()
                         //.label("Phone")
-                        .content(field()
-                                .content(a("+44").is(STATIC))
-                                .addonRight(input(TEL).placeholder("Your phone number").is(EXPANDED))
-                                .help("Do not enter the first zero")),
+                        .content(a("+44").is(STATIC))
+                        .addonRight(input(TEL).placeholder("Your phone number").is(EXPANDED))
+                        .help("Do not enter the first zero"),
                 field().horizontal()
                         .label("Department", NORMAL)
-                        .content(field().is(NARROW).content(select("department").is(Style.FULLWIDTH)
-                                .options("Business development", "Marketing", "Sales"))),
+                        .content(select("department").is(Style.FULLWIDTH)
+                                .options("Business development", "Marketing", "Sales")),
                 field().horizontal()
                         .label("Already a member?")
-                        .content(field().is(NARROW)
-                                .content(radioGroup("member").content(
-                                        radio("y", "Yes"),
-                                        radio("n", "No")))),
+                        .content(radios("member")
+                                .option("y", "Yes")
+                                .option("n", "No")),
                 field().horizontal()
                         .label("Subject", NORMAL)
-                        .content(field()
-                                .content(input(TEXT).is(DANGER).placeholder("e.g. Partnership opportunity"))
-                                .help("This field is required", DANGER)),
+                        .content(input(TEXT).is(DANGER).placeholder("e.g. Partnership opportunity"))
+                        .help("This field is required", DANGER),
                 field().horizontal()
                         .label("Question", NORMAL)
-                        .content(field().content(textarea().placeholder("Explain how we can help you"))),
+                        .content(textarea().placeholder("Explain how we can help you")),
                 field().horizontal()
-                        .content(field().content(button("Send message").is(PRIMARY))));
+                        .content(button("Send message").is(PRIMARY)));
 
         then(form).rendersAs("""
                 <div style="width: 1000px;">
@@ -1089,9 +1084,9 @@ class FieldTest {
                         .content(checkbox().content(string("I agree"))),
                 field().horizontal().is(size)
                         .label(size.key() + " radio")
-                        .content(radioGroup("question").content(
-                                radio("y", "Yes"),
-                                radio("n", "No"))),
+                        .content(radios("question")
+                                .option("y", "Yes")
+                                .option("n", "No")),
                 field().horizontal().is(size)
                         .label(size.key() + " button")
                         .content(button(size.key() + " button")),

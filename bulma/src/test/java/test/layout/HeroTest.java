@@ -8,6 +8,8 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.NoSectionWrapper;
 import test.RenderTestExtension;
 
+import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
+import static com.github.t1.bulmajava.basic.BulmaElement.TextModifier.text;
 import static com.github.t1.bulmajava.basic.Color.DANGER;
 import static com.github.t1.bulmajava.basic.Color.INFO;
 import static com.github.t1.bulmajava.basic.Color.LINK;
@@ -204,7 +206,7 @@ class HeroTest {
                                 a("Documentation"),
                                 div().content(
                                         a().is(BUTTON, PRIMARY, INVERTED).content(icon("github", BOLD), span("Download")))))
-                .body(div().classes("container", "has-text-centered").content(
+                .body(div().classes("container").has(text(CENTERED)).content(
                         titleP("Title"),
                         subtitleP("Subtitle")))
                 .foot(navTabs().content(
@@ -292,7 +294,7 @@ class HeroTest {
                                 a("Documentation"),
                                 div().content(
                                         a().is(BUTTON, INFO, INVERTED).content(icon("github", BOLD), span("Download")))))
-                .body(div().classes("container", "has-text-centered").content(
+                .body(div().classes("container").has(text(CENTERED)).content(
                         titleP("Title"),
                         subtitleP("Subtitle")))
                 .foot(navTabs().isBoxed().is(FULLWIDTH).content(
@@ -380,7 +382,7 @@ class HeroTest {
                                 a("Documentation"),
                                 div().content(
                                         a().is(BUTTON, SUCCESS, INVERTED).content(icon("github", BOLD), span("Download")))))
-                .body(div().classes("container", "has-text-centered").content(
+                .body(div().classes("container").has(text(CENTERED)).content(
                         titleP("Title"),
                         subtitleP("Subtitle")))
                 .foot(navTabs().isBoxed().is(FULLWIDTH).content(

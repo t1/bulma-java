@@ -20,8 +20,8 @@ public class Tabs extends BulmaElement<Tabs> {
     }
 
 
-    @Override public Tabs content(Renderable content) {
-        ul().content(content);
+    @Override public Tabs content(Renderable content, boolean first) {
+        ul().content(content, first);
         return this;
     }
 

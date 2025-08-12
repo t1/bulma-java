@@ -4,16 +4,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.form.Radio.RadioGroup.radioGroup;
-import static com.github.t1.bulmajava.form.Radio.radio;
+import static com.github.t1.bulmajava.form.Radio.radios;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class RadioTest {
     @Test void shouldRenderRadio() {
-        var field = radioGroup("answer")
-                .content(radio("y", "Yes"))
-                .content(radio("n", "No"));
+        var field = radios("answer")
+                .option("y", "Yes")
+                .option("n", "No");
 
         then(field).rendersAs("""
                 <div class="radios">
@@ -30,10 +29,10 @@ class RadioTest {
     }
 
     @Test void shouldRenderDisabledRadio() {
-        var field = radioGroup("rsvp")
-                .content(radio("y", "Going"))
-                .content(radio("n", "Not going"))
-                .content(radio("m", "Maybe").disabled());
+        var field = radios("rsvp")
+                .option("y", "Going")
+                .option("n", "Not going")
+                .option("m", "Maybe").disabled();
 
         //noinspection HtmlUnknownAttribute // the disabled label is actually correct
         then(field).rendersAs("""
@@ -47,7 +46,7 @@ class RadioTest {
                         Not going
                     </label>
                     <label class="radio" disabled>
-                        <input type="radio" value="m" disabled name="rsvp" />
+                        <input type="radio" value="m" name="rsvp" disabled />
                         Maybe
                     </label>
                 </div>
@@ -55,9 +54,9 @@ class RadioTest {
     }
 
     @Test void shouldRenderCheckedRadio() {
-        var field = radioGroup("foobar")
-                .content(radio("foo", "Foo"))
-                .content(radio("bar", "Bar").checked());
+        var field = radios("foobar")
+                .option("foo", "Foo")
+                .option("bar", "Bar").checked();
 
         then(field).rendersAs("""
                 <div class="radios">
@@ -66,7 +65,7 @@ class RadioTest {
                         Foo
                     </label>
                     <label class="radio">
-                        <input type="radio" value="bar" checked name="foobar" />
+                        <input type="radio" value="bar" name="foobar" checked />
                         Bar
                     </label>
                 </div>

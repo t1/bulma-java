@@ -47,9 +47,9 @@ class MediaTest {
                                 br(),
                                 loremIpsumS())),
                         level().is(MOBILE)
-                                .leftA(icon("reply").is(SMALL))
-                                .leftA(icon("retweet").is(SMALL))
-                                .leftA(icon("heart").is(SMALL)))
+                                .left(a().href("about:blank").content(icon("reply").is(SMALL)))
+                                .left(a().href("about:blank").content(icon("retweet").is(SMALL)))
+                                .left(a().href("about:blank").content(icon("heart").is(SMALL))))
                 .right(div().content(delete())));
 
         // the aria-label and img-alt where not in the docs
@@ -73,15 +73,21 @@ class MediaTest {
                             </div>
                             <nav class="level is-mobile">
                                 <div class="level-left">
-                                    <a class="level-item">
-                                        <span class="icon is-small"><i class="fas fa-reply"></i></span>
-                                    </a>
-                                    <a class="level-item">
-                                        <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-                                    </a>
-                                    <a class="level-item">
-                                        <span class="icon is-small"><i class="fas fa-heart"></i></span>
-                                    </a>
+                                    <div class="level-item">
+                                        <a href="about:blank">
+                                            <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                                        </a>
+                                    </div>
+                                    <div class="level-item">
+                                        <a href="about:blank">
+                                            <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+                                        </a>
+                                    </div>
+                                    <div class="level-item">
+                                        <a href="about:blank">
+                                            <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                                        </a>
+                                    </div>
                                 </div>
                             </nav>
                         </div>

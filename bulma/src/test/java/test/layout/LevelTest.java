@@ -78,22 +78,19 @@ class LevelTest {
     }
 
     @Test void shouldRenderCenteredLevel() {
-        var level = level().item(div().content(
-                                p("Tweets").classes("heading"),
-                                p("3,456").classes("title")),
-                        "has-text-centered")
-                .item(div().content(
-                                p("Following").classes("heading"),
-                                p("123").classes("title")),
-                        "has-text-centered")
-                .item(div().content(
-                                p("Followers").classes("heading"),
-                                p("456K").classes("title")),
-                        "has-text-centered")
-                .item(div().content(
-                                p("Likes").classes("heading"),
-                                p("789").classes("title")),
-                        "has-text-centered");
+        var level = level().centered()
+                .content(div().content(
+                        p("Tweets").classes("heading"),
+                        p("3,456").classes("title")))
+                .content(div().content(
+                        p("Following").classes("heading"),
+                        p("123").classes("title")))
+                .content(div().content(
+                        p("Followers").classes("heading"),
+                        p("456K").classes("title")))
+                .content(div().content(
+                        p("Likes").classes("heading"),
+                        p("789").classes("title")));
 
         then(level).rendersAs("""
                 <nav class="level">
@@ -127,11 +124,16 @@ class LevelTest {
 
     @Test void shouldRenderCenteredLevel2() {
         var level = level()
-                .item(a("Home").classes("link").is(INFO), "has-text-centered")
-                .item(a("Menu").classes("link").is(INFO), "has-text-centered")
-                .item(img("https://bulma.io/assets/images/bulma-type.png", "").style("height: 30px;"), "has-text-centered")
-                .item(a("Reservations").classes("link").is(INFO), "has-text-centered")
-                .item(a("Contact").classes("link").is(INFO), "has-text-centered");
+                .content(a("Home").classes("link").is(INFO))
+                .centered()
+                .content(a("Menu").classes("link").is(INFO))
+                .centered()
+                .content(img("https://bulma.io/assets/images/bulma-type.png", "").style("height: 30px;"))
+                .centered()
+                .content(a("Reservations").classes("link").is(INFO))
+                .centered()
+                .content(a("Contact").classes("link").is(INFO))
+                .centered();
 
         then(level).rendersAs("""
                 <nav class="level">
@@ -155,22 +157,20 @@ class LevelTest {
     }
 
     @Test void shouldRenderMobileLevel() {
-        var level = level().is(MOBILE).item(div().content(
-                                p("Tweets").classes("heading"),
-                                p("3,456").classes("title")),
-                        "has-text-centered")
-                .item(div().content(
-                                p("Following").classes("heading"),
-                                p("123").classes("title")),
-                        "has-text-centered")
-                .item(div().content(
-                                p("Followers").classes("heading"),
-                                p("456K").classes("title")),
-                        "has-text-centered")
-                .item(div().content(
-                                p("Likes").classes("heading"),
-                                p("789").classes("title")),
-                        "has-text-centered");
+        var level = level().is(MOBILE)
+                .centered()
+                .content(div().content(
+                        p("Tweets").classes("heading"),
+                        p("3,456").classes("title")))
+                .content(div().content(
+                        p("Following").classes("heading"),
+                        p("123").classes("title")))
+                .content(div().content(
+                        p("Followers").classes("heading"),
+                        p("456K").classes("title")))
+                .content(div().content(
+                        p("Likes").classes("heading"),
+                        p("789").classes("title")));
 
         then(level).rendersAs("""
                 <nav class="level is-mobile">
@@ -196,6 +196,43 @@ class LevelTest {
                         <div>
                             <p class="heading">Likes</p>
                             <p class="title">789</p>
+                        </div>
+                    </div>
+                </nav>
+                """);
+    }
+
+    @Test void shouldRenderLeftRightDivAndALevel() {
+        var level = level().is(MOBILE)
+                .left(p("left div"))
+                .left(a("left a").href("about:blank"))
+                .left(button("left button"))
+                .right(p("right div"))
+                .right(a("right a").href("about:blank"))
+                .right(button("right button"));
+
+        then(level).rendersAs("""
+                <nav class="level is-mobile">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <p>left div</p>
+                        </div>
+                        <div class="level-item">
+                            <a href="about:blank">left a</a>
+                        </div>
+                        <div class="level-item">
+                            <button class="button">left button</button>
+                        </div>
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item">
+                            <p>right div</p>
+                        </div>
+                        <div class="level-item">
+                            <a href="about:blank">right a</a>
+                        </div>
+                        <div class="level-item">
+                            <button class="button">right button</button>
                         </div>
                     </div>
                 </nav>

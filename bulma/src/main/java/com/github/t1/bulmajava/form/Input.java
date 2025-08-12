@@ -33,7 +33,7 @@ public class Input extends BulmaElement<Input> {
 
     protected boolean renderOpenTagSlash() {return true;}
 
-    @Override protected Input content(Renderable content, boolean first) {throw new UnsupportedOperationException("Input can not have content");}
+    @Override public Input content(Renderable content, boolean first) {throw new UnsupportedOperationException("Input can not have content");}
 
     public Input value(int value) {return value(Integer.toString(value));}
 

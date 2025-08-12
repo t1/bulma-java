@@ -27,8 +27,8 @@ public class Breadcrumb extends BulmaElement<Breadcrumb> {
                 HtmlBasics.ul());
     }
 
-    public Breadcrumb content(Renderable renderable) {
-        ul().content(item(renderable));
+    public Breadcrumb content(Renderable renderable, boolean first) {
+        ul().content(item(renderable), first);
         return this;
     }
 

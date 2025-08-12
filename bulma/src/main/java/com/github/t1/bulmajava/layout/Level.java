@@ -1,57 +1,55 @@
 package com.github.t1.bulmajava.layout;
 
 import com.github.t1.bulmajava.basic.BulmaElement;
-import com.github.t1.htmljava.Anchor;
-import com.github.t1.htmljava.Element;
+import com.github.t1.htmljava.AbstractElement;
 import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.util.stream.Stream;
 
-import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
+import static com.github.t1.bulmajava.basic.BulmaElement.TextModifier.text;
 import static com.github.t1.htmljava.HtmlBasics.div;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Level extends BulmaElement<Level> {
     public static Level level() {return new Level();}
 
-    public Level() {super("nav", "level");}
+    private boolean centered;
+    private AbstractElement<?> lastItem;
+
+    private Level() {super("nav", "level");}
 
 
-    /** Use {@link #item(Renderable, String...)} instead! */
-    @Deprecated
-    @Override public Level content(String content) {return super.content(content);}
-
-    /** Use {@link #item(Renderable, String...)} instead! */
-    @Deprecated
-    @Override public Level content(Renderable content) {return super.content(content);}
-
-    /** Use {@link #item(Renderable, String...)} instead! */
-    @Deprecated
-    @Override public Level content(Renderable... content) {return super.content(content);}
-
-    /** Use {@link #item(Renderable, String...)} instead! */
-    @Deprecated
-    @Override public Level content(Stream<? extends Renderable> content) {return super.content(content);}
-
-    public Level item(Renderable content, String... classNames) {
-        return super.content(levelItem(content).classes(classNames));
+    public Level content(Renderable content, boolean first) {
+        if (content instanceof AbstractElement<?> element &&
+            (element.hasClass("level-left") || element.hasClass("level-right"))) {
+            return super.content(content, first);
+        }
+        lastItem = levelItem(content);
+        if (centered) centered();
+        return super.content(lastItem, first);
     }
 
-    public Level left(Renderable... content) {
-        return content("level-left", left -> left.content(Stream.of(content).map(Level::levelItem)));
+    public Level left(Renderable... content) {return leftRight("left", content);}
+
+    public Level right(Renderable... content) {return leftRight("right", content);}
+
+    private Level leftRight(String leftOrRight, Renderable... content) {
+        return content("level-" + leftOrRight,
+                left -> left.content(Stream.of(content).map(Level::levelItem)));
     }
 
-    public Level leftA(Renderable... content) {
-        return content("level-left", left -> left.content(Stream.of(content).map(Level::levelItemA)));
+    private static AbstractElement<?> levelItem(Renderable... content) {
+        return div().classes("level-item").content(content);
     }
 
-    private static Anchor levelItemA(Renderable... content) {return a().classes("level-item").content(content);}
-
-    private static Element levelItem(Renderable... content) {return div().classes("level-item").content(content);}
-
-    public Level right(Renderable... content) {
-        return content("level-right", right -> right.content(Stream.of(content).map(Level::levelItem)));
+    /// Adds the class `text-centered` to the last item of this level,
+    /// or to _all_ items if there is no last item yet.
+    public Level centered() {
+        if (lastItem == null) this.centered = true;
+        else lastItem.is(text(CENTERED));
+        return this;
     }
 }
