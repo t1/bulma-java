@@ -238,7 +238,7 @@ class ButtonTest {
     }
 
     @Test void shouldRenderButtonGroup() {
-        var button = group().controls(
+        var button = group().content(
                 button("Save changes").is(LINK),
                 button("Cancel"),
                 button("Delete post").is(DANGER));

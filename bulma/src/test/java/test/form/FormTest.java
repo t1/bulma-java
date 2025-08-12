@@ -22,7 +22,7 @@ class FormTest {
 
         then(form).rendersAs("""
                 <form method="post" action="/submit">
-                    <input class="input" type="text" name="chat_message">
+                    <input class="input" type="text" name="chat_message" />
                 </form>
                 """);
     }
@@ -34,7 +34,7 @@ class FormTest {
 
         then(form).rendersAs("""
                 <form method="get" action="/submit">
-                    <input class="input" type="text" name="chat_message">
+                    <input class="input" type="text" name="chat_message" />
                 </form>
                 """);
     }
@@ -46,7 +46,7 @@ class FormTest {
 
         then(form).rendersAs("""
                 <form method="dialog" action="/submit">
-                    <input class="input" type="text" name="chat_message">
+                    <input class="input" type="text" name="chat_message" />
                 </form>
                 """);
     }
@@ -58,7 +58,7 @@ class FormTest {
 
         then(form).rendersAs("""
                 <form action="/submit">
-                    <input class="input" type="text" name="chat_message">
+                    <input class="input" type="text" name="chat_message" />
                 </form>
                 """);
     }
@@ -73,7 +73,7 @@ class FormTest {
         //noinspection HtmlWrongAttributeValue
         then(form).rendersAs("""
                 <form action="/submit" method="put">
-                    <input class="input" type="text" name="chat_message">
+                    <input class="input" type="text" name="chat_message" />
                 </form>
                 """);
     }
@@ -88,7 +88,7 @@ class FormTest {
                 <form enctype="application/x-www-form-urlencoded" method="post" action="/submit">
                     <div class="file">
                         <label class="file-label">
-                            <input id="foo" class="file-input" type="file">
+                            <input id="foo" class="file-input" type="file" />
                             <span class="file-cta">
                                 <span class="file-label">Choose a file…</span>
                             </span>
@@ -108,7 +108,7 @@ class FormTest {
                 <form enctype="multipart/form-data" method="post" action="/submit">
                     <div class="file">
                         <label class="file-label">
-                            <input id="foo" class="file-input" type="file">
+                            <input id="foo" class="file-input" type="file" />
                             <span class="file-cta">
                                 <span class="file-label">Choose a file…</span>
                             </span>
@@ -128,7 +128,7 @@ class FormTest {
                 <form enctype="text/plain" method="post" action="/submit">
                     <div class="file">
                         <label class="file-label">
-                            <input id="foo" class="file-input" type="file">
+                            <input id="foo" class="file-input" type="file" />
                             <span class="file-cta">
                                 <span class="file-label">Choose a file…</span>
                             </span>
@@ -149,7 +149,7 @@ class FormTest {
                 <form method="post" enctype="multipart/form-data">
                     <div>
                         <label for="foo">Choose file to upload</label>
-                        <input id="foo" type="file" name="file" multiple>
+                        <input id="foo" type="file" name="file" multiple />
                     </div>
                     <div>
                         <button>Submit</button>

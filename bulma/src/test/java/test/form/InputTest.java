@@ -38,7 +38,7 @@ class InputTest {
         var button = submit("Submit input");
 
         then(button).rendersAs("""
-                <input class="button" type="submit" value="Submit input">
+                <input class="button" type="submit" value="Submit input" />
                 """);
     }
 
@@ -46,7 +46,7 @@ class InputTest {
         var button = reset("Reset input");
 
         then(button).rendersAs("""
-                <input class="button" type="reset" value="Reset input">
+                <input class="button" type="reset" value="Reset input" />
                 """);
     }
 
@@ -54,7 +54,7 @@ class InputTest {
         var input = input(TEXT).placeholder("Text input");
 
         then(input).rendersAs("""
-                <input class="input" type="text" placeholder="Text input">
+                <input class="input" type="text" placeholder="Text input" />
                 """);
     }
 
@@ -62,7 +62,7 @@ class InputTest {
         var input = input(TEXT).placeholder(color.key() + " input").is(color);
 
         then(input).rendersAs("""
-                <input class="input is-$color" type="text" placeholder="$color input">
+                <input class="input is-$color" type="text" placeholder="$color input" />
                 """.replace("$color", color.key()));
     }
 
@@ -70,7 +70,7 @@ class InputTest {
         var input = input(TEXT).placeholder(size.key() + " input").is(size);
 
         then(input).rendersAs("""
-                <input class="input is-$size" type="text" placeholder="$size input">
+                <input class="input is-$size" type="text" placeholder="$size input" />
                 """.replace("$size", size.key()));
     }
 
@@ -78,29 +78,29 @@ class InputTest {
         var input = input(TEXT).placeholder("Rounded input").is(ROUNDED);
 
         then(input).rendersAs("""
-                <input class="input is-rounded" type="text" placeholder="Rounded input">
+                <input class="input is-rounded" type="text" placeholder="Rounded input" />
                 """);
     }
 
     @ParameterizedTest @EnumSource(mode = EXCLUDE, names = "LOADING") void shouldRenderStateInput(State state) {
-        var input = field().control(input(TEXT).placeholder(state.key() + " input").is(state));
+        var input = field().content(input(TEXT).placeholder(state.key() + " input").is(state));
 
         then(input).rendersAs("""
                 <div class="field">
                     <div class="control">
-                        <input class="input is-$state" type="text" placeholder="$state input">
+                        <input class="input is-$state" type="text" placeholder="$state input" />
                     </div>
                 </div>
                 """.replace("$state", state.key()));
     }
 
     @Test void shouldRenderLoadingInput() {
-        var input = field().control(input(TEXT).placeholder("Loading input"), LOADING);
+        var input = field().content(input(TEXT).placeholder("Loading input").is(LOADING));
 
         then(input).rendersAs("""
                 <div class="field">
                     <div class="control is-loading">
-                        <input class="input" type="text" placeholder="Loading input">
+                        <input class="input" type="text" placeholder="Loading input" />
                     </div>
                 </div>
                 """);
@@ -108,31 +108,31 @@ class InputTest {
 
     @Test void shouldRenderSizedLoadingInput() {
         var input = div().style("width: 800px;").content(
-                field().control(input(TEXT).placeholder("Small loading input").is(SMALL), SMALL, LOADING),
-                field().control(input(TEXT).placeholder("Normal loading input"), LOADING),
-                field().control(input(TEXT).placeholder("Medium loading input").is(MEDIUM), MEDIUM, LOADING),
-                field().control(input(TEXT).placeholder("Large loading input").is(LARGE), LARGE, LOADING));
+                field().content(input(TEXT).placeholder("Small loading input").is(SMALL, LOADING)),
+                field().content(input(TEXT).placeholder("Normal loading input").is(LOADING)),
+                field().content(input(TEXT).placeholder("Medium loading input").is(MEDIUM, LOADING)),
+                field().content(input(TEXT).placeholder("Large loading input").is(LARGE, LOADING)));
 
         then(input).rendersAs("""
                 <div style="width: 800px;">
                     <div class="field">
                         <div class="control is-small is-loading">
-                            <input class="input is-small" type="text" placeholder="Small loading input">
+                            <input class="input is-small" type="text" placeholder="Small loading input" />
                         </div>
                     </div>
                     <div class="field">
                         <div class="control is-loading">
-                            <input class="input" type="text" placeholder="Normal loading input">
+                            <input class="input" type="text" placeholder="Normal loading input" />
                         </div>
                     </div>
                     <div class="field">
                         <div class="control is-medium is-loading">
-                            <input class="input is-medium" type="text" placeholder="Medium loading input">
+                            <input class="input is-medium" type="text" placeholder="Medium loading input" />
                         </div>
                     </div>
                     <div class="field">
                         <div class="control is-large is-loading">
-                            <input class="input is-large" type="text" placeholder="Large loading input">
+                            <input class="input is-large" type="text" placeholder="Large loading input" />
                         </div>
                     </div>
                 </div>
@@ -140,72 +140,72 @@ class InputTest {
     }
 
     @Test void shouldRenderDisabledInput() {
-        var input = field().control(input(TEXT).placeholder("Disabled input").disabled());
+        var input = field().content(input(TEXT).placeholder("Disabled input").disabled());
 
         then(input).rendersAs("""
                 <div class="field">
                     <div class="control">
-                        <input class="input" type="text" placeholder="Disabled input" disabled>
+                        <input class="input" type="text" placeholder="Disabled input" disabled />
                     </div>
                 </div>
                 """);
     }
 
     @Test void shouldRenderReadonlyInput() {
-        var input = field().control(input(TEXT).value("This text is readonly").readonly());
+        var input = field().content(input(TEXT).value("This text is readonly").readonly());
 
         then(input).rendersAs("""
                 <div class="field">
                     <div class="control">
-                        <input class="input" type="text" value="This text is readonly" readonly>
+                        <input class="input" type="text" value="This text is readonly" readonly />
                     </div>
                 </div>
                 """);
     }
 
     @Test void shouldRenderReadonlyTrueInput() {
-        var input = field().control(input(TEXT).value("This text is readonly").readonly(true));
+        var input = field().content(input(TEXT).value("This text is readonly").readonly(true));
 
         then(input).rendersAs("""
                 <div class="field">
                     <div class="control">
-                        <input class="input" type="text" value="This text is readonly" readonly>
+                        <input class="input" type="text" value="This text is readonly" readonly />
                     </div>
                 </div>
                 """);
     }
 
     @Test void shouldRenderReadonlyFalseInput() {
-        var input = field().control(input(TEXT).value("This text is not readonly").readonly(false));
+        var input = field().content(input(TEXT).value("This text is not readonly").readonly(false));
 
         then(input).rendersAs("""
                 <div class="field">
                     <div class="control">
-                        <input class="input" type="text" value="This text is not readonly">
+                        <input class="input" type="text" value="This text is not readonly" />
                     </div>
                 </div>
                 """);
     }
 
     @Test void shouldRenderNullInput() {
-        var input = field().control(input(TEXT).value(null));
+        var input = field().content(input(TEXT).value(null));
 
         then(input).rendersAs("""
                 <div class="field">
                     <div class="control">
-                        <input class="input" type="text">
+                        <input class="input" type="text" />
                     </div>
                 </div>
                 """);
     }
 
     @Test void shouldRenderUnsafeInputValue() {
-        var input = field().control(input(TEXT).value("<>&\"'"));
+        var input = field().content(input(TEXT).value("<>&\"'"));
 
         then(input).rendersAs("""
                 <div class="field">
                     <div class="control">
-                        <input class="input" type="text" value="&lt;&gt;&amp;&quot;&#x27;">
+                        <input class="input" type="text" value="&lt;&gt;&amp;&quot;&#x27;" />
                     </div>
                 </div>
                 """);
@@ -215,9 +215,9 @@ class InputTest {
         var input = div().style("width: 800px;").content(
                 field().horizontal()
                         .label("From", NORMAL)
-                        .control(field().control(input(EMAIL).is(STATIC).value("me@example.com").readonly())),
+                        .content(input(EMAIL).is(STATIC).value("me@example.com").readonly()),
                 field().horizontal().label("To", NORMAL)
-                        .control(field().control(input(EMAIL).placeholder("Recipient email"))));
+                        .content(input(EMAIL).placeholder("Recipient email")));
 
         then(input).rendersAs("""
                 <div style="width: 800px;">
@@ -228,7 +228,7 @@ class InputTest {
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-static" type="email" value="me@example.com" readonly>
+                                    <input class="input is-static" type="email" value="me@example.com" readonly />
                                 </div>
                             </div>
                         </div>
@@ -240,7 +240,7 @@ class InputTest {
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input class="input" type="email" placeholder="Recipient email">
+                                    <input class="input" type="email" placeholder="Recipient email" />
                                 </div>
                             </div>
                         </div>
@@ -251,24 +251,24 @@ class InputTest {
 
     @Test void shouldRenderInputWithIcons() {
         var input = div().style("width: 500px;").content(
-                field().control(input(EMAIL).placeholder("Email"))
+                field().content(input(EMAIL).placeholder("Email"))
                         .iconLeft("envelope")
                         .iconRight("check"),
-                field().control(input(PASSWORD).placeholder("Password"))
+                field().content(input(PASSWORD).placeholder("Password"))
                         .iconLeft("lock"));
 
         then(input).rendersAs("""
                 <div style="width: 500px;">
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input" type="email" placeholder="Email">
+                            <input class="input" type="email" placeholder="Email" />
                             <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
                             <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
                         </div>
                     </div>
                     <div class="field">
                         <div class="control has-icons-left">
-                            <input class="input" type="password" placeholder="Password">
+                            <input class="input" type="password" placeholder="Password" />
                             <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
                         </div>
                     </div>
@@ -278,7 +278,7 @@ class InputTest {
 
     @Test void shouldRenderInputWithSmallIcon() {
         var input = div().style("width: 500px;").content(
-                field().control(input(EMAIL).placeholder("Email").is(SMALL))
+                field().content(input(EMAIL).placeholder("Email").is(SMALL))
                         .iconLeft("envelope")
                         .iconRight("check"));
 
@@ -286,7 +286,7 @@ class InputTest {
                 <div style="width: 500px;">
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input is-small" type="email" placeholder="Email">
+                            <input class="input is-small" type="email" placeholder="Email" />
                             <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
                             <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
                         </div>
@@ -297,7 +297,7 @@ class InputTest {
 
     @Test void shouldRenderInputWithNormalIcon() {
         var input = div().style("width: 500px;").content(
-                field().control(input(EMAIL).placeholder("Email"))
+                field().content(input(EMAIL).placeholder("Email"))
                         .iconLeft("envelope")
                         .iconRight("check"));
 
@@ -305,7 +305,7 @@ class InputTest {
                 <div style="width: 500px;">
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input" type="email" placeholder="Email">
+                            <input class="input" type="email" placeholder="Email" />
                             <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
                             <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
                         </div>
@@ -316,7 +316,7 @@ class InputTest {
 
     @Test void shouldRenderInputWithMediumIcon() {
         var input = div().style("width: 500px;").content(
-                field().control(input(EMAIL).placeholder("Email").is(MEDIUM))
+                field().content(input(EMAIL).placeholder("Email").is(MEDIUM))
                         .iconLeft("envelope")
                         .iconRight("check"));
 
@@ -324,7 +324,7 @@ class InputTest {
                 <div style="width: 500px;">
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input is-medium" type="email" placeholder="Email">
+                            <input class="input is-medium" type="email" placeholder="Email" />
                             <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
                             <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
                         </div>
@@ -335,7 +335,7 @@ class InputTest {
 
     @Test void shouldRenderInputWithLargeIcon() {
         var input = div().style("width: 500px;").content(
-                field().control(input(EMAIL).placeholder("Email").is(LARGE))
+                field().content(input(EMAIL).placeholder("Email").is(LARGE))
                         .iconLeft("envelope")
                         .iconRight("check"));
 
@@ -343,7 +343,7 @@ class InputTest {
                 <div style="width: 500px;">
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input is-large" type="email" placeholder="Email">
+                            <input class="input is-large" type="email" placeholder="Email" />
                             <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
                             <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
                         </div>
@@ -354,13 +354,13 @@ class InputTest {
 
     @Test void shouldRenderColorInput() {
         var input = div().style("width: 500px;").content(
-                field().control(input(COLOR).value("#f6b73c")));
+                field().content(input(COLOR).value("#f6b73c")));
 
         then(input).rendersAs("""
                 <div style="width: 500px;">
                     <div class="field">
                         <div class="control">
-                            <input class="input" type="color" value="#f6b73c">
+                            <input class="input" type="color" value="#f6b73c" />
                         </div>
                     </div>
                 </div>
@@ -369,13 +369,13 @@ class InputTest {
 
     @Test void shouldRenderDateInput() {
         var input = div().style("width: 500px;").content(
-                field().control(input(DATE).value("2023-10-09")));
+                field().content(input(DATE).value("2023-10-09")));
 
         then(input).rendersAs("""
                 <div style="width: 500px;">
                     <div class="field">
                         <div class="control">
-                            <input class="input" type="date" value="2023-10-09">
+                            <input class="input" type="date" value="2023-10-09" />
                         </div>
                     </div>
                 </div>
@@ -384,13 +384,13 @@ class InputTest {
 
     @Test void shouldRenderDatetimeLocalInput() {
         var input = div().style("width: 500px;").content(
-                field().control(input(DATETIME_LOCAL).value("2023-10-09T12:34")));
+                field().content(input(DATETIME_LOCAL).value("2023-10-09T12:34")));
 
         then(input).rendersAs("""
                 <div style="width: 500px;">
                     <div class="field">
                         <div class="control">
-                            <input class="input" type="datetime-local" value="2023-10-09T12:34">
+                            <input class="input" type="datetime-local" value="2023-10-09T12:34" />
                         </div>
                     </div>
                 </div>
@@ -399,13 +399,13 @@ class InputTest {
 
     @Test void shouldRenderEmailInput() {
         var input = div().style("width: 500px;").content(
-                field().control(input(EMAIL).value("foo@bar.baz")));
+                field().content(input(EMAIL).value("foo@bar.baz")));
 
         then(input).rendersAs("""
                 <div style="width: 500px;">
                     <div class="field">
                         <div class="control">
-                            <input class="input" type="email" value="foo@bar.baz">
+                            <input class="input" type="email" value="foo@bar.baz" />
                         </div>
                     </div>
                 </div>
@@ -414,13 +414,13 @@ class InputTest {
 
     @Test void shouldRenderHiddenInput() {
         var input = div().style("width: 500px;").content(
-                field().control(input(HIDDEN).value("secret-sauce")));
+                field().content(input(HIDDEN).value("secret-sauce")));
 
         then(input).rendersAs("""
                 <div style="width: 500px;">
                     <div class="field">
                         <div class="control">
-                            <input class="input" type="hidden" value="secret-sauce">
+                            <input class="input" type="hidden" value="secret-sauce" />
                         </div>
                     </div>
                 </div>
@@ -435,7 +435,7 @@ class InputTest {
 
         then(input).rendersAs("""
                 <div style="width: 500px;">
-                    <input type="range" name="cowbell" min="0" max="100" value="80" step="20">
+                    <input type="range" name="cowbell" min="0" max="100" value="80" step="20" />
                 </div>
                 """);
     }
@@ -444,14 +444,14 @@ class InputTest {
         var input = div().style("width: 500px;").content(
                 field()
                         .label("Cowbell")
-                        .control(input(RANGE).name("cowbell").min(0).max(100).value(90).step(10)));
+                        .content(input(RANGE).name("cowbell").min(0).max(100).value(90).step(10)));
 
         then(input).rendersAs("""
                 <div style="width: 500px;">
                     <div class="field">
                         <label class="label">Cowbell</label>
                         <div class="control">
-                            <input class="input" type="range" name="cowbell" min="0" max="100" value="90" step="10">
+                            <input class="input" type="range" name="cowbell" min="0" max="100" value="90" step="10" />
                         </div>
                     </div>
                 </div>

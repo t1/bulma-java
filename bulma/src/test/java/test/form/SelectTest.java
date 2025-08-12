@@ -8,10 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
-import static com.github.t1.bulmajava.basic.Size.LARGE;
-import static com.github.t1.bulmajava.basic.Size.MEDIUM;
-import static com.github.t1.bulmajava.basic.Size.NORMAL;
-import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.FOCUSED;
 import static com.github.t1.bulmajava.basic.State.HOVERED;
 import static com.github.t1.bulmajava.basic.State.LOADING;
@@ -195,7 +191,7 @@ class SelectTest {
     }
 
     @Test void shouldRenderSelectWithLeftIcon() {
-        var select = field().control(select(null)
+        var select = field().content(select(null)
                         .option(null, "Country").selected()
                         .option(null, "Select dropdown")
                         .option(null, "With options"))
@@ -217,8 +213,8 @@ class SelectTest {
                 """);
     }
 
-    @Test void shouldRenderSmallSelectWithLeftIcon() {
-        var select = field().control(select(null).is(SMALL)
+    @ParameterizedTest @EnumSource void shouldRenderSizedSelectWithLeftIcon(Size size) {
+        var select = field().content(select(null).is(size)
                         .option(null, "Country").selected()
                         .option(null, "Select dropdown")
                         .option(null, "With options"))
@@ -227,7 +223,7 @@ class SelectTest {
         then(select).rendersAs("""
                 <div class="field">
                     <div class="control has-icons-left">
-                        <div class="select is-small">
+                        <div class="select is-${size}">
                             <select>
                                 <option selected>Country</option>
                                 <option>Select dropdown</option>
@@ -237,75 +233,6 @@ class SelectTest {
                         <span class="icon is-small is-left"><i class="fas fa-globe"></i></span>
                     </div>
                 </div>
-                """);
-    }
-
-    @Test void shouldRenderNormalSelectWithLeftIcon() {
-        var select = field().control(select(null)
-                        .option(null, "Country").selected()
-                        .option(null, "Select dropdown")
-                        .option(null, "With options"))
-                .iconLeft("globe", NORMAL);
-
-        then(select).rendersAs("""
-                <div class="field">
-                    <div class="control has-icons-left">
-                        <div class="select">
-                            <select>
-                                <option selected>Country</option>
-                                <option>Select dropdown</option>
-                                <option>With options</option>
-                            </select>
-                        </div>
-                        <span class="icon is-normal is-left"><i class="fas fa-globe"></i></span>
-                    </div>
-                </div>
-                """);
-    }
-
-    @Test void shouldRenderMediumSelectWithLeftIcon() {
-        var select = field().control(select(null).is(MEDIUM)
-                        .option(null, "Country").selected()
-                        .option(null, "Select dropdown")
-                        .option(null, "With options"))
-                .iconLeft("globe", MEDIUM);
-
-        then(select).rendersAs("""
-                <div class="field">
-                    <div class="control has-icons-left">
-                        <div class="select is-medium">
-                            <select>
-                                <option selected>Country</option>
-                                <option>Select dropdown</option>
-                                <option>With options</option>
-                            </select>
-                        </div>
-                        <span class="icon is-medium is-left"><i class="fas fa-globe"></i></span>
-                    </div>
-                </div>
-                """);
-    }
-
-    @Test void shouldRenderLargeSelectWithLeftIcon() {
-        var select = field().control(select(null).is(LARGE)
-                        .option(null, "Country").selected()
-                        .option(null, "Select dropdown")
-                        .option(null, "With options"))
-                .iconLeft("globe", LARGE);
-
-        then(select).rendersAs("""
-                <div class="field">
-                    <div class="control has-icons-left">
-                        <div class="select is-large">
-                            <select>
-                                <option selected>Country</option>
-                                <option>Select dropdown</option>
-                                <option>With options</option>
-                            </select>
-                        </div>
-                        <span class="icon is-large is-left"><i class="fas fa-globe"></i></span>
-                    </div>
-                </div>
-                """);
+                """.replace("${size}", size.key()));
     }
 }

@@ -18,14 +18,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static com.github.t1.bulmajava.elements.Title.title;
-import static com.github.t1.bulmajava.layout.Container.container;
-import static com.github.t1.bulmajava.layout.Section.section;
 import static com.github.t1.htmljava.Html.html;
 import static com.github.t1.htmljava.HtmlBasics.hr;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 public class RenderTestExtension implements Extension, BeforeAllCallback, BeforeEachCallback, AfterEachCallback, AfterAllCallback, LauncherSessionListener {
-    @SuppressWarnings("HtmlUnknownTarget")
     private static final Renderer ALL = new Renderer()
             .unsafeAppend(html("Bulma-Java Demo")
                     .stylesheet("https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css")
@@ -34,7 +31,6 @@ public class RenderTestExtension implements Extension, BeforeAllCallback, Before
                     .script("test-classes/klmn.js")
                     .close(false).render())
             .unsafeAppend("<body>\n");
-    //            <!--suppress HtmlFormInputWithoutLabel -->
 
 
     public static void render(Renderable renderable) {renderable.render(ALL);}
@@ -59,7 +55,10 @@ public class RenderTestExtension implements Extension, BeforeAllCallback, Before
 
     @Override public void beforeAll(ExtensionContext extensionContext) {
         if (addSectionWrapper(extensionContext))
-            ALL.unsafeAppend(section().content(container().close(false)).close(false).render()).in().in();
+            ALL.unsafeAppend("""
+                    <section class="section">
+                        <div class="container">
+                    """).in().in();
         ALL.unsafeAppend("        " + title(extensionContext.getDisplayName()));
     }
 

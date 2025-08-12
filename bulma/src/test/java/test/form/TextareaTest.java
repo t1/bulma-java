@@ -54,7 +54,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderHoverTextArea() {
-        var textarea = field().control(
+        var textarea = field().content(
                 textarea().placeholder("Hovered textarea").is(HOVERED));
 
         then(textarea).rendersAs("""
@@ -67,7 +67,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderFocusTextArea() {
-        var textarea = field().control(
+        var textarea = field().content(
                 textarea().placeholder("Focused textarea").is(FOCUSED));
 
         then(textarea).rendersAs("""
@@ -80,8 +80,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderLoadingTextArea() {
-        var textarea = field().control(
-                textarea().placeholder("Loading textarea"), LOADING);
+        var textarea = field().content(textarea().placeholder("Loading textarea").is(LOADING));
 
         then(textarea).rendersAs("""
                 <div class="field">
@@ -94,10 +93,10 @@ class TextareaTest {
 
     @Test void shouldRenderSizedLoadingTextArea() {
         var textarea = div().style("width: 300px;").content(
-                field().control(textarea().placeholder("Small loading textarea").is(SMALL), SMALL, LOADING),
-                field().control(textarea().placeholder("Normal loading textarea"), LOADING),
-                field().control(textarea().placeholder("Medium loading textarea").is(MEDIUM), MEDIUM, LOADING),
-                field().control(textarea().placeholder("Large loading textarea").is(LARGE), LARGE, LOADING));
+                field().content(textarea().placeholder("Small loading textarea").is(SMALL, LOADING)),
+                field().content(textarea().placeholder("Normal loading textarea").is(LOADING)),
+                field().content(textarea().placeholder("Medium loading textarea").is(MEDIUM, LOADING)),
+                field().content(textarea().placeholder("Large loading textarea").is(LARGE, LOADING)));
 
         then(textarea).rendersAs("""
                 <div style="width: 300px;">
@@ -126,7 +125,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderDisabledTextArea() {
-        var textarea = field().control(
+        var textarea = field().content(
                 textarea().placeholder("Disabled textarea").disabled());
 
         then(textarea).rendersAs("""
@@ -139,7 +138,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderReadonlyTextArea() {
-        var textarea = field().control(
+        var textarea = field().content(
                 textarea().content("This content is readonly").readonly());
 
         then(textarea).rendersAs("""
@@ -152,7 +151,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderReadonlyTrueTextArea() {
-        var textarea = field().control(
+        var textarea = field().content(
                 textarea().content("This content is readonly").readonly(true));
 
         then(textarea).rendersAs("""
@@ -165,7 +164,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderReadonlyFalseTextArea() {
-        var textarea = field().control(
+        var textarea = field().content(
                 textarea().content("This content is not readonly").readonly(false));
 
         then(textarea).rendersAs("""
@@ -178,7 +177,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderRequiredTextArea() {
-        var textarea = field().control(
+        var textarea = field().content(
                 textarea().content("This content is required").required());
 
         then(textarea).rendersAs("""
@@ -191,7 +190,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderRequiredTrueTextArea() {
-        var textarea = field().control(
+        var textarea = field().content(
                 textarea().content("This content is required").required(true));
 
         then(textarea).rendersAs("""
@@ -204,7 +203,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderRequiredFalseTextArea() {
-        var textarea = field().control(
+        var textarea = field().content(
                 textarea().content("This content is not required").required(false));
 
         then(textarea).rendersAs("""
@@ -217,7 +216,7 @@ class TextareaTest {
     }
 
     @Test void shouldRenderFixedSizeTextArea() {
-        var textarea = field().control(
+        var textarea = field().content(
                 textarea().fixedSize().placeholder("Fixed size textarea"));
 
         then(textarea).rendersAs("""

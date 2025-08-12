@@ -4,22 +4,22 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
-import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static com.github.t1.bulmajava.form.Checkbox.checkbox;
 import static com.github.t1.bulmajava.form.Field.field;
+import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class CheckboxTest {
     @Test void shouldRenderCheckbox() {
-        var field = field().control(checkbox().id("foo").name("bar").content("Remember me"));
+        var field = field().content(checkbox().id("foo").name("bar").content("Remember me"));
 
         then(field).rendersAs("""
                 <div class="field">
                     <div class="control">
                         <label class="checkbox">
-                            <input id="foo" type="checkbox" name="bar">
+                            <input id="foo" type="checkbox" name="bar" />
                             Remember me
                         </label>
                     </div>
@@ -28,7 +28,7 @@ class CheckboxTest {
     }
 
     @Test void shouldRenderCheckboxWithLink() {
-        var field = field().control(checkbox().content(
+        var field = field().content(checkbox().content(
                 string("I agree to the"),
                 a("terms and conditions").href("#")));
 
@@ -36,7 +36,7 @@ class CheckboxTest {
                 <div class="field">
                     <div class="control">
                         <label class="checkbox">
-                            <input type="checkbox">
+                            <input type="checkbox" />
                             I agree to the
                             <a href="#">terms and conditions</a>
                         </label>
@@ -46,14 +46,14 @@ class CheckboxTest {
     }
 
     @Test void shouldRenderDisabledCheckbox() {
-        var field = field().control(checkbox().content("Save my preferences").disabled());
+        var field = field().content(checkbox().content("Save my preferences").disabled());
 
         //noinspection HtmlUnknownAttribute // the disabled label is actually correct
         then(field).rendersAs("""
                 <div class="field">
                     <div class="control">
                         <label class="checkbox" disabled>
-                            <input type="checkbox" disabled>
+                            <input type="checkbox" disabled />
                             Save my preferences
                         </label>
                     </div>
@@ -62,13 +62,13 @@ class CheckboxTest {
     }
 
     @Test void shouldRenderCheckedCheckbox() {
-        var field = field().control(checkbox().content("Save my preferences").checked());
+        var field = field().content(checkbox().content("Save my preferences").checked());
 
         then(field).rendersAs("""
                 <div class="field">
                     <div class="control">
                         <label class="checkbox">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked />
                             Save my preferences
                         </label>
                     </div>

@@ -203,7 +203,7 @@ class TagTest {
     }
 
     @Test void shouldRenderMultilineAddonTags() {
-        var tags = multilineGroup().style("width: 240px;").classes("has-background-grey-lighter").controls(
+        var tags = multilineGroup().style("width: 240px;").classes("has-background-grey-lighter").content(
                 tagsAddon().content(tag("npm").is(DARK), tag("0.9.4").is(INFO)),
                 tagsAddon().content(tag("build").is(DARK), tag("passing").is(SUCCESS)),
                 tagsAddon().content(tag("chat").is(DARK), tag("on gitter").is(PRIMARY)));

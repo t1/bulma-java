@@ -50,3 +50,9 @@ For a little demo based on https://quarkus.io[Quarkus] and https://htmx.org/docs
 == Restrictions
 
 Currently, the only icons supported, are https://fontawesome.com[fontawesome].
+
+== Form validation
+
+TODO: use the help field to display validation errors. See https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation#a_more_detailed_example[the MDN] for an example of how to do that.
+
+see https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Constraint_validation

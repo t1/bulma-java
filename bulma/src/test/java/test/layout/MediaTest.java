@@ -98,7 +98,7 @@ class MediaTest {
                 .left(figure().content(imageP(_64x64).content(
                         img(placeholder(_128x128), "bulma"))))
                 .content(
-                        field().control(textarea().placeholder("Add a comment...")),
+                        field().content(textarea().placeholder("Add a comment...")),
                         level()
                                 .left(a("Submit").is(BUTTON, INFO))
                                 .right(checkbox().content("Press enter to submit"))));
@@ -127,7 +127,7 @@ class MediaTest {
                                 <div class="level-right">
                                     <div class="level-item">
                                         <label class="checkbox">
-                                            <input type="checkbox">
+                                            <input type="checkbox" />
                                             Press enter to submit
                                         </label>
                                     </div>
@@ -168,8 +168,8 @@ class MediaTest {
                         .left(figure().content(imageP(_64x64).content(
                                 img("https://bulma.io/assets/images/placeholders/128x128.png", "bulma"))))
                         .content(
-                                field().control(textarea().placeholder("Add a comment...")),
-                                field().control(button("Post comment"))));
+                                field().content(textarea().placeholder("Add a comment...")),
+                                field().content(button("Post comment"))));
 
         // the img-alts where not in the docs
         // the two article-only medias where missing the media-content in the docs

@@ -21,7 +21,7 @@ class ValidationTest {
     @Test void shouldRenderFieldWithColorIcon() {
         var form = div().style("width: 400px;").content(
                 field().label("Label")
-                        .control(input(TEXT).is(PRIMARY).placeholder("Text input"))
+                        .content(input(TEXT).is(PRIMARY).placeholder("Text input"))
                         .iconLeft("check", SUCCESS)
                         .iconRight("exclamation-triangle", WARNING));
 
@@ -30,7 +30,7 @@ class ValidationTest {
                     <div class="field">
                         <label class="label">Label</label>
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input is-primary" type="text" placeholder="Text input">
+                            <input class="input is-primary" type="text" placeholder="Text input" />
                             <span class="icon is-small is-left"><i class="fas fa-check has-text-success"></i></span>
                             <span class="icon is-small is-right"><i class="fas fa-exclamation-triangle has-text-warning"></i></span>
                         </div>
@@ -42,14 +42,14 @@ class ValidationTest {
     @Test void shouldRenderRequiredField() {
         var form = div().style("width: 400px;").content(
                 field().label("Label")
-                        .control(input(TEXT).placeholder("Text input").required()));
+                        .content(input(TEXT).placeholder("Text input").required()));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
                     <div class="field">
                         <label class="label">Label</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="Text input" required>
+                            <input class="input" type="text" placeholder="Text input" required />
                         </div>
                     </div>
                 </div>
@@ -59,14 +59,14 @@ class ValidationTest {
     @Test void shouldRenderRequiredTrueField() {
         var form = div().style("width: 400px;").content(
                 field().label("Label")
-                        .control(input(TEXT).placeholder("Text input").required(true)));
+                        .content(input(TEXT).placeholder("Text input").required(true)));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
                     <div class="field">
                         <label class="label">Label</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="Text input" required>
+                            <input class="input" type="text" placeholder="Text input" required />
                         </div>
                     </div>
                 </div>
@@ -76,14 +76,14 @@ class ValidationTest {
     @Test void shouldRenderRequiredFalseField() {
         var form = div().style("width: 400px;").content(
                 field().label("Label")
-                        .control(input(TEXT).placeholder("Text input").required(false)));
+                        .content(input(TEXT).placeholder("Text input").required(false)));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
                     <div class="field">
                         <label class="label">Label</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="Text input">
+                            <input class="input" type="text" placeholder="Text input" />
                         </div>
                     </div>
                 </div>
@@ -93,14 +93,14 @@ class ValidationTest {
     @Test void shouldRenderMinlengthField() {
         var form = div().style("width: 400px;").content(
                 field().label("Label")
-                        .control(input(TEXT).placeholder("Text input").minlength(5)));
+                        .content(input(TEXT).placeholder("Text input").minlength(5)));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
                     <div class="field">
                         <label class="label">Label</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="Text input" minlength="5">
+                            <input class="input" type="text" placeholder="Text input" minlength="5" />
                         </div>
                     </div>
                 </div>
@@ -110,14 +110,14 @@ class ValidationTest {
     @Test void shouldRenderMaxlengthField() {
         var form = div().style("width: 400px;").content(
                 field().label("Label")
-                        .control(input(TEXT).placeholder("Text input").maxlength(5)));
+                        .content(input(TEXT).placeholder("Text input").maxlength(5)));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
                     <div class="field">
                         <label class="label">Label</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="Text input" maxlength="5">
+                            <input class="input" type="text" placeholder="Text input" maxlength="5" />
                         </div>
                     </div>
                 </div>
@@ -127,14 +127,14 @@ class ValidationTest {
     @Test void shouldRenderMinDateField() {
         var form = div().style("width: 400px;").content(
                 field().label("Label")
-                        .control(input(DATE).min(LocalDate.of(2023, 10, 9))));
+                        .content(input(DATE).min(LocalDate.of(2023, 10, 9))));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
                     <div class="field">
                         <label class="label">Label</label>
                         <div class="control">
-                            <input class="input" type="date" min="2023-10-09">
+                            <input class="input" type="date" min="2023-10-09" />
                         </div>
                     </div>
                 </div>
@@ -144,14 +144,14 @@ class ValidationTest {
     @Test void shouldRenderMaxDateField() {
         var form = div().style("width: 400px;").content(
                 field().label("Label")
-                        .control(input(DATE).max(LocalDate.of(2023, 10, 19))));
+                        .content(input(DATE).max(LocalDate.of(2023, 10, 19))));
 
         then(form).rendersAs("""
                 <div style="width: 400px;">
                     <div class="field">
                         <label class="label">Label</label>
                         <div class="control">
-                            <input class="input" type="date" max="2023-10-19">
+                            <input class="input" type="date" max="2023-10-19" />
                         </div>
                     </div>
                 </div>
@@ -161,7 +161,7 @@ class ValidationTest {
     @Test void shouldRenderMinAndMaxDateField() {
         var form = div().style("width: 400px;").content(
                 field().label("Label")
-                        .control(input(DATE)
+                        .content(input(DATE)
                                 .min(LocalDate.of(2023, 10, 9))
                                 .max(LocalDate.of(2023, 10, 19))));
 
@@ -170,7 +170,7 @@ class ValidationTest {
                     <div class="field">
                         <label class="label">Label</label>
                         <div class="control">
-                            <input class="input" type="date" min="2023-10-09" max="2023-10-19">
+                            <input class="input" type="date" min="2023-10-09" max="2023-10-19" />
                         </div>
                     </div>
                 </div>

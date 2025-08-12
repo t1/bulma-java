@@ -28,7 +28,7 @@ class LevelTest {
                         p().classes("subtitle", "is-5").content(
                                 strong("123"), string(" posts")),
                         field()
-                                .control(input(TEXT).placeholder("Find a post"))
+                                .content(input(TEXT).placeholder("Find a post"))
                                 .addonRight(button("Search")))
                 .right(
                         p().content(strong("All")),
@@ -48,7 +48,7 @@ class LevelTest {
                         <div class="level-item">
                             <div class="field has-addons">
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Find a post">
+                                    <input class="input" type="text" placeholder="Find a post" />
                                 </div>
                                 <div class="control">
                                     <button class="button">Search</button>

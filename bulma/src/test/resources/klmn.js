@@ -36,5 +36,5 @@ document.addEventListener('DOMContentLoaded', function () {
         setValue(n);
     }
 
-    selectGap(3);
+    if ($klmnGaps.length >= 3) selectGap(3);
 });

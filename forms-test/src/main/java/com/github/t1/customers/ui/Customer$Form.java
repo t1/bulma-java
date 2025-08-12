@@ -18,11 +18,11 @@ public class Customer$Form {
     public Renderable content(Customer customer) {
         return fieldset().content(
                 field().horizontal().label("Customer Number", NORMAL)
-                        .control(field().control(input(TEXT).readonly().placeholder("12345").value(customer.getId().toString()), EXPANDED)),
+                        .content(field().content(input(TEXT).readonly().placeholder("12345").value(customer.getId().toString()).is(EXPANDED))),
                 field().horizontal().label("Name", NORMAL)
-                        .control(field().control(input(TEXT).readonly().placeholder("Name").value(customer.getName()), EXPANDED)),
+                        .content(field().content(input(TEXT).readonly().placeholder("Name").value(customer.getName()).is(EXPANDED))),
                 field().horizontal()
                         .label("Email", NORMAL)
-                        .control(field().control(input(EMAIL).readonly().placeholder("Email").value(customer.getEmail()), EXPANDED)));
+                        .content(field().content(input(EMAIL).readonly().placeholder("Email").value(customer.getEmail()).is(EXPANDED))));
     }
 }

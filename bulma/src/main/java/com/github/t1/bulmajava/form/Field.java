@@ -2,7 +2,9 @@ package com.github.t1.bulmajava.form;
 
 import com.github.t1.bulmajava.basic.Alignment;
 import com.github.t1.bulmajava.basic.BulmaElement;
+import com.github.t1.bulmajava.basic.HasModifier;
 import com.github.t1.bulmajava.basic.IsModifier;
+import com.github.t1.bulmajava.basic.Size;
 import com.github.t1.bulmajava.elements.Icon;
 import com.github.t1.htmljava.AbstractElement;
 import com.github.t1.htmljava.Anchor;
@@ -12,28 +14,28 @@ import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import java.util.function.Function;
-import java.util.stream.Stream;
-
 import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
 import static com.github.t1.bulmajava.basic.Alignment.LEFT;
 import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
+import static com.github.t1.bulmajava.basic.State.LOADING;
 import static com.github.t1.bulmajava.elements.Button.BUTTON;
 import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.HtmlBasics.element;
 import static com.github.t1.htmljava.HtmlBasics.p;
 
-/**
- * The Bulma docs is not explicit about the <code>field-label</code> and <code>field-body</code> classes,
- * but they seem to be required when the field itself is {@link #horizontal()}
- */
+/// We try to reduce the complexity of building Bulma fields:
+/// * We add nested `field` elements automatically when necessary, so you don't have to.
+/// * We automatically create a `control` element for you, so you don't have to.
+/// * You can set the `size` of the field, and it will be applied to the `label`,
+///  as well as `input` and `button` elements within.
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Field extends BulmaElement<Field> {
     public static final IsModifier EXPANDED = () -> "expanded";
     private static final IsModifier GROUPED = () -> "grouped";
     private static final IsModifier GROUPED_MULTILINE = () -> "grouped-multiline";
     private static final IsModifier HORIZONTAL = () -> "horizontal";
+    private static final HasModifier HAS_ADDONS = () -> "addons";
 
     public static Element fieldset() {return element("fieldset");}
 
@@ -45,8 +47,60 @@ public class Field extends BulmaElement<Field> {
     public static Field multilineGroup() {return group().is(GROUPED_MULTILINE);}
 
 
+    private Size size;
+
     public Field() {super("div", "field");}
 
+    @Override public Field content(Renderable content, boolean first) {
+        if (content instanceof Field) {
+            throw new IllegalArgumentException("There's no need to manually nest fields; we'll do that for you when necessary");
+        }
+        if (content instanceof AbstractElement<?> element
+            && (element.hasClass("field-label") || element.hasClass("label") || element.hasClass("help"))) {
+            return super.content(content, first);
+        }
+
+        AbstractElement<?> control = control().content(content);
+        // all radios must go into a single control
+        if (content instanceof Radio radio) {
+            var existing = findElement("control");
+            if (existing.isPresent()) {
+                existing.get().content(radio);
+                return this;
+            }
+        }
+
+        if (hasModifier(HORIZONTAL)) {
+            control = div().classes("field-body").content(div().classes("field").content(control));
+        }
+        if (content instanceof AbstractElement<?> element) {
+            element.is(size);
+            if (element instanceof Anchor) element.is(BUTTON);
+            if (element.hasModifier(BUTTON) || element.hasClass("select") || element instanceof Input) {
+                move(HAS_ADDONS).from(element).to(this); // the field
+            }
+            move(EXPANDED).from(element).to(control);
+            if (element.hasModifier(LOADING)) {
+                copy(Size.values()).from(element).to(control);
+                move(LOADING).from(element).to(control);
+            }
+        }
+        return super.content(control, first);
+    }
+
+    @Override public Field is(Modifier... modifiers) {
+        // TODO maybe introduce a Modifiers class similar to Attributes and Classes
+        for (int i = 0; i < modifiers.length; i++) {
+            var modifier = modifiers[i];
+            if (modifier instanceof Size s) {
+                if (this.size != null)
+                    throw new IllegalArgumentException("Field already has size " + this.size + ", cannot set to " + s);
+                this.size = s;
+                modifiers[i] = null; // remove size from modifiers
+            }
+        }
+        return super.is(modifiers);
+    }
 
     public Field grouped() {return is(GROUPED);}
 
@@ -60,54 +114,21 @@ public class Field extends BulmaElement<Field> {
 
     public Field label(String name, Modifier... modifiers) {
         var label = element("label").classes("label").content(name);
-        if (hasModifier(HORIZONTAL)) findElement("field-label").orElseThrow() // created in #horizontal()
-                .is(modifiers).content(label);
-        else super.content(label.is(modifiers));
+        if (hasModifier(HORIZONTAL))
+            findElement("field-label").orElseThrow() // created in #horizontal()
+                    .is(modifiers).is(size).content(label);
+        else super.content(label.is(modifiers).is(size));
         return this;
     }
 
     public Field help(String text, Modifier... modifiers) {return help(p(text), modifiers);}
 
-    public Field help(AbstractElement<?> content, Modifier... modifiers) {return super.content(content.classes("help").is(modifiers));}
+    public Field help(AbstractElement<?> content, Modifier... modifiers) {return content(content.classes("help").is(modifiers));}
 
-    /** Use {@link #control(AbstractElement, Modifier...)} instead! */
-    @Deprecated @Override public Field content(Renderable content) {return super.content(content);}
-
-    /** Use {@link #controls(AbstractElement[])} instead! */
-    @Deprecated @Override public Field content(Renderable... content) {return super.content(content);}
-
-    /** Use {@link #controls(Stream, Modifier...)} instead! */
-    @Deprecated @Override public Field content(Stream<? extends Renderable> content) {return super.content(content);}
-
-    /** Use {@link #control(AbstractElement, Modifier...)} instead! */
-    // TODO this method doesn't make sense here, as field content cannot be a simple string.
-    //  this it true for may other types of abstract elements, so we should probably remove it from AbstractElement
-    //  and add it to only those element types that can.
-    @Deprecated @Override public Field content(String content) {return super.content(content);}
-
-    // TODO maybe we can use the normal content methods and use a map function to wrap it in a control?
-    //  The LOADING and SIZE modifiers would be handled with methods that hide the logic for applying the classes
-    //  to the the control and/or element.
-    public Field controls(AbstractElement<?>... content) {return controls(Stream.of(content));}
-
-    public Field controls(Stream<AbstractElement<?>> content, Modifier... modifiers) {
-        content.forEach(c -> control(c, modifiers));
-        return this;
+    private AbstractElement<?> fieldBody() {
+        return findElement(e -> e.hasClass("field-body") || e.hasClass("control"))
+                .orElseGet(() -> hasModifier(HORIZONTAL) ? div().classes("field-body") : control());
     }
-
-    public Field control(AbstractElement<?> content, Modifier... modifiers) {
-        if (content instanceof Anchor) content.is(BUTTON);
-        if (this.hasModifier(GROUPED)) return super.content(control().is(modifiers).content(content));
-        return control(control -> control.is(modifiers).content(content));
-    }
-
-    private Field control(Function<AbstractElement<?>, AbstractElement<?>> function) {
-        var control = getOrCreate(e -> e.hasClass("control") || e.hasClass("field-body"), this::body);
-        function.apply(control);
-        return this;
-    }
-
-    private Element body() {return hasModifier(HORIZONTAL) ? div().classes("field-body") : control();}
 
     public Field iconLeft(String iconName, Modifier... modifiers) {return iconLeft(Icon.icon(iconName), modifiers);}
 
@@ -119,23 +140,12 @@ public class Field extends BulmaElement<Field> {
 
     private Field icon(Icon icon, Alignment alignment, Modifier... modifiers) {
         assert alignment != CENTERED;
-        return control(control -> control.classes("has-icons-" + alignment.key()).content(
-                icon.is(SMALL).is(modifiers).is(alignment)));
+        fieldBody().classes("has-icons-" + alignment.key())
+                .content(icon.is(SMALL).is(modifiers).is(alignment));
+        return this;
     }
 
-    /**
-     * You must call this after all the regular {@link #content(Renderable)}, as we can't distinguish between the
-     * different controls in the field.
-     * <p>
-     * TODO We'd need some sort of meta-data mechanism for that
-     */
-    public Field addonLeft(AbstractElement<?> content, Modifier... modifiers) {
-        if (content instanceof Anchor) content.is(BUTTON);
-        return firstContent(control().is(modifiers).content(content)).classes("has-addons");
-    }
+    public Field addonLeft(AbstractElement<?> content) {return firstContent(content.has(HAS_ADDONS));}
 
-    public Field addonRight(AbstractElement<?> content, Modifier... modifiers) {
-        if (content instanceof Anchor) content.is(BUTTON);
-        return super.content(control().is(modifiers).content(content)).classes("has-addons");
-    }
+    public Field addonRight(AbstractElement<?> content) {return content(content.has(HAS_ADDONS));}
 }

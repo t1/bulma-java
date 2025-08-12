@@ -79,7 +79,7 @@ class PanelTest {
                     <p class="panel-heading">Repositories</p>
                     <div class="panel-block">
                         <p class="control has-icons-left">
-                            <input class="input" type="text" placeholder="Search">
+                            <input class="input" type="text" placeholder="Search" />
                             <span class="icon is-left"><i class="fas fa-search" aria-hidden="true"></i></span>
                         </p>
                     </div>
@@ -115,7 +115,7 @@ class PanelTest {
                         mojs
                     </a>
                     <label class="panel-block">
-                        <input type="checkbox">
+                        <input type="checkbox" />
                         remember me
                     </label>
                     <div class="panel-block">
@@ -167,7 +167,7 @@ class PanelTest {
                     </p>
                     <div class="panel-block">
                         <p class="control has-icons-left">
-                            <input class="input is-$color" type="text" placeholder="Search">
+                            <input class="input is-$color" type="text" placeholder="Search" />
                             <span class="icon is-left"><i class="fas fa-search" aria-hidden="true"></i></span>
                         </p>
                     </div>

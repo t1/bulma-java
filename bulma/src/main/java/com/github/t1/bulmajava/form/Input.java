@@ -4,6 +4,7 @@ import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.Attribute;
 import com.github.t1.htmljava.Attributes;
 import com.github.t1.htmljava.Classes;
+import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
@@ -23,10 +24,16 @@ public class Input extends BulmaElement<Input> {
         return input(type).value(value).notClasses("input").classes("button");
     }
 
-    public static Input input(InputType type) {return new Input(type).close(false);}
+    public static Input input(InputType type) {return new Input(type);}
 
-    private Input(InputType type) {super("input", Attributes.of(Classes.of("input"), Attribute.of("type", type.key())));}
+    private Input(InputType type) {
+        super("input", Attributes.of(Classes.of("input"), Attribute.of("type", type.key())));
+        this.close(false);
+    }
 
+    protected boolean renderOpenTagSlash() {return true;}
+
+    @Override protected Input content(Renderable content, boolean first) {throw new UnsupportedOperationException("Input can not have content");}
 
     public Input value(int value) {return value(Integer.toString(value));}
 

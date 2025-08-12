@@ -21,6 +21,33 @@ import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 @Accessors(fluent = true, chain = true) @SuperBuilder(toBuilder = true)
 public class AbstractElement<SELF extends AbstractElement<?>> implements Renderable {
+    public static CopyModifierStep1 copy(Modifier... modifier) {return new CopyModifierStep1(modifier);}
+
+    public record CopyModifierStep1(Modifier[] modifiers) {
+        public CopyModifierStep2 from(AbstractElement<?> source) {return new CopyModifierStep2(modifiers, source);}
+    }
+
+    public record CopyModifierStep2(Modifier[] modifiers, AbstractElement<?> source) {
+        public void to(AbstractElement<?> target) {
+            Stream.of(modifiers).filter(source::hasModifier).forEach(target::is);
+        }
+    }
+
+    public static MoveModifierStep1 move(Modifier... modifier) {return new MoveModifierStep1(modifier);}
+
+    public record MoveModifierStep1(Modifier[] modifiers) {
+        public MoveModifierStep2 from(AbstractElement<?> source) {return new MoveModifierStep2(modifiers, source);}
+    }
+
+    public record MoveModifierStep2(Modifier[] modifiers, AbstractElement<?> source) {
+        public void to(AbstractElement<?> target) {
+            Stream.of(modifiers).filter(source::hasModifier).forEach(modifier -> {
+                source.not(modifier);
+                target.is(modifier);
+            });
+        }
+    }
+
 
     private boolean close;
 
@@ -30,7 +57,8 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     @Getter private Attributes attributes;
     private Renderable content;
-    // TODO get rid of the mapFunction mechanism
+
+    // TODO get rid of the mapFunction mechanism... overload #content(Renderable content, boolean first) instead
     @NonNull private Function<Renderable, Renderable> mapFunction;
 
     protected AbstractElement(@NonNull String name, String... classes) {this(name, Attributes.of(Classes.of(classes)));}
@@ -120,7 +148,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     public SELF is(Modifier... modifiers) {return is(Stream.of(modifiers));}
 
     public SELF is(Stream<Modifier> modifiers) {
-        modifiers.forEach(m -> m.apply(this));
+        modifiers.filter(Objects::nonNull).forEach(m -> m.apply(this));
         return self();
     }
 
@@ -185,7 +213,8 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return self();
     }
 
-
+    /// A function that is applied to each content element before it is added.
+    /// This allows to, e.g., add classes to the content or wrap it with an additional element.
     public SELF map(Function<Renderable, Renderable> function) {
         this.mapFunction = function;
         return self();
@@ -197,9 +226,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
      * @see #content(Renderable)
      */
     public SELF firstContent(Renderable content) {
-        var mapped = mapFunction.apply(content);
-        this.content = (this.content == null) ? mapped : concat(mapped, this.content);
-        return self();
+        return content(content, true);
     }
 
     public SELF content(String content) {return content(string(content));}
@@ -211,9 +238,12 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return self();
     }
 
-    public SELF content(Renderable content) {
+    public SELF content(Renderable content) {return content(content, false);}
+
+    protected SELF content(Renderable content, boolean first) {
         var mapped = mapFunction.apply(content);
-        this.content = (this.content == null) ? mapped : concat(this.content, mapped);
+        this.content = (this.content == null) ? mapped :
+                first ? concat(mapped, this.content): concat(this.content, mapped);
         return self();
     }
 
@@ -269,6 +299,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         if (attributes != null && !attributes.isEmpty()) {
             renderer.unsafeAppend(" ");
             attributes.render(renderer);
+            if (renderOpenTagSlash()) renderer.unsafeAppend(" /");
         }
         renderer.unsafeAppend(">");
         if (content != null) {
@@ -284,4 +315,6 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         }
         if (rendersOnSeparateLines) renderer.nl();
     }
+
+    protected boolean renderOpenTagSlash() {return false;}
 }
