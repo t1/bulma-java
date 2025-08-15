@@ -3,7 +3,6 @@ package com.github.t1.customers.ui;
 import com.github.t1.bulmajava.elements.ImageSize;
 import com.github.t1.customers.Customer;
 import com.github.t1.ui.Page;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -19,7 +18,7 @@ import static jakarta.ws.rs.core.MediaType.TEXT_HTML;
 
 @Provider
 @Produces(TEXT_HTML)
-@RequiredArgsConstructor(onConstructor_ = @Inject)
+@RequiredArgsConstructor
 public class CustomerPage implements MessageBodyWriter<Customer> {
     private final Page page;
     private final Customer$Form form;

@@ -3,7 +3,6 @@ package com.github.t1.orders.ui;
 import com.github.t1.htmljava.Renderable;
 import com.github.t1.orders.Order;
 import com.github.t1.ui.Page;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -26,7 +25,7 @@ import static java.time.format.FormatStyle.SHORT;
 
 @Provider
 @Produces(TEXT_HTML)
-@RequiredArgsConstructor(onConstructor_ = @Inject)
+@RequiredArgsConstructor
 public class OrdersPage implements MessageBodyWriter<List<Order>> {
     private final Page page;
 

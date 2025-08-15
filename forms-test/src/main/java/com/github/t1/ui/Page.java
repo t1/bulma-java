@@ -8,7 +8,6 @@ import com.github.t1.htmljava.Html;
 import com.github.t1.htmljava.Renderable;
 import com.github.t1.htmljava.Renderer;
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.UriInfo;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +41,7 @@ import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 import static java.util.Locale.ROOT;
 
 @RequestScoped
-@RequiredArgsConstructor(onConstructor_ = @Inject)
+@RequiredArgsConstructor
 public class Page implements Renderable {
     //private final HttpSession session;
     private final HttpHeaders headers;

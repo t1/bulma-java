@@ -2,7 +2,6 @@ package com.github.t1.products.ui;
 
 import com.github.t1.products.Product;
 import com.github.t1.ui.Page;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -27,7 +26,7 @@ import static jakarta.ws.rs.core.MediaType.TEXT_HTML;
 
 @Provider
 @Produces(TEXT_HTML)
-@RequiredArgsConstructor(onConstructor_ = @Inject)
+@RequiredArgsConstructor
 public class ProductPage implements MessageBodyWriter<Product> {
     private final Page page;
 
