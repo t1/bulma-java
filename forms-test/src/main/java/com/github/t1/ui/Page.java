@@ -87,6 +87,7 @@ public class Page implements Renderable {
         return Navbar.navbar("the-navbar").classes("is-fixed-top", "px-5", "has-shadow")
                 .hasBackground(dark(SUCCESS))
                 .start(tabs().content(
+                        tab("Home", "/", "home"),
                         tab("Products", "/products", "search"),
                         tab("Customers", "/customers", "wrench"),
                         tab("Orders", "/orders", "file-alt")));
