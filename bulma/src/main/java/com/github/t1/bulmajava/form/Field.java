@@ -80,7 +80,7 @@ public class Field extends BulmaElement<Field> {
     private FieldControl lastControl;
 
     @RequiredArgsConstructor @ToString
-    private static class FieldControl {
+    private class FieldControl {
         private final AbstractElement<?> content;
         private FieldIcon leftIcon;
         private FieldIcon rightIcon;
@@ -90,6 +90,42 @@ public class Field extends BulmaElement<Field> {
 
         public boolean noLabelPadding() {
             return content instanceof Radios || content instanceof Checkbox;
+        }
+
+        private boolean hasAddons() {return leftAddons.isPresent() || rightAddons.isPresent();}
+
+        private void render(Renderer renderer) {
+            var content = this.content.twin(); // we'll have copy/move some modifiers
+            var control = control().content(content);
+
+            if (leftIcon != null) leftIcon.addTo(control, LEFT);
+            if (rightIcon != null) rightIcon.addTo(control, RIGHT);
+
+            var subField = hasModifier(HORIZONTAL)
+                    ? div().classes("field").renderOpeningTag(renderer, true)
+                    : null;
+            // if we have a horizontal field with addons _and_ help, we need a sub-sub-field, and has-addons has to be copied there
+            var subSubField = (subField != null && help != null && hasAddons())
+                    ? div().classes("field").has(ADDONS).renderOpeningTag(renderer, true)
+                    : null;
+
+            content.is(size);
+            if (content instanceof Anchor) content.is(BUTTON);
+            move(EXPANDED).from(content).to(control);
+            if (content.hasModifier(LOADING)) {
+                copy(Size.values()).from(content).to(control);
+                move(LOADING).from(content).to(control);
+            }
+
+            leftAddons.render(renderer);
+
+            control.render(renderer);
+
+            rightAddons.render(renderer);
+
+            if (subSubField != null) subSubField.close();
+            if (help != null) help.build().render(renderer);
+            if (subField != null) subField.close();
         }
     }
 
@@ -103,6 +139,8 @@ public class Field extends BulmaElement<Field> {
     @ToString
     private static class FieldAddons {
         private List<AbstractElement<?>> addons;
+
+        public boolean isPresent() {return addons != null && !addons.isEmpty();}
 
         public void add(AbstractElement<?> element) {
             if (element instanceof Anchor) element.is(BUTTON);
@@ -231,35 +269,11 @@ public class Field extends BulmaElement<Field> {
 
     private void renderControls(Renderer renderer) {
         // the field-body is only needed for horizontal fields, otherwise we can render directly into the field
-        var fieldBody = hasModifier(HORIZONTAL) ? div().classes("field-body").renderOpeningTag(renderer, true) : null;
+        var fieldBody = hasModifier(HORIZONTAL)
+                ? div().classes("field-body").renderOpeningTag(renderer, true)
+                : null;
 
-        controls.forEach(fieldControl -> {
-            var element = fieldControl.content.twin();
-            var controlElement = control().content(element);
-
-            if (fieldControl.leftIcon != null) fieldControl.leftIcon.addTo(controlElement, LEFT);
-            if (fieldControl.rightIcon != null) fieldControl.rightIcon.addTo(controlElement, RIGHT);
-
-            element.is(size);
-            if (element instanceof Anchor) element.is(BUTTON);
-            move(EXPANDED).from(element).to(controlElement);
-            if (element.hasModifier(LOADING)) {
-                copy(Size.values()).from(element).to(controlElement);
-                move(LOADING).from(element).to(controlElement);
-            }
-
-            var nestedField = hasModifier(HORIZONTAL) ?div().classes("field").renderOpeningTag(renderer, true) : null;
-
-            fieldControl.leftAddons.render(renderer);
-
-            controlElement.render(renderer);
-
-            fieldControl.rightAddons.render(renderer);
-
-            if (fieldControl.help != null) fieldControl.help.build().render(renderer);
-
-            if (nestedField != null) nestedField.close();
-        });
+        controls.forEach(fieldControl -> fieldControl.render(renderer));
 
         if (fieldBody != null) fieldBody.close();
     }

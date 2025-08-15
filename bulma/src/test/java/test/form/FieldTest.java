@@ -2,7 +2,6 @@ package test.form;
 
 import com.github.t1.bulmajava.basic.Size;
 import com.github.t1.htmljava.Anchor;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -826,7 +825,6 @@ class FieldTest {
                 """);
     }
 
-    @Disabled
     @Test void shouldRenderHorizontalForm() {
         var form = div().style("width: 1000px;").content(
                 field("From").horizontal()
@@ -856,6 +854,7 @@ class FieldTest {
 
         // Bulma docs: the Department `select` is `fullwidth`, while the nested `field` is `narrow`;
         // also, the Already-a-member?-`field` is `narrow`... makes no sense, so we removed those.
+        // The `has-addons` in the phone number field is no problem, and the `is-expanded` is not necessary.
         then(form).rendersAs("""
                 <div style="width: 1000px;">
                     <div class="field is-horizontal">
@@ -878,10 +877,10 @@ class FieldTest {
                             </div>
                         </div>
                     </div>
-                    <div class="field is-horizontal">
+                    <div class="field is-horizontal has-addons">
                         <div class="field-label is-normal"></div>
                         <div class="field-body">
-                            <div class="field is-expanded">
+                            <div class="field">
                                 <div class="field has-addons">
                                     <div class="control">
                                         <a class="is-static button" href="#">+44</a>
