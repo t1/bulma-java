@@ -17,10 +17,10 @@ public class Customer$Form {
     public Renderable content(Customer customer) {
         return fieldset().content(
                 field("Customer Number").horizontal()
-                        .content(field().content(input(TEXT).readonly().placeholder("12345").value(customer.getId().toString()).is(EXPANDED))),
+                        .content(input(TEXT).readonly().placeholder("12345").value(customer.getId().toString()).is(EXPANDED)),
                 field("Name").horizontal()
-                        .content(field().content(input(TEXT).readonly().placeholder("Name").value(customer.getName()).is(EXPANDED))),
+                        .content(input(TEXT).readonly().placeholder("Name").value(customer.getName()).is(EXPANDED)),
                 field("Email").horizontal()
-                        .content(field().content(input(EMAIL).readonly().placeholder("Email").value(customer.getEmail()).is(EXPANDED))));
+                        .content(input(EMAIL).readonly().placeholder("Email").value(customer.getEmail()).is(EXPANDED)));
     }
 }

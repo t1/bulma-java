@@ -3,12 +3,12 @@ package com.github.t1.customers.ui;
 import com.github.t1.bulmajava.elements.ImageSize;
 import com.github.t1.customers.Customer;
 import com.github.t1.ui.Page;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.ext.MessageBodyWriter;
 import jakarta.ws.rs.ext.Provider;
-import lombok.RequiredArgsConstructor;
 
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
@@ -18,10 +18,14 @@ import static jakarta.ws.rs.core.MediaType.TEXT_HTML;
 
 @Provider
 @Produces(TEXT_HTML)
-@RequiredArgsConstructor
 public class CustomerPage implements MessageBodyWriter<Customer> {
     private final Page page;
     private final Customer$Form form;
+
+    @Inject public CustomerPage(Page page, Customer$Form form) {
+        this.page = page;
+        this.form = form;
+    }
 
     @Override
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {

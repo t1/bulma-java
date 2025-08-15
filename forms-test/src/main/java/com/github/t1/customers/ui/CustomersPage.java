@@ -3,12 +3,12 @@ package com.github.t1.customers.ui;
 import com.github.t1.customers.Customer;
 import com.github.t1.htmljava.Renderable;
 import com.github.t1.ui.Page;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.ext.MessageBodyWriter;
 import jakarta.ws.rs.ext.Provider;
-import lombok.RequiredArgsConstructor;
 
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
@@ -30,9 +30,12 @@ import static jakarta.ws.rs.core.MediaType.TEXT_HTML;
 
 @Provider
 @Produces(TEXT_HTML)
-@RequiredArgsConstructor
 public class CustomersPage implements MessageBodyWriter<List<Customer>> {
     private final Page page;
+
+    @Inject public CustomersPage(Page page) {
+        this.page = page;
+    }
 
     @Override
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {

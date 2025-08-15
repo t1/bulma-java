@@ -3,12 +3,12 @@ package com.github.t1.orders.ui;
 import com.github.t1.htmljava.Renderable;
 import com.github.t1.orders.Order;
 import com.github.t1.ui.Page;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.ext.MessageBodyWriter;
 import jakarta.ws.rs.ext.Provider;
-import lombok.RequiredArgsConstructor;
 
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
@@ -25,9 +25,12 @@ import static java.time.format.FormatStyle.SHORT;
 
 @Provider
 @Produces(TEXT_HTML)
-@RequiredArgsConstructor
 public class OrdersPage implements MessageBodyWriter<List<Order>> {
     private final Page page;
+
+    @Inject public OrdersPage(Page page) {
+        this.page = page;
+    }
 
     @Override
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {

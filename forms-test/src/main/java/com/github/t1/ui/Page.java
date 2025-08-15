@@ -8,9 +8,9 @@ import com.github.t1.htmljava.Html;
 import com.github.t1.htmljava.Renderable;
 import com.github.t1.htmljava.Renderer;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.UriInfo;
-import lombok.RequiredArgsConstructor;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.time.LocalDate;
@@ -41,7 +41,6 @@ import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 import static java.util.Locale.ROOT;
 
 @RequestScoped
-@RequiredArgsConstructor
 public class Page implements Renderable {
     //private final HttpSession session;
     private final HttpHeaders headers;
@@ -51,6 +50,11 @@ public class Page implements Renderable {
 
     private Html html;
     private Section section;
+
+    @Inject public Page(HttpHeaders headers, UriInfo uriInfo) {
+        this.headers = headers;
+        this.uriInfo = uriInfo;
+    }
 
     public Page title(String title) {
         //noinspection CommaExpressionJS,JSUnresolvedReference
