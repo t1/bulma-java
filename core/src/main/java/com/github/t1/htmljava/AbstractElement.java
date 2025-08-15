@@ -21,6 +21,7 @@ import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 @Accessors(fluent = true, chain = true) @SuperBuilder(toBuilder = true)
 public class AbstractElement<SELF extends AbstractElement<?>> implements Renderable {
+    /// A convenience method-chain to _copy_ modifiers from one element to another.
     public static CopyModifierStep1 copy(Modifier... modifier) {return new CopyModifierStep1(modifier);}
 
     public record CopyModifierStep1(Modifier[] modifiers) {
@@ -33,6 +34,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         }
     }
 
+    /// A convenience method-chain to _move_ modifiers from one element to another.
     public static MoveModifierStep1 move(Modifier... modifier) {return new MoveModifierStep1(modifier);}
 
     public record MoveModifierStep1(Modifier[] modifiers) {
@@ -56,6 +58,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     @Getter @NonNull private String name;
 
     @Getter private Attributes attributes;
+
     private Renderable content;
 
     // TODO get rid of the mapFunction mechanism... overload #content(Renderable content, boolean first) instead
@@ -76,6 +79,9 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         this.mapFunction = mapFunction;
     }
 
+    /// Clone, but don't use Cloneable; and `copy` is already something else
+    public AbstractElement<SELF> twin() {return toBuilder().attributes(attributes().twin()).build();}
+
     @Override public String toString() {return render();}
 
     public boolean hasName(String name) {return this.name.equals(name);}
@@ -86,8 +92,10 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public boolean hasModifier(Modifier modifier) {return modifier.check(this);}
 
-    @Override public boolean hasClass(String name) {
-        return Optional.ofNullable(getClasses()).map(classes -> classes.hasClass(name)).orElse(false);
+    public boolean hasClass(String name) {
+        return Optional.ofNullable(getClasses())
+                .map(classes -> classes.hasClass(name))
+                .orElse(false);
     }
 
     public Classes getClasses() {
@@ -133,11 +141,13 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     public SELF notClasses(String... classes) {return notClasses(Classes.of(classes));}
 
     public SELF notClasses(Classes removing) {
-        if (attributes == null) return self();
-        attributes.find(Classes.class).ifPresent(existing -> {
-            existing.minus(removing);
-            if (existing.empty()) attributes.remove(existing);
-        });
+        if (attributes != null) {
+            attributes.find(Classes.class).ifPresent(existing -> {
+                var removed = existing.minus(removing);
+                if (removed.empty()) attributes.remove(existing);
+                else attributes.replace(existing, removed);
+            });
+        }
         return self();
     }
 
@@ -220,15 +230,6 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return self();
     }
 
-    /**
-     * Insert this {@link Renderable} as the first content element.
-     *
-     * @see #content(Renderable)
-     */
-    public final SELF firstContent(Renderable content) {
-        return content(content, true);
-    }
-
     public SELF content(String content) {return content(string(content));}
 
     public SELF content(Renderable... content) {return content(Arrays.stream(content));}
@@ -238,26 +239,36 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return self();
     }
 
-    public SELF content(Renderable content) {return content(content, false);}
+    public SELF content(Renderable content) {return content(content, LAST);}
 
-    public SELF content(Renderable content, boolean first) {
+    /// Add the given content to the existing content at that index (too big numbers are appended).
+    /// This is the central method to add content to an element; all other methods delegate to this one,
+    /// so this is the perfect method to override in subclasses to change the way content is added.
+    public SELF content(Renderable content, int index) {
+        assert index >= 0;
         var mapped = mapFunction.apply(content);
         this.content = (this.content == null) ? mapped :
-                first ? concat(mapped, this.content): concat(this.content, mapped);
+                this.content instanceof ConcatenatedRenderable concatenated ? concatenated.plus(mapped, index) :
+                        (index == 0) ? concat(mapped, this.content) : concat(this.content, mapped);
         return self();
     }
 
-    public final SELF content(String className, Function<AbstractElement<?>, AbstractElement<?>> function) {
-        return content(e -> e.hasClass(className), function, () -> div().classes(className));
+    public final SELF content(String className, Function<AbstractElement<?>, AbstractElement<?>> wrapper) {
+        return content(e -> e.hasClass(className), wrapper, () -> div().classes(className));
     }
 
     public final SELF content(
             Predicate<AbstractElement<?>> predicate,
-            Function<AbstractElement<?>, AbstractElement<?>> function,
+            Function<AbstractElement<?>, AbstractElement<?>> wrapper,
             Supplier<AbstractElement<?>> generator) {
         var element = findElement(predicate);
-        element.ifPresentOrElse(function::apply, () -> content(function.apply(generator.get())));
+        element.ifPresentOrElse(wrapper::apply, () -> content(wrapper.apply(generator.get())));
         return self();
+    }
+
+    public final SELF setContent(Renderable content) {
+        this.content = null;
+        return content(content);
     }
 
     public <T extends AbstractElement<?>> T getOrCreate(String className) {
@@ -294,27 +305,53 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     }
 
     @Override public void render(Renderer renderer) {
-        if (rendersOnSeparateLines) renderer.appendIndent();
+        try (var ignored = renderOpeningTag(renderer, contentRendersOnSeparateLines())) {
+            renderContent(renderer);
+        }
+    }
+
+    public TagContinuation renderOpeningTag(Renderer renderer, boolean contentRendersOnSeparateLines) {
+        if (rendersOnSeparateLines()) renderer.indent();
         renderer.unsafeAppend("<").safeAppend(name);
         if (attributes != null && !attributes.isEmpty()) {
             renderer.unsafeAppend(" ");
             attributes.render(renderer);
-            if (renderOpenTagSlash()) renderer.unsafeAppend(" /");
+            if (slashOpeningTag()) renderer.unsafeAppend(" /");
         }
         renderer.unsafeAppend(">");
-        if (content != null) {
-            if (content.rendersOnSeparateLines()) renderer.nl().in();
-            content.render(renderer);
-            if (content.rendersOnSeparateLines()) {
-                renderer.out();
-                if (close) renderer.appendIndent();
-            }
+        return new TagContinuation(renderer, contentRendersOnSeparateLines);
+    }
+
+    /// Helper class to help with indentation when manually rendering the content of tags.
+    public class TagContinuation implements AutoCloseable {
+        private final Renderer renderer;
+        private final boolean contentRendersOnSeparateLines;
+
+        public TagContinuation(Renderer renderer, boolean contentRendersOnSeparateLines) {
+            this.renderer = renderer;
+            this.contentRendersOnSeparateLines = contentRendersOnSeparateLines;
+            if (contentRendersOnSeparateLines) renderer.nl().in();
         }
+
+        @Override public void close() {
+            renderClosingTag(renderer, contentRendersOnSeparateLines);
+        }
+    }
+
+    public void renderContent(Renderer renderer) {
+        if (content != null) content.render(renderer);
+    }
+
+    public void renderClosingTag(Renderer renderer, boolean contentRendersOnSeparateLines) {
+        if (contentRendersOnSeparateLines) renderer.out();
         if (close) {
+            if (contentRendersOnSeparateLines) renderer.indent();
             renderer.unsafeAppend("</").safeAppend(name).unsafeAppend(">");
         }
         if (rendersOnSeparateLines) renderer.nl();
     }
 
-    protected boolean renderOpenTagSlash() {return false;}
+    protected boolean contentRendersOnSeparateLines() {return content != null && content.rendersOnSeparateLines();}
+
+    protected boolean slashOpeningTag() {return false;}
 }

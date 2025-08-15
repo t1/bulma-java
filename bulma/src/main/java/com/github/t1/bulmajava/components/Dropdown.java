@@ -48,8 +48,8 @@ public class Dropdown extends BulmaElement<Dropdown> {
     }
 
     @Override
-    public Dropdown content(Renderable renderable, boolean first) {
-        menu().content(item(renderable), first);
+    public Dropdown content(Renderable renderable, int index) {
+        menu().content(item(renderable), index);
         return this;
     }
 

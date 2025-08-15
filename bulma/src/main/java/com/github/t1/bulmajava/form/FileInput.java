@@ -2,6 +2,7 @@ package com.github.t1.bulmajava.form;
 
 import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.bulmajava.elements.Icon;
+import com.github.t1.htmljava.AbstractElement;
 import com.github.t1.htmljava.Attributes;
 import com.github.t1.htmljava.Classes;
 import com.github.t1.htmljava.Element;
@@ -28,9 +29,12 @@ public class FileInput extends BulmaElement<FileInput> {
 
     public FileInput icon(String iconName) {
         return label(label -> {
-            var cta = (Element) label.find(renderable -> renderable.hasClass("file-cta")).orElseThrow();
+            var cta = (Element) label
+                    .find(renderable -> renderable instanceof AbstractElement<?> element
+                                        && element.hasClass("file-cta"))
+                    .orElseThrow();
             var icon = Icon.icon(iconName).notClasses("icon").classes("file-icon");
-            cta.firstContent(icon);
+            cta.content(icon, 0);
             return label;
         });
     }
@@ -43,7 +47,7 @@ public class FileInput extends BulmaElement<FileInput> {
     private FileInput label(Function<ConcatenatedRenderable, ConcatenatedRenderable> function) {
         var div = contentAs(Element.class);
         var label = div.contentAs(ConcatenatedRenderable.class);
-        function.apply(label);
+        div.setContent(function.apply(label));
         return this;
     }
 

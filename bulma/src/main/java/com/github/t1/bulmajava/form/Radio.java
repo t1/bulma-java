@@ -25,17 +25,18 @@ public class Radio extends BulmaElement<Radio> {
 
     @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
     public static class Radios extends BulmaElement<Radios> {
-        private String name;
+        // we don't call it just `name` because that would conflict with AbstractElement#name when cloning (copy)
+        private String inputName;
         private Radio lastRadio;
 
-        private Radios(String name) {
+        private Radios(String inputName) {
             super("div", "radios");
-            this.name = name;
+            this.inputName = inputName;
         }
 
-        @Override public Radios content(Renderable content, boolean first) {
-            if (content instanceof Radio radio) radio.input.attr("name", this.name);
-            return super.content(content, first);
+        @Override public Radios content(Renderable content, int index) {
+            if (content instanceof Radio radio) radio.input.attr("name", this.inputName);
+            return super.content(content, index);
         }
 
         public Radios option(String value, String label) {

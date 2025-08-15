@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
-import static com.github.t1.bulmajava.basic.BulmaElement.TextModifier.text;
 import static com.github.t1.bulmajava.elements.Content.content_;
 import static com.github.t1.bulmajava.layout.Footer.footer;
 import static com.github.t1.htmljava.Anchor.a;
@@ -18,7 +17,7 @@ import static test.CustomAssertions.then;
 class FooterTest {
     @Test void shouldRenderFooter() {
         var section = footer().content(
-                content_().has(text(CENTERED)).content(
+                content_().hasText(CENTERED).content(
                         p().content(
                                 strong("Bulma"), string(" by "), a("Jeremy Thomas").href("https://jgthms.com").rendersOnSeparateLines(false),
                                 string(". The source code is licensed "), a("MIT").href("http://opensource.org/licenses/mit-license.php").rendersOnSeparateLines(false),

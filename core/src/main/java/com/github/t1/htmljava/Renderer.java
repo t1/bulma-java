@@ -6,22 +6,13 @@ public class Renderer {
     private String indentString = "    ";
     private int indent = 0;
 
-    public Renderer indentString(String indentString) {
-        this.indentString = indentString;
-        return this;
-    }
+    public Renderer indentString(String indentString) {this.indentString = indentString; return this;}
 
-    public Renderer in() {
-        indent++;
-        return this;
-    }
+    public Renderer in() {indent++; return this;}
 
-    public Renderer out() {
-        indent--;
-        return this;
-    }
+    public Renderer out() {indent--; return this;}
 
-    public Renderer appendIndent() {return unsafeAppend(indentString.repeat(indent));}
+    public Renderer indent() {return unsafeAppend(indentString.repeat(indent));}
 
     public Renderer nl() {
         if (lastChar() != '\n') unsafeAppend("\n");

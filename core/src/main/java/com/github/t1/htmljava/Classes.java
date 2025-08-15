@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static java.util.Collections.unmodifiableSet;
+
 public record Classes(@NonNull Set<String> set) implements Attribute {
     public static Classes of(Stream<String> classes) {return of(classes.toArray(String[]::new));}
 
@@ -15,16 +17,16 @@ public record Classes(@NonNull Set<String> set) implements Attribute {
                 Classes.of(Set.of()).plus(classes); // ignore null classes
     }
 
-    public static Classes of(Set<String> classes) {return new Classes(new LinkedHashSet<>(classes));}
+    public static Classes of(Set<String> classes) {return new Classes(unmodifiableSet(new LinkedHashSet<>(classes)));}
 
-    @Override public String toString() {return render();}
+    @Override public @NonNull String toString() {return render();}
 
 
     @Override public String key() {return "class";}
 
     public boolean empty() {return set.isEmpty();}
 
-    @Override public boolean hasClass(String name) {return set.contains(name);}
+    public boolean hasClass(String name) {return set.contains(name);}
 
     @Override public boolean matches(Attribute attribute) {
         return attribute instanceof Classes that && that.set.equals(this.set);
@@ -41,7 +43,11 @@ public record Classes(@NonNull Set<String> set) implements Attribute {
         return Classes.of(copy);
     }
 
-    public void minus(Classes classes) {set.removeAll(classes.set);}
+    public Classes minus(Classes classes) {
+        var copy = new LinkedHashSet<>(this.set);
+        classes.set.forEach(copy::remove);
+        return Classes.of(copy);
+    }
 
 
     @Override public void renderValue(Renderer renderer) {

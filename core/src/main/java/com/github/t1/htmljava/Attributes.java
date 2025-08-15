@@ -24,6 +24,8 @@ public class Attributes implements Renderable {
 
     @Override public String toString() {return render();}
 
+    public Attributes twin() {return of(attributes.toArray(Attribute[]::new));}
+
 
     @Override public Optional<Renderable> find(Predicate<Renderable> predicate) {
         return attributes.stream().filter(predicate).findFirst().map(Renderable.class::cast);
@@ -40,6 +42,8 @@ public class Attributes implements Renderable {
     public Optional<Attribute> findAttribute(Predicate<Attribute> predicate) {return findAttributes(predicate).findAny();}
 
     public Stream<Attribute> findAttributes(Predicate<Attribute> predicate) {return attributes.stream().filter(predicate);}
+
+    public int size() {return attributes.size();}
 
     public boolean isEmpty() {return attributes.isEmpty();}
 

@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
-import static com.github.t1.bulmajava.basic.BulmaElement.control;
 import static com.github.t1.bulmajava.basic.Color.PRIMARY;
 import static com.github.t1.bulmajava.basic.Style.LIGHT;
 import static com.github.t1.bulmajava.components.Navbar.NavbarDropdown.navbarDropdown;
@@ -21,6 +20,7 @@ import static com.github.t1.bulmajava.elements.Button.buttons;
 import static com.github.t1.bulmajava.elements.Image.img;
 import static com.github.t1.bulmajava.elements.MenuActivationType.ACTIVE;
 import static com.github.t1.bulmajava.elements.MenuActivationType.HOVERABLE;
+import static com.github.t1.bulmajava.form.Field.control;
 import static com.github.t1.bulmajava.layout.Section.section;
 import static com.github.t1.htmljava.Anchor.a;
 import static com.github.t1.htmljava.HtmlBasics.div;

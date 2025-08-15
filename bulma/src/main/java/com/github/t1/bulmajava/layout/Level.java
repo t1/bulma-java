@@ -22,14 +22,14 @@ public class Level extends BulmaElement<Level> {
     private Level() {super("nav", "level");}
 
 
-    public Level content(Renderable content, boolean first) {
+    public Level content(Renderable content, int index) {
         if (content instanceof AbstractElement<?> element &&
             (element.hasClass("level-left") || element.hasClass("level-right"))) {
-            return super.content(content, first);
+            return super.content(content, index);
         }
         lastItem = levelItem(content);
         if (centered) centered();
-        return super.content(lastItem, first);
+        return super.content(lastItem, index);
     }
 
     public Level left(Renderable... content) {return leftRight("left", content);}

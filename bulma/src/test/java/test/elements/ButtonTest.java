@@ -25,11 +25,10 @@ import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Button.buttons;
 import static com.github.t1.bulmajava.elements.Button.buttonsAddon;
-import static com.github.t1.bulmajava.elements.Button.fieldsAddon;
 import static com.github.t1.bulmajava.elements.ButtonType.BUTTON;
 import static com.github.t1.bulmajava.elements.ButtonType.RESET;
 import static com.github.t1.bulmajava.elements.ButtonType.SUBMIT;
-import static com.github.t1.bulmajava.form.Field.group;
+import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.htmljava.Anchor.a;
 import static com.github.t1.htmljava.HtmlBasics.span;
 import static test.CustomAssertions.then;
@@ -238,7 +237,7 @@ class ButtonTest {
     }
 
     @Test void shouldRenderButtonGroup() {
-        var button = group().content(
+        var button = field().grouped().content(
                 button("Save changes").is(LINK),
                 button("Cancel"),
                 button("Delete post").is(DANGER));
@@ -259,10 +258,10 @@ class ButtonTest {
     }
 
     @Test void shouldRenderFieldAddons() {
-        var buttons = fieldsAddon().content(
-                button().icon("align-left").content(span("Left")),
-                button().icon("align-center").content(span("Center")),
-                button().icon("align-right").content(span("Right")));
+        var buttons = field()
+                .content(button().icon("align-center").content(span("Center")))
+                .addonLeft(button().icon("align-left").content(span("Left")))
+                .addonRight(button().icon("align-right").content(span("Right")));
 
         then(buttons).rendersAs("""
                 <div class="field has-addons">

@@ -17,7 +17,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import static com.github.t1.bulmajava.basic.BulmaElement.control;
 import static com.github.t1.bulmajava.basic.SizeModifier.size;
 import static com.github.t1.bulmajava.components.Card.card;
 import static com.github.t1.bulmajava.elements.Image.image;
@@ -25,6 +24,7 @@ import static com.github.t1.bulmajava.elements.ImageRatio._4by3;
 import static com.github.t1.bulmajava.elements.ImageSize._48x48;
 import static com.github.t1.bulmajava.elements.Title.subtitleP;
 import static com.github.t1.bulmajava.elements.Title.titleP;
+import static com.github.t1.bulmajava.form.Field.control;
 import static com.github.t1.bulmajava.grid.Grid.cell;
 import static com.github.t1.bulmajava.grid.Grid.grid;
 import static com.github.t1.bulmajava.layout.Media.media;

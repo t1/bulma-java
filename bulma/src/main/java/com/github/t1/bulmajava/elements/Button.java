@@ -22,13 +22,7 @@ public class Button extends BulmaElement<Button> {
 
     public static Element buttons() {return div().classes("buttons");}
 
-    public static Element fieldsAddon() {return div().classes("field", "has-addons").map(Button::inControl);}
-
-    private static Renderable inControl(Renderable renderable) {
-        return renderable.hasClass("control") ? renderable : control().content(renderable);
-    }
-
-    public static Element buttonsAddon() {return buttons().classes("has-addons");}
+    public static Element buttonsAddon() {return buttons().has(ADDONS);}
 
     public static Button button(String content) {return button(string(content));}
 

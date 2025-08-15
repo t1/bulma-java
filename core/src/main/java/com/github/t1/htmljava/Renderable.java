@@ -17,14 +17,28 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 public interface Renderable {
+    /// The index for adding a content element at the end.
+    int LAST = Integer.MAX_VALUE;
+
+    /// Fluent API to add an element to a list at a specific index.
+    static <T> AddElementStep1<T> add(T element) {return new AddElementStep1<>(element);}
+
+    record AddElementStep1<T>(T element) {
+        public AddElementStep2<T> as(int index) {return new AddElementStep2<>(element, index);}
+    }
+
+    record AddElementStep2<T>(T element, int index) {
+        public void in(List<T> list) {
+            if (index >= list.size()) list.add(element);
+            else list.add(index, element);
+        }
+    }
+
     default <T extends Renderable> Optional<T> find(Class<T> type) {return find(type::isInstance).map(type::cast);}
 
     default Optional<Renderable> find(Predicate<Renderable> predicate) {
         return predicate.test(this) ? Optional.of(this) : Optional.empty();
     }
-
-    default boolean hasClass(String name) {return false;}
-
 
     void render(Renderer renderer);
 
@@ -57,14 +71,16 @@ public interface Renderable {
         @Override public void render(Renderer renderer) {
             renderer.nl().in();
             renderable.render().lines().forEach(line -> {
-                if (!line.isBlank()) renderer.appendIndent().unsafeAppend(line);
+                if (!line.isBlank()) renderer.indent().unsafeAppend(line);
                 renderer.unsafeAppend("\n");
             });
-            renderer.out().appendIndent();
+            renderer.out().indent();
         }
     }
 
     record ConcatenatedRenderable(List<Renderable> renderables) implements Renderable {
+        public ConcatenatedRenderable {renderables = List.copyOf(renderables); /* unmodifiable */}
+
         public static Collector<Renderable, List<Renderable>, ConcatenatedRenderable> toRenderable() {
             return new Collector<>() {
                 @Override public Supplier<List<Renderable>> supplier() {return ArrayList::new;}
@@ -101,10 +117,15 @@ public interface Renderable {
                     : Stream.of(renderable);
         }
 
-        public ConcatenatedRenderable content(Renderable renderable) {
-            renderables.add(renderable);
-            return this;
+        public ConcatenatedRenderable content(Renderable renderable) {return plus(renderable, LAST);}
+
+        public ConcatenatedRenderable plus(Renderable renderable, int index) {
+            var list = new ArrayList<>(renderables);
+            add(renderable).as(index).in(list);
+            return new ConcatenatedRenderable(list);
         }
+
+        public Renderable last() {return renderables.get(renderables.size() - 1);}
 
         @Override public Optional<Renderable> find(Predicate<Renderable> predicate) {
             return renderables.stream().filter(predicate).findFirst();
@@ -117,13 +138,11 @@ public interface Renderable {
         @Override public void render(Renderer renderer) {
             renderables.forEach(renderable -> {
                 if (rendersOnSeparateLines() && !renderable.rendersOnSeparateLines())
-                    renderer.nl().appendIndent();
+                    renderer.nl().indent();
                 renderable.render(renderer);
                 if (rendersOnSeparateLines() && !renderable.rendersOnSeparateLines())
                     renderer.nl();
             });
         }
-
-        public Renderable last() {return renderables.get(renderables.size() - 1);}
     }
 }

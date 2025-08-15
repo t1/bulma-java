@@ -28,7 +28,7 @@ import static com.github.t1.bulmajava.elements.Tag.tag;
 import static com.github.t1.bulmajava.elements.Tag.tagA;
 import static com.github.t1.bulmajava.elements.Tag.tags;
 import static com.github.t1.bulmajava.elements.Tag.tagsAddon;
-import static com.github.t1.bulmajava.form.Field.multilineGroup;
+import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static test.CustomAssertions.then;
@@ -203,7 +203,7 @@ class TagTest {
     }
 
     @Test void shouldRenderMultilineAddonTags() {
-        var tags = multilineGroup().style("width: 240px;").classes("has-background-grey-lighter").content(
+        var tags = field().groupedMultiline().style("width: 240px;").classes("has-background-grey-lighter").content(
                 tagsAddon().content(tag("npm").is(DARK), tag("0.9.4").is(INFO)),
                 tagsAddon().content(tag("build").is(DARK), tag("passing").is(SUCCESS)),
                 tagsAddon().content(tag("chat").is(DARK), tag("on gitter").is(PRIMARY)));

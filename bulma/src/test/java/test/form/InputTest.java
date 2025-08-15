@@ -11,7 +11,6 @@ import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.Size.LARGE;
 import static com.github.t1.bulmajava.basic.Size.MEDIUM;
-import static com.github.t1.bulmajava.basic.Size.NORMAL;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.LOADING;
 import static com.github.t1.bulmajava.basic.Style.ROUNDED;
@@ -211,12 +210,11 @@ class InputTest {
                 """);
     }
 
-    @Test void shouldRenderReadonlyStaticInput() {
+    @Test void shouldRenderHorizontalInputWithReadonlyStaticInput() {
         var input = div().style("width: 800px;").content(
-                field().horizontal()
-                        .label("From", NORMAL)
+                field("From").horizontal()
                         .content(input(EMAIL).is(STATIC).value("me@example.com").readonly()),
-                field().horizontal().label("To", NORMAL)
+                field("To").horizontal()
                         .content(input(EMAIL).placeholder("Recipient email")));
 
         then(input).rendersAs("""
@@ -262,14 +260,14 @@ class InputTest {
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
                             <input class="input" type="email" placeholder="Email" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check"></i></span>
                         </div>
                     </div>
                     <div class="field">
                         <div class="control has-icons-left">
                             <input class="input" type="password" placeholder="Password" />
-                            <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-lock"></i></span>
                         </div>
                     </div>
                 </div>
@@ -287,8 +285,8 @@ class InputTest {
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
                             <input class="input is-small" type="email" placeholder="Email" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check"></i></span>
                         </div>
                     </div>
                 </div>
@@ -306,8 +304,8 @@ class InputTest {
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
                             <input class="input" type="email" placeholder="Email" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check"></i></span>
                         </div>
                     </div>
                 </div>
@@ -325,8 +323,8 @@ class InputTest {
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
                             <input class="input is-medium" type="email" placeholder="Email" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check"></i></span>
                         </div>
                     </div>
                 </div>
@@ -344,8 +342,8 @@ class InputTest {
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
                             <input class="input is-large" type="email" placeholder="Email" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check"></i></span>
                         </div>
                     </div>
                 </div>
@@ -442,8 +440,7 @@ class InputTest {
 
     @Test void shouldRenderRangeField() {
         var input = div().style("width: 500px;").content(
-                field()
-                        .label("Cowbell")
+                field("Cowbell")
                         .content(input(RANGE).name("cowbell").min(0).max(100).value(90).step(10)));
 
         then(input).rendersAs("""

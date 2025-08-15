@@ -2,90 +2,144 @@ package com.github.t1.bulmajava.form;
 
 import com.github.t1.bulmajava.basic.Alignment;
 import com.github.t1.bulmajava.basic.BulmaElement;
-import com.github.t1.bulmajava.basic.HasModifier;
 import com.github.t1.bulmajava.basic.IsModifier;
 import com.github.t1.bulmajava.basic.Size;
 import com.github.t1.bulmajava.elements.Icon;
+import com.github.t1.bulmajava.form.Radio.Radios;
 import com.github.t1.htmljava.AbstractElement;
 import com.github.t1.htmljava.Anchor;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Modifier;
 import com.github.t1.htmljava.Renderable;
+import com.github.t1.htmljava.Renderer;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.github.t1.bulmajava.basic.Alignment.LEFT;
 import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
+import static com.github.t1.bulmajava.basic.Size.NORMAL;
 import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.LOADING;
 import static com.github.t1.bulmajava.elements.Button.BUTTON;
 import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.HtmlBasics.element;
 import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.Renderable.add;
 
-/// We try to reduce the complexity of building Bulma fields:
-/// * We add nested `field` elements automatically when necessary, so you don't have to.
-/// * We automatically create a `control` element for you, so you don't have to.
-/// * You can set the `size` of the field, and it will be applied to the `label`,
-///  as well as `input` and `button` elements within.
+/// The Bulma `field` element is a container for a label and one or more inputs (Bulma calls them form controls)
+/// with icons, addons, and a help text. Most things are optional, but it requires quite some boilerplate markup to build,
+/// so we provide a fluent API to make it much easier. Just think of the things you want to see,
+/// this class will take care of the details.
+///
+/// The basic pattern is that you create a {@link #field(String)} with its label (or {@link #field()}
+/// without a label), then add your inputs, etc. as {@link #content(Renderable)},
+/// which you can then modify with icons and a help text.
+/// E.g., building a text field with an icon, an addon, and a help text looks like this:
+/// ```java
+/// field("User")
+///     .content(input(TEXT).expanded())
+///     .iconLeft("user")
+///     .addonRight(button("Search"))
+///     .help("The username you want to search for", SUCCESS);
+///```
+///
+/// Note that you can only have one icon on each side of the input, but multiple addons.
+///
+/// Sometimes, you may want to have several inputs for a single label. In that case, you can simply
+/// add more `content` and then modify that with icons or help. Multiple inputs can be styled as a
+/// group of inputs by using {@link #grouped()} or {@link #groupedMultiline()}.
+///
+/// To place the labels left of the inputs instead of above, you can use {@link #horizontal()}.
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Field extends BulmaElement<Field> {
     public static final IsModifier EXPANDED = () -> "expanded";
+
+    // we could make GROUPED public, but GROUPED_MULTILINE also needs GROUPED, so to be consistent.
     private static final IsModifier GROUPED = () -> "grouped";
     private static final IsModifier GROUPED_MULTILINE = () -> "grouped-multiline";
     private static final IsModifier HORIZONTAL = () -> "horizontal";
-    private static final HasModifier HAS_ADDONS = () -> "addons";
+
+    // TODO maybe we could make usage of this fully automatic?
+    public static Element control() {return div().is(CONTROL);}
 
     public static Element fieldset() {return element("fieldset");}
 
-    public static Field field() {return new Field();}
+    @SuppressWarnings("RedundantCast") public static Field field() {return new Field((String) null);}
 
+    public static Field field(String label) {return new Field(label);}
 
-    public static Field group() {return field().is(GROUPED);}
-
-    public static Field multilineGroup() {return group().is(GROUPED_MULTILINE);}
-
-
+    private final String label;
     private Size size;
+    private final List<FieldControl> controls = new ArrayList<>();
 
-    public Field() {super("div", "field");}
+    private FieldControl lastControl;
 
-    @Override public Field content(Renderable content, boolean first) {
+    @RequiredArgsConstructor @ToString
+    private static class FieldControl {
+        private final AbstractElement<?> content;
+        private FieldIcon leftIcon;
+        private FieldIcon rightIcon;
+        private final FieldAddons leftAddons = new FieldAddons();
+        private final FieldAddons rightAddons = new FieldAddons();
+        private FieldHelp help;
+
+        public boolean noLabelPadding() {
+            return content instanceof Radios || content instanceof Checkbox;
+        }
+    }
+
+    private record FieldIcon(Icon icon, Modifier[] modifiers) {
+        public void addTo(Element control, Alignment alignment) {
+            control.classes("has-icons-" + alignment.key())
+                    .content(icon.is(SMALL).is(modifiers).is(alignment));
+        }
+    }
+
+    @ToString
+    private static class FieldAddons {
+        private List<AbstractElement<?>> addons;
+
+        public void add(AbstractElement<?> element) {
+            if (element instanceof Anchor) element.is(BUTTON);
+            if (addons == null) addons = new ArrayList<>();
+            addons.add(element);
+        }
+
+        public void render(Renderer renderer) {
+            if (addons != null) {
+                for (var addon : addons) {
+                    addon = addon.twin();
+                    var control = control();
+                    move(EXPANDED).from(addon).to(control);
+                    control.content(addon).render(renderer);
+                }
+            }
+        }
+    }
+
+    private record FieldHelp(AbstractElement<?> content, Modifier[] modifiers) {
+        public AbstractElement<?> build() {return content.classes("help").is(modifiers);}
+    }
+
+    public Field(String label) {
+        super("div", "field");
+        this.label = label;
+    }
+
+    @Override public Field content(Renderable content, int index) {
         if (content instanceof Field) {
             throw new IllegalArgumentException("There's no need to manually nest fields; we'll do that for you when necessary");
         }
-        if (content instanceof AbstractElement<?> element
-            && (element.hasClass("field-label") || element.hasClass("label") || element.hasClass("help"))) {
-            return super.content(content, first);
-        }
 
-        AbstractElement<?> control = control().content(content);
-        // all radios must go into a single control
-        if (content instanceof Radio radio) {
-            var existing = findElement("control");
-            if (existing.isPresent()) {
-                existing.get().content(radio);
-                return this;
-            }
-        }
+        lastControl = new FieldControl((AbstractElement<?>) content);
+        add(lastControl).as(index).in(controls);
 
-        if (hasModifier(HORIZONTAL)) {
-            control = div().classes("field-body").content(div().classes("field").content(control));
-        }
-        if (content instanceof AbstractElement<?> element) {
-            element.is(size);
-            if (element instanceof Anchor) element.is(BUTTON);
-            if (element.hasModifier(BUTTON) || element.hasClass("select") || element instanceof Input) {
-                move(HAS_ADDONS).from(element).to(this); // the field
-            }
-            move(EXPANDED).from(element).to(control);
-            if (element.hasModifier(LOADING)) {
-                copy(Size.values()).from(element).to(control);
-                move(LOADING).from(element).to(control);
-            }
-        }
-        return super.content(control, first);
+        return this;
     }
 
     @Override public Field is(Modifier... modifiers) {
@@ -102,50 +156,113 @@ public class Field extends BulmaElement<Field> {
         return super.is(modifiers);
     }
 
+    public Field horizontal() {return this.is(HORIZONTAL);}
+
     public Field grouped() {return is(GROUPED);}
 
     public Field groupedRight() {return grouped().classes("is-grouped-right");}
 
     public Field groupedCentered() {return grouped().classes("is-grouped-centered");}
 
-    public Field groupedMultiline() {return grouped().classes("is-grouped-multiline");}
-
-    public Field horizontal() {return super.content(div().classes("field-label")).is(HORIZONTAL);}
-
-    public Field label(String name, Modifier... modifiers) {
-        var label = element("label").classes("label").content(name);
-        if (hasModifier(HORIZONTAL))
-            findElement("field-label").orElseThrow() // created in #horizontal()
-                    .is(modifiers).is(size).content(label);
-        else super.content(label.is(modifiers).is(size));
-        return this;
-    }
+    public Field groupedMultiline() {return grouped().is(GROUPED_MULTILINE);}
 
     public Field help(String text, Modifier... modifiers) {return help(p(text), modifiers);}
 
-    public Field help(AbstractElement<?> content, Modifier... modifiers) {return content(content.classes("help").is(modifiers));}
-
-    private AbstractElement<?> fieldBody() {
-        return findElement(e -> e.hasClass("field-body") || e.hasClass("control"))
-                .orElseGet(() -> hasModifier(HORIZONTAL) ? div().classes("field-body") : control());
+    public Field help(AbstractElement<?> content, Modifier... modifiers) {
+        assert lastControl != null : "You must add a content (e.g. input) before adding help to it";
+        lastControl.help = new FieldHelp(content, modifiers); return this;
     }
 
     public Field iconLeft(String iconName, Modifier... modifiers) {return iconLeft(Icon.icon(iconName), modifiers);}
 
-    public Field iconLeft(Icon icon, Modifier... modifiers) {return icon(icon, LEFT, modifiers);}
-
-    public Field iconRight(String iconName, Modifier... modifiers) {return iconRight(Icon.icon(iconName), modifiers);}
-
-    public Field iconRight(Icon icon, Modifier... modifiers) {return icon(icon, RIGHT, modifiers);}
-
-    private Field icon(Icon icon, Alignment alignment, Modifier... modifiers) {
-        assert alignment != CENTERED;
-        fieldBody().classes("has-icons-" + alignment.key())
-                .content(icon.is(SMALL).is(modifiers).is(alignment));
+    public Field iconLeft(Icon icon, Modifier... modifiers) {
+        assert lastControl != null : "You must add a content (e.g. input) before setting an icon";
+        assert lastControl.leftIcon == null : "Field already has left icon, cannot add another";
+        lastControl.leftIcon = new FieldIcon(icon, modifiers);
         return this;
     }
 
-    public Field addonLeft(AbstractElement<?> content) {return firstContent(content.has(HAS_ADDONS));}
+    public Field iconRight(String iconName, Modifier... modifiers) {return iconRight(Icon.icon(iconName), modifiers);}
 
-    public Field addonRight(AbstractElement<?> content) {return content(content.has(HAS_ADDONS));}
+    public Field iconRight(Icon icon, Modifier... modifiers) {
+        assert lastControl != null : "You must add a content (e.g. input) before setting an icon";
+        assert lastControl.rightIcon == null : "Field already has right icon, cannot add another";
+        lastControl.rightIcon = new FieldIcon(icon, modifiers);
+        return this;
+    }
+
+    public Field addonLeft(AbstractElement<?> element) {
+        assert lastControl != null : "You must add a content (e.g. input) before adding addons to it";
+        lastControl.leftAddons.add(element);
+        return this.has(ADDONS);
+    }
+
+    public Field addonRight(AbstractElement<?> element) {
+        assert lastControl != null : "You must add a content (e.g. input) before adding addons to it";
+        lastControl.rightAddons.add(element);
+        return this.has(ADDONS);
+    }
+
+
+    @Override public void renderContent(Renderer renderer) {
+        renderLabel(renderer);
+        renderControls(renderer);
+    }
+
+    private void renderLabel(Renderer renderer) {
+        if (this.label != null || hasModifier(HORIZONTAL)) {
+            var label = (this.label == null) ? null : element("label").classes("label").content(this.label);
+            if (hasModifier(HORIZONTAL)) {
+                label = div().classes("field-label").is(horizontalLabelSize()).content(label);
+            } else {
+                //noinspection DataFlowIssue // IntelliJ does not see that the label is never null here
+                label.is(size);
+            }
+            renderer.nl();
+            label.render(renderer);
+        }
+    }
+
+    /// Horizontal labels must have a size, or they will not align; but not if they contain checkboxes or radios.
+    /// Mixing checkboxes and radios with other controls in a horizontal field is not properly supported.
+    private Size horizontalLabelSize() {
+        return size == null && controls.stream().noneMatch(FieldControl::noLabelPadding) ? NORMAL : size;
+    }
+
+    private void renderControls(Renderer renderer) {
+        // the field-body is only needed for horizontal fields, otherwise we can render directly into the field
+        var fieldBody = hasModifier(HORIZONTAL) ? div().classes("field-body").renderOpeningTag(renderer, true) : null;
+
+        controls.forEach(fieldControl -> {
+            var element = fieldControl.content.twin();
+            var controlElement = control().content(element);
+
+            if (fieldControl.leftIcon != null) fieldControl.leftIcon.addTo(controlElement, LEFT);
+            if (fieldControl.rightIcon != null) fieldControl.rightIcon.addTo(controlElement, RIGHT);
+
+            element.is(size);
+            if (element instanceof Anchor) element.is(BUTTON);
+            move(EXPANDED).from(element).to(controlElement);
+            if (element.hasModifier(LOADING)) {
+                copy(Size.values()).from(element).to(controlElement);
+                move(LOADING).from(element).to(controlElement);
+            }
+
+            var nestedField = hasModifier(HORIZONTAL) ?div().classes("field").renderOpeningTag(renderer, true) : null;
+
+            fieldControl.leftAddons.render(renderer);
+
+            controlElement.render(renderer);
+
+            fieldControl.rightAddons.render(renderer);
+
+            if (fieldControl.help != null) fieldControl.help.build().render(renderer);
+
+            if (nestedField != null) nestedField.close();
+        });
+
+        if (fieldBody != null) fieldBody.close();
+    }
+
+    @Override protected boolean contentRendersOnSeparateLines() {return true;}
 }

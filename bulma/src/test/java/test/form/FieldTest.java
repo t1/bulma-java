@@ -1,7 +1,6 @@
 package test.form;
 
 import com.github.t1.bulmajava.basic.Size;
-import com.github.t1.bulmajava.basic.Style;
 import com.github.t1.htmljava.Anchor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -47,29 +46,30 @@ import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.HtmlBasics.em;
 import static com.github.t1.htmljava.HtmlBasics.p;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
+import static org.assertj.core.api.BDDAssertions.catchThrowableOfType;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
 class FieldTest {
     @Test void shouldRenderForm() {
         var form = div().style("width: 400px;").content(
-                field().label("Name")
+                field("Name")
                         .content(input(TEXT).placeholder("Text input")),
-                field().label("Username")
+                field("Username")
                         .content(input(TEXT).is(SUCCESS).placeholder("Text input").value("bulma"))
                         .iconLeft("user")
                         .iconRight("check")
                         .help("This username is available", SUCCESS),
-                field().label("Email")
+                field("Email")
                         .content(input(EMAIL).is(DANGER).placeholder("Email input").value("hello@"))
                         .iconLeft("envelope")
                         .iconRight("exclamation-triangle")
                         .help(p().content(string("This email is "), em("invalid")), DANGER),
-                field().label("Subject")
+                field("Subject")
                         .content(select(null)
                                 .option("1", "Select dropdown")
                                 .option("2", "With options")),
-                field().label("Message")
+                field("Message")
                         .content(textarea().placeholder("Textarea")),
                 field().content(
                         checkbox().content(
@@ -93,8 +93,8 @@ class FieldTest {
                         <label class="label">Username</label>
                         <div class="control has-icons-left has-icons-right">
                             <input class="input is-success" type="text" placeholder="Text input" value="bulma" />
-                            <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-user"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check"></i></span>
                         </div>
                         <p class="help is-success">This username is available</p>
                     </div>
@@ -102,8 +102,8 @@ class FieldTest {
                         <label class="label">Email</label>
                         <div class="control has-icons-left has-icons-right">
                             <input class="input is-danger" type="email" placeholder="Email input" value="hello@" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-exclamation-triangle"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-exclamation-triangle"></i></span>
                         </div>
                         <p class="help is-danger">This email is <em>invalid</em></p>
                     </div>
@@ -159,30 +159,27 @@ class FieldTest {
                 """);
     }
 
-    @Test void shouldRenderFormField() {
-        var form = div().style("width: 400px;").content(
-                field().label("Label")
+    @Test void shouldRenderField() {
+        var field = field("Label")
                         .content(input(TEXT).placeholder("Text input"))
-                        .help("This is a help text"));
+                        .help("This is a help text");
 
-        then(form).rendersAs("""
-                <div style="width: 400px;">
-                    <div class="field">
-                        <label class="label">Label</label>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Text input" />
-                        </div>
-                        <p class="help">This is a help text</p>
+        then(field).rendersAs("""
+                <div class="field">
+                    <label class="label">Label</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Text input" />
                     </div>
+                    <p class="help">This is a help text</p>
                 </div>
                 """);
     }
 
     @Test void shouldRenderSpacedFormFields() {
         var form = div().style("width: 400px;").content(
-                field().label("Name")
+                field("Name")
                         .content(input(TEXT).placeholder("e.g Alex Smith")),
-                field().label("Email")
+                field("Email")
                         .content(input(EMAIL).placeholder("e.g. alexsmith@gmail.com")));
 
         then(form).rendersAs("""
@@ -217,14 +214,14 @@ class FieldTest {
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
                             <input class="input" type="email" placeholder="Email" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check"></i></span>
                         </div>
                     </div>
                     <div class="field">
                         <div class="control has-icons-left">
                             <input class="input" type="password" placeholder="Password" />
-                            <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-lock"></i></span>
                         </div>
                     </div>
                     <div class="field">
@@ -255,7 +252,7 @@ class FieldTest {
                                     <option value="3">With options</option>
                                 </select>
                             </div>
-                            <span class="icon is-small is-left"><i class="fas fa-globe"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-globe"></i></span>
                         </div>
                     </div>
                 </div>
@@ -264,8 +261,7 @@ class FieldTest {
 
     @Test void shouldRenderSmallInputWithIcon() {
         var form = div().style("width: 400px;").content(
-                field().is(SMALL)
-                        .label("Small input")
+                field("Small input").is(SMALL)
                         .content(input(EMAIL).placeholder("Normal"))
                         .iconLeft("envelope")
                         .iconRight("check"));
@@ -276,8 +272,8 @@ class FieldTest {
                         <label class="label is-small">Small input</label>
                         <div class="control has-icons-left has-icons-right">
                             <input class="input is-small" type="email" placeholder="Normal" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check"></i></span>
                         </div>
                     </div>
                 </div>
@@ -286,8 +282,7 @@ class FieldTest {
 
     @Test void shouldRenderNormalSizeInputWithIcon() {
         var form = div().style("width: 400px;").content(
-                field()
-                        .label("Normal input")
+                field("Normal input")
                         .content(input(EMAIL).placeholder("Extra small"))
                         .iconLeft("envelope", XS)
                         .iconRight("check", XS),
@@ -302,8 +297,8 @@ class FieldTest {
                         <label class="label">Normal input</label>
                         <div class="control has-icons-left has-icons-right">
                             <input class="input" type="email" placeholder="Extra small" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope fa-xs"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check fa-xs"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope fa-xs"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check fa-xs"></i></span>
                         </div>
                     </div>
                     <div class="field">
@@ -319,8 +314,7 @@ class FieldTest {
 
     @Test void shouldRenderMediumSizeInputWithIcon() {
         var form = div().style("width: 400px;").content(
-                field().is(MEDIUM)
-                        .label("Medium input")
+                field("Medium input").is(MEDIUM)
                         .content(input(EMAIL).placeholder("Extra small"))
                         .iconLeft("envelope", XS)
                         .iconRight("check", XS),
@@ -339,8 +333,8 @@ class FieldTest {
                         <label class="label is-medium">Medium input</label>
                         <div class="control has-icons-left has-icons-right">
                             <input class="input is-medium" type="email" placeholder="Extra small" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope fa-xs"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check fa-xs"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope fa-xs"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check fa-xs"></i></span>
                         </div>
                     </div>
                     <div class="field">
@@ -363,7 +357,7 @@ class FieldTest {
 
     @Test void shouldRenderLargeSizeInputWithIcon() {
         var form = div().style("width: 400px;").content(
-                field().is(LARGE).label("Large input")
+                field("Large input").is(LARGE)
                         .content(input(EMAIL).placeholder("Extra small"))
                         .iconLeft("envelope", XS)
                         .iconRight("check", XS),
@@ -386,8 +380,8 @@ class FieldTest {
                         <label class="label is-large">Large input</label>
                         <div class="control has-icons-left has-icons-right">
                             <input class="input is-large" type="email" placeholder="Extra small" />
-                            <span class="icon is-small is-left"><i class="fas fa-envelope fa-xs"></i></span>
-                            <span class="icon is-small is-right"><i class="fas fa-check fa-xs"></i></span>
+                            <span class="icon is-left is-small"><i class="fas fa-envelope fa-xs"></i></span>
+                            <span class="icon is-right is-small"><i class="fas fa-check fa-xs"></i></span>
                         </div>
                     </div>
                     <div class="field">
@@ -416,38 +410,34 @@ class FieldTest {
     }
 
     @Test void shouldRenderFieldWithButtonAddon() {
-        var form = div().style("width: 400px;").content(field()
+        var field = field()
                 .content(input(TEXT).placeholder("Find a repository"))
-                .addonRight(a("Search").is(INFO)));
+                .addonRight(a("Search").is(INFO));
 
-        then(form).rendersAs("""
-                <div style="width: 400px;">
-                    <div class="field has-addons">
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Find a repository" />
-                        </div>
-                        <div class="control">
-                            <a class="is-info button">Search</a>
-                        </div>
+        then(field).rendersAs("""
+                <div class="field has-addons">
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Find a repository" />
+                    </div>
+                    <div class="control">
+                        <a class="is-info button">Search</a>
                     </div>
                 </div>
                 """);
     }
 
     @Test void shouldRenderFieldWithStaticButtonAddon() {
-        var form = div().style("width: 400px;").content(field()
+        var field = field()
                 .content(input(TEXT).placeholder("Your email"))
-                .addonRight(a("@gmail.com").is(STATIC)));
+                .addonRight(a("@gmail.com").is(STATIC));
 
-        then(form).rendersAs("""
-                <div style="width: 400px;">
-                    <div class="field has-addons">
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Your email" />
-                        </div>
-                        <div class="control">
-                            <a class="is-static button">@gmail.com</a>
-                        </div>
+        then(field).rendersAs("""
+                <div class="field has-addons">
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Your email" />
+                    </div>
+                    <div class="control">
+                        <a class="is-static button">@gmail.com</a>
                     </div>
                 </div>
                 """);
@@ -482,7 +472,7 @@ class FieldTest {
 
     @Test void shouldRenderFieldWithExpandedFieldAndLeftAndRightAddon() {
         var form = field()
-                .content(input(TEXT).placeholder("Amount of money").is(EXPANDED))
+                .content(input(TEXT).placeholder("Amount of money").expanded())
                 .addonLeft(select(null).options(List.of("$", "£", "€")))
                 .addonRight(a("Transfer"));
 
@@ -509,7 +499,7 @@ class FieldTest {
 
     @Test void shouldRenderFieldWithDisabledAutofocus() {
         var form = field()
-                .content(input(TEXT).disabled().autofocus().is(EXPANDED));
+                .content(input(TEXT).disabled().autofocus().expanded());
 
         then(form).rendersAs("""
                 <div class="field">
@@ -522,7 +512,7 @@ class FieldTest {
 
     @Test void shouldRenderFieldWithTabindex() {
         var form = field()
-                .content(input(TEXT).tabindex(-1).is(EXPANDED));
+                .content(input(TEXT).tabindex(-1).expanded());
 
         then(form).rendersAs("""
                 <div class="field">
@@ -535,7 +525,7 @@ class FieldTest {
 
     @Test void shouldRenderFieldPreventingEscapeKey() {
         var form = field()
-                .content(input(TEXT).onkeydown("Escape", "event.preventDefault();").is(EXPANDED));
+                .content(input(TEXT).onkeydown("Escape", "event.preventDefault();").expanded());
 
         // We accept the warning about `event`: see https://stackoverflow.com/a/58341967/3333174
         //noinspection JSDeprecatedSymbols
@@ -550,7 +540,7 @@ class FieldTest {
 
     @Test void shouldRenderFieldWithOnclick() {
         var form = field()
-                .content(input(TEXT).onclick("window.location.href='about:blank'").is(EXPANDED));
+                .content(input(TEXT).onclick("window.location.href='about:blank'").expanded());
 
         then(form).rendersAs("""
                 <div class="field">
@@ -563,7 +553,7 @@ class FieldTest {
 
     @Test void shouldRenderFieldLoggingEnterKey() {
         var form = field()
-                .content(input(TEXT).onkeyup("Enter", "console.debug('enter pressed');").is(EXPANDED));
+                .content(input(TEXT).onkeyup("Enter", "console.debug('enter pressed');").expanded());
 
         // We accept the warning about `event`: see https://stackoverflow.com/a/58341967/3333174
         //noinspection JSDeprecatedSymbols
@@ -578,9 +568,9 @@ class FieldTest {
 
     @Test void shouldRenderFieldWithFieldAndLeftAndExpandedRightAddon() {
         var form = field()
-                .addonLeft(select(null).options("$", "£", "€"))
                 .content(input(TEXT).placeholder("Amount of money"))
-                .addonRight(input(TEXT).placeholder("Target account").is(EXPANDED));
+                .addonLeft(select(null).options("$", "£", "€"))
+                .addonRight(input(TEXT).placeholder("Target account").expanded());
 
         then(form).rendersAs("""
                 <div class="field has-addons">
@@ -603,10 +593,10 @@ class FieldTest {
                 """);
     }
 
-    @Test void shouldRenderFieldWithFieldAndExpandedLeftAddonAndRightAddon() {
+    @Test void shouldRenderFieldWithExpandedLeftAddonAndRightAddon() {
         var form = field()
                 .content(input(TEXT).placeholder("Amount of money"))
-                .addonLeft(input(TEXT).placeholder("Currency").is(EXPANDED))
+                .addonLeft(input(TEXT).placeholder("Currency").expanded())
                 .addonRight(a("Transfer"));
 
         then(form).rendersAs("""
@@ -625,13 +615,13 @@ class FieldTest {
     }
 
     @Test void shouldRenderFieldWithExpandedSelect() {
-        var form = field()
+        var field = field()
                 .content(select("country").is(FULLWIDTH, EXPANDED)
                         .options("Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador",
                                 "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"))
                 .addonRight(button("Choose").submit().is(PRIMARY));
 
-        then(form).rendersAs("""
+        then(field).rendersAs("""
                 <div class="field has-addons">
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
@@ -659,6 +649,7 @@ class FieldTest {
     }
 
     @Test void shouldRenderCenteredFieldWithAddons() {
+        // TODO has-addons-centered should be the alignment of the field
         var form = field().classes("has-addons-centered")
                 .content(input(TEXT).placeholder("Amount of money"))
                 .addonLeft(select("currency").options("$", "£", "€"))
@@ -686,6 +677,7 @@ class FieldTest {
     }
 
     @Test void shouldRenderRightFieldWithAddons() {
+        // TODO has-addons-right should be the alignment of the field
         var form = field().classes("has-addons-right")
                 .content(input(TEXT).placeholder("Amount of money"))
                 .addonLeft(select("currency").options("$", "£", "€"))
@@ -765,7 +757,7 @@ class FieldTest {
 
     @Test void shouldRenderGroupedFieldsExpanded() {
         var form = field().grouped().content(
-                input(TEXT).placeholder("Find a repository").is(EXPANDED),
+                input(TEXT).placeholder("Find a repository").expanded(),
                 a("Search").is(INFO));
 
         then(form).rendersAs("""
@@ -837,37 +829,33 @@ class FieldTest {
     @Disabled
     @Test void shouldRenderHorizontalForm() {
         var form = div().style("width: 1000px;").content(
-                field().horizontal()
-                        .label("From", NORMAL)
-                        .content(input(TEXT).placeholder("Name").is(EXPANDED))
+                field("From").horizontal()
+                        .content(input(TEXT).placeholder("Name").expanded())
                         .iconLeft("user")
-                        .content(input(EMAIL).is(SUCCESS).placeholder("Email").value("alex@smith.com").is(EXPANDED))
+                        .content(input(EMAIL).is(SUCCESS).placeholder("Email").value("alex@smith.com").expanded())
                         .iconLeft("envelope")
                         .iconRight("check"),
                 field().horizontal()
-                        //.label("Phone")
-                        .content(a("+44").is(STATIC))
-                        .addonRight(input(TEL).placeholder("Your phone number").is(EXPANDED))
+                        .content(input(TEL).placeholder("Your phone number").expanded())
+                        .addonLeft(a("+44").href("#").is(STATIC))
                         .help("Do not enter the first zero"),
-                field().horizontal()
-                        .label("Department", NORMAL)
-                        .content(select("department").is(Style.FULLWIDTH)
+                field("Department").horizontal()
+                        .content(select("department")
                                 .options("Business development", "Marketing", "Sales")),
-                field().horizontal()
-                        .label("Already a member?")
+                field("Already a member?").horizontal()
                         .content(radios("member")
                                 .option("y", "Yes")
                                 .option("n", "No")),
-                field().horizontal()
-                        .label("Subject", NORMAL)
+                field("Subject").horizontal()
                         .content(input(TEXT).is(DANGER).placeholder("e.g. Partnership opportunity"))
                         .help("This field is required", DANGER),
-                field().horizontal()
-                        .label("Question", NORMAL)
+                field("Question").horizontal()
                         .content(textarea().placeholder("Explain how we can help you")),
                 field().horizontal()
                         .content(button("Send message").is(PRIMARY)));
 
+        // Bulma docs: the Department `select` is `fullwidth`, while the nested `field` is `narrow`;
+        // also, the Already-a-member?-`field` is `narrow`... makes no sense, so we removed those.
         then(form).rendersAs("""
                 <div style="width: 1000px;">
                     <div class="field is-horizontal">
@@ -876,27 +864,27 @@ class FieldTest {
                         </div>
                         <div class="field-body">
                             <div class="field">
-                                <div class="control is-expanded has-icons-left">
+                                <div class="control has-icons-left is-expanded">
                                     <input class="input" type="text" placeholder="Name" />
-                                    <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
+                                    <span class="icon is-left is-small"><i class="fas fa-user"></i></span>
                                 </div>
                             </div>
                             <div class="field">
-                                <div class="control is-expanded has-icons-left has-icons-right">
+                                <div class="control has-icons-left has-icons-right is-expanded">
                                     <input class="input is-success" type="email" placeholder="Email" value="alex@smith.com" />
-                                    <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                                    <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                                    <span class="icon is-left is-small"><i class="fas fa-envelope"></i></span>
+                                    <span class="icon is-right is-small"><i class="fas fa-check"></i></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="field is-horizontal">
-                        <div class="field-label"></div>
+                        <div class="field-label is-normal"></div>
                         <div class="field-body">
                             <div class="field is-expanded">
                                 <div class="field has-addons">
                                     <div class="control">
-                                        <a class="is-static button">+44</a>
+                                        <a class="is-static button" href="#">+44</a>
                                     </div>
                                     <div class="control is-expanded">
                                         <input class="input" type="tel" placeholder="Your phone number" />
@@ -911,9 +899,9 @@ class FieldTest {
                             <label class="label">Department</label>
                         </div>
                         <div class="field-body">
-                            <div class="field is-narrow">
+                            <div class="field">
                                 <div class="control">
-                                    <div class="select is-fullwidth">
+                                    <div class="select">
                                         <select name="department">
                                             <option value="Business development">Business development</option>
                                             <option value="Marketing">Marketing</option>
@@ -929,16 +917,18 @@ class FieldTest {
                             <label class="label">Already a member?</label>
                         </div>
                         <div class="field-body">
-                            <div class="field is-narrow">
+                            <div class="field">
                                 <div class="control">
-                                    <label class="radio">
-                                        <input type="radio" name="member" />
-                                        Yes
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="member" />
-                                        No
-                                    </label>
+                                    <div class="radios">
+                                        <label class="radio">
+                                            <input type="radio" value="y" name="member" />
+                                            Yes
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" value="n" name="member" />
+                                            No
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -969,7 +959,7 @@ class FieldTest {
                         </div>
                     </div>
                     <div class="field is-horizontal">
-                        <div class="field-label"></div>
+                        <div class="field-label is-normal"></div>
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
@@ -982,22 +972,34 @@ class FieldTest {
                 """);
     }
 
+    @Test void shouldRenderHorizontalField() {
+        var field = field().horizontal().content(input(TEXT).value("test"));
+
+        then(field).rendersAs("""
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal"></div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input" type="text" value="test" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                """);
+    }
+
     @Test void shouldRenderHorizontalFormWithSizes() {
         var form = div().style("width: 1000px;").content(
-                field().horizontal()
-                        .label("No padding")
+                field("No padding").horizontal()
                         .content(checkbox().content("Checkbox")),
-                field().horizontal().is(SMALL)
-                        .label("Small padding")
+                field("Small padding").horizontal().is(SMALL)
                         .content(input(TEXT).placeholder("Small sized input")),
-                field().horizontal().is(NORMAL)
-                        .label("Normal label")
+                field("Normal label").horizontal().is(NORMAL)
                         .content(input(TEXT).placeholder("Normal sized input")),
-                field().horizontal().is(MEDIUM)
-                        .label("Medium label")
+                field("Medium label").horizontal().is(MEDIUM)
                         .content(input(TEXT).placeholder("Medium sized input")),
-                field().horizontal().is(LARGE)
-                        .label("Large label")
+                field("Large label").horizontal().is(LARGE)
                         .content(input(TEXT).placeholder("Large sized input")));
 
         then(form).rendersAs("""
@@ -1071,27 +1073,21 @@ class FieldTest {
 
     @ParameterizedTest @EnumSource void shouldRenderHorizontalFormWithSize(Size size) {
         var form = div().style("width: 1000px;").content(
-                field().horizontal().is(size)
-                        .label(size.key() + " select")
+                field(size.key() + " select").horizontal().is(size)
                         .content(select(null)
                                 .option("1", "Select dropdown")
                                 .option("2", "With options")),
-                field().horizontal().is(size)
-                        .label(size.key() + " textarea")
+                field(size.key() + " textarea").horizontal().is(size)
                         .content(textarea().placeholder("Textarea")),
-                field().horizontal().is(size)
-                        .label(size.key() + " check")
+                field(size.key() + " check").horizontal().is(size)
                         .content(checkbox().content(string("I agree"))),
-                field().horizontal().is(size)
-                        .label(size.key() + " radio")
+                field(size.key() + " radio").horizontal().is(size)
                         .content(radios("question")
                                 .option("y", "Yes")
                                 .option("n", "No")),
-                field().horizontal().is(size)
-                        .label(size.key() + " button")
+                field(size.key() + " button").horizontal().is(size)
                         .content(button(size.key() + " button")),
-                field().horizontal().is(size)
-                        .label(size.key() + " input")
+                field(size.key() + " input").horizontal().is(size)
                         .content(input(TEXT).placeholder(size.key() + " sized input")));
 
         then(form).rendersAs("""
@@ -1192,8 +1188,8 @@ class FieldTest {
     @Test void shouldRenderDisabledForm() {
         var form = div().style("width: 1000px;").content(
                 fieldset().disabled().content(
-                        field().label("Name").content(input(TEXT).placeholder("e.g Alex Smith")),
-                        field().label("Email").content(input(EMAIL).placeholder("e.g. alexsmith@gmail.com"))));
+                        field("Name").content(input(TEXT).placeholder("e.g Alex Smith")),
+                        field("Email").content(input(EMAIL).placeholder("e.g. alexsmith@gmail.com"))));
 
         then(form).rendersAs("""
                 <div style="width: 1000px;">
@@ -1213,5 +1209,51 @@ class FieldTest {
                     </fieldset>
                 </div>
                 """);
+    }
+
+    @Test void shouldFailToBuildLeftFieldIconWithoutContent() {
+        var exception = catchThrowableOfType(AssertionError.class, () -> field()
+                .iconLeft("left"));
+
+        then(exception).hasMessage("You must add a content (e.g. input) before setting an icon");
+    }
+
+    @Test void shouldFailToBuildRightFieldIconWithoutContent() {
+        var exception = catchThrowableOfType(AssertionError.class, () -> field()
+                .iconRight("right"));
+
+        then(exception).hasMessage("You must add a content (e.g. input) before setting an icon");
+    }
+
+    @Test void shouldFailToBuildFieldWithTwoLeftIcons() {
+        var exception = catchThrowableOfType(AssertionError.class, () -> field()
+                .content(input(TEXT))
+                .iconLeft("left")
+                .iconLeft("left2"));
+
+        then(exception).hasMessage("Field already has left icon, cannot add another");
+    }
+
+    @Test void shouldFailToBuildFieldWithTwoRightIcons() {
+        var exception = catchThrowableOfType(AssertionError.class, () -> field()
+                .content(input(TEXT))
+                .iconRight("right")
+                .iconRight("right2"));
+
+        then(exception).hasMessage("Field already has right icon, cannot add another");
+    }
+
+    @Test void shouldFailToBuildLeftFieldAddonWithoutContent() {
+        var exception = catchThrowableOfType(AssertionError.class, () -> field()
+                .addonLeft(button("left")));
+
+        then(exception).hasMessage("You must add a content (e.g. input) before adding addons to it");
+    }
+
+    @Test void shouldFailToBuildRightFieldAddonWithoutContent() {
+        var exception = catchThrowableOfType(AssertionError.class, () -> field()
+                .addonRight(button("right")));
+
+        then(exception).hasMessage("You must add a content (e.g. input) before adding addons to it");
     }
 }

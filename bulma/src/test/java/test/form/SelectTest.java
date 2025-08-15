@@ -207,7 +207,7 @@ class SelectTest {
                                 <option>With options</option>
                             </select>
                         </div>
-                        <span class="icon is-small is-left"><i class="fas fa-globe"></i></span>
+                        <span class="icon is-left is-small"><i class="fas fa-globe"></i></span>
                     </div>
                 </div>
                 """);
@@ -230,7 +230,7 @@ class SelectTest {
                                 <option>With options</option>
                             </select>
                         </div>
-                        <span class="icon is-small is-left"><i class="fas fa-globe"></i></span>
+                        <span class="icon is-left is-small"><i class="fas fa-globe"></i></span>
                     </div>
                 </div>
                 """.replace("${size}", size.key()));

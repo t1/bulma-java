@@ -20,7 +20,7 @@ public class Tag extends BulmaElement<Tag> {
 
     public static Element tags() {return div().classes("tags");}
 
-    public static Element tagsAddon() {return tags().classes("has-addons");}
+    public static Element tagsAddon() {return tags().has(ADDONS);}
 
     private Tag() {super("span", "tag");}
 }

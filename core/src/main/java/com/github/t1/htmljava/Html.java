@@ -100,14 +100,14 @@ public class Html extends AbstractElement<Html> {
         return content(e -> e.hasName("head"), function, () -> element("head"));
     }
 
-    @Override public Html content(Renderable content, boolean first) {
+    @Override public Html content(Renderable content, int index) {
         return content instanceof AbstractElement<?> e && e.hasName("body")
-                ? super.content(content, first) : body(content, first);
+                ? super.content(content, index) : body(content, index);
     }
 
-    public Html body(Renderable content) {return body(content, false);}
+    public Html body(Renderable content) {return body(content, LAST);}
 
-    public Html body(Renderable content, boolean first) {return body((AbstractElement<?> e) -> e.content(content, first));}
+    public Html body(Renderable content, int index) {return body((AbstractElement<?> e) -> e.content(content, index));}
 
     public Html body(Function<AbstractElement<?>, AbstractElement<?>> function) {
         return content(e -> e.hasName("body"), function, Body::body);

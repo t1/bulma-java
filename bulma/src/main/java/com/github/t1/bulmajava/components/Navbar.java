@@ -115,12 +115,12 @@ public class Navbar extends BulmaElement<Navbar> {
 
         private NavbarDropdown() {super("div", "has-dropdown");}
 
-        public NavbarDropdown content(Renderable content, boolean first) {
+        public NavbarDropdown content(Renderable content, int index) {
             var dropdown = findDropdown();
             if (dropdown.isPresent()) {
-                dropdown.get().content(item(content), first);
+                dropdown.get().content(item(content), index);
                 return this;
-            } else return super.content(content, first);
+            } else return super.content(content, index);
         }
 
         private Optional<AbstractElement<?>> findDropdown() {return findElement("navbar-dropdown");}

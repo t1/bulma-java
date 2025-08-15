@@ -31,9 +31,9 @@ public class Input extends BulmaElement<Input> {
         this.close(false);
     }
 
-    protected boolean renderOpenTagSlash() {return true;}
+    protected boolean slashOpeningTag() {return true;}
 
-    @Override public Input content(Renderable content, boolean first) {throw new UnsupportedOperationException("Input can not have content");}
+    @Override public Input content(Renderable content, int index) {throw new UnsupportedOperationException("Input can not have content");}
 
     public Input value(int value) {return value(Integer.toString(value));}
 
@@ -43,6 +43,8 @@ public class Input extends BulmaElement<Input> {
 
     public Input name(String name) {return attr("name", name);}
 
+
+    public Input expanded() {return is(Field.EXPANDED);}
 
     public Input readonly() {return attr("readonly");}
 

@@ -4,7 +4,6 @@ import com.github.t1.customers.Customer;
 import com.github.t1.htmljava.Renderable;
 import jakarta.enterprise.context.Dependent;
 
-import static com.github.t1.bulmajava.basic.Size.NORMAL;
 import static com.github.t1.bulmajava.form.Field.EXPANDED;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Field.fieldset;
@@ -17,12 +16,11 @@ import static com.github.t1.bulmajava.form.InputType.TEXT;
 public class Customer$Form {
     public Renderable content(Customer customer) {
         return fieldset().content(
-                field().horizontal().label("Customer Number", NORMAL)
+                field("Customer Number").horizontal()
                         .content(field().content(input(TEXT).readonly().placeholder("12345").value(customer.getId().toString()).is(EXPANDED))),
-                field().horizontal().label("Name", NORMAL)
+                field("Name").horizontal()
                         .content(field().content(input(TEXT).readonly().placeholder("Name").value(customer.getName()).is(EXPANDED))),
-                field().horizontal()
-                        .label("Email", NORMAL)
+                field("Email").horizontal()
                         .content(field().content(input(EMAIL).readonly().placeholder("Email").value(customer.getEmail()).is(EXPANDED))));
     }
 }

@@ -35,11 +35,11 @@ public class Grid extends BulmaElement<Grid> {
 
         private FixedGrid() {
             super("div", "fixed-grid");
-            super.content(grid(), false);
+            super.content(grid(), LAST);
         }
 
-        @Override public FixedGrid content(Renderable content, boolean first) {
-            ((Grid) content()).content(content, first);
+        @Override public FixedGrid content(Renderable content, int index) {
+            ((Grid) content()).content(content, index);
             return this;
         }
 
