@@ -24,7 +24,7 @@ public class Checkbox extends BulmaElement<Checkbox> {
     }
 
     public Checkbox name(String name) {
-        input().name(name);
+        input().fieldName(name);
         return this;
     }
 

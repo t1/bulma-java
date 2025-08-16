@@ -33,15 +33,18 @@ public class Input extends BulmaElement<Input> {
 
     protected boolean slashOpeningTag() {return true;}
 
-    @Override public Input content(Renderable content, int index) {throw new UnsupportedOperationException("Input can not have content");}
+    @Override
+    public Input content(Renderable content, int index) {throw new UnsupportedOperationException("Input can not have content");}
 
-    public Input value(int value) {return value(Integer.toString(value));}
+    public Input value(Integer value) {return (value == null) ? this : value(value.toString());}
+
+    public Input value(Long value) {return (value == null) ? this : value(value.toString());}
 
     public Input value(String value) {return (value == null) ? this : attr("value", value);}
 
     public Input placeholder(String placeholder) {return attr("placeholder", placeholder);}
 
-    public Input name(String name) {return attr("name", name);}
+    public Input fieldName(String name) {return attr("name", name);}
 
 
     public Input expanded() {return is(Field.EXPANDED);}
@@ -73,4 +76,6 @@ public class Input extends BulmaElement<Input> {
 
     /** @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max">spec</a> */
     public Input step(int step) {return attr("step", Integer.toString(step));}
+
+    public String fieldName() {return findAttribute("name").map(Attribute::value).orElse(null);}
 }

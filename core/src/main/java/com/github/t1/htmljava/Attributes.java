@@ -32,12 +32,13 @@ public class Attributes implements Renderable {
     }
 
     public boolean hasAttribute(String key) {return findAttribute(attribute -> attribute.key().equals(key)).isPresent();}
-
     public boolean hasAttribute(String key, String value) {return hasAttribute(Attribute.of(key, value));}
 
     public boolean hasAttribute(Attribute attribute) {return hasAttribute(attribute::matches);}
 
     public boolean hasAttribute(Predicate<Attribute> predicate) {return findAttribute(predicate).isPresent();}
+
+    public Optional<Attribute> findAttribute(String key) {return findAttribute(attribute -> attribute.key().equals(key));}
 
     public Optional<Attribute> findAttribute(Predicate<Attribute> predicate) {return findAttributes(predicate).findAny();}
 
@@ -54,7 +55,7 @@ public class Attributes implements Renderable {
             var item = this.attributes.get(i);
             if (item.hasKey(attribute.key())) {
                 found = true;
-                this.attributes.set(i, item.and(attribute));
+                if (!item.equals(attribute)) this.attributes.set(i, item.and(attribute));
                 break;
             }
         }

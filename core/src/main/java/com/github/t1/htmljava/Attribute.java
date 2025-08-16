@@ -48,6 +48,12 @@ public interface Attribute extends Renderable {
 
     default Attribute and(Attribute attribute) {throw new UnsupportedOperationException();}
 
+    default String value() {
+        var renderer = new Renderer();
+        renderValue(renderer);
+        return renderer.toString();
+    }
+
     record StringAttribute(String key, String value, boolean unsafe) implements Attribute {
         public static Attribute unsafeStringAttribute(@NonNull String key, @NonNull String value) {return new StringAttribute(key, value, true);}
 

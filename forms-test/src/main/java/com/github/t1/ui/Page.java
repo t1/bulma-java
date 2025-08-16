@@ -74,8 +74,7 @@ public class Page implements Renderable {
                                         .content(
                                                 navbar(),
                                                 Title.title(title)))));
-        var body = this.html.findElement(e -> e.hasName("body")).orElseThrow();
-        body.content(element("script").content(unsafeString("""
+        this.html.body().content(element("script").content(unsafeString("""
                 document.body.addEventListener("reload-page", function(){
                     window.location.reload();
                 })

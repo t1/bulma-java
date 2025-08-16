@@ -75,9 +75,12 @@ public class Field extends BulmaElement<Field> {
 
     private final String label;
     private Size size;
+    private boolean readonly;
     private final List<FieldControl> controls = new ArrayList<>();
 
     private FieldControl lastControl;
+
+    public Field allReadonly() {readonly = true; return this;}
 
     @RequiredArgsConstructor @ToString
     private class FieldControl {
@@ -110,6 +113,12 @@ public class Field extends BulmaElement<Field> {
                     : null;
 
             content.is(size);
+            if (readonly) {
+                if (content instanceof Input input) input.readonly();
+                if (content instanceof Textarea textarea) textarea.readonly();
+                // all other form controls are readonly by default
+                // see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/readonly
+            }
             if (content instanceof Anchor) content.is(BUTTON);
             move(EXPANDED).from(content).to(control);
             if (content.hasModifier(LOADING)) {
@@ -126,6 +135,11 @@ public class Field extends BulmaElement<Field> {
             if (subSubField != null) subSubField.close();
             if (help != null) help.build().render(renderer);
             if (subField != null) subField.close();
+        }
+
+        public boolean hasFieldControl(String name) {
+            // TODO support the other field types
+            return content instanceof Input input && name.equals(input.fieldName());
         }
     }
 
@@ -239,6 +253,11 @@ public class Field extends BulmaElement<Field> {
         assert lastControl != null : "You must add a content (e.g. input) before adding addons to it";
         lastControl.rightAddons.add(element);
         return this.has(ADDONS);
+    }
+
+
+    public boolean hasFieldControl(String name) {
+        return controls.stream().anyMatch(fieldControl -> fieldControl.hasFieldControl(name));
     }
 
 

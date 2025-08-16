@@ -1,26 +1,25 @@
 package com.github.t1.customers.ui;
 
+import com.github.t1.bulmajava.form.Field;
 import com.github.t1.customers.Customer;
-import com.github.t1.htmljava.Renderable;
 import jakarta.enterprise.context.Dependent;
 
-import static com.github.t1.bulmajava.form.Field.EXPANDED;
+import java.util.stream.Stream;
+
+import static com.github.t1.bulmajava.basic.Style.STATIC;
 import static com.github.t1.bulmajava.form.Field.field;
-import static com.github.t1.bulmajava.form.Field.fieldset;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.EMAIL;
 import static com.github.t1.bulmajava.form.InputType.TEXT;
 
-// TODO generate this class from the Customer class with a annotation processor
+// TODO generate this class from the Customer class with an annotation processor
+//  annotations: @Input(TEXT, EMAIL, ...), @Readonly (=>static); required and others from Bean Validation
 @Dependent
 public class Customer$Form {
-    public Renderable content(Customer customer) {
-        return fieldset().content(
-                field("Customer Number").horizontal()
-                        .content(input(TEXT).readonly().placeholder("12345").value(customer.getId().toString()).is(EXPANDED)),
-                field("Name").horizontal()
-                        .content(input(TEXT).readonly().placeholder("Name").value(customer.getName()).is(EXPANDED)),
-                field("Email").horizontal()
-                        .content(input(EMAIL).readonly().placeholder("Email").value(customer.getEmail()).is(EXPANDED)));
+    public Stream<Field> of(Customer customer) {
+        return Stream.of(
+                field("Customer Number").content(input(TEXT).is(STATIC).fieldName("customerNumber").value(customer.getId())),
+                field("Name").content(input(TEXT).fieldName("name").required().autofocus().value(customer.getName())),
+                field("Email").content(input(EMAIL).fieldName("email").value(customer.getEmail())));
     }
 }

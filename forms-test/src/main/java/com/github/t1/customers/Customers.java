@@ -1,9 +1,14 @@
 package com.github.t1.customers;
 
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 import java.util.Map;
@@ -14,23 +19,53 @@ import static java.util.Comparator.comparing;
 
 @Path("/customers")
 public class Customers {
-    public static final Customer JANE = Customer.builder().id(1L).name("Jane Doe").email("jane.doe@example.com").build();
-    public static final Customer JOE = Customer.builder().id(2L).name("Joe Doe").email("joe.doe@example.com").build();
-    public static final Customer JOANE = Customer.builder().id(3L).name("Joane Doe").email("joane.doe@example.com").build();
+    public static final Customer JANE = Customer.builder().name("Jane Doe").email("jane.doe@example.com").build();
+    public static final Customer JOE = Customer.builder().name("Joe Doe").email("joe.doe@example.com").build();
+    public static final Customer JOANE = Customer.builder().name("Joane Doe").email("joane.doe@example.com").build();
+    private static long nextId = 1;
 
     private static final Map<Long, Customer> CUSTOMERS = new ConcurrentHashMap<>();
 
     static {add(JANE); add(JOE); add(JOANE);}
 
-    private static void add(Customer customer) {CUSTOMERS.put(customer.getId(), customer);}
+    private static void add(Customer customer) {
+        if (customer.getId() != null) throw new BadRequestException("Customer id must not be set on create");
+        var id = nextId++;
+        customer.setId(id);
+        CUSTOMERS.put(id, customer);
+    }
 
 
-    @GET @Path("/{customerId}") public Customer one(@PathParam("customerId") long customerId) {
+    @GET @Path("/{customerId}")
+    public Customer customer(@PathParam("customerId") long customerId) {
         return Optional.ofNullable(CUSTOMERS.get(customerId))
                 .orElseThrow(NotFoundException::new);
     }
 
-    @GET public List<Customer> all() {
+    @GET
+    public List<Customer> customers() {
         return CUSTOMERS.values().stream().sorted(comparing(Customer::getId)).toList();
+    }
+
+    @POST
+    public Response create(Customer customer) {
+        add(customer);
+        return Response.ok().header("HX-Redirect", "/customers/" + customer.getId()).build();
+    }
+
+    @PUT  @Path("/{customerId}")
+    public Response update(@PathParam("customerId") long customerId, Customer customer) {
+        if (customer.getId() != null) throw new BadRequestException("Set the customer id in the path, not in the body");
+        if (!CUSTOMERS.containsKey(customerId)) throw new NotFoundException();
+        customer.setId(customerId);
+        CUSTOMERS.put(customerId, customer);
+        return Response.ok().header("HX-Redirect", "/customers/" + customerId).build();
+    }
+
+    @DELETE @Path("/{customerId}")
+    public Response delete(@PathParam("customerId") long customerId) {
+        var customer = CUSTOMERS.remove(customerId);
+        if (customer == null) throw new NotFoundException();
+        return Response.ok().header("HX-Redirect", "/customers").build();
     }
 }

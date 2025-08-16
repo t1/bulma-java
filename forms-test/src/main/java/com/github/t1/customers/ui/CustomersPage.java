@@ -16,6 +16,9 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import static com.github.t1.bulmajava.basic.BulmaElement.PULLED_RIGHT;
+import static com.github.t1.bulmajava.basic.Color.PRIMARY;
+import static com.github.t1.bulmajava.elements.Button.BUTTON;
 import static com.github.t1.bulmajava.elements.Image.figure;
 import static com.github.t1.bulmajava.elements.Image.imageP;
 import static com.github.t1.bulmajava.elements.Image.img;
@@ -23,6 +26,7 @@ import static com.github.t1.bulmajava.elements.ImageSize._128x128;
 import static com.github.t1.bulmajava.elements.ImageSize._64x64;
 import static com.github.t1.bulmajava.layout.Media.media;
 import static com.github.t1.customers.ui.CustomerPage.customerImage;
+import static com.github.t1.htmljava.Anchor.a;
 import static com.github.t1.htmljava.HtmlBasics.p;
 import static com.github.t1.htmljava.HtmlBasics.small;
 import static com.github.t1.htmljava.HtmlBasics.strong;
@@ -47,6 +51,7 @@ public class CustomersPage implements MessageBodyWriter<List<Customer>> {
     public void writeTo(List<Customer> customers, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) {
         page.title("Customers")
                 .content(customers.stream().map(this::map))
+                .content(a("Create").is(BUTTON, PRIMARY, PULLED_RIGHT).href("/customers/create"))
                 .render(entityStream);
     }
 

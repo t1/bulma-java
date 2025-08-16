@@ -97,11 +97,11 @@ public class Html extends AbstractElement<Html> {
     public Html head(Renderable content) {return head((AbstractElement<?> e) -> e.content(content));}
 
     public Html head(Function<AbstractElement<?>, AbstractElement<?>> function) {
-        return content(e -> e.hasName("head"), function, () -> element("head"));
+        return content(e -> e.hasTagName("head"), function, () -> element("head"));
     }
 
     @Override public Html content(Renderable content, int index) {
-        return content instanceof AbstractElement<?> e && e.hasName("body")
+        return content instanceof AbstractElement<?> e && e.hasTagName("body")
                 ? super.content(content, index) : body(content, index);
     }
 
@@ -110,7 +110,7 @@ public class Html extends AbstractElement<Html> {
     public Html body(Renderable content, int index) {return body((AbstractElement<?> e) -> e.content(content, index));}
 
     public Html body(Function<AbstractElement<?>, AbstractElement<?>> function) {
-        return content(e -> e.hasName("body"), function, Body::body);
+        return content(e -> e.hasTagName("body"), function, Body::body);
     }
 
 
@@ -118,4 +118,6 @@ public class Html extends AbstractElement<Html> {
         renderer.unsafeAppend("<!DOCTYPE html>\n");
         super.render(renderer);
     }
+
+    public AbstractElement<?> body() {return findElement(e -> e.hasTagName("body")).orElseThrow();}
 }

@@ -17,6 +17,6 @@ public class Menu {
     public static Element menuList() {return ul().classes("menu-list").map(Menu::item);}
 
     private static Renderable item(Renderable renderable) {
-        return (renderable instanceof AbstractElement<?> e && e.hasName("li")) ? renderable : li().content(renderable);
+        return (renderable instanceof AbstractElement<?> e && e.hasTagName("li")) ? renderable : li().content(renderable);
     }
 }

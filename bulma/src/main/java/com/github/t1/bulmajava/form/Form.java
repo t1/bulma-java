@@ -1,12 +1,15 @@
 package com.github.t1.bulmajava.form;
 
 import com.github.t1.bulmajava.basic.BulmaElement;
+import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Form extends BulmaElement<Form> {
     public static Form form() {return new Form();}
+
+    private boolean horizontal;
 
     private Form() {super("form");}
 
@@ -28,10 +31,18 @@ public class Form extends BulmaElement<Form> {
 
     public Form multipart() {return enctype("multipart/form-data");}
 
-    /** this is the default */
+    /// this is the default
     public Form urlencoded() {return enctype("application/x-www-form-urlencoded");}
 
     public Form plain() {return enctype("text/plain");}
 
     public Form enctype(String enctype) {return attr("enctype", enctype);}
+
+    /// Mark all fields added to this form as {@link Field#horizontal horizontal}.
+    public Form horizontal() {return this;}
+
+    @Override public Form content(Renderable content, int index) {
+        if (content instanceof Field field) field.horizontal();
+        return super.content(content, index);
+    }
 }

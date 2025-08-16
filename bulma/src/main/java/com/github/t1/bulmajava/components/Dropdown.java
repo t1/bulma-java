@@ -62,7 +62,7 @@ public class Dropdown extends BulmaElement<Dropdown> {
     private static Renderable item(Renderable renderable) {
         if (renderable instanceof Anchor a) return a.classes("dropdown-item");
         if (renderable instanceof Element e)
-            return e.hasName("hr") ? e.classes("dropdown-divider") : e.classes("dropdown-item");
+            return e.hasTagName("hr") ? e.classes("dropdown-divider") : e.classes("dropdown-item");
         return renderable;
     }
 

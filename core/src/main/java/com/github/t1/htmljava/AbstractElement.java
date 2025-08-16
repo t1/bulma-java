@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -55,7 +56,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     @Getter private boolean rendersOnSeparateLines;
 
-    @Getter @NonNull private String name;
+    @Getter @NonNull private String tagName;
 
     @Getter private Attributes attributes;
 
@@ -64,16 +65,16 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     // TODO get rid of the mapFunction mechanism... overload #content(Renderable content, boolean first) instead
     @NonNull private Function<Renderable, Renderable> mapFunction;
 
-    protected AbstractElement(@NonNull String name, String... classes) {this(name, Attributes.of(Classes.of(classes)));}
+    protected AbstractElement(@NonNull String tagName, String... classes) {this(tagName, Attributes.of(Classes.of(classes)));}
 
-    protected AbstractElement(@NonNull String name, Attributes attributes) {this(name, attributes, null);}
+    protected AbstractElement(@NonNull String tagName, Attributes attributes) {this(tagName, attributes, null);}
 
-    protected AbstractElement(@NonNull String name, Attributes attributes, Renderable content) {this(name, attributes, content, Function.identity());}
+    protected AbstractElement(@NonNull String tagName, Attributes attributes, Renderable content) {this(tagName, attributes, content, Function.identity());}
 
-    protected AbstractElement(@NonNull String name, Attributes attributes, Renderable content, Function<Renderable, Renderable> mapFunction) {
+    protected AbstractElement(@NonNull String tagName, Attributes attributes, Renderable content, Function<Renderable, Renderable> mapFunction) {
         this.close = true;
         this.rendersOnSeparateLines = true;
-        this.name = name;
+        this.tagName = tagName;
         this.attributes = attributes;
         this.content = content;
         this.mapFunction = mapFunction;
@@ -84,9 +85,11 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     @Override public String toString() {return render();}
 
-    public boolean hasName(String name) {return this.name.equals(name);}
+    public boolean hasTagName(String name) {return this.tagName.equals(name);}
 
     public boolean hasAttribute(String name) {return attributes.hasAttribute(name);}
+
+    public Optional<Attribute> findAttribute(String name) {return attributes.findAttribute(name);}
 
     public boolean hasAttribute(String name, String value) {return attributes.hasAttribute(name, value);}
 
@@ -239,6 +242,8 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return self();
     }
 
+    public SELF content(Collection<? extends Renderable> content) {return content(content.stream());}
+
     public SELF content(Renderable content) {return content(content, LAST);}
 
     /// Add the given content to the existing content at that index (too big numbers are appended).
@@ -312,7 +317,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public TagContinuation renderOpeningTag(Renderer renderer, boolean contentRendersOnSeparateLines) {
         if (rendersOnSeparateLines()) renderer.indent();
-        renderer.unsafeAppend("<").safeAppend(name);
+        renderer.unsafeAppend("<").safeAppend(tagName);
         if (attributes != null && !attributes.isEmpty()) {
             renderer.unsafeAppend(" ");
             attributes.render(renderer);
@@ -346,7 +351,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         if (contentRendersOnSeparateLines) renderer.out();
         if (close) {
             if (contentRendersOnSeparateLines) renderer.indent();
-            renderer.unsafeAppend("</").safeAppend(name).unsafeAppend(">");
+            renderer.unsafeAppend("</").safeAppend(tagName).unsafeAppend(">");
         }
         if (rendersOnSeparateLines) renderer.nl();
     }

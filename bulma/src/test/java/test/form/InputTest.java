@@ -187,7 +187,7 @@ class InputTest {
     }
 
     @Test void shouldRenderNullInput() {
-        var input = field().content(input(TEXT).value(null));
+        var input = field().content(input(TEXT).value((String) null));
 
         then(input).rendersAs("""
                 <div class="field">
@@ -429,7 +429,7 @@ class InputTest {
 
     @Test void shouldRenderRawRangeInput() {
         var input = div().style("width: 500px;").content(
-                input(RANGE).notClasses("input").name("cowbell").min(0).max(100).value(80).step(20));
+                input(RANGE).notClasses("input").fieldName("cowbell").min(0).max(100).value(80).step(20));
 
         then(input).rendersAs("""
                 <div style="width: 500px;">
@@ -441,7 +441,7 @@ class InputTest {
     @Test void shouldRenderRangeField() {
         var input = div().style("width: 500px;").content(
                 field("Cowbell")
-                        .content(input(RANGE).name("cowbell").min(0).max(100).value(90).step(10)));
+                        .content(input(RANGE).fieldName("cowbell").min(0).max(100).value(90).step(10)));
 
         then(input).rendersAs("""
                 <div style="width: 500px;">

@@ -20,8 +20,8 @@ public class Modal {
 
     private static Renderable part(Renderable renderable) {
         if (renderable instanceof AbstractElement<?> e) {
-            if (e.hasName("header")) return e.classes("modal-card-head");
-            if (e.hasName("footer")) return e.classes("modal-card-foot");
+            if (e.hasTagName("header")) return e.classes("modal-card-head");
+            if (e.hasTagName("footer")) return e.classes("modal-card-foot");
             return e.classes("modal-card-body");
         }
         return renderable;

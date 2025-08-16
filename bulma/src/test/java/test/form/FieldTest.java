@@ -32,6 +32,7 @@ import static com.github.t1.bulmajava.form.Checkbox.checkbox;
 import static com.github.t1.bulmajava.form.Field.EXPANDED;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Field.fieldset;
+import static com.github.t1.bulmajava.form.Form.form;
 import static com.github.t1.bulmajava.form.Input.input;
 import static com.github.t1.bulmajava.form.InputType.EMAIL;
 import static com.github.t1.bulmajava.form.InputType.PASSWORD;
@@ -160,8 +161,8 @@ class FieldTest {
 
     @Test void shouldRenderField() {
         var field = field("Label")
-                        .content(input(TEXT).placeholder("Text input"))
-                        .help("This is a help text");
+                .content(input(TEXT).placeholder("Text input"))
+                .help("This is a help text");
 
         then(field).rendersAs("""
                 <div class="field">
@@ -522,6 +523,23 @@ class FieldTest {
                 """);
     }
 
+    @Test void shouldRenderReadonlyFields() {
+        var form = field().allReadonly().content(
+                input(TEXT).fieldName("a").value("A"),
+                input(TEXT).fieldName("b").value("B"));
+
+        then(form).rendersAs("""
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text" name="a" value="A" readonly />
+                    </div>
+                    <div class="control">
+                        <input class="input" type="text" name="b" value="B" readonly />
+                    </div>
+                </div>
+                """);
+    }
+
     @Test void shouldRenderFieldPreventingEscapeKey() {
         var form = field()
                 .content(input(TEXT).onkeydown("Escape", "event.preventDefault();").expanded());
@@ -826,37 +844,37 @@ class FieldTest {
     }
 
     @Test void shouldRenderHorizontalForm() {
-        var form = div().style("width: 1000px;").content(
-                field("From").horizontal()
+        var form = form().style("width: 1000px;").horizontal().content(
+                field("From")
                         .content(input(TEXT).placeholder("Name").expanded())
                         .iconLeft("user")
                         .content(input(EMAIL).is(SUCCESS).placeholder("Email").value("alex@smith.com").expanded())
                         .iconLeft("envelope")
                         .iconRight("check"),
-                field().horizontal()
+                field()
                         .content(input(TEL).placeholder("Your phone number").expanded())
                         .addonLeft(a("+44").href("#").is(STATIC))
                         .help("Do not enter the first zero"),
-                field("Department").horizontal()
+                field("Department")
                         .content(select("department")
                                 .options("Business development", "Marketing", "Sales")),
-                field("Already a member?").horizontal()
+                field("Already a member?")
                         .content(radios("member")
                                 .option("y", "Yes")
                                 .option("n", "No")),
-                field("Subject").horizontal()
+                field("Subject")
                         .content(input(TEXT).is(DANGER).placeholder("e.g. Partnership opportunity"))
                         .help("This field is required", DANGER),
-                field("Question").horizontal()
+                field("Question")
                         .content(textarea().placeholder("Explain how we can help you")),
-                field().horizontal()
+                field()
                         .content(button("Send message").is(PRIMARY)));
 
         // Bulma docs: the Department `select` is `fullwidth`, while the nested `field` is `narrow`;
         // also, the Already-a-member?-`field` is `narrow`... makes no sense, so we removed those.
         // The `has-addons` in the phone number field is no problem, and the `is-expanded` is not necessary.
         then(form).rendersAs("""
-                <div style="width: 1000px;">
+                <form style="width: 1000px;">
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
                             <label class="label">From</label>
@@ -877,7 +895,7 @@ class FieldTest {
                             </div>
                         </div>
                     </div>
-                    <div class="field is-horizontal has-addons">
+                    <div class="field has-addons is-horizontal">
                         <div class="field-label is-normal"></div>
                         <div class="field-body">
                             <div class="field">
@@ -967,7 +985,7 @@ class FieldTest {
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
                 """);
     }
 

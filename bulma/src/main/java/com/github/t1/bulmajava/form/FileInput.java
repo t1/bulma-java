@@ -78,7 +78,7 @@ public class FileInput extends BulmaElement<FileInput> {
     }
 
     public FileInput name(String name) {
-        input().name(name);
+        input().fieldName(name);
         return this;
     }
 

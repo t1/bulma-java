@@ -18,7 +18,7 @@ class FormTest {
     @Test void shouldRenderPostForm() {
         var form = form()
                 .post("/submit")
-                .content(input(TEXT).name("chat_message"));
+                .content(input(TEXT).fieldName("chat_message"));
 
         then(form).rendersAs("""
                 <form method="post" action="/submit">
@@ -30,7 +30,7 @@ class FormTest {
     @Test void shouldRenderGetForm() {
         var form = form()
                 .get("/submit")
-                .content(input(TEXT).name("chat_message"));
+                .content(input(TEXT).fieldName("chat_message"));
 
         then(form).rendersAs("""
                 <form method="get" action="/submit">
@@ -42,7 +42,7 @@ class FormTest {
     @Test void shouldRenderDialogForm() {
         var form = form()
                 .dialog("/submit")
-                .content(input(TEXT).name("chat_message"));
+                .content(input(TEXT).fieldName("chat_message"));
 
         then(form).rendersAs("""
                 <form method="dialog" action="/submit">
@@ -54,7 +54,7 @@ class FormTest {
     @Test void shouldRenderFormWithoutMethod() {
         var form = form()
                 .action("/submit")
-                .content(input(TEXT).name("chat_message"));
+                .content(input(TEXT).fieldName("chat_message"));
 
         then(form).rendersAs("""
                 <form action="/submit">
@@ -67,7 +67,7 @@ class FormTest {
         var form = form()
                 .action("/submit")
                 .method("put")
-                .content(input(TEXT).name("chat_message"));
+                .content(input(TEXT).fieldName("chat_message"));
 
         // put is not a valid method for a form, but we want to test that it's rendered as given
         //noinspection HtmlWrongAttributeValue
@@ -142,7 +142,7 @@ class FormTest {
         var form = form().post().multipart().content(
                 div().content(
                         element("label").content("Choose file to upload").attr("for", "foo"),
-                        input(FILE).id("foo").notClasses("input").name("file").attr("multiple")),
+                        input(FILE).id("foo").notClasses("input").fieldName("file").attr("multiple")),
                 div().content(element("button").content("Submit")));
 
         then(form).rendersAs("""

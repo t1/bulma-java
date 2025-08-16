@@ -14,7 +14,7 @@ public class Media extends BulmaElement<Media> {
     public Media() {super("article", "media");}
 
     @Override public Media content(Renderable content) {
-        if (content instanceof Element e && e.hasName("div") && e.hasClass("media-content"))
+        if (content instanceof Element e && e.hasTagName("div") && e.hasClass("media-content"))
             return super.content(content); // break recursion
         getOrCreate("media-content").content(content);
         return this;

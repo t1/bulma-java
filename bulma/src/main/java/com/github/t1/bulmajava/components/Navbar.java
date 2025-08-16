@@ -40,7 +40,7 @@ public class Navbar extends BulmaElement<Navbar> {
 
     private static Renderable item(Renderable renderable) {
         if (renderable instanceof AbstractElement<?> e && !e.hasClass("navbar-burger"))
-            return e.hasName("hr") ? e.classes("navbar-divider") : e.classes("navbar-item");
+            return e.hasTagName("hr") ? e.classes("navbar-divider") : e.classes("navbar-item");
         return renderable;
     }
 

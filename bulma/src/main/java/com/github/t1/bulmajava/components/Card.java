@@ -35,7 +35,7 @@ public class Card extends BulmaElement<Card> {
     private static Renderable headerElement(Renderable renderable) {
         if (renderable instanceof Button b)
             return b.notClasses("button").classes("card-header-icon").icon(icon -> icon.ariaHidden(true));
-        if (renderable instanceof AbstractElement<?> e && e.hasName("p"))
+        if (renderable instanceof AbstractElement<?> e && e.hasTagName("p"))
             return e.classes("card-header-title");
         return renderable;
     }
