@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import static com.github.t1.htmljava.HtmlBasics.div;
-import static com.github.t1.htmljava.HtmlBasics.element;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Card extends BulmaElement<Card> {
@@ -19,25 +18,31 @@ public class Card extends BulmaElement<Card> {
 
     public static Element cardContent() {return div().classes("card-content");}
 
-    public static Element cardFooter() {
-        return element("footer").classes("card-footer").map(Card::footerElement);
+    @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
+    public static class CardFooter extends BulmaElement<CardFooter> {
+        private static CardFooter cardFooter() {return new CardFooter();}
+
+        private CardFooter() {super("footer", "card-footer");}
+
+        @Override public CardFooter content(Renderable content, int index) {
+            if (content instanceof AbstractElement<?> e) e.classes("card-footer-item");
+            return super.content(content, index);
+        }
     }
 
-    private static Renderable footerElement(Renderable renderable) {
-        if (renderable instanceof AbstractElement<?> e) return e.classes("card-footer-item");
-        return renderable;
-    }
+    @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
+    public static class CardHeader extends BulmaElement<CardHeader> {
+        private static CardHeader cardHeader() {return new CardHeader();}
 
-    public static Element cardHeader() {
-        return element("header").classes("card-header").map(Card::headerElement);
-    }
+        private CardHeader() {super("header", "card-header");}
 
-    private static Renderable headerElement(Renderable renderable) {
-        if (renderable instanceof Button b)
-            return b.notClasses("button").classes("card-header-icon").icon(icon -> icon.ariaHidden(true));
-        if (renderable instanceof AbstractElement<?> e && e.hasTagName("p"))
-            return e.classes("card-header-title");
-        return renderable;
+        @Override public CardHeader content(Renderable content, int index) {
+            if (content instanceof Button b)
+                b.notClasses("button").classes("card-header-icon").icon(icon -> icon.ariaHidden(true));
+            if (content instanceof AbstractElement<?> e && e.hasTagName("p"))
+                e.classes("card-header-title");
+            return super.content(content, index);
+        }
     }
 
     public static Element cardImage() {return div().classes("card-image");}
@@ -54,12 +59,12 @@ public class Card extends BulmaElement<Card> {
     }
 
     public Card header(Renderable... components) {
-        getOrCreate("card-header", Card::cardHeader).content(components);
+        getOrCreate("card-header", CardHeader::cardHeader).content(components);
         return this;
     }
 
     public Card footer(Renderable... components) {
-        getOrCreate("card-footer", Card::cardFooter).content(components);
+        getOrCreate("card-footer", CardFooter::cardFooter).content(components);
         return this;
     }
 }

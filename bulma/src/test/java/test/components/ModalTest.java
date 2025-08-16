@@ -8,12 +8,10 @@ import test.RenderTestExtension;
 import static com.github.t1.bulmajava.basic.Color.PRIMARY;
 import static com.github.t1.bulmajava.basic.Color.SUCCESS;
 import static com.github.t1.bulmajava.components.Modal.modal;
-import static com.github.t1.bulmajava.components.Modal.modalCard;
 import static com.github.t1.bulmajava.components.Modal.modalCardTitle;
-import static com.github.t1.bulmajava.components.Modal.modalCloseButton;
-import static com.github.t1.bulmajava.components.Modal.modalContent;
 import static com.github.t1.bulmajava.elements.Box.box;
 import static com.github.t1.bulmajava.elements.Button.button;
+import static com.github.t1.bulmajava.elements.Button.buttons;
 import static com.github.t1.bulmajava.elements.Delete.close;
 import static com.github.t1.bulmajava.elements.Image.imageP;
 import static com.github.t1.bulmajava.elements.Image.img;
@@ -32,10 +30,9 @@ import static test.RenderTestExtension.placeholder;
 class ModalTest {
     @Test void shouldRenderModal() {
         var modal = div().content(
-                modal().id("modal-1").content(
-                        modalContent().content(
-                                box("Some text inside the modal.")),
-                        modalCloseButton()),
+                modal().id("modal-1")
+                        .content(box("Some text inside the modal."))
+                        .closeButton(),
                 openModalButton("modal-1"));
 
         then(modal).rendersAs("""
@@ -55,9 +52,8 @@ class ModalTest {
     @Test void shouldRenderModalImage() {
         var modal = div().content(
                 modal().id("modal-2").content(
-                        modalContent().content(
-                                imageP(_4by3).content(img(placeholder("1280x960"), "xxx"))),
-                        modalCloseButton()),
+                                imageP(_4by3).content(img(placeholder("1280x960"), "xxx")))
+                        .closeButton(),
                 openModalButton("modal-2"));
 
         then(modal).rendersAs("""
@@ -78,14 +74,28 @@ class ModalTest {
 
     @Test void shouldRenderModalCard() {
         var modal = div().content(
-                modal().id("modal-3").content(modalCard().content(
+                // TODO more convenient way to create a modal card?
+                // modalCard().id("modal-3")
+                //         .title("Modal title").closeButton() // short for:
+                //         // .header(
+                //         //         modalCardTitle("Modal title"),
+                //         //         closeButton())
+                //         .content(
+                //                 section().content(
+                //                         h1("Hello World"),
+                //                         loremIpsumS()))
+                //         .footer(buttons().content(
+                //                 button("Save changes").is(SUCCESS),
+                //                 button("Cancel")
+                //         )),
+                modal().id("modal-3").card(
                         header().content(
                                 modalCardTitle("Modal title"),
                                 close()),
                         section().content(
                                 h1("Hello World"),
                                 loremIpsumS()),
-                        footer().content(
+                        footer().content(buttons().content(
                                 button("Save changes").is(SUCCESS),
                                 button("Cancel")
                         ))),
@@ -105,8 +115,10 @@ class ModalTest {
                                 $loremIpsum
                             </section>
                             <footer class="modal-card-foot">
-                                <button class="button is-success">Save changes</button>
-                                <button class="button">Cancel</button>
+                                <div class="buttons">
+                                    <button class="button is-success">Save changes</button>
+                                    <button class="button">Cancel</button>
+                                </div>
                             </footer>
                         </div>
                     </div>

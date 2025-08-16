@@ -1,22 +1,36 @@
 package com.github.t1.bulmajava.components;
 
+import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.AbstractElement;
+import com.github.t1.htmljava.ClassModifier;
 import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Renderable;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
-import static com.github.t1.htmljava.HtmlBasics.aside;
 import static com.github.t1.htmljava.HtmlBasics.li;
 import static com.github.t1.htmljava.HtmlBasics.p;
 import static com.github.t1.htmljava.HtmlBasics.ul;
 
-public class Menu {
-    public static Element menu() {return aside().classes("menu");}
+@EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
+public class Menu extends BulmaElement<Menu> {
+    private static final ClassModifier MENU_LABEL = () -> "menu-label";
 
-    public static Element menuLabel(String text) {return p().classes("menu-label").content(text);}
+    public static Menu menu() {return new Menu();}
 
-    public static Element menuList() {return ul().classes("menu-list").map(Menu::item);}
+    private Menu() {super("aside", "menu");}
 
-    private static Renderable item(Renderable renderable) {
-        return (renderable instanceof AbstractElement<?> e && e.hasTagName("li")) ? renderable : li().content(renderable);
+    private Element lastList;
+
+    public Menu label(String text) {lastList = null; return content(p().is(MENU_LABEL).content(text));}
+
+    @Override public Menu content(Renderable content, int index) {
+        if (content instanceof AbstractElement<?> e && MENU_LABEL.check(e)) return super.content(content, index);
+        if (lastList == null) {
+            lastList = ul().classes("menu-list");
+            super.content(lastList, index);
+        }
+        lastList.content(content instanceof AbstractElement<?> e && e.hasTagName("li") ? content : li().content(content));
+        return this;
     }
 }

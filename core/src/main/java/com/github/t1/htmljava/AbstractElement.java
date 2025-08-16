@@ -228,6 +228,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     /// A function that is applied to each content element before it is added.
     /// This allows to, e.g., add classes to the content or wrap it with an additional element.
+    /// TODO get rid of this; instead, use separate subclasses and overload #content(Renderable content, boolean first)
     public SELF map(Function<Renderable, Renderable> function) {
         this.mapFunction = function;
         return self();

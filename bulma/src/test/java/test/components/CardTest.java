@@ -10,8 +10,6 @@ import static com.github.t1.bulmajava.basic.Alignment.CENTERED;
 import static com.github.t1.bulmajava.basic.SizeModifier.size;
 import static com.github.t1.bulmajava.components.Card.card;
 import static com.github.t1.bulmajava.components.Card.cardContent;
-import static com.github.t1.bulmajava.components.Card.cardFooter;
-import static com.github.t1.bulmajava.components.Card.cardHeader;
 import static com.github.t1.bulmajava.components.Card.cardImage;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Content.content_;
@@ -84,11 +82,11 @@ class CardTest {
     }
 
     @Test void shouldRenderCardHeader() {
-        var card = card().style("width: 260px;").content(
-                cardHeader().content(
+        var card = card().style("width: 260px;")
+                .header(
                         p("Card header"),
                         button().ariaLabel("more options")
-                                .icon("angle-down")));
+                                .icon("angle-down"));
 
         then(card).rendersAs("""
                 <div class="card" style="width: 260px;">
@@ -103,11 +101,11 @@ class CardTest {
     }
 
     @Test void shouldRenderCenteredCardHeader() {
-        var card = card().style("width: 260px;").content(
-                cardHeader().content(
+        var card = card().style("width: 260px;")
+                .header(
                         p("Card header").is(CENTERED),
                         button().ariaLabel("more options")
-                                .icon("angle-down")));
+                                .icon("angle-down"));
 
         then(card).rendersAs("""
                 <div class="card" style="width: 260px;">
@@ -150,11 +148,11 @@ class CardTest {
     }
 
     @Test void shouldRenderCardFooter() {
-        var card = card().style("width: 260px;").content(
-                cardFooter().content(
+        var card = card().style("width: 260px;")
+                .footer(
                         a("Save").href("#"),
                         a("Edit").href("#"),
-                        a("Delete").href("#")));
+                        a("Delete").href("#"));
 
         then(card).rendersAs("""
                 <div class="card" style="width: 260px;">

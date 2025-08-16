@@ -6,8 +6,6 @@ import test.RenderTestExtension;
 
 import static com.github.t1.bulmajava.basic.State.ACTIVE;
 import static com.github.t1.bulmajava.components.Menu.menu;
-import static com.github.t1.bulmajava.components.Menu.menuLabel;
-import static com.github.t1.bulmajava.components.Menu.menuList;
 import static com.github.t1.htmljava.Anchor.a;
 import static com.github.t1.htmljava.HtmlBasics.li;
 import static com.github.t1.htmljava.HtmlBasics.ul;
@@ -16,13 +14,12 @@ import static test.CustomAssertions.then;
 @ExtendWith(RenderTestExtension.class)
 class MenuTest {
     @Test void shouldRenderMenu() {
-        var menu = menu().content(
-                menuLabel("General"),
-                menuList().content(
-                        a("Dashboard"),
-                        a("Customers")),
-                menuLabel("Administration"),
-                menuList().content(
+        var menu = menu()
+                .label("General")
+                .content(a("Dashboard"),
+                        a("Customers"))
+                .label("Administration")
+                .content(
                         a("Team Settings"),
                         li().content(
                                 a("Manage Your Team").is(ACTIVE),
@@ -32,12 +29,12 @@ class MenuTest {
                                         li().content(a("Add a member")))),
                         a("Invitations"),
                         a("Cloud Storage Environment Settings"),
-                        a("Authentication")),
-                menuLabel("Transactions"),
-                menuList().content(
+                        a("Authentication"))
+                .label("Transactions")
+                .content(
                         a("Payments"),
                         a("Transfers"),
-                        a("Balance")));
+                        a("Balance"));
 
         then(menu).rendersAs("""
                 <aside class="menu">
