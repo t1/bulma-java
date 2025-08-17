@@ -18,14 +18,13 @@ import java.util.stream.Stream;
 import static com.github.t1.bulmajava.basic.State.LOADING;
 import static com.github.t1.htmljava.HtmlBasics.element;
 
+/// @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select">Select</a>
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Select extends BulmaElement<Select> {
 
     private static final Function<Select, Element> CONTENT_ELEMENT = select -> select.contentAs(Element.class);
 
-    /**
-     * It generally makes sense to give the select a name; if you really don't want it, pass <code>null</code>.
-     */
+    /// It generally makes sense to give the select a name; if you really don't want it, pass `null`.
     public static Select select(String name) {return new Select(name);}
 
 
@@ -108,4 +107,6 @@ public class Select extends BulmaElement<Select> {
         }
         return this;
     }
+
+    public Select required() {contentAs(Element.class).attr("required"); return this;}
 }

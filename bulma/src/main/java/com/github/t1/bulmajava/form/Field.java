@@ -19,6 +19,8 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import static com.github.t1.bulmajava.basic.Alignment.LEFT;
 import static com.github.t1.bulmajava.basic.Alignment.RIGHT;
@@ -31,27 +33,28 @@ import static com.github.t1.htmljava.HtmlBasics.element;
 import static com.github.t1.htmljava.HtmlBasics.p;
 import static com.github.t1.htmljava.Renderable.add;
 
-/// The Bulma `field` element is a container for a label and one or more inputs (Bulma calls them form controls)
-/// with icons, addons, and a help text. Most things are optional, but it requires quite some boilerplate markup to build,
-/// so we provide a fluent API to make it much easier. Just think of the things you want to see,
-/// this class will take care of the details.
+/// The Bulma `field` element is a container for a label and one or more form controls with icons, addons, and a help text.
+/// Most things are optional, but it requires quite some boilerplate markup to build;
+/// so we provide a fluent API to make it much easier, allowing you to think of the things you want to see,
+/// and this class will take care of the details.
 ///
-/// The basic pattern is that you create a {@link #field(String)} with its label (or {@link #field()}
-/// without a label), then add your inputs, etc. as {@link #content(Renderable)},
-/// which you can then modify with icons and a help text.
+/// The basic pattern is that you create a {@link #field(String)} with its label (or {@link #field()} without a label),
+/// and then add your form controls (input, textarea, etc.) as {@link #content(Renderable)}.
+/// After adding some content, you can decorate it with icons, addons, and/or a help text.
 /// E.g., building a text field with an icon, an addon, and a help text looks like this:
 /// ```java
 /// field("User")
-///     .content(input(TEXT).expanded())
+///     .content(input(TEXT).fieldName("username").required)
 ///     .iconLeft("user")
 ///     .addonRight(button("Search"))
 ///     .help("The username you want to search for", SUCCESS);
-///```
+/// ```
 ///
-/// Note that you can only have one icon on each side of the input, but multiple addons.
+/// You can only have one icon on each side of the input, but multiple addons.
+/// The help text can be plain (with optional modifiers) or an arbitrary element, e.g., for styled text.
 ///
-/// Sometimes, you may want to have several inputs for a single label. In that case, you can simply
-/// add more `content` and then modify that with icons or help. Multiple inputs can be styled as a
+/// Sometimes, you may want to have several inputs for a single label. In that case, you can
+/// add more `content` and then modify those with their icons, addons, or help. Multiple inputs can be styled as a
 /// group of inputs by using {@link #grouped()} or {@link #groupedMultiline()}.
 ///
 /// To place the labels left of the inputs instead of above, you can use {@link #horizontal()}.
@@ -64,12 +67,15 @@ public class Field extends BulmaElement<Field> {
     private static final IsModifier GROUPED_MULTILINE = () -> "grouped-multiline";
     private static final IsModifier HORIZONTAL = () -> "horizontal";
 
+    public static Predicate<Field> fieldName(String fieldName) {return field -> field.fieldControl(fieldName).isPresent();}
+
     // TODO maybe we could make usage of this fully automatic?
     public static Element control() {return div().is(CONTROL);}
 
     public static Element fieldset() {return element("fieldset");}
 
-    @SuppressWarnings("RedundantCast") public static Field field() {return new Field((String) null);}
+    @SuppressWarnings("RedundantCast") // lombok generates a second constructor taking a FieldBuilder
+    public static Field field() {return new Field((String) null);}
 
     public static Field field(String label) {return new Field(label);}
 
@@ -98,7 +104,7 @@ public class Field extends BulmaElement<Field> {
         private boolean hasAddons() {return leftAddons.isPresent() || rightAddons.isPresent();}
 
         private void render(Renderer renderer) {
-            var content = this.content.twin(); // we'll have copy/move some modifiers
+            var content = this.content.twin(); // we'll have to copy/move some modifiers
             var control = control().content(content);
 
             if (leftIcon != null) leftIcon.addTo(control, LEFT);
@@ -107,7 +113,7 @@ public class Field extends BulmaElement<Field> {
             var subField = hasModifier(HORIZONTAL)
                     ? div().classes("field").renderOpeningTag(renderer, true)
                     : null;
-            // if we have a horizontal field with addons _and_ help, we need a sub-sub-field, and has-addons has to be copied there
+            // for a horizontal field with addons _and_ help, we need a sub-sub, and `has-addons` has to be copied there
             var subSubField = (subField != null && help != null && hasAddons())
                     ? div().classes("field").has(ADDONS).renderOpeningTag(renderer, true)
                     : null;
@@ -116,7 +122,7 @@ public class Field extends BulmaElement<Field> {
             if (readonly) {
                 if (content instanceof Input input) input.readonly();
                 if (content instanceof Textarea textarea) textarea.readonly();
-                // all other form controls are readonly by default
+                // all other form controls are readonly by default.
                 // see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/readonly
             }
             if (content instanceof Anchor) content.is(BUTTON);
@@ -137,9 +143,9 @@ public class Field extends BulmaElement<Field> {
             if (subField != null) subField.close();
         }
 
-        public boolean hasFieldControl(String name) {
-            // TODO support the other field types
-            return content instanceof Input input && name.equals(input.fieldName());
+        public Optional<AbstractElement<?>> fieldControl(String name) {
+            // TODO support the other field control types
+            return (content instanceof Input input && name.equals(input.fieldName())) ? Optional.of(input) : Optional.empty();
         }
     }
 
@@ -256,8 +262,10 @@ public class Field extends BulmaElement<Field> {
     }
 
 
-    public boolean hasFieldControl(String name) {
-        return controls.stream().anyMatch(fieldControl -> fieldControl.hasFieldControl(name));
+    public Optional<AbstractElement<?>> fieldControl(String name) {
+        return controls.stream()
+                .flatMap(fieldControl -> fieldControl.fieldControl(name).stream())
+                .findFirst();
     }
 
 

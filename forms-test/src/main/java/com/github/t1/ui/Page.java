@@ -33,52 +33,37 @@ import static com.github.t1.bulmajava.layout.Section.section;
 import static com.github.t1.htmljava.Anchor.a;
 import static com.github.t1.htmljava.Body.body;
 import static com.github.t1.htmljava.Html.html;
-import static com.github.t1.htmljava.HtmlBasics.element;
 import static com.github.t1.htmljava.HtmlBasics.li;
 import static com.github.t1.htmljava.HtmlBasics.span;
 import static com.github.t1.htmljava.HtmlBasics.time;
-import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 import static java.util.Locale.ROOT;
 
 @RequestScoped
 public class Page implements Renderable {
-    //private final HttpSession session;
-    private final HttpHeaders headers;
-    private final UriInfo uriInfo;
+    @Inject HttpHeaders headers;
 
-    @ConfigProperty(name = "htmx.debug", defaultValue = "false") boolean debug;
+    @Inject UriInfo uriInfo;
+
+    @ConfigProperty(name = "bulma-java-forms-test.htmx.debug", defaultValue = "false") boolean debug;
 
     private Html html;
     private Section section;
-
-    @Inject public Page(HttpHeaders headers, UriInfo uriInfo) {
-        this.headers = headers;
-        this.uriInfo = uriInfo;
-    }
 
     public Page title(String title) {
         //noinspection CommaExpressionJS,JSUnresolvedReference
         this.html = html(title)
                 .stylesheet("/webjars/fortawesome__fontawesome-free/css/all.css")
                 .stylesheet("/webjars/bulma/css/bulma.css")
+                .stylesheet("/validation.css")
                 .script("/webjars/htmx.org/dist/htmx.js")
                 .script("/webjars/htmx-ext-json-enc/json-enc.js")
-                //.script("/webjars/htmx-ext-ws/ws.js")
                 .script("/webjars/htmx-ext-debug/debug.js")
-                //.script("validation.js")
-                .content(body().has(NAVBAR_FIXED_TOP).content(
-                        container().content(
-                                this.section = section().classes("mt-6")
-                                        .attr("hx-ext", "ws,json-enc" + (debug ? ",debug" : ""))
-                                        //.attr("ws-connect", "/connect/" + session.getId())
-                                        .content(
-                                                navbar(),
-                                                Title.title(title)))));
-        this.html.body().content(element("script").content(unsafeString("""
-                document.body.addEventListener("reload-page", function(){
-                    window.location.reload();
-                })
-                """)));
+                .content(body().has(NAVBAR_FIXED_TOP).content(container().content(
+                        this.section = section().classes("mt-6")
+                                .attr("hx-ext", "ws,json-enc" + (debug ? ",debug" : ""))
+                                .content(
+                                        navbar(),
+                                        Title.title(title)))));
         return this;
     }
 

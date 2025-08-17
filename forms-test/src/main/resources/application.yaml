@@ -10,3 +10,6 @@ quarkus:
     display-request-duration: true
     theme: feeling-blue
     try-it-out-enabled: true
+bulma-java-forms-test:
+  htmx:
+    #debug: true

@@ -3,6 +3,7 @@ package com.github.t1.customers.ui;
 import com.github.t1.bulmajava.elements.Button;
 import com.github.t1.bulmajava.elements.ImageSize;
 import com.github.t1.bulmajava.form.Field;
+import com.github.t1.bulmajava.form.Form;
 import com.github.t1.customers.Customer;
 import com.github.t1.htmljava.Anchor;
 import com.github.t1.htmljava.Element;
@@ -33,11 +34,13 @@ import static com.github.t1.bulmajava.elements.Button.BUTTON;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Button.buttonsAddon;
 import static com.github.t1.bulmajava.form.Form.form;
+import static com.github.t1.bulmajava.form.Input.submit;
 import static com.github.t1.htmljava.Anchor.a;
 import static com.github.t1.ui.Mode.CREATE;
 import static com.github.t1.ui.Mode.EDIT;
 import static com.github.t1.ui.Mode.VIEW;
 import static jakarta.ws.rs.core.MediaType.TEXT_HTML;
+import static java.util.function.Predicate.not;
 
 @Path("/customers")
 @Provider
@@ -62,28 +65,32 @@ public class CustomerPage implements MessageBodyWriter<Customer> {
     @Override
     public void writeTo(Customer customer, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) {
         page.title(customer.getName())
-                .content(form().horizontal()
-                        .content(fields(customer))
-                        .content(actionButtons(customer)))
+                .content(customerForm(customer))
                 .render(entityStream);
     }
 
     @GET @Path("/create") public String create() {
         return page.title("Create Customer")
-                .content(form().horizontal()
-                        .action("/customers")
-                        .post()
-                        .content(fields(new Customer()))
-                        .content(actionButtons(new Customer())))
+                .content(customerForm(new Customer())
+                        .post().action("/customers"))
                 .render();
+    }
+
+    private Form customerForm(Customer customer) {
+        return form().id("customer-form").horizontal()
+                .content(fields(customer))
+                .content(actionButtons(customer));
     }
 
     private Element actionButtons(Customer customer) {return buttonsAddon().is(PULLED_RIGHT).content(actions(customer));}
 
     private Stream<Field> fields(Customer customer) {
         var fields = form.of(customer);
-        if (mode() == CREATE) fields = fields.filter(field -> !field.hasFieldControl("customerNumber"));
-        if (mode() == VIEW) fields = fields.map(Field::allReadonly);
+        switch (mode()) {
+            case CREATE -> fields = fields
+                    .filter(not(Field.fieldName("customerNumber")));
+            case VIEW -> fields = fields.map(Field::allReadonly);
+        }
         return fields;
     }
 
@@ -91,13 +98,13 @@ public class CustomerPage implements MessageBodyWriter<Customer> {
         return switch (mode()) {
             case CREATE -> List.of(
                     cancel("/customers"),
-                    save("post", "/customers"));
+                    submit("Save").is(PRIMARY));
             case VIEW -> List.of(
                     edit(customerPath(customer) + "?edit"),
                     delete(customerPath(customer)));
             case EDIT -> List.of(
                     cancel(customerPath(customer)),
-                    save("put", customerPath(customer)));
+                    savePut(customerPath(customer)));
         };
     }
 
@@ -109,7 +116,7 @@ public class CustomerPage implements MessageBodyWriter<Customer> {
 
     private Anchor cancel(String href) {return a("Cancel").is(BUTTON).href(href);}
 
-    private Button save(String action, String path) {return button("Save").is(PRIMARY).attr("hx-" + action, path);}
+    private Button savePut(String path) {return button("Save").is(PRIMARY).attr("hx-put", path);}
 
     private Anchor edit(String path) {return a("Edit").is(BUTTON, LINK).href(path);}
 

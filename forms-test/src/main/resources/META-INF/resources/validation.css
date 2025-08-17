@@ -1,0 +1,8 @@
+:is(input, textarea, select):user-invalid {
+    border-color: var(--bulma-danger);
+}
+
+.field:has(:is(input, textarea, select):required) .label::after {
+    content: " *";
+    color: var(--bulma-danger);
+}

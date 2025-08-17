@@ -1,6 +1,7 @@
 package com.github.t1.customers;
 
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.NotFoundException;
@@ -10,11 +11,14 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static jakarta.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static java.util.Comparator.comparing;
 
 @Path("/customers")
@@ -48,9 +52,11 @@ public class Customers {
     }
 
     @POST
+    // I don't like to have to specify the media types here, but in Quarkus, this necessary ;-(
+    @Consumes({APPLICATION_JSON, APPLICATION_FORM_URLENCODED})
     public Response create(Customer customer) {
         add(customer);
-        return Response.ok().header("HX-Redirect", "/customers/" + customer.getId()).build();
+        return Response.seeOther(URI.create("/customers/" + customer.getId())).build();
     }
 
     @PUT  @Path("/{customerId}")
