@@ -1,5 +1,6 @@
 package com.github.t1.customers;
 
+import jakarta.validation.Valid;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -17,15 +18,18 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.github.t1.customers.Customer.Level.bronze;
+import static com.github.t1.customers.Customer.Level.gold;
+import static com.github.t1.customers.Customer.Level.platinum;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static java.util.Comparator.comparing;
 
 @Path("/customers")
 public class Customers {
-    public static final Customer JANE = Customer.builder().name("Jane Doe").email("jane.doe@example.com").build();
-    public static final Customer JOE = Customer.builder().name("Joe Doe").email("joe.doe@example.com").build();
-    public static final Customer JOANE = Customer.builder().name("Joane Doe").email("joane.doe@example.com").build();
+    public static final Customer JANE = Customer.builder().name("Jane Doe").email("jane.doe@example.com").supportLevel(gold).build();
+    public static final Customer JOE = Customer.builder().name("Joe Doe").email("joe.doe@example.com").supportLevel(bronze).build();
+    public static final Customer JOANE = Customer.builder().name("Joane Doe").email("joane.doe@example.com").supportLevel(platinum).build();
     private static long nextId = 1;
 
     private static final Map<Long, Customer> CUSTOMERS = new ConcurrentHashMap<>();
@@ -54,7 +58,7 @@ public class Customers {
     @POST
     // I don't like to have to specify the media types here, but in Quarkus, this necessary ;-(
     @Consumes({APPLICATION_JSON, APPLICATION_FORM_URLENCODED})
-    public Response create(Customer customer) {
+    public Response create(@Valid Customer customer) {
         add(customer);
         return Response.seeOther(URI.create("/customers/" + customer.getId())).build();
     }

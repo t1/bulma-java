@@ -1,8 +1,10 @@
 :is(input, textarea, select):user-invalid {
+    /*noinspection CssUnresolvedCustomProperty*/
     border-color: var(--bulma-danger);
 }
 
 .field:has(:is(input, textarea, select):required) .label::after {
     content: " *";
+    /*noinspection CssUnresolvedCustomProperty*/
     color: var(--bulma-danger);
 }

@@ -26,6 +26,8 @@ public class Input extends BulmaElement<Input> {
 
     public static Input input(InputType type) {return new Input(type);}
 
+    public static Input input(InputType type, String fieldName) {return input(type).fieldName(fieldName);}
+
     private Input(InputType type) {
         super("input", Attributes.of(Classes.of("input"), Attribute.of("type", type.key())));
         this.close(false);

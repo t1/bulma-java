@@ -58,6 +58,7 @@ public class Page implements Renderable {
                 .script("/webjars/htmx.org/dist/htmx.js")
                 .script("/webjars/htmx-ext-json-enc/json-enc.js")
                 .script("/webjars/htmx-ext-debug/debug.js")
+                .script("/validation.js")
                 .content(body().has(NAVBAR_FIXED_TOP).content(container().content(
                         this.section = section().classes("mt-6")
                                 .attr("hx-ext", "ws,json-enc" + (debug ? ",debug" : ""))

@@ -51,7 +51,11 @@ For a little demo based on https://quarkus.io[Quarkus] and https://htmx.org/docs
 
 Currently, the only icons supported, are https://fontawesome.com[fontawesome].
 
-== Form validation
+== Forms and validation
+
+You can include the `validation.css` file in your HTML to get a red asterisk on the label of `required` fields and mark invalid fields with a red border, when the user has changed them.
+
+TODO: document the usage of the `validation.js`
 
 TODO: use the help field to display validation errors. See https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation#a_more_detailed_example[the MDN] for an example of how to do that.
 

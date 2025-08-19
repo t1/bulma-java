@@ -14,6 +14,7 @@ import static com.github.t1.bulmajava.basic.State.LOADING;
 import static com.github.t1.bulmajava.basic.Style.ROUNDED;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Select.select;
+import static org.assertj.core.api.Assertions.catchIllegalArgumentException;
 import static test.CustomAssertions.then;
 
 @ExtendWith(RenderTestExtension.class)
@@ -65,6 +66,74 @@ class SelectTest {
                     </select>
                 </div>
                 """);
+    }
+
+    @Test void shouldRenderSelectSelectedByValue() {
+        var select = select("foo")
+                .option("1", "One")
+                .option("2", "Two")
+                .option("3", "Three")
+                .selected("2");
+
+        then(select).rendersAs("""
+                <div class="select">
+                    <select name="foo">
+                        <option value="1">One</option>
+                        <option value="2" selected>Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderSelectWithDeselectedValue() {
+        var select = select("foo")
+                .option("1", "One")
+                .option("2", "Two").selected()
+                .option("3", "Three")
+                .selected(null);
+
+        then(select).rendersAs("""
+                <div class="select">
+                    <select name="foo">
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderSingleSelectSelectedByValue() {
+        var select = select("foo")
+                .option("1", "One")
+                .selected("1");
+
+        then(select).rendersAs("""
+                <div class="select">
+                    <select name="foo">
+                        <option value="1" selected>One</option>
+                    </select>
+                </div>
+                """);
+    }
+
+    @Test void shouldFailToSelectMultipleUndefinedOption() {
+        var exception = catchIllegalArgumentException(() -> select("foo")
+                .option("1", "One")
+                .option("2", "Two")
+                .option("3", "Three")
+                .selected("4"));
+
+        then(exception).hasMessage("no option with value '4'");
+    }
+
+    @Test void shouldFailToSelectSingleUndefinedOption() {
+        var exception = catchIllegalArgumentException(() -> select("foo")
+                .option("1", "One")
+                .selected("2"));
+
+        then(exception).hasMessage("no option with value '2'");
     }
 
     @Test void shouldRenderMultipleSelectWithoutSize() {

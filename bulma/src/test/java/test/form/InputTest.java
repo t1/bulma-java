@@ -429,7 +429,7 @@ class InputTest {
 
     @Test void shouldRenderRawRangeInput() {
         var input = div().style("width: 500px;").content(
-                input(RANGE).notClasses("input").fieldName("cowbell").min(0).max(100).value(80).step(20));
+                input(RANGE, "cowbell").notClasses("input").min(0).max(100).value(80).step(20));
 
         then(input).rendersAs("""
                 <div style="width: 500px;">

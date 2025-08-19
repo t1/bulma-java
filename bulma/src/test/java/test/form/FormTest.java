@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import test.RenderTestExtension;
 
+import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.FileInput.fileInput;
 import static com.github.t1.bulmajava.form.Form.form;
 import static com.github.t1.bulmajava.form.Input.input;
@@ -22,7 +23,83 @@ class FormTest {
 
         then(form).rendersAs("""
                 <form method="post" action="/submit">
-                    <input class="input" type="text" name="chat_message" />
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" name="chat_message" />
+                        </div>
+                    </div>
+                </form>
+                """);
+    }
+
+    @Test void shouldRenderNovalidateForm() {
+        var form = form().novalidate()
+                .content(input(TEXT).fieldName("chat_message"));
+
+        then(form).rendersAs("""
+                <form novalidate>
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" name="chat_message" />
+                        </div>
+                    </div>
+                </form>
+                """);
+    }
+
+    @Test void shouldRenderFormWithDirectControl() {
+        var form = form()
+                .content(input(TEXT).fieldName("chat_message"));
+
+        then(form).rendersAs("""
+                <form>
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" name="chat_message" />
+                        </div>
+                    </div>
+                </form>
+                """);
+    }
+
+    @Test void shouldRenderHorizontalFormWithDirectControl() {
+        var form = form().horizontal()
+                .content(input(TEXT).fieldName("chat_message"));
+
+        then(form).rendersAs("""
+                <form>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal"></div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input" type="text" name="chat_message" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                """);
+    }
+
+    @Test void shouldRenderHorizontalForm() {
+        var form = form().horizontal()
+                .content(field("Chat").content(input(TEXT).fieldName("chat_message")));
+
+        then(form).rendersAs("""
+                <form>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Chat</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input" type="text" name="chat_message" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
                 """);
     }
@@ -34,7 +111,11 @@ class FormTest {
 
         then(form).rendersAs("""
                 <form method="get" action="/submit">
-                    <input class="input" type="text" name="chat_message" />
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" name="chat_message" />
+                        </div>
+                    </div>
                 </form>
                 """);
     }
@@ -46,7 +127,11 @@ class FormTest {
 
         then(form).rendersAs("""
                 <form method="dialog" action="/submit">
-                    <input class="input" type="text" name="chat_message" />
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" name="chat_message" />
+                        </div>
+                    </div>
                 </form>
                 """);
     }
@@ -58,7 +143,11 @@ class FormTest {
 
         then(form).rendersAs("""
                 <form action="/submit">
-                    <input class="input" type="text" name="chat_message" />
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" name="chat_message" />
+                        </div>
+                    </div>
                 </form>
                 """);
     }
@@ -73,7 +162,11 @@ class FormTest {
         //noinspection HtmlWrongAttributeValue
         then(form).rendersAs("""
                 <form action="/submit" method="put">
-                    <input class="input" type="text" name="chat_message" />
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" name="chat_message" />
+                        </div>
+                    </div>
                 </form>
                 """);
     }

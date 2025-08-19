@@ -5,6 +5,9 @@ import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
+import static com.github.t1.bulmajava.form.Field.field;
+
+/// If you directly add an input to a form, we'll wrap it in a {@link Field#field()} for you.
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Form extends BulmaElement<Form> {
     public static Form form() {return new Form();}
@@ -39,10 +42,14 @@ public class Form extends BulmaElement<Form> {
     public Form enctype(String enctype) {return attr("enctype", enctype);}
 
     /// Mark all fields added to this form as {@link Field#horizontal horizontal}.
-    public Form horizontal() {return this;}
+    public Form horizontal() {this.horizontal = true; return this;}
+
+    public Form novalidate() {return this.attr("novalidate");}
 
     @Override public Form content(Renderable content, int index) {
-        if (content instanceof Field field) field.horizontal();
+        if (content instanceof Input || content instanceof Textarea) // TODO support other types of form controls
+            content = field().content(content);
+        if (horizontal && content instanceof Field field) field.horizontal();
         return super.content(content, index);
     }
 }

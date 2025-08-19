@@ -23,10 +23,14 @@ import static com.github.t1.htmljava.HtmlBasics.hr;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 public class RenderTestExtension implements Extension, BeforeAllCallback, BeforeEachCallback, AfterEachCallback, AfterAllCallback, LauncherSessionListener {
+    /// use a running forms-test to load bulma and fontawesome locally, instead of loading them from the internet
+    private static final boolean OFFLINE = Boolean.getBoolean("BULMA_JAVA_OFFLINE");
     private static final Renderer ALL = new Renderer()
             .unsafeAppend(html("Bulma-Java Demo")
-                    .stylesheet("https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css")
-                    .stylesheet("https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.0/css/bulma.min.css")
+                    .stylesheet(OFFLINE ? "http://localhost:8080/webjars/fortawesome__fontawesome-free/css/all.css" :
+                            "https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css")
+                    .stylesheet(OFFLINE ? "http://localhost:8080/webjars/bulma/css/bulma.css" :
+                            "https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.0/css/bulma.min.css")
                     .script("test-classes/main.js")
                     .script("test-classes/klmn.js")
                     .close(false).render())

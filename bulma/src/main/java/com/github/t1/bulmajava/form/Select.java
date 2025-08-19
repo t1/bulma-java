@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -67,15 +68,39 @@ public class Select extends BulmaElement<Select> {
         throw new UnsupportedOperationException("select elements can only contain options");
     }
 
-    /** Use {@link #options(String...)} )} instead! */
+    /** Use {@link #options(String...)} instead! */
     @Deprecated
     @Override public Select content(Renderable... content) {return super.content(content);}
 
-    /** Use {@link #options(String...)} )} instead! */
+    /// Use {@link #options(String...)} instead!
     @Deprecated
     @Override public Select content(Stream<? extends Renderable> content) {return super.content(content);}
 
-    /** Marks the last option as <code>selected</code> */
+    /// Mark the option with that value as selected
+    public Select selected(String optionValue) {
+        if (optionValue == null) options()
+                .filter(option -> option.hasAttribute("selected"))
+                .filter(option -> option.hasAttribute("value"))
+                .forEach(option -> option.attributes().remove("selected"));
+        else findOption(optionValue)
+                .orElseThrow(() -> new IllegalArgumentException("no option with value '" + optionValue + "'")).attr("selected");
+        return this;
+    }
+
+    public Optional<Element> findOption(String optionValue) {
+        return options()
+                .filter(option -> option.hasAttribute("value", optionValue))
+                .findAny();
+    }
+
+    public Stream<Element> options() {
+        var select = contentAs(Element.class);
+        return select.contentIsA(ConcatenatedRenderable.class)
+                ? select.contentAs(ConcatenatedRenderable.class).renderables().stream().map(Element.class::cast)
+                : Stream.of(select.contentAs(Element.class));
+    }
+
+    /// Marks the last option as <code>selected</code>
     public Select selected() {
         lastOption().attr("selected");
         return this;

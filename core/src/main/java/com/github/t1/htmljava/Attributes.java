@@ -32,6 +32,7 @@ public class Attributes implements Renderable {
     }
 
     public boolean hasAttribute(String key) {return findAttribute(attribute -> attribute.key().equals(key)).isPresent();}
+
     public boolean hasAttribute(String key, String value) {return hasAttribute(Attribute.of(key, value));}
 
     public boolean hasAttribute(Attribute attribute) {return hasAttribute(attribute::matches);}
@@ -79,7 +80,7 @@ public class Attributes implements Renderable {
                 break;
             }
         }
-        if (!found) throw new IllegalStateException("exiting not found");
+        if (!found) throw new IllegalStateException("attribute " + existing + " not found");
         return this;
     }
 

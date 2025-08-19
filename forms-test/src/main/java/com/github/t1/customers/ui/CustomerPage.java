@@ -33,6 +33,7 @@ import static com.github.t1.bulmajava.basic.Color.PRIMARY;
 import static com.github.t1.bulmajava.elements.Button.BUTTON;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Button.buttonsAddon;
+import static com.github.t1.bulmajava.form.Field.fieldName;
 import static com.github.t1.bulmajava.form.Form.form;
 import static com.github.t1.bulmajava.form.Input.submit;
 import static com.github.t1.htmljava.Anchor.a;
@@ -78,6 +79,7 @@ public class CustomerPage implements MessageBodyWriter<Customer> {
 
     private Form customerForm(Customer customer) {
         return form().id("customer-form").horizontal()
+                // TODO .novalidate().on("submit", "if (!validateAll()) event.preventDefault();")
                 .content(fields(customer))
                 .content(actionButtons(customer));
     }
@@ -87,8 +89,7 @@ public class CustomerPage implements MessageBodyWriter<Customer> {
     private Stream<Field> fields(Customer customer) {
         var fields = form.of(customer);
         switch (mode()) {
-            case CREATE -> fields = fields
-                    .filter(not(Field.fieldName("customerNumber")));
+            case CREATE -> fields = fields.filter(not(fieldName("customerNumber")));
             case VIEW -> fields = fields.map(Field::allReadonly);
         }
         return fields;
