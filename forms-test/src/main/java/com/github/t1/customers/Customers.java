@@ -2,6 +2,7 @@ package com.github.t1.customers;
 
 import jakarta.validation.Valid;
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -22,7 +23,6 @@ import static com.github.t1.customers.Customer.Level.bronze;
 import static com.github.t1.customers.Customer.Level.gold;
 import static com.github.t1.customers.Customer.Level.platinum;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
-import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static java.util.Comparator.comparing;
 
 @Path("/customers")
@@ -56,14 +56,18 @@ public class Customers {
     }
 
     @POST
-    // I don't like to have to specify the media types here, but in Quarkus, this necessary ;-(
-    @Consumes({APPLICATION_JSON, APPLICATION_FORM_URLENCODED})
+    @Consumes(APPLICATION_FORM_URLENCODED)
+    public Response createFormEncoded(@BeanParam @Valid Customer customer) {
+        return create(customer);
+    }
+
+    @POST
     public Response create(@Valid Customer customer) {
         add(customer);
         return Response.seeOther(URI.create("/customers/" + customer.getId())).build();
     }
 
-    @PUT  @Path("/{customerId}")
+    @PUT @Path("/{customerId}")
     public Response update(@PathParam("customerId") long customerId, Customer customer) {
         if (customer.getId() != null) throw new BadRequestException("Set the customer id in the path, not in the body");
         if (!CUSTOMERS.containsKey(customerId)) throw new NotFoundException();
