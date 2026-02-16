@@ -2,7 +2,7 @@ package com.github.t1.htmljava;
 
 @SuppressWarnings("UnusedReturnValue")
 public class Renderer {
-    private final StringBuilder string = new StringBuilder();
+    private final StringBuilder buffer = new StringBuilder();
     private String indentString = "    ";
     private int indent = 0;
 
@@ -20,11 +20,11 @@ public class Renderer {
     }
 
     private char lastChar() {
-        return string.isEmpty() ? 0 : string.charAt(string.length() - 1);
+        return buffer.isEmpty() ? 0 : buffer.charAt(buffer.length() - 1);
     }
 
     public Renderer unsafeAppend(String string) {
-        this.string.append(string);
+        buffer.append(string);
         return this;
     }
 
@@ -35,14 +35,14 @@ public class Renderer {
 
     private void safeAppend(int c) {
         switch (c) {
-            case '&' -> string.append("&amp;");
-            case '<' -> string.append("&lt;");
-            case '>' -> string.append("&gt;");
-            case '\"' -> string.append("&quot;");
-            case '\'' -> string.append("&#x27;");
-            default -> string.append((char) c);
+            case '&' -> buffer.append("&amp;");
+            case '<' -> buffer.append("&lt;");
+            case '>' -> buffer.append("&gt;");
+            case '\"' -> buffer.append("&quot;");
+            case '\'' -> buffer.append("&#x27;");
+            default -> buffer.append((char) c);
         }
     }
 
-    public String render() {return string.toString();}
+    public String render() {return buffer.toString();}
 }

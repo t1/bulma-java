@@ -1,15 +1,11 @@
 package com.github.t1.htmljava;
 
-import lombok.NonNull;
-
-import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static java.util.Collections.unmodifiableSet;
+public class Classes extends CombinableAttribute {
+    public static final String KEY = "class";
 
-public record Classes(@NonNull Set<String> set) implements Attribute {
     public static Classes of(Stream<String> classes) {return of(classes.toArray(String[]::new));}
 
     public static Classes of(String... classes) {
@@ -17,45 +13,23 @@ public record Classes(@NonNull Set<String> set) implements Attribute {
                 Classes.of(Set.of()).plus(classes); // ignore null classes
     }
 
-    public static Classes of(Set<String> classes) {return new Classes(unmodifiableSet(new LinkedHashSet<>(classes)));}
+    public static Classes of(Set<String> classes) {return new Classes(classes);}
 
-    @Override public @NonNull String toString() {return render();}
+    private Classes(Set<String> values) {super(values);}
 
+    @Override protected Classes create(Set<String> values) {return new Classes(values);}
 
-    @Override public String key() {return "class";}
-
-    public boolean empty() {return set.isEmpty();}
-
-    public boolean hasClass(String name) {return set.contains(name);}
-
-    @Override public boolean matches(Attribute attribute) {
-        return attribute instanceof Classes that && that.set.equals(this.set);
-    }
-
+    @Override public String key() {return KEY;}
 
     public Classes and(Attribute classes) {return plus((Classes) classes);}
 
-    public Classes plus(Classes classes) {return plus(classes.set.toArray(String[]::new));}
+    @Override public Classes plus(CombinableAttribute other) {return (Classes) super.plus(other);}
 
-    public Classes plus(String... classes) {
-        var copy = new LinkedHashSet<>(this.set);
-        Stream.of(classes).filter(Objects::nonNull).forEach(copy::add);
-        return Classes.of(copy);
-    }
+    @Override public Classes plus(String... classes) {return (Classes) super.plus(classes);}
 
-    public Classes minus(Classes classes) {
-        var copy = new LinkedHashSet<>(this.set);
-        classes.set.forEach(copy::remove);
-        return Classes.of(copy);
-    }
+    @Override public Classes minus(CombinableAttribute other) {return (Classes) super.minus(other);}
 
+    public Classes minus(Classes classes) {return (Classes) super.minus(classes);}
 
-    @Override public void renderValue(Renderer renderer) {
-        var first = true;
-        for (var aClass : set) {
-            if (first) first = false;
-            else renderer.unsafeAppend(" ");
-            renderer.unsafeAppend(aClass);
-        }
-    }
+    @Override public Classes mergeWith(Attribute incoming) {return (Classes) super.mergeWith(incoming);}
 }

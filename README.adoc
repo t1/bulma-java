@@ -73,6 +73,7 @@ Foundation library providing core HTML rendering capabilities.
 ** `Renderable` - Core abstraction for anything that renders to HTML
 ** `Renderer` - StringBuilder-based HTML renderer with automatic indentation and escaping
 ** `AbstractElement<SELF>` - Base class for all HTML elements using generic self-type pattern
+** `EventHandlers<SELF>` - Mixin interface for HTML event handler attributes (`onclick`, `onkeyup`, etc.)
 ** `Modifier` - Interface for applying/unapplying modifications (classes, attributes)
 ** `HtmlBasics` - Static factory methods for common HTML elements
 

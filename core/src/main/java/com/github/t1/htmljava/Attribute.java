@@ -7,7 +7,13 @@ import java.util.Comparator;
 public interface Attribute extends Renderable {
     static Attribute of(@NonNull String key) {return new NoValueAttribute(key);}
 
-    static Attribute of(@NonNull String key, @NonNull String value) {return new StringAttribute(key, value, false);}
+    static Attribute of(@NonNull String key, @NonNull String value) {
+        return switch (key) {
+            case Styles.KEY -> Styles.of(value);
+            case Classes.KEY -> Classes.of(value);
+            default -> new StringAttribute(key, value, false);
+        };
+    }
 
     /**
      * We want some attributes to be in a specific order:
@@ -46,12 +52,10 @@ public interface Attribute extends Renderable {
 
     void renderValue(Renderer renderer);
 
-    default Attribute and(Attribute attribute) {throw new UnsupportedOperationException();}
-
     default String value() {
         var renderer = new Renderer();
         renderValue(renderer);
-        return renderer.toString();
+        return renderer.render();
     }
 
     record StringAttribute(String key, String value, boolean unsafe) implements Attribute {
@@ -63,12 +67,6 @@ public interface Attribute extends Renderable {
 
         @Override public String key() {return key;}
 
-        @Override public Attribute and(Attribute attribute) {
-            if ("style".equals(key()))
-                return Attribute.of(key, value + " " + ((StringAttribute) attribute).value);
-            throw new UnsupportedOperationException("can't add to a '" + key() + "' attribute");
-        }
-
         @Override public void renderValue(Renderer renderer) {
             if (unsafe) renderer.unsafeAppend(value);
             else renderer.safeAppend(value);
@@ -78,7 +76,7 @@ public interface Attribute extends Renderable {
     record NoValueAttribute(String key) implements Attribute {
         @Override public String key() {return key;}
 
-        @Override public boolean matches(Attribute attribute) {return attribute.hasKey(attribute.key());}
+        @Override public boolean matches(Attribute attribute) {return this.hasKey(attribute.key());}
 
         @Override public void render(Renderer renderer) {renderer.unsafeAppend(key());}
 

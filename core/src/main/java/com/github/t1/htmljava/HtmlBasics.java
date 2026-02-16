@@ -2,10 +2,22 @@ package com.github.t1.htmljava;
 
 import java.time.temporal.Temporal;
 
+import static com.github.t1.htmljava.Renderable.Indented.indented;
 import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
 public class HtmlBasics {
+    public static final String APPLICATION_JAVASCRIPT = "application/javascript";
+
     public static Element element(String name) {return new Element(name);}
+
+    public static Element scriptSrc(String src) {return element("script").attr("src", src);}
+
+    public static Element scriptSrc(String src, String type) {return scriptSrc(src).attr("type", type);}
+
+    public static Element javaScriptCode(String code) {
+        return element("script").attr("type", APPLICATION_JAVASCRIPT)
+                .content(indented(unsafeString(code)));
+    }
 
     public static Element abbr(String title, String abbr) {
         return element("abbr").attr("title", title).content(abbr);

@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -51,16 +52,16 @@ public class Attributes implements Renderable {
 
 
     public Attributes add(@NonNull Attribute attribute) {
-        boolean found = false;
-        for (int i = 0; i < this.attributes.size(); i++) {
-            var item = this.attributes.get(i);
-            if (item.hasKey(attribute.key())) {
-                found = true;
-                if (!item.equals(attribute)) this.attributes.set(i, item.and(attribute));
-                break;
-            }
-        }
-        if (!found) this.attributes.add(attribute);
+        findIndex(attribute.key()).ifPresentOrElse(
+                i -> {
+                    var item = this.attributes.get(i);
+                    if (!item.equals(attribute)) {
+                        if (item instanceof CombinableAttribute combinable)
+                            this.attributes.set(i, combinable.mergeWith(attribute));
+                        else throw new IllegalStateException("duplicate attribute " + attribute.key());
+                    }
+                },
+                () -> this.attributes.add(attribute));
         this.attributes.sort(Attribute.COMPARATOR);
         return this;
     }
@@ -70,18 +71,17 @@ public class Attributes implements Renderable {
     public void remove(Attribute attribute) {replace(attribute, null);}
 
     public Attributes replace(Attribute existing, Attribute replacement) {
-        boolean found = false;
-        for (int i = 0; i < this.attributes.size(); i++) {
-            var item = this.attributes.get(i);
-            if (item.hasKey(existing.key())) {
-                found = true;
-                if (replacement == null) this.attributes.remove(i);
-                else this.attributes.set(i, replacement);
-                break;
-            }
-        }
-        if (!found) throw new IllegalStateException("attribute " + existing + " not found");
+        var index = findIndex(existing.key())
+                .orElseThrow(() -> new IllegalStateException("attribute " + existing + " not found"));
+        if (replacement == null) this.attributes.remove(index);
+        else this.attributes.set(index, replacement);
         return this;
+    }
+
+    private OptionalInt findIndex(String key) {
+        for (int i = 0; i < this.attributes.size(); i++)
+            if (this.attributes.get(i).hasKey(key)) return OptionalInt.of(i);
+        return OptionalInt.empty();
     }
 
     public void render(Renderer renderer) {

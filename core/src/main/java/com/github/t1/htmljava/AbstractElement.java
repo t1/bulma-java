@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
@@ -15,34 +16,33 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static com.github.t1.htmljava.Attribute.StringAttribute.unsafeStringAttribute;
 import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.Renderable.ConcatenatedRenderable.concat;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 @Accessors(fluent = true, chain = true) @SuperBuilder(toBuilder = true)
-public class AbstractElement<SELF extends AbstractElement<?>> implements Renderable {
+public class AbstractElement<SELF extends AbstractElement<?>> implements Renderable, EventHandlers<SELF> {
     /// A convenience method-chain to _copy_ modifiers from one element to another.
-    public static CopyModifierStep1 copy(Modifier... modifier) {return new CopyModifierStep1(modifier);}
+    public static CopyModifierCopy copy(Modifier... modifier) {return new CopyModifierCopy(modifier);}
 
-    public record CopyModifierStep1(Modifier[] modifiers) {
-        public CopyModifierStep2 from(AbstractElement<?> source) {return new CopyModifierStep2(modifiers, source);}
+    public record CopyModifierCopy(Modifier[] modifiers) {
+        public CopyModifierFrom from(AbstractElement<?> source) {return new CopyModifierFrom(modifiers, source);}
     }
 
-    public record CopyModifierStep2(Modifier[] modifiers, AbstractElement<?> source) {
+    public record CopyModifierFrom(Modifier[] modifiers, AbstractElement<?> source) {
         public void to(AbstractElement<?> target) {
             Stream.of(modifiers).filter(source::hasModifier).forEach(target::is);
         }
     }
 
     /// A convenience method-chain to _move_ modifiers from one element to another.
-    public static MoveModifierStep1 move(Modifier... modifier) {return new MoveModifierStep1(modifier);}
+    public static MoveModifierMove move(Modifier... modifier) {return new MoveModifierMove(modifier);}
 
-    public record MoveModifierStep1(Modifier[] modifiers) {
-        public MoveModifierStep2 from(AbstractElement<?> source) {return new MoveModifierStep2(modifiers, source);}
+    public record MoveModifierMove(Modifier[] modifiers) {
+        public MoveModifierFrom from(AbstractElement<?> source) {return new MoveModifierFrom(modifiers, source);}
     }
 
-    public record MoveModifierStep2(Modifier[] modifiers, AbstractElement<?> source) {
+    public record MoveModifierFrom(Modifier[] modifiers, AbstractElement<?> source) {
         public void to(AbstractElement<?> target) {
             Stream.of(modifiers).filter(source::hasModifier).forEach(modifier -> {
                 source.not(modifier);
@@ -58,7 +58,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     @Getter @NonNull private String tagName;
 
-    @Getter private Attributes attributes;
+    @Getter @NonNull private Attributes attributes;
 
     private Renderable content;
 
@@ -71,7 +71,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     protected AbstractElement(@NonNull String tagName, Attributes attributes, Renderable content) {this(tagName, attributes, content, Function.identity());}
 
-    protected AbstractElement(@NonNull String tagName, Attributes attributes, Renderable content, Function<Renderable, Renderable> mapFunction) {
+    protected AbstractElement(@NonNull String tagName, @NonNull Attributes attributes, Renderable content, @NonNull Function<Renderable, Renderable> mapFunction) {
         this.close = true;
         this.rendersOnSeparateLines = true;
         this.tagName = tagName;
@@ -96,14 +96,10 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     public boolean hasModifier(Modifier modifier) {return modifier.check(this);}
 
     public boolean hasClass(String name) {
-        return Optional.ofNullable(getClasses())
-                .map(classes -> classes.hasClass(name))
-                .orElse(false);
+        return attributes.find(Classes.class).map(c -> c.has(name)).orElse(false);
     }
 
-    public Classes getClasses() {
-        return attributes == null ? null : attributes.find(Classes.class).orElse(null);
-    }
+    public Optional<Classes> getClasses() {return attributes.find(Classes.class);}
 
     public Renderable content() {return content;}
 
@@ -144,13 +140,11 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     public SELF notClasses(String... classes) {return notClasses(Classes.of(classes));}
 
     public SELF notClasses(Classes removing) {
-        if (attributes != null) {
-            attributes.find(Classes.class).ifPresent(existing -> {
-                var removed = existing.minus(removing);
-                if (removed.empty()) attributes.remove(existing);
-                else attributes.replace(existing, removed);
-            });
-        }
+        attributes.find(Classes.class).ifPresent(existing -> {
+            var removed = existing.minus(removing);
+            if (removed.empty()) attributes.remove(existing);
+            else attributes.replace(existing, removed);
+        });
         return self();
     }
 
@@ -172,7 +166,11 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
         return self();
     }
 
-    public SELF style(String style) {return attr("style", style);}
+    public boolean hasStyle(String style) {
+        return attributes.find(Styles.class).map(s -> s.has(style)).orElse(false);
+    }
+
+    public SELF style(String style) {return attr(Styles.of(style));}
 
     public SELF ariaHidden(boolean hidden) {return ariaHidden(Boolean.toString(hidden));}
 
@@ -186,9 +184,10 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public SELF attr(String name, String value) {return attr(Attribute.of(name, value));}
 
+    public SELF attr(String name, URI value) {return attr(name, value.toString());}
+
     public SELF attr(Attribute attribute) {
-        if (attributes == null) Attributes.of(attribute);
-        else attributes.add(attribute);
+        attributes.add(attribute);
         return self();
     }
 
@@ -205,21 +204,6 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
 
     public SELF tabindex(int tabindex) {return attr("tabindex", Integer.toString(tabindex));}
 
-
-    public SELF onclick(String action) {return on("click", action);}
-
-    public SELF onkeyup(String key, String action) {return onkey("up", key, action);}
-
-    public SELF onkeydown(String key, String action) {return onkey("down", key, action);}
-
-    public SELF onkey(String eventType, String key, String action) {
-        // `event` is officially deprecated, but seems to be okay to use: https://stackoverflow.com/a/58341967/3333174
-        return on("key" + eventType, "if (event.key === '" + key + "') { " + action + " }");
-    }
-
-    public SELF on(String event, String action) {
-        return attr(unsafeStringAttribute("on" + event, action));
-    }
 
     public SELF with(Consumer<SELF> consumer) {
         consumer.accept(self());
@@ -319,7 +303,7 @@ public class AbstractElement<SELF extends AbstractElement<?>> implements Rendera
     public TagContinuation renderOpeningTag(Renderer renderer, boolean contentRendersOnSeparateLines) {
         if (rendersOnSeparateLines()) renderer.indent();
         renderer.unsafeAppend("<").safeAppend(tagName);
-        if (attributes != null && !attributes.isEmpty()) {
+        if (!attributes.isEmpty()) {
             renderer.unsafeAppend(" ");
             attributes.render(renderer);
             if (slashOpeningTag()) renderer.unsafeAppend(" /");

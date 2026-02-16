@@ -6,15 +6,12 @@ import lombok.experimental.SuperBuilder;
 import java.net.URI;
 import java.util.function.Function;
 
-import static com.github.t1.htmljava.Body.scriptSrc;
-import static com.github.t1.htmljava.HtmlBasics.element;
+import static com.github.t1.htmljava.HtmlBasics.*;
 import static com.github.t1.htmljava.Renderable.Indented.indented;
 import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Html extends AbstractElement<Html> {
-    public static final String APPLICATION_JAVASCRIPT = "application/javascript";
-
     /**
      * It generally makes sense to give the html head a title;
      * if you really don't want it, pass <code>null</code>.
@@ -24,37 +21,24 @@ public class Html extends AbstractElement<Html> {
     protected Html(String title) {
         super("html", Attributes.of(Attribute.of("lang", "en")),
                 element("head").content(
-                        meta_("charset", "utf-8"),
-                        meta_("http-equiv", "X-UA-Compatible", "IE=edge"),
-                        meta_name("viewport", "width=device-width, initial-scale=1"),
+                        metaElement("charset", "utf-8"),
+                        metaElement("http-equiv", "X-UA-Compatible").attr("content", "IE=edge"),
+                        metaElement("name", "viewport").attr("content", "width=device-width, initial-scale=1"),
                         (title == null) ? null : element("title").content(title)));
     }
 
 
-    public Html meta(String name, String value) {return head(meta_(name, value));}
+    public Html meta(String name, String value) {return head(metaElement(name, value));}
 
-    public Html metaName(String name, String value) {return head(meta_name(name, value));}
+    public Html metaName(String name, String value) {
+        return head(metaElement("name", name).attr("content", value));}
 
     public Html meta(String name1, String value1, String name2, String value2) {
-        return head(meta_(name1, value1, name2, value2));
+        return head(metaElement(name1, value1).attr(name2, value2));
     }
 
-    private static Element meta_(String name, String value) {
+    private static Element metaElement(String name, String value) {
         return element("meta").close(false).attr(name, value);
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    private static Element meta_(String name, String value, String content) {
-        return meta_(name, value, "content", content);
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    private static Element meta_name(String value, String content) {
-        return meta_("name", value, "content", content);
-    }
-
-    private static Element meta_(String name1, String value1, String name2, String value2) {
-        return meta_(name1, value1).attr(name2, value2);
     }
 
     public Html title(String title) {return head(element("title").content(title));}
@@ -69,7 +53,7 @@ public class Html extends AbstractElement<Html> {
     ///
     /// Note that the style is _unsafe_!
     public Html styleElement(String style) {
-        return head(element("style").content(indented(unsafeString(style))));
+        return head(element(Styles.KEY).content(indented(unsafeString(style))));
     }
 
     public Html script(URI src) {return script(src.toString());}
@@ -92,7 +76,7 @@ public class Html extends AbstractElement<Html> {
      * <br/>
      * Note that the code is <em>unsafe</em>!
      */
-    public Html javaScriptCode(String code) {return body(Body.javaScriptCode(code));}
+    public Html javaScriptCode(String code) {return body(HtmlBasics.javaScriptCode(code));}
 
     public Html head(Renderable content) {return head((AbstractElement<?> e) -> e.content(content));}
 

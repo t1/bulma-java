@@ -21,14 +21,14 @@ public interface Renderable {
     int LAST = Integer.MAX_VALUE;
 
     /// Fluent API to add an element to a list at a specific index.
-    static <T> AddElementStep1<T> add(T element) {return new AddElementStep1<>(element);}
+    static <T> AddElementAt<T> add(T element) {return new AddElementAt<>(element);}
 
-    record AddElementStep1<T>(T element) {
-        public AddElementStep2<T> as(int index) {return new AddElementStep2<>(element, index);}
+    record AddElementAt<T>(T element) {
+        public AddElementInto<T> at(int index) {return new AddElementInto<>(element, index);}
     }
 
-    record AddElementStep2<T>(T element, int index) {
-        public void in(List<T> list) {
+    record AddElementInto<T>(T element, int index) {
+        public void into(List<T> list) {
             if (index >= list.size()) list.add(element);
             else list.add(index, element);
         }
@@ -107,11 +107,11 @@ public interface Renderable {
 
         public static Renderable concat(Stream<Renderable> renderables) {
             return new ConcatenatedRenderable(renderables
-                    .flatMap(ConcatenatedRenderable::merge)
+                    .flatMap(ConcatenatedRenderable::flatten)
                     .collect(toList()));
         }
 
-        private static Stream<Renderable> merge(Renderable renderable) {
+        private static Stream<Renderable> flatten(Renderable renderable) {
             return (renderable instanceof ConcatenatedRenderable concatenatedRenderable)
                     ? concatenatedRenderable.renderables.stream()
                     : Stream.of(renderable);
@@ -121,7 +121,7 @@ public interface Renderable {
 
         public ConcatenatedRenderable plus(Renderable renderable, int index) {
             var list = new ArrayList<>(renderables);
-            add(renderable).as(index).in(list);
+            add(renderable).at(index).into(list);
             return new ConcatenatedRenderable(list);
         }
 
@@ -136,12 +136,12 @@ public interface Renderable {
         }
 
         @Override public void render(Renderer renderer) {
+            var separateLines = rendersOnSeparateLines();
             renderables.forEach(renderable -> {
-                if (rendersOnSeparateLines() && !renderable.rendersOnSeparateLines())
-                    renderer.nl().indent();
+                var wrapWithNewlines = separateLines && !renderable.rendersOnSeparateLines();
+                if (wrapWithNewlines) renderer.nl().indent();
                 renderable.render(renderer);
-                if (rendersOnSeparateLines() && !renderable.rendersOnSeparateLines())
-                    renderer.nl();
+                if (wrapWithNewlines) renderer.nl();
             });
         }
     }

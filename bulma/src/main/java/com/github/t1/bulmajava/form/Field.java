@@ -195,7 +195,7 @@ public class Field extends BulmaElement<Field> {
         }
 
         lastControl = new FieldControl((AbstractElement<?>) content);
-        add(lastControl).as(index).in(controls);
+        add(lastControl).at(index).into(controls);
 
         return this;
     }

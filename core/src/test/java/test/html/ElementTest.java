@@ -7,6 +7,7 @@ import com.github.t1.htmljava.Element;
 import com.github.t1.htmljava.Renderable.RenderableString;
 import org.junit.jupiter.api.Test;
 
+import java.net.URI;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -33,6 +34,7 @@ class ElementTest {
     private static final ClassModifier FOO = () -> "foo";
     private static final AttributeModifier FOOBAR = new AttributeModifier() {
         @Override public String key() {return "foo";}
+
         @Override public String value() {return "bar";}
     };
 
@@ -91,8 +93,14 @@ class ElementTest {
     }
 
     @Test void shouldRenderTextSpanWithConcatenatedStyles() {
-        var tag = span("Hello World").style("background-color: beige;").style("font-style: italic;");
+        var tag = span("Hello World")
+                .style("background-color: beige;")
+                .attr("style", "background-color: beige;") // manual and duplicate will be removed
+                .style("font-style: italic;");
 
+        then(tag.hasStyle("background-color: beige;")).isTrue();
+        then(tag.hasStyle("font-style: italic;")).isTrue();
+        then(tag.hasStyle("color: red;")).isFalse();
         then(tag.render()).isEqualTo("""
                 <span style="background-color: beige; font-style: italic;">Hello World</span>
                 """);
@@ -187,7 +195,8 @@ class ElementTest {
     @Test void shouldRenderTagWithClasses() {
         var tag = element("span")
                 .classes("cls1", "cls2")
-                .classes("cls3")
+                .attr("class", "cls3") // manual
+                .classes("cls3") // duplicate will be removed
                 .content("Foo");
 
         then(tag.render()).isEqualTo("<span class=\"cls1 cls2 cls3\">Foo</span>\n");
@@ -225,7 +234,7 @@ class ElementTest {
         then(element.contentStream()).hasSize(2);
     }
 
-    // this is not proper html, but we must make sure it's safe
+    // this is not proper HTML, but we must make sure it's safe
     @Test void shouldRenderUnsafeElementName() {
         var h1 = element("foo&<>\"'");
 
@@ -242,6 +251,14 @@ class ElementTest {
                 """);
     }
 
+    @Test void shouldRenderUriAttribute() {
+        var h1 = element("a").attr("href", URI.create("http://example.com")).content("x");
+
+        then(h1.render()).isEqualTo("""
+                <a href="http://example.com">x</a>
+                """);
+    }
+
     @Test void shouldRenderNoValAttribute() {
         var h1 = element("foo").attr("bar");
 
@@ -250,7 +267,7 @@ class ElementTest {
                 """);
     }
 
-    // this is not proper html, but we must make sure it's safe
+    // this is not proper HTML, but we must make sure it's safe
     @Test void shouldRenderUnsafeAttribute() {
         var h1 = element("foo").attr("unsafe&amp;&lt;&gt;&quot;&#x27;");
 
