@@ -10,6 +10,8 @@
     </parent>
 
     <artifactId>bulma-java</artifactId>
+    <name>Bulma Java</name>
+    <description>Chainable Html builder of Bulma components</description>
 
     <dependencies>
         <dependency>

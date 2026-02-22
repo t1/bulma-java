@@ -10,4 +10,6 @@
     </parent>
 
     <artifactId>java-html</artifactId>
+    <name>Java-Html</name>
+    <description>Chainable Html builder</description>
 </project>
