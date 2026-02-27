@@ -2,3 +2,9 @@ target/
 /.idea/
 /.envrc
 /TODO.md
+
+# Eclipse / jdtls
+.classpath
+.factorypath
+.project
+org.eclipse.*

@@ -1,9 +1,28 @@
 # AGENTS.md
 
-Be very critical and honest to what I say. **VERY IMPORTANT**
+**VERY IMPORTANT** Be very critical and honest to what I say. And when I ask a question,
+it's just a question, not a suggestion.
+**Do NOT use local/private auto memory.** Store all learnings and conventions in this file (or other project files),
+so they are shared with everyone working on the project.
+
+Don't forget to update the documentation when you change the code. **VERY IMPORTANT**
+
+If you create a new file, also stage exactly this file to git, but not any other files that are not staged.
+
+If you commit something, don't include that co-author hint.
 
 **For comprehensive project documentation, architecture, testing, and coding conventions,
 see [README.adoc](README.adoc).**
+
+## Documentation Strategy
+
+**VERY IMPORTANT**: This project uses `package-info.java` files for package-level documentation and architecture.
+
+When working with code:
+- **Always read the relevant `package-info.java` files** to understand the architecture, patterns, and conventions for that package
+- Use `package-info.java` to understand package responsibilities, dependencies, and relationships
+- See `README.md` for project overview, tech stack, setup instructions, development guidelines, and coding conventions
+- For package-specific details, refer to the co-located `package-info.java` files
 
 ## Before Making Changes
 
