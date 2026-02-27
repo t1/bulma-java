@@ -15,6 +15,7 @@ import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.HtmlBasics.span;
 import static com.github.t1.htmljava.Renderable.ConcatenatedRenderable.concat;
 
+/// Content items automatically get the `dropdown-item` class; `<hr>` elements get `dropdown-divider`.
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Dropdown extends BulmaElement<Dropdown> {
     public static Dropdown dropdown(String id) {

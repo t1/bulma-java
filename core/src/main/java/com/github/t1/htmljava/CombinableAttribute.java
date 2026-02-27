@@ -10,6 +10,9 @@ import java.util.stream.Stream;
 
 import static java.util.Collections.unmodifiableSet;
 
+/// Attributes that merge rather than replace when added twice to the same element.
+/// Without this, calling `.classes("a")` then `.classes("b")` would lose `"a"`.
+/// {@link Classes} and {@link Styles} extend this; regular attributes throw on duplicates.
 @EqualsAndHashCode
 public abstract class CombinableAttribute implements Attribute {
     private final Set<String> values;

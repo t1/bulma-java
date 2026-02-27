@@ -16,6 +16,7 @@ import static com.github.t1.bulmajava.basic.Size.SMALL;
 import static com.github.t1.bulmajava.basic.State.ACTIVE;
 import static com.github.t1.htmljava.HtmlBasics.li;
 
+/// Content items are auto-wrapped in `<li>`. Icons are automatically made small and `aria-hidden`.
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Breadcrumb extends BulmaElement<Breadcrumb> {
     public static Breadcrumb breadcrumb() {return new Breadcrumb();}

@@ -10,12 +10,13 @@ import static com.github.t1.htmljava.HtmlBasics.*;
 import static com.github.t1.htmljava.Renderable.Indented.indented;
 import static com.github.t1.htmljava.Renderable.UnsafeString.unsafeString;
 
+/// Root document element. Auto-generates `<!DOCTYPE html>`, `<head>` (with charset, viewport,
+/// and optional title), and `<body>`. Content added via {@link #content(Renderable, int)}
+/// is automatically routed to the body, not the head.
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Html extends AbstractElement<Html> {
-    /**
-     * It generally makes sense to give the html head a title;
-     * if you really don't want it, pass <code>null</code>.
-     */
+    /// It generally makes sense to give the html head a title;
+    /// if you really don't want it, pass `null`.
     public static Html html(String title) {return new Html(title);}
 
     protected Html(String title) {
@@ -70,12 +71,10 @@ public class Html extends AbstractElement<Html> {
 
     public Html javaScriptBody(String src) {return body(scriptSrc(src, APPLICATION_JAVASCRIPT));}
 
-    /**
-     * Add a <code>script</code> element to the body with <code>type="application/javascript</code>,
-     * and the script code you provide indented to the current level.
-     * <br/>
-     * Note that the code is <em>unsafe</em>!
-     */
+    /// Add a `script` element to the body with `type="application/javascript"`,
+    /// and the script code you provide indented to the current level.
+    ///
+    /// Note that the code is _unsafe_!
     public Html javaScriptCode(String code) {return body(HtmlBasics.javaScriptCode(code));}
 
     public Html head(Renderable content) {return head((AbstractElement<?> e) -> e.content(content));}

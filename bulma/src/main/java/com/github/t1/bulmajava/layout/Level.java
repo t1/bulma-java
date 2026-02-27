@@ -13,6 +13,7 @@ import static com.github.t1.bulmajava.basic.BulmaElement.TextModifier.text;
 import static com.github.t1.htmljava.HtmlBasics.div;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
+/// Content is auto-wrapped in `div.level-item`. Use `left()` and `right()` for sided content.
 public class Level extends BulmaElement<Level> {
     public static Level level() {return new Level();}
 

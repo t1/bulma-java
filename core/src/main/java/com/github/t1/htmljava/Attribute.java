@@ -15,16 +15,12 @@ public interface Attribute extends Renderable {
         };
     }
 
-    /**
-     * We want some attributes to be in a specific order:
-     * <ol>
-     *     <li><code>id</code></li>
-     *     <li><code>class</code></li>
-     *     <li><code>rel</code></li>
-     *     <li><code>href</code></li>
-     *     <li>everything else</li>
-     * </ol>
-     */
+    /// We want some attributes to be in a specific order:
+    /// 1. `id`
+    /// 2. `class`
+    /// 3. `rel`
+    /// 4. `href`
+    /// 5. everything else
     Comparator<String> KEY_COMPARATOR = (left, right) -> {
         if (left.equals(right)) return 0;
         return switch (left) {

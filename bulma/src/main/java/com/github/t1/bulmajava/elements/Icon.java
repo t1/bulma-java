@@ -21,6 +21,8 @@ import static com.github.t1.htmljava.HtmlBasics.i;
 import static com.github.t1.htmljava.HtmlBasics.span;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
+/// FontAwesome icon. Modifiers applied via `is()` are forwarded to the inner `<i>` element,
+/// not the outer `<span class="icon">`.
 public class Icon extends BulmaElement<Icon> {
     public static Icon icon(String name, String... classes) {return icon(name, (FontSize) null, classes);}
 

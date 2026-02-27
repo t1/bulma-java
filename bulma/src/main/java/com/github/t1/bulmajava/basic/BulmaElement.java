@@ -13,6 +13,9 @@ import java.util.function.Function;
 import static com.github.t1.bulmajava.basic.BulmaElement.BackgroundModifier.background;
 import static com.github.t1.bulmajava.basic.BulmaElement.TextModifier.text;
 
+/// Extends {@link AbstractElement} with Bulma-specific helpers.
+/// Use `hasText(COLOR)` for `has-text-*` and `hasBackground(COLOR)` for `has-background-*` classes,
+/// since plain `is(PRIMARY)` would produce `is-primary`, not `has-text-primary`.
 @Accessors(fluent = true, chain = true) @SuperBuilder(toBuilder = true)
 public class BulmaElement<SELF extends BulmaElement<?>> extends AbstractElement<SELF> {
     public static final IsModifier RESPONSIVE = () -> "responsive";

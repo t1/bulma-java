@@ -13,6 +13,8 @@ import static com.github.t1.htmljava.HtmlBasics.element;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
+/// Use `head()`, `body()`, and `foot()` to add rows, not `content()`.
+/// The `content()` overrides are deprecated and will be removed.
 public class Table extends BulmaElement<Table> {
     public static Element row(Renderable... cols) {return tr().map(Table::td).content(cols);}
 

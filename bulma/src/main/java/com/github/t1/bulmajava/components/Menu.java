@@ -12,6 +12,7 @@ import static com.github.t1.htmljava.HtmlBasics.li;
 import static com.github.t1.htmljava.HtmlBasics.p;
 import static com.github.t1.htmljava.HtmlBasics.ul;
 
+/// Content items are auto-wrapped in `<ul class="menu-list">` and `<li>`.
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Menu extends BulmaElement<Menu> {
     private static final ClassModifier MENU_LABEL = () -> "menu-label";

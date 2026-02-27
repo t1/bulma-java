@@ -16,6 +16,9 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
+/// The fundamental rendering contract. Everything that produces HTML implements this —
+/// elements, text, concatenations, even raw HTML. This enables tree-like composition
+/// where any {@link Renderable} can be nested as content inside an {@link AbstractElement}.
 public interface Renderable {
     /// The index for adding a content element at the end.
     int LAST = Integer.MAX_VALUE;

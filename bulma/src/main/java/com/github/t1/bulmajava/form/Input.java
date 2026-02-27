@@ -14,6 +14,7 @@ import static com.github.t1.bulmajava.form.InputType.RESET;
 import static com.github.t1.bulmajava.form.InputType.SUBMIT;
 import static java.time.format.DateTimeFormatter.ISO_DATE;
 
+/// Self-closing `<input>` element. Calling `content()` throws {@link UnsupportedOperationException}.
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Input extends BulmaElement<Input> {
     public static Input submit(String value) {return inputButton(SUBMIT, value);}

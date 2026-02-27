@@ -22,6 +22,8 @@ import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.HtmlBasics.span;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
+/// Use `start()` and `end()` to add items, not `content()`.
+/// The `content()` overrides are deprecated and will be removed.
 public class Navbar extends BulmaElement<Navbar> {
     public static final ClassModifier NAVBAR_FIXED_TOP = () -> "has-navbar-fixed-top";
     public static final ClassModifier NAVBAR_FIXED_BOTTOM = () -> "has-navbar-fixed-bottom";

@@ -1,5 +1,9 @@
 package com.github.t1.htmljava;
 
+/// HTML writer with automatic indentation and XSS protection.
+/// All text goes through {@link #safeAppend(String)} which escapes `&`, `<`, `>`, `"`, `'`.
+/// {@link #unsafeAppend(String)} bypasses escaping and must only be used for trusted markup
+/// (tag syntax, known-safe attribute values).
 @SuppressWarnings("UnusedReturnValue")
 public class Renderer {
     private final StringBuilder buffer = new StringBuilder();

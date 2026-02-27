@@ -10,6 +10,8 @@ import lombok.experimental.SuperBuilder;
 import java.util.stream.Stream;
 
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
+/// Use `head()`, `body()`, and `foot()` to add content, not `content()`.
+/// The `content()` overrides are deprecated and will be removed.
 public class Hero extends BulmaElement<Hero> {
     public static Hero hero() {return new Hero();}
 

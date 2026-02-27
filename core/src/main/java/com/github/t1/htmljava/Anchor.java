@@ -20,6 +20,6 @@ public class Anchor extends AbstractElement<Anchor> {
 
     public Anchor title(String title) {return attr("title", title);}
 
-    /** Marks this <code>a</code> as <code>"aria-current"="page"</code> */
+    /// Marks this `a` as `"aria-current"="page"`
     public Anchor active() {return attr("aria-current", "page");}
 }

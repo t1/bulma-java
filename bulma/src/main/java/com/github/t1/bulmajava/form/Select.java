@@ -19,6 +19,9 @@ import java.util.stream.Stream;
 import static com.github.t1.bulmajava.basic.State.LOADING;
 import static com.github.t1.htmljava.HtmlBasics.element;
 
+/// Use `option()` and `options()` to add choices, not `content()`.
+/// Modifiers applied via `is()` are forwarded to the inner `<select>` element.
+///
 /// @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select">Select</a>
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Select extends BulmaElement<Select> {

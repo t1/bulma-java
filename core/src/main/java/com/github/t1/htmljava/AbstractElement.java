@@ -20,6 +20,11 @@ import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.Renderable.ConcatenatedRenderable.concat;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
 
+/// Base class for all HTML elements. Uses the generic self-type pattern (`SELF`) so that
+/// fluent method chains like `.classes("x").content("y")` return the concrete subclass type,
+/// not `AbstractElement`. Subclasses only need a constructor; all fluent API methods are inherited.
+///
+/// @param <SELF> the concrete element type, returned by all fluent methods
 @Accessors(fluent = true, chain = true) @SuperBuilder(toBuilder = true)
 public class AbstractElement<SELF extends AbstractElement<?>> implements Renderable, EventHandlers<SELF> {
     /// A convenience method-chain to _copy_ modifiers from one element to another.

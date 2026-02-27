@@ -7,6 +7,7 @@ import com.github.t1.htmljava.Renderable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
+/// Content is auto-wrapped in `div.media-content`. Use `left()` and `right()` for side content.
 @EqualsAndHashCode(callSuper = true) @SuperBuilder(toBuilder = true)
 public class Media extends BulmaElement<Media> {
     public static Media media() {return new Media();}

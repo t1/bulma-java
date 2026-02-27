@@ -4,6 +4,7 @@ import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.htmljava.Renderable;
 import lombok.experimental.SuperBuilder;
 
+/// Bulma CSS grid. Content added to a {@link FixedGrid} is routed to its inner Grid.
 @SuperBuilder(toBuilder = true)
 public class Grid extends BulmaElement<Grid> {
     public static Cell cell() {return new Cell();}

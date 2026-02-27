@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
+/// Ordered list type. Sets the `type` attribute (e.g., `type="A"`) and optionally
+/// adds a variant CSS class (e.g., `is-upper-alpha`) for Bulma styling.
 @RequiredArgsConstructor @Getter @Accessors(fluent = true)
 public enum ListType implements AttributeModifier {
     NUMERIC("1", null),

@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
+/// FontAwesome icon size codes (`2xs`, `xs`, `sm`, `lg`, `xl`, `2xl`, `1x`–`10x`).
+/// Not a Bulma CSS modifier — used by the `Icon` component to set the icon size.
 @RequiredArgsConstructor @Getter @Accessors(fluent = true)
 public enum FontSize {
     xxs("2xs"), xs("xs"), sm("sm"), lg("lg"), xl("xl"), xxl("2xl"),
