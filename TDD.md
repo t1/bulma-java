@@ -30,7 +30,7 @@ Watch for these violations of discipline:
 
 - **Planning beyond base functionality** - Including advanced features in initial test list instead of focusing on core
   functionality
-- **Multiple active tests** - Converting more than one `it.todo()` to executable test code at once
+- **Multiple active tests** - Converting more than one placeholder test to executable test code at once
 - **Implementing beyond tests** - Adding features or logic not demanded by current failing test
 - **Skipping predictions** - Running tests without explicitly stating expected failures
 - **Avoiding refactoring** - Moving to next test without attempting at least one improvement
@@ -47,7 +47,8 @@ Watch for these violations of discipline:
 ## Core TDD Process
 
 1. **Test List First**
-    - Create a list of test cases using `it.todo()` for BASE FUNCTIONALITY ONLY before writing any implementation
+    - Create a list of test cases for BASE FUNCTIONALITY ONLY before writing any implementation
+    - Use your language's mechanism for placeholder tests (e.g. `it.todo()` in Vitest, `@Disabled` in JUnit)
     - This helps understand the scope of the core feature (not advanced features)
     - Example for String Calculator base functionality:
       ```typescript
@@ -59,10 +60,17 @@ Watch for these violations of discipline:
         // NOT: advanced features like custom delimiters, ignore >1000, etc.
       });
       ```
+      ```java
+      // JUnit 5 equivalent
+      @Disabled @Test void shouldReturnZeroForEmptyString() {}
+      @Disabled @Test void shouldReturnNumberForSingleNumber() {}
+      @Disabled @Test void shouldReturnSumForTwoNumbers() {}
+      @Disabled @Test void shouldReturnSumForMultipleNumbers() {}
+      ```
 
 2. **One Test at a Time**
-    - Convert exactly ONE `it.todo()` to executable test code at a time
-    - All other tests remain as `it.todo()` descriptions
+    - Convert exactly ONE placeholder test to executable test code at a time
+    - All other tests remain as placeholders
     - Never have more than one failing test in red phase
     - Implement only what's needed to make that single test pass
     - Don't think ahead or implement features for future tests

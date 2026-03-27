@@ -29,6 +29,7 @@ import static com.github.t1.bulmajava.elements.IconSize.LG;
 import static com.github.t1.bulmajava.elements.IconSize.SM;
 import static com.github.t1.bulmajava.elements.IconSize.XS;
 import static com.github.t1.bulmajava.form.Checkbox.checkbox;
+import static com.github.t1.bulmajava.elements.Tag.tag;
 import static com.github.t1.bulmajava.form.Field.EXPANDED;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Field.fieldset;
@@ -42,6 +43,7 @@ import static com.github.t1.bulmajava.form.Radio.radios;
 import static com.github.t1.bulmajava.form.Select.select;
 import static com.github.t1.bulmajava.form.Textarea.textarea;
 import static com.github.t1.htmljava.Anchor.a;
+import static com.github.t1.htmljava.HtmlBasics.span;
 import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.HtmlBasics.em;
 import static com.github.t1.htmljava.HtmlBasics.p;
@@ -154,6 +156,23 @@ class FieldTest {
                                 <button class="button is-link is-light">Cancel</button>
                             </div>
                         </div>
+                    </div>
+                </div>
+                """);
+    }
+
+    @Test void shouldRenderFieldWithRichLabel() {
+        var field = field().label(span("petId"), tag("path"))
+                .content(input(TEXT).attr("name", "petId"));
+
+        then(field).rendersAs("""
+                <div class="field">
+                    <label class="label">
+                        <span>petId</span>
+                        <span class="tag">path</span>
+                    </label>
+                    <div class="control">
+                        <input class="input" type="text" name="petId" />
                     </div>
                 </div>
                 """);

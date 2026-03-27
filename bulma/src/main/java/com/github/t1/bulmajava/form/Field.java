@@ -31,6 +31,8 @@ import static com.github.t1.bulmajava.elements.Button.BUTTON;
 import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.HtmlBasics.element;
 import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.Renderable.ConcatenatedRenderable.concat;
+import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static com.github.t1.htmljava.Renderable.add;
 
 /// The Bulma `field` element is a container for a label and one or more form controls with icons, addons, and a help text.
@@ -38,8 +40,9 @@ import static com.github.t1.htmljava.Renderable.add;
 /// so we provide a fluent API to make it much easier, allowing you to think of the things you want to see,
 /// and this class will take care of the details.
 ///
-/// The basic pattern is that you create a {@link #field(String)} with its label (or {@link #field()} without a label),
-/// and then add your form controls (input, textarea, etc.) as {@link #content(Renderable)}.
+/// The basic pattern is that you create a {@link #field(String)} with its label (or {@link #field()} without a label,
+/// optionally with a rich {@link #label(Renderable...)}), and then add your form controls (input, textarea, etc.)
+/// as {@link #content(Renderable)}.
 /// After adding some content, you can decorate it with icons, addons, and/or a help text.
 /// E.g., building a text field with an icon, an addon, and a help text looks like this:
 /// ```java
@@ -79,12 +82,18 @@ public class Field extends BulmaElement<Field> {
 
     public static Field field(String label) {return new Field(label);}
 
-    private final String label;
+    private Renderable label;
     private Size size;
     private boolean readonly;
     private final List<FieldControl> controls = new ArrayList<>();
 
     private FieldControl lastControl;
+
+    /// Sets the label to rich content (e.g. a span + tag badges) instead of the plain string from {@link #field(String)}.
+    public Field label(Renderable... content) {
+        this.label = concat(content);
+        return this;
+    }
 
     public Field allReadonly() {readonly = true; return this;}
 
@@ -186,7 +195,7 @@ public class Field extends BulmaElement<Field> {
 
     public Field(String label) {
         super("div", "field");
-        this.label = label;
+        this.label = label != null ? string(label) : null;
     }
 
     @Override public Field content(Renderable content, int index) {
@@ -275,8 +284,8 @@ public class Field extends BulmaElement<Field> {
     }
 
     private void renderLabel(Renderer renderer) {
-        if (this.label != null || hasModifier(HORIZONTAL)) {
-            var label = (this.label == null) ? null : element("label").classes("label").content(this.label);
+        var label = createLabelElement();
+        if (label != null || hasModifier(HORIZONTAL)) {
             if (hasModifier(HORIZONTAL)) {
                 label = div().classes("field-label").is(horizontalLabelSize()).content(label);
             } else {
@@ -286,6 +295,10 @@ public class Field extends BulmaElement<Field> {
             renderer.nl();
             label.render(renderer);
         }
+    }
+
+    private Element createLabelElement() {
+        return label != null ? element("label").classes("label").content(label) : null;
     }
 
     /// Horizontal labels must have a size, or they will not align; but not if they contain checkboxes or radios.
