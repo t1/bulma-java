@@ -8,3 +8,5 @@ target/
 .factorypath
 .project
 org.eclipse.*
+
+/.links/

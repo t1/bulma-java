@@ -25,11 +25,12 @@ import static com.github.t1.bulmajava.basic.Style.LIGHT;
 import static com.github.t1.bulmajava.basic.Style.STATIC;
 import static com.github.t1.bulmajava.elements.Button.button;
 import static com.github.t1.bulmajava.elements.Button.buttons;
+import static com.github.t1.bulmajava.elements.Icon.icon;
 import static com.github.t1.bulmajava.elements.IconSize.LG;
 import static com.github.t1.bulmajava.elements.IconSize.SM;
 import static com.github.t1.bulmajava.elements.IconSize.XS;
-import static com.github.t1.bulmajava.form.Checkbox.checkbox;
 import static com.github.t1.bulmajava.elements.Tag.tag;
+import static com.github.t1.bulmajava.form.Checkbox.checkbox;
 import static com.github.t1.bulmajava.form.Field.EXPANDED;
 import static com.github.t1.bulmajava.form.Field.field;
 import static com.github.t1.bulmajava.form.Field.fieldset;
@@ -43,10 +44,10 @@ import static com.github.t1.bulmajava.form.Radio.radios;
 import static com.github.t1.bulmajava.form.Select.select;
 import static com.github.t1.bulmajava.form.Textarea.textarea;
 import static com.github.t1.htmljava.Anchor.a;
-import static com.github.t1.htmljava.HtmlBasics.span;
 import static com.github.t1.htmljava.HtmlBasics.div;
 import static com.github.t1.htmljava.HtmlBasics.em;
 import static com.github.t1.htmljava.HtmlBasics.p;
+import static com.github.t1.htmljava.HtmlBasics.span;
 import static com.github.t1.htmljava.Renderable.RenderableString.string;
 import static org.assertj.core.api.BDDAssertions.catchThrowableOfType;
 import static test.CustomAssertions.then;
@@ -1291,5 +1292,24 @@ class FieldTest {
                 .addonRight(button("right")));
 
         then(exception).hasMessage("You must add a content (e.g. input) before adding addons to it");
+    }
+
+    @Test void shouldRenderFieldWithIconAddon() {
+        var field = field()
+                .content(input(TEXT).placeholder("Find a repository"))
+                .addonRight(icon("search"));
+
+        then(field).rendersAs("""
+                <div class="field has-addons">
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Find a repository" />
+                    </div>
+                    <div class="control">
+                        <button class="button">
+                            <span class="icon"><i class="fas fa-search"></i></span>
+                        </button>
+                    </div>
+                </div>
+                """);
     }
 }

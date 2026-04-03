@@ -4,6 +4,7 @@ import com.github.t1.bulmajava.basic.Alignment;
 import com.github.t1.bulmajava.basic.BulmaElement;
 import com.github.t1.bulmajava.basic.IsModifier;
 import com.github.t1.bulmajava.basic.Size;
+import com.github.t1.bulmajava.elements.Button;
 import com.github.t1.bulmajava.elements.Icon;
 import com.github.t1.bulmajava.form.Radio.Radios;
 import com.github.t1.htmljava.AbstractElement;
@@ -173,6 +174,7 @@ public class Field extends BulmaElement<Field> {
 
         public void add(AbstractElement<?> element) {
             if (element instanceof Anchor) element.is(BUTTON);
+            if (element instanceof Icon icon) element = Button.button().content(icon);
             if (addons == null) addons = new ArrayList<>();
             addons.add(element);
         }

@@ -20,6 +20,10 @@
 /// - **Select uses option(), not content()**: The `content()` methods on
 ///   {@link com.github.t1.bulmajava.form.Select} are deprecated.
 ///   Use `option()` and `options()` instead.
+/// - **Addons auto-wrap certain types**: Adding an {@link com.github.t1.htmljava.Anchor} as an addon
+///   automatically adds the `button` CSS class; adding an {@link com.github.t1.bulmajava.elements.Icon}
+///   wraps it in a {@link com.github.t1.bulmajava.elements.Button}, since Bulma addons only support
+///   inputs, buttons, and dropdowns.
 /// - **Input has no content**: Calling `content()` on {@link com.github.t1.bulmajava.form.Input}
 ///   throws `UnsupportedOperationException` — `<input>` is a void element.
 package com.github.t1.bulmajava.form;
