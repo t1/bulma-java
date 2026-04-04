@@ -1298,6 +1298,7 @@ class FieldTest {
         var field = field()
                 .content(input(TEXT).placeholder("Find a repository"))
                 .addonRight(icon("search"));
+                // TODO this breaks the styling: .help("this is a help text");
 
         then(field).rendersAs("""
                 <div class="field has-addons">
