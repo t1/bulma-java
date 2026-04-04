@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.t1</groupId>
         <artifactId>bulma-java-parent</artifactId>
-        <version>1.0a19</version>
+        <version>1.0a20-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.github.t1</groupId>
             <artifactId>java-html</artifactId>
-            <version>1.0a19</version>
+            <version>1.0a20-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
