@@ -18,10 +18,10 @@ import static com.github.t1.htmljava.Renderable.RenderableString.string;
 public class Table extends BulmaElement<Table> {
     public static Element row(Renderable... cols) {return tr().map(Table::td).content(cols);}
 
-    /** First colum is a header column <code>th</code>, the rest are regular <code>td</code> */
+    /// First column is a header column `th`, the rest are regular `td`
     public static Element rowH(String hCol, Renderable... cols) {return rowH(string(hCol), cols);}
 
-    /** First colum is a header column <code>th</code>, the rest are regular <code>td</code> */
+    /// First column is a header column `th`, the rest are regular `td`
     public static Element rowH(Renderable hCol, Renderable... cols) {
         return tr()
                 .content(th(hCol))
@@ -75,19 +75,19 @@ public class Table extends BulmaElement<Table> {
                 tr().map(e -> th().content(e)).content(content)));
     }
 
-    /** Use {@link #head(Renderable...)}, {@link #body(Renderable...)}, or {@link #foot(Renderable...)} instead! */
+    /// Use [#head(Renderable...)], [#body(Renderable...)], or [#foot(Renderable...)] instead!
     @Deprecated
     @Override public Table content(String content) {return super.content(content);}
 
-    /** Use {@link #head(Renderable...)}, {@link #body(Renderable...)}, or {@link #foot(Renderable...)} instead! */
+    /// Use [#head(Renderable...)], [#body(Renderable...)], or [#foot(Renderable...)] instead!
     @Deprecated
     @Override public Table content(Stream<? extends Renderable> content) {return super.content(content);}
 
-    /** Use {@link #head(Renderable...)}, {@link #body(Renderable...)}, or {@link #foot(Renderable...)} instead! */
+    /// Use [#head(Renderable...)], [#body(Renderable...)], or [#foot(Renderable...)] instead!
     @Deprecated
     @Override public Table content(Renderable... content) {return super.content(content);}
 
-    /** Use {@link #head(Renderable...)}, {@link #body(Renderable...)}, or {@link #foot(Renderable...)} instead! */
+    /// Use [#head(Renderable...)], [#body(Renderable...)], or [#foot(Renderable...)] instead!
     @Deprecated
     @Override public Table content(Renderable content) {return super.content(content);}
 }

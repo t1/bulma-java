@@ -61,17 +61,17 @@ public class Select extends BulmaElement<Select> {
         return this;
     }
 
-    /** Use {@link #option(String)} or {@link #option(String, String)} instead! */
+    /// Use [#option(String)] or [#option(String, String)] instead!
     @Deprecated
     @Override public Select content(String content) {return super.content(content);}
 
-    /** Use {@link #option(String)} or {@link #option(String, String)} instead! */
+    /// Use [#option(String)] or [#option(String, String)] instead!
     @Deprecated
     @Override public Select content(Renderable content) {
         throw new UnsupportedOperationException("select elements can only contain options");
     }
 
-    /** Use {@link #options(String...)} instead! */
+    /// Use [#options(String...)] instead!
     @Deprecated
     @Override public Select content(Renderable... content) {return super.content(content);}
 

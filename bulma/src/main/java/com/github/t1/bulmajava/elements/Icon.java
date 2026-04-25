@@ -38,7 +38,7 @@ public class Icon extends BulmaElement<Icon> {
         return new Icon().content(i().classes(style.className(), "fa-" + name).classes(classes)).fontSize(fontSize);
     }
 
-    /** FontAwesome only allows stacking two icons */
+    /// FontAwesome only allows stacking two icons
     public static Element iconStack(Icon... icons) {
         var stack = span().classes("fa-stack fa-lg");
         for (int i = 0; i < icons.length; i++)

@@ -4,7 +4,10 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.net.URI;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static com.github.t1.htmljava.HtmlBasics.*;
 import static com.github.t1.htmljava.Renderable.Indented.indented;
@@ -83,15 +86,40 @@ public class Html extends AbstractElement<Html> {
         return content(e -> e.hasTagName("head"), function, () -> element("head"));
     }
 
+    /// Routes content to the `<body>` automatically, unless the content _is_ a `<body>` element.
+    /// This means `html("T").content(h1("Hi"))` is equivalent to `html("T").body(h1("Hi"))`.
+    /// To add an explicit [Body] element with attributes, pass it here:
+    /// `html("T").content(body().has(NAVBAR_FIXED_TOP).content(...))`
     @Override public Html content(Renderable content, int index) {
         return content instanceof AbstractElement<?> e && e.hasTagName("body")
                 ? super.content(content, index) : body(content, index);
     }
 
+    /// Add content to the `<body>`, creating it if necessary.
     public Html body(Renderable content) {return body(content, LAST);}
 
+    /// Add multiple content elements to the `<body>`, creating it if necessary.
+    /// This is the natural way to add several top-level elements:
+    /// `html("T").body(navbar(), section(), footer())`
+    public Html body(Renderable... content) {return body(Arrays.stream(content));}
+
+    /// Add streamed content to the `<body>`, creating it if necessary.
+    public Html body(Stream<? extends Renderable> content) {
+        content.filter(Objects::nonNull).forEach(this::body);
+        return this;
+    }
+
+    /// Add content to the `<body>` at a specific position.
+    /// Used, e.g., by [scriptBody(String)] to append scripts after other body content.
     public Html body(Renderable content, int index) {return body((AbstractElement<?> e) -> e.content(content, index));}
 
+    /// Modify the `<body>` element itself, e.g., to add attributes or classes.
+    /// Creates the body if it doesn't exist yet.
+    /// Use this when you need to set attributes on the `<body>` tag:
+    /// `html("T").body(e -> e.classes("custom").content(h1("Hello")))`
+    ///
+    /// Alternatively, pass an explicit [Body] element to [#content(Renderable, int)]:
+    /// `html("T").content(body().has(NAVBAR_FIXED_TOP).content(section()...))`
     public Html body(Function<AbstractElement<?>, AbstractElement<?>> function) {
         return content(e -> e.hasTagName("body"), function, Body::body);
     }
@@ -102,5 +130,6 @@ public class Html extends AbstractElement<Html> {
         super.render(renderer);
     }
 
+    /// Returns the existing `<body>` element for later mutation. Throws if no body exists yet.
     public AbstractElement<?> body() {return findElement(e -> e.hasTagName("body")).orElseThrow();}
 }

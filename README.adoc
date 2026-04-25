@@ -145,14 +145,34 @@ renders as:
 ==== Full Documents
 
 `html()` creates a complete document with `<!DOCTYPE html>`, `<head>`, and `<body>`.
-Content added to the document is automatically routed to the `<body>`:
 
 [source,java]
 ----
 html("Page Title")
     .stylesheet("app.css")
     .script("app.js")
-    .body(div().content(p("Hello")))
+    .body(navbar(), section(), footer())
+----
+
+The `body()` method accepts single elements, varargs, or streams.
+Multiple `body()` calls accumulate content:
+
+[source,java]
+----
+html("Page Title")
+    .body(navbar())
+    .body(section())
+----
+
+`content()` on `Html` automatically routes to the body, so `html("T").content(h1("Hi"))` is equivalent to `html("T").body(h1("Hi"))`.
+
+To set attributes or classes on the `<body>` tag itself, pass an explicit `Body` element:
+
+[source,java]
+----
+html("Page Title").content(body().has(NAVBAR_FIXED_TOP).content(
+    container().content(section())
+))
 ----
 
 Use `.head()` to add content to the `<head>` explicitly.

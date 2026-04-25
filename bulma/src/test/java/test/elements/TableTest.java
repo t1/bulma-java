@@ -89,7 +89,7 @@ class TableTest {
 
     @ParameterizedTest @EnumSource void shouldRenderStyledTable(TableStyle style) {
         var table = table().is(style)
-                .head(string("One"), string("Two"))
+                .head("One", "Two")
                 .body(
                         row(string("Three"), string("Four")),
                         row(string("Five"), string("Six")),

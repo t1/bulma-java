@@ -160,31 +160,66 @@ String fragment = div().content(p("Hello")).render();
 
 ```java
 html("My App")
-    .
-
-stylesheet("https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css")
-    .
-
-script("app.js")
-    .
-
-javaScriptCode("console.log('inline JS');")
-    .
-
-body(
-        section().
-
-content(container().
-
-content(
-        title("Welcome"),
-
-p("Hello world")
+    .stylesheet("https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css")
+    .script("app.js")
+    .body(
+        section().content(container().content(
+            title("Welcome"),
+            p("Hello world")
         ))
-                )
-                .
+    )
+    .render();
+```
 
-render();
+### Adding Body Content
+
+There are several ways to add content to the `<body>` of an `Html` page, each useful in different situations:
+
+**Multiple elements** — the most common case with several top-level children:
+```java
+html("My App").body(navbar(), section(), footer())
+```
+
+**Single element** — when the body has one root element:
+```java
+html("My App").body(section().content(title("Hello")))
+```
+
+**Chained calls** — building up the body incrementally:
+```java
+html("My App")
+    .body(navbar())
+    .body(section())
+    .body(footer())
+```
+
+**Implicit routing** — `content()` on `Html` automatically routes to the body:
+```java
+html("My App").content(h1("Hello"))  // equivalent to .body(h1("Hello"))
+```
+
+**Body with attributes** — when you need classes or attributes on the `<body>` tag itself,
+pass an explicit `Body` element via `content()`:
+```java
+html("My App").content(body().has(NAVBAR_FIXED_TOP).content(
+    container().content(section().content(title("Hello")))
+))
+```
+
+**Functional modification** — an alternative for setting body attributes inline:
+```java
+html("My App").body(e -> e.classes("custom").content(h1("Hello")))
+```
+
+**Positional insertion** — insert at a specific position (0 = first):
+```java
+html("My App").body(section()).body(navbar(), 0)  // navbar before section
+```
+
+**Retrieve and mutate** — get the existing body element for later modification:
+```java
+var page = html("My App").body(section());
+page.body().content(footer());  // add to existing body
 ```
 
 ## Custom Attributes

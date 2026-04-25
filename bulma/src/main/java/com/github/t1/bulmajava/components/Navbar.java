@@ -71,19 +71,19 @@ public class Navbar extends BulmaElement<Navbar> {
         return burger;
     }
 
-    /** Use {@link #start(Renderable...)}/{@link #end(Renderable...)} instead! */
+    /// Use [#start(Renderable...)]/[#end(Renderable...)] instead!
     @Deprecated
     @Override public Navbar content(String content) {return super.content(content);}
 
-    /** Use {@link #start(Renderable...)}/{@link #end(Renderable...)} instead! */
+    /// Use [#start(Renderable...)]/[#end(Renderable...)] instead!
     @Deprecated
     @Override public Navbar content(Stream<? extends Renderable> content) {return super.content(content);}
 
-    /** Use {@link #start(Renderable...)}/{@link #end(Renderable...)} instead! */
+    /// Use [#start(Renderable...)]/[#end(Renderable...)] instead!
     @Deprecated
     @Override public Navbar content(Renderable... content) {return super.content(content);}
 
-    /** Use {@link #start(Renderable...)}/{@link #end(Renderable...)} instead! */
+    /// Use [#start(Renderable...)]/[#end(Renderable...)] instead!
     @Deprecated
     @Override public Navbar content(Renderable content) {return super.content(content);}
 

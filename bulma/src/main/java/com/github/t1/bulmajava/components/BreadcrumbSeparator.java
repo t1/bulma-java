@@ -2,7 +2,7 @@ package com.github.t1.bulmajava.components;
 
 import com.github.t1.bulmajava.basic.HasModifier;
 
-/** These are only the alternative separators; i.e., the default <code>/</code> is not in here */
+/// These are only the alternative separators; i.e., the default `/` is not in here
 public enum BreadcrumbSeparator implements HasModifier {
     ARROW, BULLET, DOT, SUCCEEDS;
 

@@ -21,16 +21,16 @@ public class Hero extends BulmaElement<Hero> {
     public Hero isFullheightWithNavbar() {return classes("is-fullheight-with-navbar");}
 
 
-    /** Use {@link #body(Renderable...)} instead! */
+    /// Use [#body(Renderable...)] instead!
     @Deprecated @Override public Hero content(String content) {return super.content(content);}
 
-    /** Use {@link #body(Renderable...)} instead! */
+    /// Use [#body(Renderable...)] instead!
     @Deprecated @Override public Hero content(Renderable content) {return super.content(content);}
 
-    /** Use {@link #body(Renderable...)} instead! */
+    /// Use [#body(Renderable...)] instead!
     @Deprecated @Override public Hero content(Renderable... content) {return super.content(content);}
 
-    /** Use {@link #body(Renderable...)} instead! */
+    /// Use [#body(Renderable...)] instead!
     @Deprecated @Override public Hero content(Stream<? extends Renderable> content) {return super.content(content);}
 
     public Hero head(Renderable content) {return content("hero-head", head -> head.content(content));}
