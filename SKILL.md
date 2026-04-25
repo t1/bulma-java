@@ -516,6 +516,8 @@ spacing/styling?
 
 ## Common Mistakes
 
+- **Don't bypass HTML escaping** - Only use `unsafeAppend()` or `UnsafeString` for trusted HTML content, never for
+  user-provided content. **VERY IMPORTANT**
 - Using `html()` for fragments — produces full document with doctype. Use element factories directly (`div()`,
   `section()`, etc.) for partials.
 - Forgetting `.render()` — elements are builders, not strings.

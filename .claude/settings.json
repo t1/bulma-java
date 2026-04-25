@@ -1,0 +1,11 @@
+{
+  "enabledPlugins": {
+    "tdder@t1": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(mvn *)",
+      "mcp__idea__*"
+    ]
+  }
+}
