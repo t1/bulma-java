@@ -61,7 +61,7 @@ For a demo application based on https://quarkus.io[Quarkus] and https://htmx.org
 
 === AI Usage
 
-If you use some coding LLM based AI tooling, e.g. coding agents, the `SKILL.md` file could be helpful.
+If you use some coding LLM based AI tooling, e.g. coding agents, the https://raw.githubusercontent.com/t1/bulma-java/refs/heads/trunk/bulma/src/main/resources/META-INF/.agent/skills/bulma-java.md[skill] file could be helpful.
 See the instructions for your tools on how to set it up.
 
 === Usage Patterns
