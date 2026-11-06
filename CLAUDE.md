@@ -33,7 +33,3 @@ See README.adoc § Architecture for details (modifier hierarchy, rendering pipel
 - JUnit 5 + AssertJ with custom `CustomAssertions.then(renderable).rendersAs("expected html")`
 - Tests aggregate output to `bulma/target/all-tests.html` for visual verification in browser
 - Modifier coverage via `@EnumSource` parameterized tests
-
-## SKILL.md
-
-SKILL.md contains the comprehensive component reference and usage guide. Consult it when writing code that uses bulma-java components.
